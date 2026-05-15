@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Man City vs Crystal Palace | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --y:#F5C800; --y2:#FFD93D; --y3:#B89200;
+  --bg:#0A0A08; --bg2:#111110; --bg3:#181815; --bg4:#1E1E1A; --bg5:#252520;
+  --border:rgba(245,200,0,0.12); --border2:rgba(245,200,0,0.22); --border3:rgba(255,255,255,0.06);
+  --text:#F0EDE0; --text2:#9A9880; --text3:#5A5845;
+  --green:#22C55E; --red:#EF4444; --blue:#3B82F6;
+  --sidebar-w:220px; --rsidebar-w:280px;
+  --font-display:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --font-mono:'Space Mono',monospace; --font-num:'Oswald',sans-serif;
+  --radius:8px; --radius-lg:12px; --radius-xl:16px;
+}
+[data-theme="light"] {
+  --bg:#FAFAF5; --bg2:#FFFFFF; --bg3:#F5F4EE; --bg4:#EEECEA; --bg5:#E5E3DC;
+  --border:rgba(180,145,0,0.18); --border2:rgba(180,145,0,0.35); --border3:rgba(0,0,0,0.06);
+  --text:#1A1A14; --text2:#5C5A48; --text3:#9A9880;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:14px;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:52px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;}
+.logo{font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--y);letter-spacing:-.5px;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.logo-dot{width:8px;height:8px;background:var(--y);border-radius:50%;animation:pulse-dot 1.5s ease infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.topbar-nav{display:flex;align-items:center;gap:2px;margin-left:4px;}
+.topbar-navlink{padding:5px 11px;border-radius:var(--radius);font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:5px;}
+.topbar-navlink:hover{color:var(--text);background:rgba(245,200,0,.06);}
+.topbar-navlink.active{color:var(--y);background:rgba(245,200,0,.08);}
+.upcoming-tag{font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3);padding:1px 5px;border-radius:3px;letter-spacing:.5px;}
+.search-bar{flex:1;max-width:340px;margin-left:12px;display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:0 12px;height:34px;}
+.search-bar input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:13px;width:100%;}
+.search-bar input::placeholder{color:var(--text3);}
+.search-bar i{color:var(--text3);font-size:13px;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.btn-icon{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;color:var(--text2);font-size:14px;position:relative;}
+.btn-icon:hover{border-color:var(--y);color:var(--y);background:rgba(245,200,0,.06);}
+.notif-badge{position:absolute;top:-4px;right:-4px;width:14px;height:14px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);}
+.theme-toggle{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--y);font-size:14px;transition:all .18s;}
+.theme-toggle:hover{background:rgba(245,200,0,.08);border-color:var(--y);}
+.wallet-pill{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:34px;font-family:var(--font-mono);font-size:12px;}
+.wallet-bal{color:var(--y);font-weight:700;}
+.wallet-label{color:var(--text3);font-size:10px;}
+.avatar{width:34px;height:34px;background:linear-gradient(135deg,var(--y),var(--y3));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:13px;color:#000;cursor:pointer;}
+
+/* ── LAYOUT ── */
+.layout{display:flex;margin-top:52px;height:calc(100vh - 52px);overflow:hidden;}
+
+/* ── LEFT SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 0;}
+.sidebar-section{margin-bottom:24px;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;font-size:13px;}
+.sidebar-item .item-badge{margin-left:auto;background:var(--y);color:#000;font-size:9px;font-weight:700;font-family:var(--font-mono);padding:2px 5px;border-radius:4px;}
+.sidebar-item .item-badge.red{background:var(--red);color:#fff;}
+.trending-event{margin:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;cursor:pointer;transition:all .15s;}
+.trending-event:hover{border-color:var(--border2);}
+.trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.trend-change{font-family:var(--font-mono);font-size:10px;color:var(--green);}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;background:var(--bg);padding:16px;display:flex;flex-direction:column;gap:14px;}
+
+/* ── MATCH CARD ── */
+.match-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:hidden;}
+.match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--y),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.3}50%{opacity:1}}
+.match-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.league-badge{display:flex;align-items:center;gap:6px;background:rgba(245,200,0,.1);border:1px solid var(--border2);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--y);letter-spacing:1px;}
+.live-indicator{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;}
+.live-dot{width:7px;height:7px;border-radius:50%;}
+@keyframes live-pulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.6)}70%{box-shadow:0 0 0 8px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+
+/* score / ticker */
+.match-center{display:flex;align-items:center;justify-content:center;gap:20px;}
+.team-block{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
+.team-logo{width:52px;height:52px;border-radius:50%;border:2px solid var(--border2);padding:6px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.team-name{font-family:var(--font-display);font-weight:700;font-size:14px;text-align:center;}
+.team-record{font-family:var(--font-mono);font-size:10px;}
+.score-block{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.ticker-score{display:flex;align-items:center;gap:6px;font-family:var(--font-num);font-weight:600;font-size:36px;color:var(--text);letter-spacing:1px;line-height:1;}
+.ticker-abbr{color:var(--text2);font-size:22px;font-weight:500;letter-spacing:2px;}
+.ticker-dash{color:var(--text3);font-size:20px;font-weight:400;}
+.ticker-goals{color:var(--text);font-size:38px;font-weight:700;min-width:24px;text-align:center;transition:color .3s;}
+.ticker-sep{color:var(--y);font-size:32px;font-weight:700;padding:0 4px;text-shadow:0 0 12px rgba(245,200,0,.4);}
+.match-clock{font-family:var(--font-mono);font-size:13px;color:var(--y);background:rgba(245,200,0,.1);border:1px solid var(--border2);border-radius:6px;padding:4px 10px;display:flex;align-items:center;gap:5px;}
+.match-status-pill{font-family:var(--font-mono);font-size:10px;font-weight:700;background:var(--bg4);border:1px solid var(--border);color:var(--text2);border-radius:4px;padding:3px 8px;}
+.match-meta{margin-top:10px;padding-top:10px;border-top:1px solid var(--border3);display:flex;align-items:center;gap:24px;flex-wrap:wrap;font-size:11px;}
+.meta-item{display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;}
+
+/* ── EVENT FEED ── */
+.event-feed-wrap{margin-top:16px;padding-top:14px;border-top:1px solid var(--border3);}
+.event-feed-title{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.event-feed{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto;}
+.event-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:var(--radius);background:var(--bg3);border:1px solid var(--border3);animation:slideDown .4s cubic-bezier(.4,0,.2,1);}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.event-item.goal{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.05);}
+.event-item.card-y{border-color:rgba(234,179,8,.3);background:rgba(234,179,8,.04);}
+.event-item.card-r{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.06);}
+.event-item.sub{border-color:rgba(59,130,246,.25);background:rgba(59,130,246,.04);}
+.event-item.whistle{border-color:var(--border2);}
+.event-time{font-family:var(--font-mono);font-size:10px;color:var(--y);font-weight:700;white-space:nowrap;padding-top:1px;}
+.event-icon{font-size:15px;flex-shrink:0;}
+.event-text{color:var(--text2);font-size:12px;line-height:1.5;flex:1;}
+.event-text strong{color:var(--text);font-weight:600;}
+.score-flash{animation:scoreFlash .8s ease;}
+@keyframes scoreFlash{0%,100%{color:var(--text)}30%,70%{color:var(--green);text-shadow:0 0 20px rgba(34,197,94,.6);}}
+
+/* ── STATS ROW ── */
+.stats-row{display:flex;gap:10px;}
+.stat-box{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;}
+.stat-box-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.stat-box-val{font-family:var(--font-num);font-weight:700;font-size:28px;color:var(--text);}
+.stat-box-val.yellow{color:var(--y);}
+.stat-box-sub{font-family:var(--font-mono);font-size:10px;color:var(--green);margin-top:3px;}
+
+/* ── TABS ── */
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+
+/* ── SENTIMENT ── */
+.sentiment-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.sentiment-bar{height:10px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:8px;}
+.sentiment-city{background:linear-gradient(90deg,var(--y),rgba(245,200,0,.6));}
+.sentiment-draw{background:rgba(100,100,100,.4);}
+.sentiment-palace{background:linear-gradient(90deg,rgba(0,100,200,.6),#1a5fa8);}
+.sentiment-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+
+/* ── HOT MARKETS STRIP ── */
+.trending-strip{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px;}
+.trending-pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.trending-pills::-webkit-scrollbar{display:none;}
+.trend-pill{flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:6px 12px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.trend-pill:hover{border-color:var(--y);background:rgba(245,200,0,.06);}
+.trend-pill-name{font-size:12px;font-weight:500;color:var(--text);}
+.trend-pill-prob{font-family:var(--font-mono);font-size:10px;color:var(--y);margin-top:2px;}
+
+/* ── MARKETS GRID ── */
+.markets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.market-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden;}
+.market-card:hover{border-color:var(--border2);background:var(--bg3);}
+.market-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--y);opacity:0;transition:opacity .2s;}
+.market-card:hover::after{opacity:1;}
+.market-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.market-title{font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--text);line-height:1.3;}
+.market-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;}
+.market-prob-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.market-prob{font-family:var(--font-num);font-weight:700;font-size:28px;color:var(--y);}
+.market-prob-bar{flex:1;height:5px;background:var(--bg4);border-radius:99px;overflow:hidden;}
+.market-prob-fill{height:100%;background:var(--y);border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.market-price-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;}
+.price-chip{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;text-align:center;}
+.price-chip.yes{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04);}
+.price-chip.no{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04);}
+.price-chip-label{font-size:9px;font-family:var(--font-mono);color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.price-chip-val{font-family:var(--font-mono);font-weight:700;font-size:16px;margin-top:1px;}
+.price-chip.yes .price-chip-val{color:var(--green);}
+.price-chip.no .price-chip-val{color:var(--red);}
+.price-change{font-family:var(--font-mono);font-size:10px;}
+.price-change.up{color:var(--green);}
+.price-change.down{color:var(--red);}
+.market-mini-chart{height:40px;margin-bottom:12px;}
+.market-btns{display:flex;gap:6px;}
+.btn-yes{flex:1;padding:8px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;transition:all .15s;letter-spacing:.3px;background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.btn-yes:hover{background:var(--green);color:#000;}
+.btn-no{flex:1;padding:8px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;transition:all .15s;letter-spacing:.3px;background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3);}
+.btn-no:hover{background:var(--red);color:#fff;}
+.market-stats-row{display:flex;align-items:center;gap:12px;padding-top:10px;border-top:1px solid var(--border3);margin-top:4px;}
+.mstat{flex:1;text-align:center;}
+.mstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;}
+.mstat-val{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--text2);margin-top:2px;}
+
+/* ── OPEN POSITIONS ── */
+.positions-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.positions-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.positions-title .badge{background:var(--y);color:#000;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;}
+.position-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border3);}
+.position-row:last-child{border-bottom:none;}
+.pos-market{flex:2;font-size:13px;color:var(--text);}
+.pos-market small{display:block;color:var(--text3);font-family:var(--font-mono);font-size:10px;margin-top:2px;}
+.pos-size,.pos-entry{flex:1;font-family:var(--font-mono);font-size:12px;color:var(--text2);text-align:center;}
+.pos-pnl{flex:1;font-family:var(--font-mono);font-size:13px;font-weight:700;text-align:right;}
+.pos-pnl.green{color:var(--green);}
+.pos-pnl.red{color:var(--red);}
+
+/* ── RIGHT SIDEBAR ── */
+.right-sidebar{width:var(--rsidebar-w);background:var(--bg2);border-left:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 12px;display:flex;flex-direction:column;gap:16px;}
+.rsidebar-section-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.ob-row{display:flex;align-items:center;gap:8px;padding:3px 0;position:relative;overflow:hidden;}
+.ob-bar{position:absolute;top:0;bottom:0;border-radius:2px;opacity:.12;}
+.ob-bar.ask{background:var(--red);right:0;}
+.ob-bar.bid{background:var(--green);left:0;}
+.ob-price{font-family:var(--font-mono);font-size:11px;font-weight:700;width:40px;}
+.ob-price.ask{color:var(--red);}
+.ob-price.bid{color:var(--green);}
+.ob-size{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto;}
+.ob-total{font-family:var(--font-mono);font-size:10px;color:var(--text3);width:40px;text-align:right;}
+.ob-spread{text-align:center;padding:6px 0;font-family:var(--font-mono);font-size:10px;color:var(--y);border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);margin:4px 0;}
+.activity-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border3);}
+.activity-item:last-child{border-bottom:none;}
+.act-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.act-dot.buy{background:var(--green);}
+.act-dot.sell{background:var(--red);}
+.act-text{flex:1;font-size:11px;color:var(--text2);line-height:1.4;}
+.act-text strong{color:var(--text);font-weight:500;}
+.act-time{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.trade-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border3);animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side.buy{background:rgba(34,197,94,.15);color:var(--green);}
+.trade-side.sell{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-market{font-size:11px;color:var(--text2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trade-price{font-family:var(--font-mono);font-size:11px;color:var(--text);font-weight:600;}
+.trade-size{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ── ORDER PANEL ── */
+.order-panel{position:fixed;bottom:0;right:var(--rsidebar-w);z-index:200;width:340px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:20px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.5);}
+.order-panel.open{transform:translateY(0);}
+.order-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.order-panel-title{font-family:var(--font-display);font-weight:700;font-size:15px;}
+.btn-close{width:28px;height:28px;background:var(--bg4);border:none;border-radius:50%;cursor:pointer;color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.btn-close:hover{background:var(--red);color:#fff;}
+.order-market-name{font-size:12px;color:var(--text3);margin-bottom:16px;font-family:var(--font-mono);}
+.order-side-tabs{display:flex;gap:6px;margin-bottom:16px;}
+.order-side-btn{flex:1;padding:8px;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;transition:all .15s;background:var(--bg3);color:var(--text2);}
+.order-side-btn.yes.active{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:var(--green);}
+.order-side-btn.no.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:var(--red);}
+.order-field{margin-bottom:14px;}
+.order-field label{display:block;font-size:11px;color:var(--text3);font-family:var(--font-mono);letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.order-field input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;color:var(--text);font-family:var(--font-mono);font-size:14px;font-weight:700;outline:none;transition:border-color .15s;}
+.order-field input:focus{border-color:var(--y);}
+.order-summary{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:16px;}
+.order-summary-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px;}
+.order-summary-row .label{color:var(--text3);font-family:var(--font-mono);}
+.order-summary-row .value{color:var(--text);font-family:var(--font-mono);font-weight:600;}
+.order-summary-row .value.green{color:var(--green);}
+.order-summary-row .value.yellow{color:var(--y);}
+.btn-place{width:100%;padding:14px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.5px;transition:all .15s;background:var(--y);color:#000;}
+.btn-place:hover{background:var(--y2);transform:translateY(-1px);}
+
+/* ── DROPDOWNS ── */
+.notif-dropdown{position:fixed;top:56px;right:16px;z-index:300;width:300px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.4);display:none;}
+.notif-dropdown.open{display:block;animation:dropIn .2s ease;}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.notif-item{padding:8px 10px;border-radius:var(--radius);margin-bottom:4px;background:var(--bg3);}
+.notif-text{font-size:12px;color:var(--text2);line-height:1.5;}
+.notif-time{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;}
+.profile-dropdown{position:fixed;top:56px;right:16px;z-index:300;width:180px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:8px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+.profile-dropdown.open{display:block;animation:dropIn .2s ease;}
+.profile-item{padding:8px 12px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px;transition:all .15s;}
+.profile-item:hover{background:var(--bg3);color:var(--text);}
+.profile-item i{width:14px;text-align:center;color:var(--text3);font-size:12px;}
+
+/* ── COMMENT SECTION ── */
+.comment-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border3);}
+.comment-avatar{width:28px;height:28px;border-radius:50%;background:var(--bg4);border:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text2);font-family:var(--font-display);}
+.comment-body{flex:1;}
+.comment-user{font-size:11px;font-weight:600;color:var(--text);}
+.comment-text{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.5;}
+.comment-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;}
+.comments-user-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:16px;}
+
+/* ── MOBILE ── */
+@media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
+*{-webkit-tap-highlight-color:transparent;}
+body{-webkit-font-smoothing:antialiased;}
+
+/* ── FLASH ── */
+@keyframes flash-green{0%,100%{background:transparent}50%{background:rgba(34,197,94,.1)}}
+.flash-green{animation:flash-green .6s ease;}
+
+/* ── FOOTER ── */
+.site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 0 24px;}
+.footer-inner{max-width:1400px;margin:0 auto;padding:0 32px;display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.footer-logo{font-family:var(--font-display);font-weight:800;font-size:36px;color:var(--text3);letter-spacing:-1px;margin-bottom:24px;opacity:.35;}
+.footer-cols{display:flex;gap:48px;margin-bottom:28px;}
+.footer-col{display:flex;flex-direction:column;gap:10px;}
+.footer-col-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:4px;}
+.footer-col a{font-size:13px;color:var(--text3);transition:color .15s;display:flex;align-items:center;gap:6px;}
+.footer-col a:hover{color:var(--text);}
+.footer-col a i{font-size:12px;width:14px;}
+.footer-copy{font-family:var(--font-display);font-weight:600;font-size:11px;color:var(--text3);opacity:.6;}
+.footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
+.store-badge img{height:44px;border-radius:10px;transition:opacity .15s;display:block;}
+.store-badge:hover img{opacity:.85;}
+[data-theme="dark"] .store-badge img{filter:brightness(.92);}
+.footer-disclaimer{font-family:var(--font-display);font-weight:600;font-size:13px;color:var(--text3);}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="../main.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="../main.html" class="topbar-navlink">Markets</a>
+    <a href="10000002.html" class="topbar-navlink">Spurs vs Leeds <span style="font-family:var(--font-mono);font-size:8px;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;">LIVE</span></a>
+    <a href="10000003.html" class="topbar-navlink active">City vs Palace <span class="upcoming-tag" id="nav-status-tag">UPCOMING</span></a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+    <a href="../faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search markets, events, teams...">
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon" title="Notifications" onclick="toggleNotif()">
+      <i class="fa-solid fa-bell"></i><span class="notif-badge">2</span>
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <i class="fa-solid fa-sun" id="theme-icon"></i>
+    </div>
+    <div class="wallet-pill">
+      <div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div>
+    </div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<!-- NOTIF DROPDOWN -->
+<div class="notif-dropdown" id="notif-dd">
+  <div style="font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:10px;padding:0 4px;">Notifications</div>
+  <div class="notif-item"><div class="notif-text">⚡ City vs Palace kicks off soon — markets are open</div><div class="notif-time">Just now</div></div>
+  <div class="notif-item"><div class="notif-text">📈 Volume spike on <strong>Over 2.5 Goals</strong> — ₦66 YES</div><div class="notif-time">5 min ago</div></div>
+</div>
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+<!-- LEFT SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Browse</div>
+    <div class="sidebar-item active"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+    <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist <span class="item-badge">5</span></div>
+    <div class="sidebar-item"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+    <div class="sidebar-item"><i class="fa-solid fa-chart-column"></i>My Positions</div>
+    <div class="sidebar-item"><i class="fa-solid fa-chart-line"></i>Analytics</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Find Markets</div>
+    <div class="sidebar-item">⚽ Football</div>
+    <div class="sidebar-item">🏉 Other Sports</div>
+    <div class="sidebar-item">🎬 Entertainment</div>
+    <div class="sidebar-item">🎵 Music</div>
+    <div class="sidebar-item">⚖️ Politics</div>
+    <div class="sidebar-item">🛢️ Commodities</div>
+    <div class="sidebar-item">🪙 Finance</div>
+    <div class="sidebar-item">🌀 Miscellaneous</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Trending Events</div>
+    <div class="trending-event">
+      <div class="trend-name">🔵 City vs Palace</div>
+      <div style="display:flex;justify-content:space-between;margin-top:3px;">
+        <div class="trend-vol">₦12M vol</div>
+        <div class="trend-change">▲ 9%</div>
+      </div>
+    </div>
+    <div class="trending-event">
+      <div class="trend-name">🐓 Spurs vs Leeds</div>
+      <div style="display:flex;justify-content:space-between;margin-top:3px;">
+        <div class="trend-vol">₦184M vol</div>
+        <div class="trend-change">▲ 6%</div>
+      </div>
+    </div>
+    <div class="trending-event">
+      <div class="trend-name">🎵 Rema new song?</div>
+      <div style="display:flex;justify-content:space-between;margin-top:3px;">
+        <div class="trend-vol">₦28M vol</div>
+        <div class="trend-change">▲ 12%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- MATCH CARD -->
+  <div class="match-card" style="position:sticky;top:0;z-index:50;padding:14px 24px;">
+    <div class="match-card-top">
+      <div class="league-badge"><span>⚽</span> PREMIER LEAGUE</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="live-indicator" id="live-indicator">
+          <div class="live-dot" id="live-dot" style="background:var(--blue);"></div>
+          <span id="live-label">UPCOMING</span>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Etihad Stadium</div>
+      </div>
+    </div>
+
+    <div class="match-center">
+      <div class="team-block">
+        <div class="team-logo">🔵</div>
+        <div class="team-name">Man City</div>
+        <div class="team-record" style="color:var(--green);">Form: W W D W W</div>
+      </div>
+      <div class="score-block">
+        <div class="ticker-score">
+          <span class="ticker-abbr">MCI</span>
+          <span class="ticker-dash">—</span>
+          <span class="ticker-goals" id="score-home">0</span>
+          <span class="ticker-sep">|</span>
+          <span class="ticker-goals" id="score-away">0</span>
+          <span class="ticker-dash">—</span>
+          <span class="ticker-abbr">CRY</span>
+        </div>
+        <div class="match-clock">
+          <i id="clock-icon" class="fa-solid fa-calendar-clock" style="font-size:11px;"></i>
+          <span id="clock-display" style="font-size:11px;">Loading...</span>
+        </div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:#3B82F6;">UPCOMING</div>
+      </div>
+      <div class="team-block">
+        <div class="team-logo">🦅</div>
+        <div class="team-name">Crystal Palace</div>
+        <div class="team-record" style="color:var(--red);">Form: D W L D W</div>
+      </div>
+    </div>
+
+    <!-- EVENT FEED -->
+    <div class="event-feed-wrap" id="event-feed-wrap" style="display:none;">
+      <div class="event-feed-title">Match Events</div>
+      <div class="event-feed" id="event-feed"></div>
+    </div>
+
+    <div class="match-meta">
+      <div class="meta-item"><i class="fa-solid fa-location-dot"></i>Etihad Stadium, Manchester</div>
+      <div class="meta-item"><i class="fa-solid fa-cloud-sun"></i>11°C, Overcast</div>
+      <div class="meta-item"><i class="fa-solid fa-users"></i>53,400 Attendance</div>
+      <div class="meta-item" style="margin-left:auto;">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Total Volume: </span>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦12,140,000</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦12M</div><div class="stat-box-sub">▲ +9% today</div></div>
+    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">9</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
+    <div class="stat-box"><div class="stat-box-label">City Win Prob</div><div class="stat-box-val yellow" id="city-prob-stat">73%</div><div class="stat-box-sub" style="color:var(--text3);">Pre-match consensus</div></div>
+    <div class="stat-box"><div class="stat-box-label">Your P/L</div><div class="stat-box-val" style="color:var(--text3);">₦0</div><div class="stat-box-sub" style="color:var(--text3);">No positions yet</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('trades',this)">Trades</button>
+    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
+    <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+
+    <!-- SENTIMENT -->
+    <div class="sentiment-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Probability of Win</div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">Based on ₦276M volume</div>
+      </div>
+      <div class="sentiment-bar">
+        <div class="sentiment-city" style="width:73%;"></div>
+        <div class="sentiment-draw" style="width:15%;"></div>
+        <div class="sentiment-palace" style="width:12%;"></div>
+      </div>
+      <div class="sentiment-labels">
+        <span style="color:var(--y);font-weight:700;">City Win 73%</span>
+        <span>Draw 15%</span>
+        <span style="color:#5a8fc8;">Palace Win 12%</span>
+      </div>
+    </div>
+
+    <!-- HOT MARKETS STRIP -->
+    <div class="trending-strip">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🔥 Hot Markets</div>
+      <div class="trending-pills">
+        <div class="trend-pill" onclick="openOrder('City Win','YES',58)"><div class="trend-pill-name">City Win</div><div class="trend-pill-prob">₦58 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Over 2.5 Goals','YES',66)"><div class="trend-pill-name">Over 2.5 Goals</div><div class="trend-pill-prob">₦66 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('BTTS','YES',52)"><div class="trend-pill-name">BTTS</div><div class="trend-pill-prob">₦52 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Red Card','YES',18)"><div class="trend-pill-name">Red Card</div><div class="trend-pill-prob">₦18 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Penalty','YES',28)"><div class="trend-pill-name">Penalty</div><div class="trend-pill-prob">₦28 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Palace Upset','YES',12)"><div class="trend-pill-name">Palace Upset</div><div class="trend-pill-prob">₦12 YES</div></div>
+      </div>
+    </div>
+
+    <!-- MARKETS GRID -->
+    <div class="markets-grid" id="markets-grid"></div>
+
+    <!-- OPEN POSITIONS -->
+    <div class="positions-card">
+      <div class="positions-title">Open Positions <span class="badge">0</span></div>
+      <div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No open positions — pick a market above to get started</div>
+    </div>
+  </div>
+
+  <!-- TRADES TAB -->
+  <div id="tab-trades" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Trade History</div>
+      <div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No trades yet on this market</div>
+    </div>
+  </div>
+
+  <!-- COMMENTS TAB -->
+  <div id="tab-comments" style="display:none;">
+    <div class="comments-user-section">
+      <div class="positions-title">Community <span class="badge" style="background:var(--blue);color:#fff;">12</span></div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
+
+  <!-- ANALYTICS TAB -->
+  <div id="tab-analytics" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Probability Chart — City Win</div>
+      <div style="position:relative;height:220px;"><canvas id="probChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- RULES TAB -->
+  <div id="tab-rules" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Market Rules & Resolution</div>
+      <div style="color:var(--text2);font-size:13px;line-height:1.8;display:flex;flex-direction:column;gap:14px;">
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Match Winner</div><div>Resolves YES if the specified team wins at full-time (90 min + stoppage). Extra time excluded.</div></div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Over/Under Goals</div><div>Based on total goals at full-time. Own goals count. Suspended matches void.</div></div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Data Source</div><div>Official Premier League data feed. Resolution within 30 minutes of final whistle.</div></div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Disputes</div><div>Contact support within 24 hours. Skedee Markets decisions are final.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- RIGHT SIDEBAR -->
+<div class="right-sidebar">
+  <div>
+    <div class="rsidebar-section-title">Order Book — City Win <span style="color:var(--green);font-size:10px;">LIVE</span></div>
+    <div id="order-book-asks"></div>
+    <div class="ob-spread" id="ob-spread">Spread: ₦2 · Mid: ₦58</div>
+    <div id="order-book-bids"></div>
+  </div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;">
+    <div class="rsidebar-section-title">Activity Feed</div>
+    <div id="activity-feed"></div>
+  </div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;">
+    <div class="rsidebar-section-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
+  </div>
+</div>
+
+</div><!-- end layout -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="../about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">PAYMENT METHODS</div>
+          <a href="https://opayweb.com" target="_blank">Opay</a>
+          <a href="https://paystack.com" target="_blank">Paystack</a>
+          <a href="https://flutterwave.com" target="_blank">Flutterwave</a>
+          <a href="https://palmpay.com" target="_blank">Palmpay</a>
+          <a href="https://privacy-policy.html" target="_blank">Bank Transfer</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ORDER PANEL -->
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header">
+    <div class="order-panel-title">Place Order</div>
+    <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="order-market-name" id="op-market-name">City Win</div>
+  <div class="order-side-tabs">
+    <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
+    <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
+  </div>
+  <div class="order-field">
+    <label>Amount (NGN ₦)</label>
+    <input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()">
+  </div>
+  <div class="order-field">
+    <label>Price per Share (₦)</label>
+    <input type="number" id="op-price" value="58" step="1" min="1" max="99" oninput="updateOrderSummary()">
+  </div>
+  <div class="order-summary">
+    <div class="order-summary-row"><span class="label">Shares</span><span class="value" id="op-shares">86.2</span></div>
+    <div class="order-summary-row"><span class="label">Avg Entry</span><span class="value" id="op-entry">₦58</span></div>
+    <div class="order-summary-row"><span class="label">Max Payout</span><span class="value green" id="op-payout">₦8,621</span></div>
+    <div class="order-summary-row"><span class="label">Potential Profit</span><span class="value yellow" id="op-profit">+₦3,621</span></div>
+    <div class="order-summary-row"><span class="label">Wallet After</span><span class="value" id="op-wallet-after">₦4,266,250</span></div>
+  </div>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+</div>
+
+<script>
+/* ============================================================
+   LIVE MATCH ENGINE
+   Set KICKOFF_TIME to the real UTC kickoff.
+   Currently: 1 hour from page load (for testing).
+   Example real time: new Date('2026-05-13T19:00:00Z')
+============================================================ */
+const KICKOFF_TIME = new Date();
+
+const match = {
+  state: 'UPCOMING', // UPCOMING | LIVE_1H | HT | LIVE_2H | FT
+  minute: 0,
+  stoppage: 0,
+  homeScore: 0,
+  awayScore: 0,
+};
+
+// Scripted match events — fires at match.minute >= min
+const SCRIPTED_EVENTS = [
+  { min:12, type:'goal',    team:'home', text:'<strong>Haaland</strong> opens the scoring — clinical finish from inside the box after a through ball from De Bruyne.' },
+  { min:23, type:'card-y',  team:'away', text:'<strong>Lerma</strong> (Crystal Palace) booked for a cynical foul on Bernardo Silva.' },
+  { min:34, type:'goal',    team:'home', text:'<strong>Haaland</strong> again! His second of the match — a powerful header from a Bernardo Silva cross. City 2–0.' },
+  { min:41, type:'goal',    team:'away', text:'<strong>Eze</strong> pulls one back for Palace! Brilliant curling effort from the edge of the box. 2–1.' },
+  { min:45, type:'whistle', team:'none', text:'<strong>Half Time</strong> — Man City 2–1 Crystal Palace. City dominant but Palace dangerous on the counter.' },
+  { min:55, type:'sub',     team:'home', text:'<strong>Phil Foden</strong> comes on for Kevin De Bruyne (Man City).' },
+  { min:62, type:'goal',    team:'home', text:'<strong>Haaland</strong> completes the hat trick! Left-footed finish from Foden\'s pass. City 3–1.' },
+  { min:71, type:'card-r',  team:'away', text:'<strong>Muñoz</strong> (Crystal Palace) receives a second yellow card — Palace down to ten men!' },
+  { min:78, type:'goal',    team:'home', text:'<strong>Foden</strong> makes it 4–1 with a composed finish after a quick City counter-attack.' },
+  { min:85, type:'card-y',  team:'home', text:'<strong>Rodri</strong> (Man City) booked for dissent.' },
+  { min:90, type:'whistle', team:'none', text:'<strong>Full Time</strong> — Man City 4–1 Crystal Palace. Haaland hat trick seals a dominant home win at the Etihad.' },
+];
+
+const firedEvents = new Set();
+let matchClockInterval = null;
+let countdownInterval = null;
+
+const EVENT_CONFIG = {
+  'goal':    { icon:'⚽', cls:'goal' },
+  'card-y':  { icon:'🟨', cls:'card-y' },
+  'card-r':  { icon:'🟥', cls:'card-r' },
+  'sub':     { icon:'🔄', cls:'sub' },
+  'whistle': { icon:'📣', cls:'whistle' },
+};
+
+function addMatchEvent(min, type, text, stoppage=0) {
+  const feed = document.getElementById('event-feed');
+  const wrap = document.getElementById('event-feed-wrap');
+  const cfg = EVENT_CONFIG[type] || { icon:'📌', cls:'' };
+  const timeStr = stoppage > 0 ? `${min}+${stoppage}'` : `${min}'`;
+  const item = document.createElement('div');
+  item.className = `event-item ${cfg.cls}`;
+  item.innerHTML = `<div class="event-time">[${timeStr}]</div><div class="event-icon">${cfg.icon}</div><div class="event-text">${text}</div>`;
+  feed.insertBefore(item, feed.firstChild);
+  wrap.style.display = 'block';
+  if (type === 'goal') {
+    ['score-home','score-away'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('score-flash');
+      void el.offsetWidth;
+      el.classList.add('score-flash');
+      setTimeout(() => el.classList.remove('score-flash'), 800);
+    });
+  }
+}
+
+function updateMatchUI() {
+  const clockEl = document.getElementById('clock-display');
+  const statusEl = document.getElementById('match-status');
+  const liveLabel = document.getElementById('live-label');
+  const liveDot = document.getElementById('live-dot');
+  const liveIndicator = document.getElementById('live-indicator');
+  const clockIcon = document.getElementById('clock-icon');
+  const navTag = document.getElementById('nav-status-tag');
+
+  document.getElementById('score-home').textContent = match.homeScore;
+  document.getElementById('score-away').textContent = match.awayScore;
+
+  if (match.state === 'UPCOMING') {
+    liveIndicator.style.color = 'var(--blue)';
+    liveDot.style.cssText = 'width:7px;height:7px;border-radius:50%;background:var(--blue);';
+    liveLabel.textContent = 'UPCOMING';
+    statusEl.textContent = 'UPCOMING';
+    statusEl.style.cssText = 'background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:#3B82F6;';
+    clockIcon.className = 'fa-solid fa-calendar-clock';
+    navTag.textContent = 'UPCOMING';
+    navTag.style.cssText = 'font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3);padding:1px 5px;border-radius:3px;letter-spacing:.5px;';
+
+  } else if (match.state === 'LIVE_1H' || match.state === 'LIVE_2H') {
+    const minStr = match.stoppage > 0 ? `${match.minute}+${match.stoppage}'` : `${match.minute}'`;
+    clockEl.textContent = minStr;
+    clockEl.style.fontSize = '';
+    clockIcon.className = 'fa-solid fa-stopwatch';
+    liveIndicator.style.color = 'var(--red)';
+    liveDot.style.cssText = 'width:7px;height:7px;border-radius:50%;background:var(--red);animation:live-pulse 1.5s ease-out infinite;box-shadow:0 0 0 0 rgba(239,68,68,.4);';
+    liveLabel.textContent = 'LIVE';
+    statusEl.textContent = match.state === 'LIVE_1H' ? '1ST HALF' : '2ND HALF';
+    statusEl.style.cssText = 'background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#EF4444;';
+    navTag.textContent = 'LIVE';
+    navTag.style.cssText = 'font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;letter-spacing:.5px;';
+
+  } else if (match.state === 'HT') {
+    clockEl.textContent = 'HT';
+    clockEl.style.fontSize = '';
+    clockIcon.className = 'fa-solid fa-whistle';
+    liveIndicator.style.color = 'var(--text2)';
+    liveDot.style.cssText = 'width:7px;height:7px;border-radius:50%;background:var(--text3);';
+    liveLabel.textContent = 'HALF TIME';
+    statusEl.textContent = 'HALF TIME';
+    statusEl.style.cssText = '';
+    navTag.textContent = 'HT';
+
+  } else if (match.state === 'FT') {
+    clockEl.textContent = 'FT';
+    clockEl.style.fontSize = '';
+    clockIcon.className = 'fa-solid fa-flag-checkered';
+    liveIndicator.style.color = 'var(--text3)';
+    liveDot.style.cssText = 'width:7px;height:7px;border-radius:50%;background:var(--text3);';
+    liveLabel.textContent = 'FULL TIME';
+    statusEl.textContent = 'FULL TIME';
+    statusEl.style.cssText = 'background:var(--bg4);border-color:var(--border);color:var(--text3);';
+    navTag.textContent = 'FT';
+    clearInterval(matchClockInterval);
+  }
+}
+
+function tickMatchClock() {
+  if (match.state === 'FT') return;
+
+  if (match.state === 'LIVE_1H') {
+    if (match.minute < 45) { match.minute++; }
+    else {
+      match.stoppage++;
+      if (match.stoppage > 4) { match.state = 'HT'; match.stoppage = 0; }
+    }
+  } else if (match.state === 'LIVE_2H') {
+    if (match.minute < 90) { match.minute++; }
+    else {
+      match.stoppage++;
+      if (match.stoppage > 5) { match.state = 'FT'; }
+    }
+  }
+
+  SCRIPTED_EVENTS.forEach(ev => {
+    const key = ev.min + '-' + ev.type + '-' + ev.text.slice(0,8);
+    if (!firedEvents.has(key) && match.minute >= ev.min) {
+      firedEvents.add(key);
+      if (ev.type === 'goal') {
+        if (ev.team === 'home') match.homeScore++;
+        else if (ev.team === 'away') match.awayScore++;
+      }
+      if (ev.type === 'whistle' && ev.min === 45) { match.state = 'HT'; setTimeout(() => { match.state = 'LIVE_2H'; match.minute = 45; updateMatchUI(); }, 15000); }
+      if (ev.type === 'whistle' && ev.min === 90) { match.state = 'FT'; }
+      addMatchEvent(ev.min, ev.type, ev.text);
+    }
+  });
+
+  updateMatchUI();
+}
+
+function tickCountdown() {
+  const diff = KICKOFF_TIME - Date.now();
+  if (diff <= 0) {
+    clearInterval(countdownInterval);
+    match.state = 'LIVE_1H';
+    match.minute = 0;
+    addMatchEvent(0, 'whistle', '<strong>Kick Off!</strong> Man City vs Crystal Palace is underway at the Etihad Stadium!');
+    updateMatchUI();
+    // Real match: setInterval(tickMatchClock, 60000)
+    // Testing (3 seconds per minute): uncomment below, comment above
+    matchClockInterval = setInterval(tickMatchClock, 60000);
+    // matchClockInterval = setInterval(tickMatchClock, 3000);
+    return;
+  }
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const el = document.getElementById('clock-display');
+  if (h > 0) { el.textContent = `${h}H ${m}M`; el.style.fontSize = '11px'; el.style.color = ''; }
+  else if (m > 0) { el.textContent = `${m}M ${String(s).padStart(2,'0')}S`; el.style.fontSize = '11px'; el.style.color = ''; }
+  else { el.textContent = `${s}S`; el.style.fontSize = '13px'; el.style.color = 'var(--red)'; }
+}
+
+/* ── MARKETS DATA ── */
+const MARKETS = [
+  { id:'city_win',     title:'Man City Win',           yes:0.58, no:0.42, vol:'₦133.8M', liq:'₦21.3M', spread:'₦2',  trend:1,  history:[0.50,0.52,0.54,0.55,0.56,0.57,0.57,0.58,0.58,0.58] },
+  { id:'palace_win',   title:'Palace Win',              yes:0.12, no:0.88, vol:'₦68.7M',  liq:'₦12.2M', spread:'₦3',  trend:-1, history:[0.18,0.16,0.15,0.14,0.13,0.13,0.12,0.12,0.12,0.12] },
+  { id:'draw',         title:'Draw at Full Time',       yes:0.22, no:0.78, vol:'₦42.6M',  liq:'₦8.4M',  spread:'₦2',  trend:0,  history:[0.22,0.22,0.23,0.22,0.22,0.22,0.22,0.22,0.22,0.22] },
+  { id:'over25',       title:'Over 2.5 Goals',          yes:0.66, no:0.34, vol:'₦78.5M',  liq:'₦14.7M', spread:'₦2',  trend:1,  history:[0.60,0.61,0.62,0.63,0.64,0.64,0.65,0.65,0.66,0.66] },
+  { id:'btts',         title:'Both Teams To Score',     yes:0.52, no:0.48, vol:'₦58.1M',  liq:'₦10.8M', spread:'₦3',  trend:0,  history:[0.50,0.51,0.51,0.52,0.52,0.52,0.53,0.52,0.52,0.52] },
+  { id:'first_score',  title:'City First To Score',     yes:0.71, no:0.29, vol:'₦33.2M',  liq:'₦6.8M',  spread:'₦4',  trend:1,  history:[0.68,0.69,0.70,0.70,0.71,0.71,0.71,0.71,0.71,0.71] },
+  { id:'red_card',     title:'Red Card Shown',          yes:0.18, no:0.82, vol:'₦27.8M',  liq:'₦5.7M',  spread:'₦3',  trend:0,  history:[0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18] },
+  { id:'penalty',      title:'Penalty Awarded',         yes:0.28, no:0.72, vol:'₦37.4M',  liq:'₦7.7M',  spread:'₦2',  trend:0,  history:[0.28,0.28,0.28,0.29,0.28,0.28,0.28,0.28,0.28,0.28] },
+  { id:'clean_sheet',  title:'City Clean Sheet',        yes:0.38, no:0.62, vol:'₦24.5M',  liq:'₦4.8M',  spread:'₦3',  trend:1,  history:[0.35,0.35,0.36,0.36,0.37,0.37,0.38,0.38,0.38,0.38] },
+  { id:'palace_upset', title:'Palace Comeback Win',     yes:0.08, no:0.92, vol:'₦19.1M',  liq:'₦3.6M',  spread:'₦2',  trend:-1, history:[0.12,0.11,0.10,0.10,0.09,0.09,0.08,0.08,0.08,0.08] },
+];
+
+const ORDER_BOOK_DATA = {
+  asks:[{p:'₦60',s:980,t:1840},{p:'₦59',s:1240,t:2100},{p:'₦58',s:2400,t:4200},{p:'₦57',s:720,t:1100}],
+  bids:[{p:'₦56',s:1600,t:2700},{p:'₦55',s:880,t:1400},{p:'₦54',s:1200,t:1900},{p:'₦53',s:390,t:560}]
+};
+
+const ACTIVITY = [
+  {type:'buy', text:'<strong>whale_trader</strong> opened City Win YES x800 at ₦58', time:'12m'},
+  {type:'buy', text:'<strong>sharp_88</strong> bought Over 2.5 Goals YES x400',       time:'18m'},
+  {type:'buy', text:'<strong>anon_4821</strong> opened City Clean Sheet YES x200',    time:'24m'},
+  {type:'sell',text:'<strong>scalper99</strong> hedged Palace Win YES x150',          time:'31m'},
+  {type:'buy', text:'<strong>prediction_king</strong> bought BTTS YES x300 at ₦52',  time:'45m'},
+];
+
+const COMMENTS_DATA = [
+  {init:'W',user:'whale_trader',text:'City at home is almost a lock. ₦58 YES still great value — Haaland is fit and Palace have a weak defence on the road.',time:'14 min ago',col:'#F5C800'},
+  {init:'S',user:'sharp_88',text:'City Clean Sheet at ₦38 is the best bet on the board. Palace have scored in only 2 of their last 8 away games.',time:'22 min ago',col:'#22C55E'},
+  {init:'P',user:'prediction_king',text:'Over 2.5 at ₦66 feels right. City average 2.8 goals per home game this season. Easy YES.',time:'35 min ago',col:'#3B82F6'},
+  {init:'A',user:'anon_4821',text:'Palace Upset at ₦12 is tempting as a long shot but honestly their away form is terrible. Pass.',time:'48 min ago',col:'#EF4444'},
+  {init:'F',user:'fomo_trader',text:'BTTS at ₦52 is a coin flip. Olise could cause City problems. I\'m in.',time:'1 hr ago',col:'#A855F7'},
+];
+
+let orderSide = 'YES';
+let currentMarketName = '';
+let currentOrderPrice = 58;
+let walletBalance = 4271250;
+let miniCharts = {};
+let probChart;
+const TRADE_NAMES = ['City Win','BTTS','Over 2.5','Penalty','Red Card','Palace Win','Clean Sheet'];
+
+/* ── RENDER MARKETS ── */
+function renderMarkets() {
+  const grid = document.getElementById('markets-grid');
+  grid.innerHTML = '';
+  MARKETS.forEach(m => {
+    const pct = Math.round(m.yes * 100);
+    const trendHtml = m.trend > 0
+      ? `<span class="price-change up">▲ +${Math.floor(Math.random()*5+1)}%</span>`
+      : m.trend < 0
+      ? `<span class="price-change down">▼ -${Math.floor(Math.random()*4+1)}%</span>`
+      : `<span class="price-change" style="color:var(--text3)">— 0%</span>`;
+    const card = document.createElement('div');
+    card.className = 'market-card';
+    card.id = 'mc-' + m.id;
+    card.innerHTML = `
+      <div class="market-header">
+        <div><div class="market-title">${m.title}</div><div class="market-vol">Vol ${m.vol} · Liq ${m.liq}</div></div>
+        ${trendHtml}
+      </div>
+      <div class="market-prob-row">
+        <div class="market-prob">${pct}%</div>
+        <div class="market-prob-bar"><div class="market-prob-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="market-price-row">
+        <div class="price-chip yes"><div class="price-chip-label">YES</div><div class="price-chip-val">₦${pct}</div></div>
+        <div class="price-chip no"><div class="price-chip-label">NO</div><div class="price-chip-val">₦${100-pct}</div></div>
+      </div>
+      <div class="market-mini-chart"><canvas id="mini-${m.id}" role="img" aria-label="${m.title} chart"></canvas></div>
+      <div class="market-btns">
+        <button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button>
+        <button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button>
+      </div>
+      <div class="market-stats-row">
+        <div class="mstat"><div class="mstat-label">SPREAD</div><div class="mstat-val">${m.spread}</div></div>
+        <div class="mstat"><div class="mstat-label">VOLUME</div><div class="mstat-val">${m.vol}</div></div>
+        <div class="mstat"><div class="mstat-label">LIQUIDITY</div><div class="mstat-val">${m.liq}</div></div>
+      </div>`;
+    grid.appendChild(card);
+    setTimeout(() => drawMiniChart(m), 50);
+  });
+}
+
+function drawMiniChart(m) {
+  const canvas = document.getElementById('mini-' + m.id);
+  if (!canvas || !window.Chart) return;
+  const lineColor = m.trend >= 0 ? '#22C55E' : '#EF4444';
+  if (miniCharts[m.id]) miniCharts[m.id].destroy();
+  miniCharts[m.id] = new Chart(canvas.getContext('2d'), {
+    type:'line',
+    data:{ labels:m.history.map((_,i)=>i), datasets:[{ data:m.history.map(v=>Math.round(v*100)), borderColor:lineColor, backgroundColor:lineColor+'15', borderWidth:1.5, fill:true, tension:0.4, pointRadius:0 }] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{enabled:false}}, scales:{x:{display:false},y:{display:false,min:0,max:100}}, animation:{duration:0} }
+  });
+}
+
+/* ── ORDER BOOK ── */
+function renderOrderBook() {
+  const maxSize = Math.max(...ORDER_BOOK_DATA.asks.map(r=>r.t), ...ORDER_BOOK_DATA.bids.map(r=>r.t));
+  document.getElementById('order-book-asks').innerHTML = ORDER_BOOK_DATA.asks.slice().reverse().map(r=>{
+    const pct = Math.round(r.t/maxSize*100);
+    return `<div class="ob-row"><div class="ob-bar ask" style="width:${pct}%"></div><span class="ob-price ask">${r.p}</span><span class="ob-size">${r.s.toLocaleString()}</span><span class="ob-total">${r.t.toLocaleString()}</span></div>`;
+  }).join('');
+  document.getElementById('order-book-bids').innerHTML = ORDER_BOOK_DATA.bids.map(r=>{
+    const pct = Math.round(r.t/maxSize*100);
+    return `<div class="ob-row"><div class="ob-bar bid" style="width:${pct}%"></div><span class="ob-price bid">${r.p}</span><span class="ob-size">${r.s.toLocaleString()}</span><span class="ob-total">${r.t.toLocaleString()}</span></div>`;
+  }).join('');
+}
+
+/* ── ACTIVITY ── */
+function renderActivity() {
+  document.getElementById('activity-feed').innerHTML = ACTIVITY.map(a=>`
+    <div class="activity-item"><div class="act-dot ${a.type}"></div><div class="act-text">${a.text}</div><div class="act-time">${a.time}</div></div>`).join('');
+}
+
+/* ── TRADES ── */
+let recentTrades = [];
+function generateTrade() {
+  return { side:Math.random()>0.45?'buy':'sell', market:TRADE_NAMES[Math.floor(Math.random()*TRADE_NAMES.length)], price:(Math.random()*0.7+0.1).toFixed(2), size:Math.floor(Math.random()*500+20) };
+}
+function renderTrades() {
+  if (!recentTrades.length) for(let i=0;i<8;i++) recentTrades.push(generateTrade());
+  document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t=>`
+    <div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${Math.round(t.price*100)}</span><span class="trade-size">×${t.size}</span></div>`).join('');
+}
+
+/* ── COMMENTS ── */
+function renderComments() {
+  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c=>`
+    <div class="comment-item">
+      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border-color:${c.col}44;">${c.init}</div>
+      <div class="comment-body"><div class="comment-user">${c.user}</div><div class="comment-text">${c.text}</div><div class="comment-meta">${c.time} · <span style="color:var(--blue)">👍 ${Math.floor(Math.random()*20+3)}</span></div></div>
+    </div>`).join('');
+}
+
+/* ── ORDER PANEL ── */
+function openOrder(name, side, price) {
+  currentMarketName = name;
+  currentOrderPrice = parseInt(price);
+  document.getElementById('op-market-name').textContent = name;
+  document.getElementById('op-price').value = currentOrderPrice;
+  setOrderSide(side);
+  document.getElementById('order-panel').classList.add('open');
+}
+function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
+function setOrderSide(side) {
+  orderSide = side;
+  document.getElementById('op-yes-btn').classList.toggle('active', side==='YES');
+  document.getElementById('op-no-btn').classList.toggle('active', side==='NO');
+  document.getElementById('op-side-label').textContent = side;
+  updateOrderSummary();
+}
+function updateOrderSummary() {
+  const amt = parseFloat(document.getElementById('op-amount').value)||0;
+  const price = parseFloat(document.getElementById('op-price').value)||1;
+  const shares = amt/price;
+  const payout = shares;
+  const profit = payout - amt;
+  document.getElementById('op-shares').textContent = shares.toFixed(1);
+  document.getElementById('op-entry').textContent = '₦' + Math.round(price).toLocaleString('en-NG');
+  document.getElementById('op-payout').textContent = '₦' + Math.round(payout).toLocaleString('en-NG');
+  document.getElementById('op-profit').textContent = (profit>=0?'+':'')+' ₦'+Math.round(profit).toLocaleString('en-NG');
+  document.getElementById('op-wallet-after').textContent = '₦' + Math.round(walletBalance-amt).toLocaleString('en-NG');
+}
+function placeOrder() {
+  const amt = parseFloat(document.getElementById('op-amount').value)||0;
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  document.getElementById('wallet-display').textContent = '₦' + walletBalance.toLocaleString('en-NG', {maximumFractionDigits:0});
+  closeOrder();
+}
+
+/* ── TABS ── */
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview','trades','comments','analytics','rules'].forEach(t=>{
+    const el = document.getElementById('tab-'+t);
+    if (el) el.style.display = t===name ? '' : 'none';
+  });
+  if (name==='comments') renderComments();
+  if (name==='analytics') setTimeout(drawProbChart, 50);
+}
+
+/* ── ANALYTICS CHART ── */
+function drawProbChart() {
+  if (probChart) probChart.destroy();
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  probChart = new Chart(document.getElementById('probChart').getContext('2d'), {
+    type:'line',
+    data:{ labels:['Open','1W ago','5D ago','3D ago','2D ago','Yesterday','Today'], datasets:[{label:'City Win %',data:[50,53,55,56,57,57,58],borderColor:'#F5C800',backgroundColor:'rgba(245,200,0,0.08)',borderWidth:2,fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:'#F5C800'}] },
+    options:{ responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},min:0,max:100}} }
+  });
+}
+
+/* ── LIVE DATA UPDATE ── */
+function updateLiveData() {
+  MARKETS.forEach(m => {
+    const delta = (Math.random()-.48)*.015;
+    m.yes = Math.max(0.02, Math.min(0.98, m.yes+delta));
+    m.no = 1 - m.yes;
+    m.history.push(m.yes);
+    if (m.history.length > 12) m.history.shift();
+    const pct = Math.round(m.yes*100);
+    const yesEl = document.querySelector(`#mc-${m.id} .price-chip.yes .price-chip-val`);
+    const noEl  = document.querySelector(`#mc-${m.id} .price-chip.no .price-chip-val`);
+    const probEl = document.querySelector(`#mc-${m.id} .market-prob`);
+    const fillEl = document.querySelector(`#mc-${m.id} .market-prob-fill`);
+    const yesBtn = document.querySelector(`#mc-${m.id} .btn-yes`);
+    const noBtn  = document.querySelector(`#mc-${m.id} .btn-no`);
+    if (yesEl)  yesEl.textContent  = '₦' + pct;
+    if (noEl)   noEl.textContent   = '₦' + (100-pct);
+    if (probEl) probEl.textContent = pct + '%';
+    if (fillEl) fillEl.style.width = pct + '%';
+    if (yesBtn) yesBtn.textContent = `BUY YES ₦${pct}`;
+    if (noBtn)  noBtn.textContent  = `BUY NO ₦${100-pct}`;
+    drawMiniChart(m);
+  });
+  ORDER_BOOK_DATA.asks.forEach(r=>{r.s+=Math.floor((Math.random()-.5)*80);r.s=Math.max(100,r.s);r.t=r.s+Math.floor(Math.random()*500);});
+  ORDER_BOOK_DATA.bids.forEach(r=>{r.s+=Math.floor((Math.random()-.5)*80);r.s=Math.max(100,r.s);r.t=r.s+Math.floor(Math.random()*500);});
+  renderOrderBook();
+  recentTrades.unshift(generateTrade());
+  if (recentTrades.length > 12) recentTrades.pop();
+  renderTrades();
+  document.getElementById('city-prob-stat').textContent = Math.round(MARKETS[0].yes*100) + '%';
+}
+
+/* ── THEME / DROPDOWNS ── */
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+  Object.values(miniCharts).forEach(c=>c.destroy());
+  miniCharts = {};
+  MARKETS.forEach(m => setTimeout(()=>drawMiniChart(m),50));
+}
+function toggleNotif() { document.getElementById('notif-dd').classList.toggle('open'); document.getElementById('profile-dd').classList.remove('open'); }
+function toggleProfile() { document.getElementById('profile-dd').classList.toggle('open'); document.getElementById('notif-dd').classList.remove('open'); }
+document.addEventListener('click', e => {
+  if (!e.target.closest('.btn-icon') && !e.target.closest('.notif-dropdown')) document.getElementById('notif-dd').classList.remove('open');
+  if (!e.target.closest('.avatar') && !e.target.closest('.profile-dropdown')) document.getElementById('profile-dd').classList.remove('open');
+});
+
+/* ── INIT ── */
+renderMarkets();
+renderOrderBook();
+renderActivity();
+renderTrades();
+updateOrderSummary();
+updateMatchUI();
+tickCountdown();
+countdownInterval = setInterval(tickCountdown, 1000);
+setInterval(updateLiveData, 2200);
+</script>
+</body>
+</html>

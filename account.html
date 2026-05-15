@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account | Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --y:#F5C800; --y2:#FFD93D; --y3:#B89200;
+  --bg:#0A0A08; --bg2:#111110; --bg3:#181815; --bg4:#1E1E1A; --bg5:#252520;
+  --border:rgba(245,200,0,0.12); --border2:rgba(245,200,0,0.22); --border3:rgba(255,255,255,0.06);
+  --text:#F0EDE0; --text2:#9A9880; --text3:#5A5845;
+  --green:#22C55E; --red:#EF4444; --blue:#3B82F6; --purple:#A855F7;
+  --font-display:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --font-mono:'Space Mono',monospace; --font-num:'Oswald',sans-serif;
+  --radius:8px; --radius-lg:12px; --radius-xl:16px;
+}
+[data-theme="light"] {
+  --bg:#FAFAF5; --bg2:#FFFFFF; --bg3:#F5F4EE; --bg4:#EEECEA; --bg5:#E5E3DC;
+  --border:rgba(180,145,0,0.18); --border2:rgba(180,145,0,0.35); --border3:rgba(0,0,0,0.06);
+  --text:#1A1A14; --text2:#5C5A48; --text3:#9A9880;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:14px;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:52px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;}
+.logo{font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--y);letter-spacing:-.5px;display:flex;align-items:center;gap:6px;}
+.logo-dot{width:8px;height:8px;background:var(--y);border-radius:50%;animation:pulse-dot 1.5s ease infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.topbar-nav{display:flex;align-items:center;gap:2px;margin-left:4px;}
+.topbar-navlink{padding:5px 11px;border-radius:var(--radius);font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;}
+.topbar-navlink:hover{color:var(--text);background:rgba(245,200,0,.06);}
+.topbar-navlink.active{color:var(--y);background:rgba(245,200,0,.08);}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.btn-icon{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;color:var(--text2);font-size:14px;position:relative;}
+.btn-icon:hover{border-color:var(--y);color:var(--y);}
+.notif-badge{position:absolute;top:-4px;right:-4px;width:14px;height:14px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);}
+.theme-toggle{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--y);font-size:14px;transition:all .18s;}
+.theme-toggle:hover{background:rgba(245,200,0,.08);border-color:var(--y);}
+.wallet-pill{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:34px;font-family:var(--font-mono);font-size:12px;}
+.wallet-bal{color:var(--y);font-weight:700;}
+.wallet-label{color:var(--text3);font-size:10px;}
+.avatar{width:34px;height:34px;background:linear-gradient(135deg,var(--y),var(--y3));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:13px;color:#000;cursor:pointer;}
+
+/* ── LAYOUT ── */
+.layout{display:flex;margin-top:52px;min-height:calc(100vh - 52px);}
+
+/* ── LEFT NAV ── */
+.account-nav{width:220px;background:var(--bg2);border-right:1px solid var(--border);flex-shrink:0;padding:24px 0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.nav-section-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 16px;margin-bottom:6px;margin-top:8px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.nav-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.nav-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.nav-item i{width:16px;text-align:center;font-size:13px;}
+.nav-item .nav-badge{margin-left:auto;font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:4px;background:var(--y);color:#000;}
+.nav-item .nav-badge.red{background:var(--red);color:#fff;}
+.nav-divider{height:1px;background:var(--border3);margin:12px 12px;}
+
+.nav-balance-box{margin:16px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px;}
+.nbb-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;margin-bottom:4px;}
+.nbb-val{font-family:var(--font-num);font-size:24px;font-weight:700;color:var(--y);margin-bottom:8px;}
+.nbb-btns{display:flex;gap:6px;}
+.nbb-btn{flex:1;padding:7px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:11px;transition:all .15s;text-align:center;}
+.nbb-btn.dep{background:var(--y);color:#000;}
+.nbb-btn.dep:hover{background:var(--y2);}
+.nbb-btn.wit{background:var(--bg4);color:var(--text2);border:1px solid var(--border);}
+.nbb-btn.wit:hover{border-color:var(--border2);color:var(--text);}
+
+/* ── MAIN CONTENT ── */
+.main{flex:1;padding:24px;display:flex;flex-direction:column;gap:16px;max-width:900px;}
+
+/* ── PAGE HEADER ── */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.page-title{font-family:var(--font-display);font-weight:800;font-size:26px;letter-spacing:-.5px;}
+.page-sub{font-size:13px;color:var(--text3);margin-top:3px;}
+
+/* ── WALLET CARD ── */
+.wallet-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:24px;position:relative;overflow:hidden;}
+.wallet-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--y),transparent);}
+.wc-bg{position:absolute;right:-20px;top:-20px;font-size:160px;opacity:.03;pointer-events:none;}
+.wc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;}
+.wc-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
+.wc-balance{font-family:var(--font-num);font-size:48px;font-weight:700;color:var(--y);line-height:1;letter-spacing:1px;}
+.wc-change{font-family:var(--font-mono);font-size:11px;color:var(--green);margin-top:5px;display:flex;align-items:center;gap:5px;}
+.wc-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.wc-btn{display:flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(--radius-lg);border:none;cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;transition:all .15s;}
+.wc-btn.deposit{background:var(--y);color:#000;}
+.wc-btn.deposit:hover{background:var(--y2);transform:translateY(-1px);}
+.wc-btn.withdraw{background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
+.wc-btn.withdraw:hover{border-color:var(--border2);color:var(--text);}
+.wc-btn.transfer{background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
+.wc-btn.transfer:hover{border-color:var(--border2);color:var(--text);}
+.wc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border3);border-radius:var(--radius);overflow:hidden;margin-top:20px;}
+.wcs-item{background:var(--bg3);padding:12px;text-align:center;}
+.wcs-val{font-family:var(--font-num);font-size:18px;font-weight:700;color:var(--text);}
+.wcs-val.green{color:var(--green);}
+.wcs-val.red{color:var(--red);}
+.wcs-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;margin-top:3px;}
+
+/* ── OPEN POSITIONS ── */
+.section-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
+.sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.sc-title{font-family:var(--font-display);font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;}
+.sc-badge{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;}
+.sc-right{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+
+.position-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:8px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border3);}
+.position-row:last-child{border-bottom:none;}
+.position-row.header{padding:6px 0 10px;border-bottom:1px solid var(--border);}
+.position-row.header div{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.pos-market{display:flex;align-items:center;gap:8px;}
+.pos-icon{width:28px;height:28px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.pos-name{font-size:12px;font-weight:500;color:var(--text);}
+.pos-name small{display:block;font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:1px;font-weight:400;}
+.pos-val{font-family:var(--font-mono);font-size:12px;color:var(--text2);text-align:center;}
+.pos-pnl{font-family:var(--font-mono);font-size:13px;font-weight:700;text-align:right;}
+.pos-pnl.green{color:var(--green);}
+.pos-pnl.red{color:var(--red);}
+.pos-close-btn{background:none;border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--text3);cursor:pointer;transition:all .15s;text-align:center;}
+.pos-close-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* ── TRANSACTION HISTORY ── */
+.tx-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border3);}
+.tx-item:last-child{border-bottom:none;}
+.tx-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.tx-icon.deposit{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);}
+.tx-icon.withdraw{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);}
+.tx-icon.win{background:rgba(245,200,0,.08);border:1px solid var(--border2);}
+.tx-icon.loss{background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.15);}
+.tx-body{flex:1;}
+.tx-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px;}
+.tx-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.tx-amount{font-family:var(--font-num);font-size:18px;font-weight:700;text-align:right;}
+.tx-amount.green{color:var(--green);}
+.tx-amount.red{color:var(--red);}
+.tx-status{font-family:var(--font-mono);font-size:9px;text-align:right;margin-top:2px;}
+.tx-status.completed{color:var(--green);}
+.tx-status.pending{color:var(--y);}
+
+/* ── KYC CARD ── */
+.kyc-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
+.kyc-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border3);}
+.kyc-row:last-child{border-bottom:none;}
+.kyc-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.kyc-icon.done{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);}
+.kyc-icon.pending{background:rgba(245,200,0,.08);border:1px solid var(--border2);}
+.kyc-body{flex:1;}
+.kyc-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px;}
+.kyc-sub{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.kyc-badge{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:3px 8px;border-radius:4px;}
+.kyc-badge.done{background:rgba(34,197,94,.12);color:var(--green);}
+.kyc-badge.pending{background:rgba(245,200,0,.1);color:var(--y);}
+
+/* ── LIMITS ── */
+.limits-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.limit-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;}
+.limit-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.limit-val{font-family:var(--font-num);font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.limit-bar-bg{height:5px;background:var(--bg4);border-radius:99px;overflow:hidden;margin-bottom:5px;}
+.limit-bar-fill{height:100%;border-radius:99px;background:var(--y);}
+.limit-sub{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ── SETTINGS ── */
+.setting-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border3);}
+.setting-row:last-child{border-bottom:none;}
+.setting-icon{width:32px;height:32px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text3);flex-shrink:0;}
+.setting-body{flex:1;}
+.setting-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px;}
+.setting-sub{font-size:11px;color:var(--text3);}
+.setting-action{flex-shrink:0;}
+.toggle{width:40px;height:22px;background:var(--bg4);border-radius:99px;position:relative;cursor:pointer;transition:background .2s;border:1px solid var(--border);}
+.toggle.on{background:var(--y);}
+.toggle-dot{position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+.toggle.on .toggle-dot{transform:translateX(18px);}
+.setting-btn{padding:6px 14px;border-radius:var(--radius);border:1px solid var(--border);background:none;color:var(--text2);font-family:var(--font-mono);font-size:10px;cursor:pointer;transition:all .15s;}
+.setting-btn:hover{border-color:var(--border2);color:var(--text);}
+.setting-btn.danger{border-color:rgba(239,68,68,.3);color:var(--red);}
+.setting-btn.danger:hover{background:rgba(239,68,68,.08);}
+
+/* ── REFERRAL ── */
+.referral-card{background:linear-gradient(135deg,rgba(245,200,0,.08),rgba(245,200,0,.02));border:1px solid var(--border2);border-radius:var(--radius-xl);padding:20px;position:relative;overflow:hidden;}
+.referral-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--y),transparent);}
+.ref-code{display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:12px 16px;margin:14px 0;}
+.ref-code-val{font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--y);flex:1;letter-spacing:2px;}
+.ref-copy-btn{padding:6px 14px;border-radius:var(--radius);background:var(--y);color:#000;border:none;cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;transition:all .15s;}
+.ref-copy-btn:hover{background:var(--y2);}
+.ref-stats{display:flex;gap:24px;}
+.ref-stat-val{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--text);}
+.ref-stat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;margin-top:2px;}
+
+/* ── NOTIFICATION PREFS ── */
+.notif-pref-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border3);}
+.notif-pref-row:last-child{border-bottom:none;}
+.notif-pref-label{font-size:13px;color:var(--text2);}
+
+/* ── REUSABLE GRID CLASSES ── */
+.deposit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.summary-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+
+/* ── POSITIONS TABLE SCROLL WRAPPER ── */
+.positions-wrap{overflow-x:auto;margin:0 -4px;padding:0 4px;}
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;height:58px;background:var(--bg2);border-top:1px solid var(--border);flex-direction:row;align-items:stretch;}
+.mobile-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;padding:6px 2px;color:var(--text3);transition:color .15s;font-size:9px;font-family:var(--font-mono);letter-spacing:.5px;border:none;background:none;}
+.mobile-nav-item:active{background:rgba(245,200,0,.04);}
+.mobile-nav-item.active{color:var(--y);}
+.mobile-nav-item i{font-size:17px;}
+.mobile-more-menu{display:none;position:fixed;bottom:58px;left:0;right:0;z-index:199;background:var(--bg2);border-top:1px solid var(--border);padding:6px 0;box-shadow:0 -4px 20px rgba(0,0,0,.4);}
+.mobile-more-menu.open{display:block;}
+.mmm-item{display:flex;align-items:center;gap:14px;padding:13px 20px;font-size:14px;color:var(--text2);cursor:pointer;transition:all .15s;}
+.mmm-item i{width:18px;text-align:center;font-size:14px;}
+.mmm-item:active{background:rgba(245,200,0,.04);}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .account-nav{display:none;}
+  .topbar-nav{display:none;}
+  .wallet-pill{display:none;}
+  .limits-grid{grid-template-columns:1fr;}
+  .wc-stats{grid-template-columns:1fr 1fr;}
+  .deposit-grid{grid-template-columns:1fr;}
+  .summary-stats-grid{grid-template-columns:repeat(2,1fr);}
+  .mobile-nav{display:flex;}
+  .main{padding:16px 12px 72px;max-width:100%;}
+  .wc-top{flex-direction:column;gap:14px;}
+  .wc-balance{font-size:32px;}
+  .wc-actions{flex-wrap:wrap;}
+  .wc-btn{padding:9px 16px;font-size:12px;}
+  .page-header{flex-direction:column;align-items:flex-start;gap:10px;}
+  .positions-wrap{overflow-x:auto;}
+  .position-row{min-width:500px;}
+}
+
+.fade-up{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="main.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="main.html" class="topbar-navlink">Markets</a>
+    <a href="profile.html" class="topbar-navlink">Profile</a>
+    <a href="faq.html" class="topbar-navlink">FAQ</a>
+    <a href="account.html" class="topbar-navlink active">Account</a>
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">3</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal">₦4,271,250</div></div></div>
+    <div class="avatar">TK</div>
+  </div>
+</div>
+
+<div class="layout">
+
+<!-- LEFT ACCOUNT NAV -->
+<div class="account-nav">
+  <div class="nav-balance-box">
+    <div class="nbb-label">WALLET BALANCE</div>
+    <div class="nbb-val">₦4,271,250</div>
+    <div class="nbb-btns">
+      <button class="nbb-btn dep" onclick="showSection('wallet')">Deposit</button>
+      <button class="nbb-btn wit" onclick="showSection('wallet')">Withdraw</button>
+    </div>
+  </div>
+
+  <div class="nav-section-label">Account</div>
+  <div class="nav-item active" id="nav-overview" onclick="showSection('overview')"><i class="fa-solid fa-chart-pie"></i>Overview</div>
+  <div class="nav-item" id="nav-positions" onclick="showSection('positions')"><i class="fa-solid fa-bolt"></i>Open Positions <span class="nav-badge">4</span></div>
+  <div class="nav-item" id="nav-wallet" onclick="showSection('wallet')"><i class="fa-solid fa-wallet"></i>Wallet</div>
+  <div class="nav-item" id="nav-transactions" onclick="showSection('transactions')"><i class="fa-solid fa-clock-rotate-left"></i>Transactions</div>
+
+  <div class="nav-divider"></div>
+  <div class="nav-section-label">Security</div>
+  <div class="nav-item" id="nav-kyc" onclick="showSection('kyc')"><i class="fa-solid fa-id-card"></i>Verification <span class="nav-badge" style="background:var(--green);color:#000;">KYC</span></div>
+  <div class="nav-item" id="nav-security" onclick="showSection('security')"><i class="fa-solid fa-shield-halved"></i>Security</div>
+
+  <div class="nav-divider"></div>
+  <div class="nav-section-label">Preferences</div>
+  <div class="nav-item" id="nav-notifications" onclick="showSection('notifications')"><i class="fa-solid fa-bell"></i>Notifications <span class="nav-badge red">3</span></div>
+  <div class="nav-item" id="nav-referral" onclick="showSection('referral')"><i class="fa-solid fa-gift"></i>Refer & Earn</div>
+  <div class="nav-item" id="nav-settings" onclick="showSection('settings')"><i class="fa-solid fa-gear"></i>Settings</div>
+
+  <div class="nav-divider"></div>
+  <div class="nav-item" style="color:var(--red);" onclick="if(confirm('Sign out?'))window.location='signup.html'"><i class="fa-solid fa-right-from-bracket" style="color:var(--red);"></i>Sign Out</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- ── OVERVIEW ── -->
+  <div id="section-overview">
+    <div class="page-header fade-up">
+      <div>
+        <div class="page-title">Good morning, Tunde 👋</div>
+        <div class="page-sub">Here's your account snapshot — Thursday, May 14 2026</div>
+      </div>
+      <a href="profile.html" style="display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius);border:1px solid var(--border);font-size:12px;color:var(--text2);transition:all .15s;" onmouseover="this.style.borderColor='var(--border2)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+        <i class="fa-solid fa-user" style="font-size:11px;"></i> View Public Profile
+      </a>
+    </div>
+
+    <!-- WALLET SUMMARY -->
+    <div class="wallet-card fade-up">
+      <div class="wc-bg">₦</div>
+      <div class="wc-top">
+        <div>
+          <div class="wc-label">Total Balance</div>
+          <div class="wc-balance">₦4,271,250</div>
+          <div class="wc-change"><i class="fa-solid fa-arrow-trend-up"></i> +₦124,000 this week (+3.0%)</div>
+        </div>
+        <div class="wc-actions">
+          <button class="wc-btn deposit" onclick="showSection('wallet')"><i class="fa-solid fa-plus"></i>Deposit</button>
+          <button class="wc-btn withdraw" onclick="showSection('wallet')"><i class="fa-solid fa-arrow-up-from-bracket"></i>Withdraw</button>
+          <button class="wc-btn transfer"><i class="fa-solid fa-arrow-right-arrow-left"></i>Transfer</button>
+        </div>
+      </div>
+      <div class="wc-stats">
+        <div class="wcs-item"><div class="wcs-val green">+₦847K</div><div class="wcs-label">Total Profit</div></div>
+        <div class="wcs-item"><div class="wcs-val red">-₦124K</div><div class="wcs-label">Total Losses</div></div>
+        <div class="wcs-item"><div class="wcs-val">₦320K</div><div class="wcs-label">In Positions</div></div>
+        <div class="wcs-item"><div class="wcs-val">₦3,951K</div><div class="wcs-label">Available</div></div>
+      </div>
+    </div>
+
+    <!-- OPEN POSITIONS MINI -->
+    <div class="section-card fade-up">
+      <div class="sc-header">
+        <div class="sc-title">Open Positions <span class="sc-badge" style="background:var(--y);color:#000;">4</span></div>
+        <div class="sc-right" style="cursor:pointer;color:var(--y);" onclick="showSection('positions')">View all →</div>
+      </div>
+      <div class="positions-wrap">
+      <div class="position-row header">
+        <div>Market</div><div style="text-align:center;">Shares</div><div style="text-align:center;">Entry</div><div style="text-align:center;">Current</div><div style="text-align:right;">P/L</div>
+      </div>
+      <div class="position-row">
+        <div class="pos-market"><div class="pos-icon" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);">⚖️</div><div><div class="pos-name">World Bank Loan YES<small>500 shares · Open</small></div></div></div>
+        <div class="pos-val">500</div><div class="pos-val">₦70</div><div class="pos-val">₦74</div>
+        <div class="pos-pnl green">+₦2,000</div>
+      </div>
+      <div class="position-row">
+        <div class="pos-market"><div class="pos-icon" style="background:rgba(245,200,0,.08);border:1px solid var(--border2);">⚽</div><div><div class="pos-name">Spurs Win YES<small>100 shares · Live</small></div></div></div>
+        <div class="pos-val">100</div><div class="pos-val">₦68</div><div class="pos-val">₦74</div>
+        <div class="pos-pnl green">+₦600</div>
+      </div>
+      <div class="position-row">
+        <div class="pos-market"><div class="pos-icon" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);">🎬</div><div><div class="pos-name">BBNaija S11 — May 19th YES<small>200 shares · Open</small></div></div></div>
+        <div class="pos-val">200</div><div class="pos-val">₦26</div><div class="pos-val">₦28</div>
+        <div class="pos-pnl green">+₦400</div>
+      </div>
+      <div class="position-row">
+        <div class="pos-market"><div class="pos-icon" style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);">🎵</div><div><div class="pos-name">Rema New Song — May YES<small>150 shares · Open</small></div></div></div>
+        <div class="pos-val">150</div><div class="pos-val">₦58</div><div class="pos-val">₦61</div>
+        <div class="pos-pnl green">+₦450</div>
+      </div>
+      </div>
+    </div>
+
+    <!-- P/L CHART -->
+    <div class="section-card fade-up">
+      <div class="sc-header">
+        <div class="sc-title">Portfolio Performance</div>
+        <div style="display:flex;gap:4px;">
+          <button class="setting-btn active-range" onclick="setRange('1W',this)" style="background:var(--y);color:#000;border-color:var(--y);">1W</button>
+          <button class="setting-btn" onclick="setRange('1M',this)">1M</button>
+          <button class="setting-btn" onclick="setRange('ALL',this)">ALL</button>
+        </div>
+      </div>
+      <div style="height:200px;position:relative;"><canvas id="portfolioChart"></canvas></div>
+    </div>
+
+    <!-- EXPOSURE -->
+    <div class="section-card fade-up">
+      <div class="sc-header"><div class="sc-title">Exposure by Category</div><div class="sc-right">₦320K in markets</div></div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:80px;font-size:12px;color:var(--text2);">⚖️ Politics</div>
+          <div style="flex:1;height:8px;background:var(--bg4);border-radius:99px;overflow:hidden;"><div style="height:100%;width:55%;background:var(--blue);border-radius:99px;"></div></div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text2);width:60px;text-align:right;">₦175K</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:80px;font-size:12px;color:var(--text2);">⚽ Football</div>
+          <div style="flex:1;height:8px;background:var(--bg4);border-radius:99px;overflow:hidden;"><div style="height:100%;width:22%;background:var(--y);border-radius:99px;"></div></div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text2);width:60px;text-align:right;">₦68K</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:80px;font-size:12px;color:var(--text2);">🎬 Entertain</div>
+          <div style="flex:1;height:8px;background:var(--bg4);border-radius:99px;overflow:hidden;"><div style="height:100%;width:16%;background:var(--purple);border-radius:99px;"></div></div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text2);width:60px;text-align:right;">₦52K</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:80px;font-size:12px;color:var(--text2);">🎵 Music</div>
+          <div style="flex:1;height:8px;background:var(--bg4);border-radius:99px;overflow:hidden;"><div style="height:100%;width:8%;background:var(--green);border-radius:99px;"></div></div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text2);width:60px;text-align:right;">₦25K</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OPEN POSITIONS ── -->
+  <div id="section-positions" style="display:none;">
+    <div class="page-header fade-up"><div><div class="page-title">Open Positions</div><div class="page-sub">4 active positions · ₦320K deployed</div></div></div>
+    <div class="section-card fade-up">
+      <div class="positions-wrap">
+      <div class="position-row header">
+        <div>Market</div><div style="text-align:center;">Shares</div><div style="text-align:center;">Entry</div><div style="text-align:center;">Current</div><div style="text-align:right;">P/L</div>
+      </div>
+      <div class="position-row">
+        <div class="pos-market"><div class="pos-icon" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);">⚖️</div><div><div class="pos-name">World Bank $1.25bn Loan — Approved YES<small>Entered May 12 · ₦35,000 staked</small></div></div></div>
+        <div class="pos-val">500</div><div class="pos-val">₦70</div><div class="pos-val">₦74</div>
+        <div class="pos-pnl green">+₦2,000</div>
+      </div>
+      <div class="position-row">
+        <div class="pos-market"><div class="pos-icon" style="background:rgba(245,200,0,.08);border:1px solid var(--border2);">⚽</div><div><div class="pos-name">Spurs vs Leeds — Spurs Win YES<small>Entered today · ₦6,800 staked · LIVE</small></div></div></div>
+        <div class="pos-val">100</div><div class="pos-val">₦68</div><div class="pos-val">₦74</div>
+        <div class="pos-pnl green">+₦600</div>
+      </div>
+      <div class="position-row">
+        <div class="pos-market"><div class="pos-icon" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);">🎬</div><div><div class="pos-name">BBNaija S11 Auditions — May 19th YES<small>Entered May 13 · ₦5,200 staked</small></div></div></div>
+        <div class="pos-val">200</div><div class="pos-val">₦26</div><div class="pos-val">₦28</div>
+        <div class="pos-pnl green">+₦400</div>
+      </div>
+      <div class="position-row">
+        <div class="pos-market"><div class="pos-icon" style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);">🎵</div><div><div class="pos-name">Rema New Song — May YES<small>Entered May 11 · ₦8,700 staked</small></div></div></div>
+        <div class="pos-val">150</div><div class="pos-val">₦58</div><div class="pos-val">₦61</div>
+        <div class="pos-pnl green">+₦450</div>
+      </div>
+      </div>
+    </div>
+    <div class="section-card fade-up" style="margin-top:12px;">
+      <div class="sc-header"><div class="sc-title">Position Summary</div></div>
+      <div class="summary-stats-grid">
+        <div style="text-align:center;"><div style="font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--y);">4</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;">OPEN</div></div>
+        <div style="text-align:center;"><div style="font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--green);">+₦3,450</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;">UNREALISED P/L</div></div>
+        <div style="text-align:center;"><div style="font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--text);">₦55,700</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;">TOTAL STAKED</div></div>
+        <div style="text-align:center;"><div style="font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--text2);">+6.2%</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;">AVG RETURN</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WALLET ── -->
+  <div id="section-wallet" style="display:none;">
+    <div class="page-header fade-up"><div><div class="page-title">Wallet</div><div class="page-sub">Deposit, withdraw, and manage your funds</div></div></div>
+    <div class="wallet-card fade-up">
+      <div class="wc-bg">₦</div>
+      <div class="wc-top">
+        <div><div class="wc-label">Available Balance</div><div class="wc-balance">₦4,271,250</div><div class="wc-change"><i class="fa-solid fa-arrow-trend-up"></i>+₦124,000 this week</div></div>
+        <div class="wc-actions">
+          <button class="wc-btn deposit"><i class="fa-solid fa-plus"></i>Deposit</button>
+          <button class="wc-btn withdraw"><i class="fa-solid fa-arrow-up-from-bracket"></i>Withdraw</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-card fade-up" style="margin-top:12px;">
+      <div class="sc-header"><div class="sc-title">Deposit Methods</div></div>
+      <div class="deposit-grid">
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;text-align:center;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='var(--border2)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:24px;margin-bottom:8px;">🏦</div>
+          <div style="font-family:var(--font-display);font-weight:600;font-size:13px;margin-bottom:4px;">Bank Transfer</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);">Instant · Free</div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;text-align:center;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='var(--border2)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:24px;margin-bottom:8px;">💳</div>
+          <div style="font-family:var(--font-display);font-weight:600;font-size:13px;margin-bottom:4px;">Debit Card</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);">Instant · Free</div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;text-align:center;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='var(--border2)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:24px;margin-bottom:8px;">📱</div>
+          <div style="font-family:var(--font-display);font-weight:600;font-size:13px;margin-bottom:4px;">USSD</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);">*737# · *966# · *822#</div>
+        </div>
+      </div>
+    </div>
+    <div class="section-card fade-up" style="margin-top:12px;">
+      <div class="sc-header"><div class="sc-title">Limits</div></div>
+      <div class="limits-grid">
+        <div class="limit-item">
+          <div class="limit-label">Daily Deposit</div>
+          <div class="limit-val">₦500K</div>
+          <div class="limit-bar-bg"><div class="limit-bar-fill" style="width:20%;"></div></div>
+          <div class="limit-sub">₦100K used today</div>
+        </div>
+        <div class="limit-item">
+          <div class="limit-label">Daily Withdrawal</div>
+          <div class="limit-val">₦500K</div>
+          <div class="limit-bar-bg"><div class="limit-bar-fill" style="width:0%;"></div></div>
+          <div class="limit-sub">₦0 withdrawn today</div>
+        </div>
+        <div class="limit-item">
+          <div class="limit-label">Wallet Limit</div>
+          <div class="limit-val">₦5M</div>
+          <div class="limit-bar-bg"><div class="limit-bar-fill" style="width:85%;background:var(--green);"></div></div>
+          <div class="limit-sub">₦4.27M of ₦5M used</div>
+        </div>
+        <div class="limit-item">
+          <div class="limit-label">Single Position</div>
+          <div class="limit-val">₦500K</div>
+          <div class="limit-bar-bg"><div class="limit-bar-fill" style="width:7%;background:var(--blue);"></div></div>
+          <div class="limit-sub">Max ₦35K this session</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TRANSACTIONS ── -->
+  <div id="section-transactions" style="display:none;">
+    <div class="page-header fade-up"><div><div class="page-title">Transaction History</div><div class="page-sub">All deposits, withdrawals, and trade settlements</div></div></div>
+    <div class="section-card fade-up">
+      <div class="sc-header"><div class="sc-title">Recent Transactions</div><div class="sc-right">Last 30 days</div></div>
+      <div class="tx-item">
+        <div class="tx-icon win">💰</div>
+        <div class="tx-body"><div class="tx-title">Market Payout — City vs Palace · Over 2.5 Goals</div><div class="tx-meta">Today, 17:12 · Ref #SKD-884721</div></div>
+        <div><div class="tx-amount green">+₦9,600</div><div class="tx-status completed">● Completed</div></div>
+      </div>
+      <div class="tx-item">
+        <div class="tx-icon deposit">🏦</div>
+        <div class="tx-body"><div class="tx-title">Bank Transfer Deposit</div><div class="tx-meta">Today, 09:00 · GTBank · Ref #SKD-884180</div></div>
+        <div><div class="tx-amount green">+₦100,000</div><div class="tx-status completed">● Completed</div></div>
+      </div>
+      <div class="tx-item">
+        <div class="tx-icon loss">📉</div>
+        <div class="tx-body"><div class="tx-title">Market Loss — BBNaija S11 · May 14th YES</div><div class="tx-meta">Today, 08:00 · Ref #SKD-883940</div></div>
+        <div><div class="tx-amount red">-₦960</div><div class="tx-status completed">● Resolved</div></div>
+      </div>
+      <div class="tx-item">
+        <div class="tx-icon win">💰</div>
+        <div class="tx-body"><div class="tx-title">Market Payout — Wizkid Album YES</div><div class="tx-meta">May 11, 14:30 · Ref #SKD-881200</div></div>
+        <div><div class="tx-amount green">+₦4,800</div><div class="tx-status completed">● Completed</div></div>
+      </div>
+      <div class="tx-item">
+        <div class="tx-icon withdraw">💸</div>
+        <div class="tx-body"><div class="tx-title">Withdrawal to GTBank ****4821</div><div class="tx-meta">May 10, 16:45 · Ref #SKD-879300</div></div>
+        <div><div class="tx-amount red">-₦200,000</div><div class="tx-status completed">● Completed</div></div>
+      </div>
+      <div class="tx-item">
+        <div class="tx-icon win">💰</div>
+        <div class="tx-body"><div class="tx-title">Market Payout — Naira/Dollar NO</div><div class="tx-meta">May 10, 11:20 · Ref #SKD-878900</div></div>
+        <div><div class="tx-amount green">+₦1,200</div><div class="tx-status completed">● Completed</div></div>
+      </div>
+      <div class="tx-item">
+        <div class="tx-icon deposit">🏦</div>
+        <div class="tx-body"><div class="tx-title">Bank Transfer Deposit</div><div class="tx-meta">May 8, 10:00 · Zenith Bank · Ref #SKD-876540</div></div>
+        <div><div class="tx-amount green">+₦500,000</div><div class="tx-status completed">● Completed</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── KYC ── -->
+  <div id="section-kyc" style="display:none;">
+    <div class="page-header fade-up"><div><div class="page-title">Verification</div><div class="page-sub">Your identity verification status</div></div></div>
+    <div class="kyc-card fade-up">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:var(--radius-lg);margin-bottom:16px;">
+        <div style="font-size:24px;">✅</div>
+        <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--green);">Fully Verified</div><div style="font-size:12px;color:var(--text3);margin-top:2px;">Your account is fully verified. All limits unlocked.</div></div>
+      </div>
+      <div class="kyc-row">
+        <div class="kyc-icon done">📱</div>
+        <div class="kyc-body"><div class="kyc-title">Phone Number</div><div class="kyc-sub">+234 801 234 5678 · Verified</div></div>
+        <div class="kyc-badge done">✓ DONE</div>
+      </div>
+      <div class="kyc-row">
+        <div class="kyc-icon done">✉️</div>
+        <div class="kyc-body"><div class="kyc-title">Email Address</div><div class="kyc-sub">t***@gmail.com · Verified</div></div>
+        <div class="kyc-badge done">✓ DONE</div>
+      </div>
+      <div class="kyc-row">
+        <div class="kyc-icon done">🪪</div>
+        <div class="kyc-body"><div class="kyc-title">BVN Verification</div><div class="kyc-sub">Bank Verification Number linked · Jan 15, 2026</div></div>
+        <div class="kyc-badge done">✓ DONE</div>
+      </div>
+      <div class="kyc-row">
+        <div class="kyc-icon done">🤳</div>
+        <div class="kyc-body"><div class="kyc-title">Selfie / Liveness Check</div><div class="kyc-sub">Face verified · Jan 15, 2026</div></div>
+        <div class="kyc-badge done">✓ DONE</div>
+      </div>
+      <div class="kyc-row">
+        <div class="kyc-icon pending">📄</div>
+        <div class="kyc-body"><div class="kyc-title">Address Verification</div><div class="kyc-sub">Optional · Upload utility bill or bank statement</div></div>
+        <div class="kyc-badge pending">OPTIONAL</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECURITY ── -->
+  <div id="section-security" style="display:none;">
+    <div class="page-header fade-up"><div><div class="page-title">Security</div><div class="page-sub">Keep your account and funds safe</div></div></div>
+    <div class="section-card fade-up">
+      <div class="setting-row">
+        <div class="setting-icon"><i class="fa-solid fa-lock"></i></div>
+        <div class="setting-body"><div class="setting-title">Password</div><div class="setting-sub">Last changed Jan 15, 2026</div></div>
+        <div class="setting-action"><button class="setting-btn">Change</button></div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+        <div class="setting-body"><div class="setting-title">Two-Factor Authentication (2FA)</div><div class="setting-sub">SMS OTP enabled on +234 801 *** 5678</div></div>
+        <div class="setting-action"><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-icon"><i class="fa-solid fa-fingerprint"></i></div>
+        <div class="setting-body"><div class="setting-title">Biometric Login</div><div class="setting-sub">Use fingerprint or Face ID to log in</div></div>
+        <div class="setting-action"><div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-icon"><i class="fa-solid fa-key"></i></div>
+        <div class="setting-body"><div class="setting-title">Transaction PIN</div><div class="setting-sub">Required before every withdrawal</div></div>
+        <div class="setting-action"><button class="setting-btn">Change PIN</button></div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-icon"><i class="fa-solid fa-clock"></i></div>
+        <div class="setting-body"><div class="setting-title">Session Timeout</div><div class="setting-sub">Auto-logout after 30 minutes of inactivity</div></div>
+        <div class="setting-action"><button class="setting-btn">Edit</button></div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-icon" style="color:var(--red);border-color:rgba(239,68,68,.2);"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div class="setting-body"><div class="setting-title" style="color:var(--red);">Close Account</div><div class="setting-sub">Permanently delete your account and withdraw all funds</div></div>
+        <div class="setting-action"><button class="setting-btn danger">Close Account</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NOTIFICATIONS ── -->
+  <div id="section-notifications" style="display:none;">
+    <div class="page-header fade-up"><div><div class="page-title">Notifications</div><div class="page-sub">Choose what you hear about and how</div></div></div>
+    <div class="section-card fade-up">
+      <div class="sc-header"><div class="sc-title">Push Notifications</div></div>
+      <div class="notif-pref-row"><div class="notif-pref-label">Market resolutions & payouts</div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      <div class="notif-pref-row"><div class="notif-pref-label">Price spikes on watchlisted markets</div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      <div class="notif-pref-row"><div class="notif-pref-label">New market openings</div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      <div class="notif-pref-row"><div class="notif-pref-label">Deposits & withdrawals confirmed</div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      <div class="notif-pref-row"><div class="notif-pref-label">Someone follows you</div><div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      <div class="notif-pref-row"><div class="notif-pref-label">Weekly performance summary</div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      <div class="notif-pref-row"><div class="notif-pref-label">Skedee news & announcements</div><div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+    </div>
+    <div class="section-card fade-up" style="margin-top:12px;">
+      <div class="sc-header"><div class="sc-title">Email Notifications</div></div>
+      <div class="notif-pref-row"><div class="notif-pref-label">Transaction receipts</div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      <div class="notif-pref-row"><div class="notif-pref-label">Monthly account statement</div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      <div class="notif-pref-row"><div class="notif-pref-label">Marketing & promotions</div><div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+    </div>
+  </div>
+
+  <!-- ── REFERRAL ── -->
+  <div id="section-referral" style="display:none;">
+    <div class="page-header fade-up"><div><div class="page-title">Refer & Earn</div><div class="page-sub">Invite friends and earn ₦500 per referral</div></div></div>
+    <div class="referral-card fade-up">
+      <div style="font-family:var(--font-display);font-weight:800;font-size:20px;margin-bottom:6px;">Share your code. Earn ₦500. <span style="color:var(--y);">Every time.</span></div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:0;">For every friend who signs up with your code and makes their first deposit, you both get ₦500 credited instantly.</div>
+      <div class="ref-code">
+        <div class="ref-code-val">SKEDEE-TK2026</div>
+        <button class="ref-copy-btn" onclick="copyRefCode()">Copy Code</button>
+      </div>
+      <div class="ref-stats">
+        <div><div class="ref-stat-val">14</div><div class="ref-stat-label">REFERRALS</div></div>
+        <div><div class="ref-stat-val" style="color:var(--y);">₦7,000</div><div class="ref-stat-label">EARNED</div></div>
+        <div><div class="ref-stat-val" style="color:var(--green);">3</div><div class="ref-stat-label">THIS MONTH</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SETTINGS ── -->
+  <div id="section-settings" style="display:none;">
+    <div class="page-header fade-up"><div><div class="page-title">Settings</div><div class="page-sub">Manage your account preferences</div></div></div>
+    <div class="section-card fade-up">
+      <div class="sc-header"><div class="sc-title">Display</div></div>
+      <div class="setting-row">
+        <div class="setting-icon"><i class="fa-solid fa-moon"></i></div>
+        <div class="setting-body"><div class="setting-title">Dark Mode</div><div class="setting-sub">Toggle between dark and light theme</div></div>
+        <div class="setting-action"><div class="toggle on" id="theme-toggle-setting" onclick="toggleTheme();this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-icon"><i class="fa-solid fa-naira-sign"></i></div>
+        <div class="setting-body"><div class="setting-title">Currency Display</div><div class="setting-sub">Naira (₦NGN) — default</div></div>
+        <div class="setting-action"><button class="setting-btn">Change</button></div>
+      </div>
+    </div>
+    <div class="section-card fade-up" style="margin-top:12px;">
+      <div class="sc-header"><div class="sc-title">Responsible Trading</div></div>
+      <div class="setting-row">
+        <div class="setting-icon"><i class="fa-solid fa-clock"></i></div>
+        <div class="setting-body"><div class="setting-title">Daily Deposit Limit</div><div class="setting-sub">Currently ₦500,000 / day</div></div>
+        <div class="setting-action"><button class="setting-btn">Edit</button></div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-icon"><i class="fa-solid fa-ban"></i></div>
+        <div class="setting-body"><div class="setting-title">Self-Exclusion</div><div class="setting-sub">Temporarily or permanently restrict your account</div></div>
+        <div class="setting-action"><button class="setting-btn danger">Set Up</button></div>
+      </div>
+    </div>
+    <div class="section-card fade-up" style="margin-top:12px;">
+      <div class="sc-header"><div class="sc-title">Data & Privacy</div></div>
+      <div class="setting-row">
+        <div class="setting-icon"><i class="fa-solid fa-download"></i></div>
+        <div class="setting-body"><div class="setting-title">Download My Data</div><div class="setting-sub">Get a full export of your account data and trade history</div></div>
+        <div class="setting-action"><button class="setting-btn">Request</button></div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-icon" style="color:var(--red);border-color:rgba(239,68,68,.2);"><i class="fa-solid fa-trash"></i></div>
+        <div class="setting-body"><div class="setting-title" style="color:var(--red);">Delete Account</div><div class="setting-sub">Permanently delete all data. This cannot be undone.</div></div>
+        <div class="setting-action"><button class="setting-btn danger">Delete</button></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+</div><!-- end layout -->
+
+<script>
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  document.body.setAttribute('data-theme', isDark?'light':'dark');
+  document.getElementById('theme-icon').className = isDark?'fa-solid fa-moon':'fa-solid fa-sun';
+}
+
+const SECTIONS = ['overview','positions','wallet','transactions','kyc','security','notifications','referral','settings'];
+
+function showSection(name) {
+  SECTIONS.forEach(s => {
+    const el = document.getElementById('section-'+s);
+    if (el) el.style.display = s===name?'':'none';
+  });
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const navEl = document.getElementById('nav-'+name);
+  if (navEl) navEl.classList.add('active');
+  if (name==='overview') setTimeout(drawPortfolioChart,50);
+  setMobileNav(name);
+  closeMobileMenu();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function setMobileNav(section) {
+  const mainSections = ['overview','positions','wallet','transactions'];
+  document.querySelectorAll('.mobile-nav-item').forEach(n=>n.classList.remove('active'));
+  if (mainSections.includes(section)) {
+    const el = document.getElementById('mnav-'+section);
+    if (el) el.classList.add('active');
+  } else {
+    const moreEl = document.getElementById('mnav-more');
+    if (moreEl) moreEl.classList.add('active');
+  }
+}
+
+function toggleMobileMenu() {
+  document.getElementById('mobile-more-menu').classList.toggle('open');
+}
+
+function closeMobileMenu() {
+  const m = document.getElementById('mobile-more-menu');
+  if (m) m.classList.remove('open');
+}
+
+function drawPortfolioChart() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  const gc = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
+  const existing = Chart.getChart('portfolioChart');
+  if (existing) existing.destroy();
+  new Chart(document.getElementById('portfolioChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+      datasets:[{
+        label:'Portfolio Value',
+        data:[4050000,4080000,4100000,4060000,4150000,4200000,4271250],
+        borderColor:'#F5C800',
+        backgroundColor:'rgba(245,200,0,0.07)',
+        borderWidth:2.5, fill:true, tension:0.4,
+        pointRadius:4, pointBackgroundColor:'#F5C800',
+        pointBorderColor:'var(--bg2)', pointBorderWidth:2,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>'₦'+ctx.raw.toLocaleString('en-NG')}}},
+      scales:{
+        x:{ticks:{color:tc,font:{size:10}},grid:{color:gc}},
+        y:{ticks:{color:tc,font:{size:10},callback:v=>'₦'+(v/1000).toFixed(0)+'K'},grid:{color:gc}}
+      }
+    }
+  });
+}
+
+function setRange(range, btn) {
+  document.querySelectorAll('.setting-btn').forEach(b=>{ b.style.background=''; b.style.color=''; b.style.borderColor=''; });
+  btn.style.background='var(--y)'; btn.style.color='#000'; btn.style.borderColor='var(--y)';
+  setTimeout(drawPortfolioChart,50);
+}
+
+function copyRefCode() {
+  navigator.clipboard?.writeText('SKEDEE-TK2026').catch(()=>{});
+  const btn = event.target;
+  btn.textContent = '✓ Copied!';
+  setTimeout(()=>btn.textContent='Copy Code', 2000);
+}
+
+const obs = new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.06});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+// init
+setTimeout(drawPortfolioChart, 100);
+</script>
+
+<!-- MOBILE BOTTOM NAV -->
+<div class="mobile-nav">
+  <button class="mobile-nav-item active" id="mnav-overview" onclick="showSection('overview')">
+    <i class="fa-solid fa-chart-pie"></i><span>Overview</span>
+  </button>
+  <button class="mobile-nav-item" id="mnav-positions" onclick="showSection('positions')">
+    <i class="fa-solid fa-bolt"></i><span>Positions</span>
+  </button>
+  <button class="mobile-nav-item" id="mnav-wallet" onclick="showSection('wallet')">
+    <i class="fa-solid fa-wallet"></i><span>Wallet</span>
+  </button>
+  <button class="mobile-nav-item" id="mnav-transactions" onclick="showSection('transactions')">
+    <i class="fa-solid fa-clock-rotate-left"></i><span>History</span>
+  </button>
+  <button class="mobile-nav-item" id="mnav-more" onclick="toggleMobileMenu()">
+    <i class="fa-solid fa-ellipsis"></i><span>More</span>
+  </button>
+</div>
+
+<!-- MOBILE MORE MENU -->
+<div class="mobile-more-menu" id="mobile-more-menu">
+  <div class="mmm-item" onclick="showSection('kyc')"><i class="fa-solid fa-id-card"></i>Verification</div>
+  <div class="mmm-item" onclick="showSection('security')"><i class="fa-solid fa-shield-halved"></i>Security</div>
+  <div class="mmm-item" onclick="showSection('notifications')"><i class="fa-solid fa-bell"></i>Notifications</div>
+  <div class="mmm-item" onclick="showSection('referral')"><i class="fa-solid fa-gift"></i>Refer & Earn</div>
+  <div class="mmm-item" onclick="showSection('settings')"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="mmm-item" style="color:var(--red);" onclick="if(confirm('Sign out?'))window.location='signup.html'"><i class="fa-solid fa-right-from-bracket" style="color:var(--red);"></i>Sign Out</div>
+</div>
+</body>
+</html>

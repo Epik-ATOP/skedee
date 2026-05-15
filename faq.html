@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root {
+  --y: #F5C800; --y2: #FFD93D; --y3: #B89200;
+  --bg: #0A0A08; --bg2: #111110; --bg3: #181815; --bg4: #1E1E1A; --bg5: #252520;
+  --border: rgba(245,200,0,0.12); --border2: rgba(245,200,0,0.22); --border3: rgba(255,255,255,0.06);
+  --text: #F0EDE0; --text2: #9A9880; --text3: #5A5845;
+  --green: #22C55E; --red: #EF4444; --blue: #3B82F6;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-num: 'Oswald', sans-serif;
+  --radius: 8px; --radius-lg: 12px; --radius-xl: 16px;
+}
+[data-theme="light"] {
+  --bg: #FAFAF5; --bg2: #FFFFFF; --bg3: #F5F4EE; --bg4: #EEECEA; --bg5: #E5E3DC;
+  --border: rgba(180,145,0,0.18); --border2: rgba(180,145,0,0.35); --border3: rgba(0,0,0,0.06);
+  --text: #1A1A14; --text2: #5C5A48; --text3: #9A9880;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { font-size:14px; scroll-behavior:smooth; }
+body { font-family:var(--font-body); background:var(--bg); color:var(--text); }
+a { color:inherit; text-decoration:none; }
+::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:99px; }
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100; height:56px;
+  background:rgba(10,10,8,0.88); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; padding:0 40px; gap:32px;
+}
+[data-theme="light"] nav { background:rgba(250,250,245,0.88); }
+.nav-logo {
+  font-family:var(--font-display); font-weight:800; font-size:20px;
+  color:var(--y); letter-spacing:-0.5px; display:flex; align-items:center; gap:7px;
+}
+.logo-dot { width:8px; height:8px; background:var(--y); border-radius:50%; animation:pulse-dot 1.5s ease infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+.nav-links { display:flex; align-items:center; gap:4px; }
+.nav-link { padding:6px 14px; border-radius:var(--radius); font-size:13px; font-weight:500; color:var(--text2); transition:all 0.15s; cursor:pointer; }
+.nav-link:hover { color:var(--text); background:rgba(245,200,0,0.06); }
+.nav-link.active { color:var(--y); }
+.nav-right { margin-left:auto; display:flex; align-items:center; gap:10px; }
+.btn-launch { padding:8px 20px; border-radius:var(--radius); background:var(--y); color:#000; border:none; cursor:pointer; font-family:var(--font-display); font-weight:700; font-size:13px; transition:all 0.15s; }
+.btn-launch:hover { background:var(--y2); transform:translateY(-1px); }
+.theme-toggle { width:34px; height:34px; background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--y); font-size:14px; transition:all 0.15s; }
+.theme-toggle:hover { background:rgba(245,200,0,0.08); }
+.btn-auth { padding:7px 14px; border-radius:var(--radius); border:1px solid var(--border2); background:transparent; font-size:12px; font-weight:500; color:var(--text2); cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+.btn-auth:hover { color:var(--y); border-color:var(--y); background:rgba(245,200,0,0.04); }
+
+/* ── HERO ── */
+.hero {
+  padding: 130px 40px 70px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.hero-grid {
+  position:absolute; inset:0; opacity:0.04;
+  background-image: linear-gradient(var(--y) 1px, transparent 1px), linear-gradient(90deg, var(--y) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+.hero-glow {
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:500px; height:400px;
+  background:radial-gradient(circle, rgba(245,200,0,0.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(245,200,0,0.08); border:1px solid var(--border2);
+  border-radius:99px; padding:5px 16px; margin-bottom:24px;
+  font-family:var(--font-mono); font-size:10px; color:var(--y); letter-spacing:1.5px;
+}
+.hero-title {
+  font-family:var(--font-display); font-weight:800;
+  font-size:clamp(40px, 6vw, 72px);
+  letter-spacing:-2px; line-height:1; margin-bottom:16px;
+}
+.hero-title span { color:var(--y); }
+.hero-sub { font-size:16px; color:var(--text2); max-width:480px; margin:0 auto 36px; line-height:1.7; }
+
+/* ── SEARCH BAR ── */
+.faq-search-wrap { max-width:520px; margin:0 auto; position:relative; z-index:1; }
+.faq-search {
+  width:100%; background:var(--bg2); border:1px solid var(--border2);
+  border-radius:var(--radius-xl); padding:14px 20px 14px 48px;
+  color:var(--text); font-family:var(--font-body); font-size:15px;
+  outline:none; transition:all 0.2s;
+}
+.faq-search:focus { border-color:var(--y); box-shadow:0 0 0 3px rgba(245,200,0,0.08); }
+.faq-search::placeholder { color:var(--text3); }
+.faq-search-icon {
+  position:absolute; left:16px; top:50%; transform:translateY(-50%);
+  color:var(--text3); font-size:15px; pointer-events:none;
+}
+.search-hint { text-align:center; margin-top:12px; font-family:var(--font-mono); font-size:10px; color:var(--text3); }
+.search-hint span { color:var(--y); cursor:pointer; }
+.search-hint span:hover { text-decoration:underline; }
+
+/* ── MAIN LAYOUT ── */
+.faq-layout {
+  max-width:1100px; margin:0 auto; padding:60px 40px 100px;
+  display:grid; grid-template-columns:220px 1fr; gap:48px; align-items:start;
+}
+
+/* ── SIDEBAR CATEGORIES ── */
+.faq-sidebar { position:sticky; top:80px; }
+.faq-sidebar-title { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:12px; }
+.faq-cat {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 12px; border-radius:var(--radius); cursor:pointer;
+  font-size:13px; font-weight:500; color:var(--text2);
+  transition:all 0.15s; border-left:2px solid transparent; margin-bottom:2px;
+}
+.faq-cat:hover { color:var(--text); background:rgba(245,200,0,0.04); }
+.faq-cat.active { color:var(--y); background:rgba(245,200,0,0.07); border-left-color:var(--y); }
+.faq-cat i { width:16px; text-align:center; font-size:13px; }
+.faq-cat .cat-count {
+  margin-left:auto; font-family:var(--font-mono); font-size:9px;
+  background:var(--bg4); color:var(--text3); padding:2px 6px; border-radius:4px;
+}
+.faq-cat.active .cat-count { background:rgba(245,200,0,0.15); color:var(--y); }
+
+.contact-box {
+  margin-top:28px; background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--radius-xl); padding:16px;
+}
+.contact-box-title { font-family:var(--font-display); font-weight:700; font-size:13px; margin-bottom:6px; }
+.contact-box-sub { font-size:12px; color:var(--text3); margin-bottom:14px; line-height:1.6; }
+.btn-contact {
+  width:100%; padding:9px; border-radius:var(--radius); border:1px solid var(--border2);
+  background:transparent; color:var(--y); font-family:var(--font-display); font-weight:700;
+  font-size:12px; cursor:pointer; transition:all 0.15s;
+}
+.btn-contact:hover { background:rgba(245,200,0,0.08); }
+
+/* ── FAQ CONTENT ── */
+.faq-content { display:flex; flex-direction:column; gap:40px; }
+
+.faq-section-header {
+  display:flex; align-items:center; gap:12px; margin-bottom:16px;
+  padding-bottom:14px; border-bottom:1px solid var(--border);
+}
+.faq-section-icon {
+  width:38px; height:38px; border-radius:var(--radius);
+  background:rgba(245,200,0,0.1); border:1px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--y); font-size:16px; flex-shrink:0;
+}
+.faq-section-title { font-family:var(--font-display); font-weight:700; font-size:18px; }
+.faq-section-count { font-family:var(--font-mono); font-size:10px; color:var(--text3); }
+
+/* ── ACCORDION ── */
+.faq-item {
+  border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden;
+  transition:border-color 0.2s; margin-bottom:8px;
+}
+.faq-item:hover { border-color:var(--border2); }
+.faq-item.open { border-color:var(--border2); }
+
+.faq-question {
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:16px 20px; cursor:pointer; user-select:none;
+  background:var(--bg2); transition:background 0.15s;
+}
+.faq-question:hover { background:var(--bg3); }
+.faq-item.open .faq-question { background:var(--bg3); }
+
+.faq-q-text {
+  font-family:var(--font-display); font-weight:600; font-size:14px; color:var(--text);
+  line-height:1.4; flex:1;
+}
+.faq-item.open .faq-q-text { color:var(--y); }
+
+.faq-chevron {
+  width:26px; height:26px; flex-shrink:0;
+  background:var(--bg4); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--text3); font-size:11px;
+  transition:transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.15s;
+}
+.faq-item.open .faq-chevron { transform:rotate(180deg); background:rgba(245,200,0,0.12); color:var(--y); }
+
+.faq-answer {
+  max-height:0; overflow:hidden;
+  transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+  background:var(--bg3);
+}
+.faq-item.open .faq-answer { max-height:600px; }
+.faq-answer-inner {
+  padding:16px 20px 20px;
+  font-size:13px; color:var(--text2); line-height:1.85;
+  border-top:1px solid var(--border3);
+}
+.faq-answer-inner p { margin-bottom:12px; }
+.faq-answer-inner p:last-child { margin-bottom:0; }
+.faq-answer-inner strong { color:var(--text); font-weight:600; }
+.faq-answer-inner a { color:var(--y); text-decoration:underline; text-underline-offset:3px; }
+.faq-answer-inner ul { padding-left:18px; margin:10px 0; display:flex; flex-direction:column; gap:6px; }
+.faq-answer-inner li::marker { color:var(--y); }
+
+.faq-tag {
+  display:inline-block; font-family:var(--font-mono); font-size:9px;
+  font-weight:700; letter-spacing:1px; padding:3px 8px; border-radius:4px;
+  margin-bottom:10px; text-transform:uppercase;
+}
+.faq-tag.new { background:rgba(34,197,94,0.12); color:var(--green); border:1px solid rgba(34,197,94,0.25); }
+.faq-tag.popular { background:rgba(245,200,0,0.1); color:var(--y); border:1px solid var(--border2); }
+
+/* ── NO RESULTS ── */
+.no-results {
+  text-align:center; padding:60px 20px; display:none;
+}
+.no-results-icon { font-size:40px; margin-bottom:16px; }
+.no-results-title { font-family:var(--font-display); font-weight:700; font-size:20px; margin-bottom:8px; }
+.no-results-sub { color:var(--text3); font-size:13px; }
+
+/* ── STILL HAVE QUESTIONS ── */
+.still-questions {
+  background:linear-gradient(135deg, rgba(245,200,0,0.08), rgba(245,200,0,0.02));
+  border:1px solid var(--border2); border-radius:var(--radius-xl);
+  padding:48px; text-align:center; margin:0 40px 80px;
+  max-width:1020px; margin-left:auto; margin-right:auto;
+}
+.sq-title { font-family:var(--font-display); font-weight:800; font-size:28px; letter-spacing:-0.5px; margin-bottom:10px; }
+.sq-sub { color:var(--text2); font-size:14px; margin-bottom:28px; line-height:1.7; }
+.sq-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.btn-primary { padding:12px 28px; border-radius:var(--radius-lg); border:none; cursor:pointer; font-family:var(--font-display); font-weight:700; font-size:14px; background:var(--y); color:#000; transition:all 0.15s; }
+.btn-primary:hover { background:var(--y2); transform:translateY(-1px); }
+.btn-secondary { padding:12px 28px; border-radius:var(--radius-lg); border:1px solid var(--border2); cursor:pointer; font-family:var(--font-display); font-weight:700; font-size:14px; background:transparent; color:var(--text2); transition:all 0.15s; }
+.btn-secondary:hover { color:var(--text); border-color:var(--y); }
+
+/* ── FOOTER ── */
+.site-footer { background:var(--bg2); border-top:1px solid var(--border); padding:40px 0 24px; }
+.footer-inner { max-width:1100px; margin:0 auto; padding:0 40px; display:flex; align-items:flex-start; justify-content:space-between; gap:40px; flex-wrap:wrap; }
+.footer-logo { font-family:var(--font-display); font-weight:800; font-size:36px; color:var(--text3); letter-spacing:-1px; margin-bottom:24px; opacity:0.35; }
+.footer-cols { display:flex; gap:48px; margin-bottom:28px; }
+.footer-col { display:flex; flex-direction:column; gap:10px; }
+.footer-col-title { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:4px; }
+.footer-col a { font-size:13px; color:var(--text3); transition:color 0.15s; display:flex; align-items:center; gap:6px; }
+.footer-col a:hover { color:var(--text); }
+.footer-copy { font-family:var(--font-mono); font-size:11px; color:var(--text3); opacity:0.6; }
+.footer-right { display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
+.store-badge img { height:44px; border-radius:10px; transition:opacity 0.15s; }
+.store-badge:hover img { opacity:0.85; }
+[data-theme="dark"] .store-badge img { filter:brightness(0.92); }
+.footer-disclaimer { font-family:var(--font-mono); font-size:13px; font-weight:700; color:var(--text3); margin-top:4px; }
+
+/* ── MOBILE ── */
+@media(max-width:900px) {
+  nav { padding:0 20px; } .nav-links { display:none; }
+  .hero { padding:100px 20px 50px; }
+  .faq-layout { grid-template-columns:1fr; padding:40px 20px 80px; }
+  .faq-sidebar { position:static; display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+  .faq-sidebar-title { display:none; }
+  .faq-cat { border-left:none; border:1px solid var(--border); border-radius:99px; padding:6px 14px; font-size:12px; }
+  .faq-cat.active { border-color:var(--y); }
+  .faq-cat i { display:none; }
+  .contact-box { display:none; }
+  .still-questions { margin:0 20px 60px; padding:32px 20px; }
+  .footer-inner { flex-direction:column; } .footer-right { align-items:flex-start; }
+}
+
+/* ── ANIMATIONS ── */
+.fade-up { opacity:0; transform:translateY(20px); transition:opacity 0.5s ease, transform 0.5s ease; }
+.fade-up.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- NAV -->
+<nav>
+  <a href="about.html" style="text-decoration:none;">
+    <div class="nav-logo"><div class="logo-dot"></div>Skedee</div>
+  </a>
+  <div class="nav-links">
+    <a href="markets/10000002.html" class="nav-link">Markets</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="#" class="nav-link">Blog</a>
+    <a href="#" class="nav-link">Careers</a>
+    <a href="faq.html" class="nav-link active">FAQ</a>
+    <a href="#" class="nav-link">Privacy Policy</a>
+  </div>
+  <div class="nav-right">
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <a href="signup.html"><button class="btn-auth">Log in / Sign Up</button></a>
+    <a href="main.html"><button class="btn-launch">Open App</button></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag">HELP CENTER</div>
+  <h1 class="hero-title">Got <span>questions?</span></h1>
+  <p class="hero-sub">Everything you need to know about trading on Skedee — from your first deposit to cashing out your winnings.</p>
+  <div class="faq-search-wrap">
+    <i class="fa-solid fa-magnifying-glass faq-search-icon"></i>
+    <input class="faq-search" id="faq-search" type="text" placeholder="Search questions, e.g. 'how do I withdraw'..." oninput="filterFAQ(this.value)">
+  </div>
+  <div class="search-hint">Popular: <span onclick="filterFAQ('withdraw')">Withdrawals</span> · <span onclick="filterFAQ('price')">How prices work</span> · <span onclick="filterFAQ('deposit')">Deposits</span> · <span onclick="filterFAQ('resolve')">Resolution</span></div>
+</div>
+
+<!-- FAQ LAYOUT -->
+<div class="faq-layout">
+
+  <!-- SIDEBAR -->
+  <div class="faq-sidebar">
+    <div class="faq-sidebar-title">Categories</div>
+    <div class="faq-cat active" onclick="filterCat('all', this)"><i class="fa-solid fa-border-all"></i> All Questions <span class="cat-count">28</span></div>
+    <div class="faq-cat" onclick="filterCat('basics', this)"><i class="fa-solid fa-book-open"></i> The Basics <span class="cat-count">6</span></div>
+    <div class="faq-cat" onclick="filterCat('account', this)"><i class="fa-solid fa-user-circle"></i> Account <span class="cat-count">4</span></div>
+    <div class="faq-cat" onclick="filterCat('money', this)"><i class="ti ti-currency-naira"></i> Deposits & Withdrawals <span class="cat-count">5</span></div>
+    <div class="faq-cat" onclick="filterCat('trading', this)"><i class="fa-solid fa-chart-line"></i> Trading <span class="cat-count">6</span></div>
+    <div class="faq-cat" onclick="filterCat('markets', this)"><i class="fa-solid fa-bolt"></i> Markets & Resolution <span class="cat-count">5</span></div>
+    <div class="faq-cat" onclick="filterCat('safety', this)"><i class="fa-solid fa-shield-halved"></i> Safety & Security <span class="cat-count">2</span></div>
+
+    <div class="contact-box">
+      <div class="contact-box-title">Still stuck?</div>
+      <div class="contact-box-sub">Our support team replies within 2 hours on weekdays.</div>
+      <button class="btn-contact"><i class="fa-solid fa-envelope" style="margin-right:6px;"></i>Contact Support</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="faq-content" id="faq-content">
+
+    <!-- THE BASICS -->
+    <div class="faq-section" data-cat="basics">
+      <div class="faq-section-header">
+        <div class="faq-section-icon"><i class="fa-solid fa-book-open"></i></div>
+        <div>
+          <div class="faq-section-title">The Basics</div>
+          <div class="faq-section-count">6 questions</div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-cat="basics" data-q="what is skedee prediction market nigeria">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">What is Skedee?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <div class="faq-tag popular">Most Asked</div>
+          <p>Skedee is Nigeria's number one prediction market. A platform where you can trade on the outcomes of real-world events using Naira.</p>
+          <p>Think of it like the stock market, but instead of trading shares in companies, you're trading on questions like <strong>"Will Man City win?"</strong> or <strong>"Will Burna Boy win a Grammy?"</strong> or <strong>"Will Peter Obi run in 2027?"</strong></p>
+          <p>Every market is a YES/NO question. You buy <strong>YES</strong> if you think it will happen. You buy <strong>NO</strong> if you think it won't. Prices reflect what the crowd believes the probability is — and you can buy, sell, or exit your position at any time before the event ends.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="basics" data-q="how different from sports betting gambling sportsbook">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">How is this different from sports betting?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Regular betting apps set fixed odds and you bet <em>against the house</em></p>
+          <p>On Skedee, <strong>you trade against other users</strong> Prices are set by market demand. If lots of people think Man City will win, the YES price rises. If doubt creeps in, it falls. Just like a stock price.</p>
+          <p>Key differences:</p>
+          <ul>
+            <li>You can <strong>sell your position early</strong> and lock in profit before the match ends</li>
+            <li>Prices change in real time — you can react to live events</li>
+            <li>No bookmaker margin baked in — prices are fairer</li>
+            <li>You can go both ways — you can buy <em>YES</em> on one outcome <em>and</em> YES on another!</li>
+          </ul>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="basics" data-q="how prices work naira 1 99 probability">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">How do prices work? What does ₦74 mean?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <div class="faq-tag popular">Popular</div>
+          <p>Every market on Skedee is priced between <strong>₦1 and ₦99</strong>. The price directly represents the market's current probability estimate.</p>
+          <p>So if a YES share costs <strong>₦74</strong>, the market believes there's roughly a <strong>74% chance</strong> that event happens. If it costs ₦22, the market thinks there's only a 22% chance.</p>
+          <p>If you buy YES at ₦74 and the event happens, each share pays out <strong>₦100</strong> — giving you a profit of ₦26 per share. If it doesn't happen, your shares expire worthless. The YES price and the NO price always add up to ₦100 (e.g. ₦74 YES + ₦26 NO = ₦100).</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="basics" data-q="what markets can i trade sports politics music entertainment">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">What can I trade on?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>If it has a clear, verifiable outcome — there's likely a market for it on Skedee. Current categories include:</p>
+          <ul>
+            <li><strong>⚽ Football</strong> — Premier League, AFCON, Champions League, NPFL</li>
+            <li><strong>🗳️ Nigerian Politics</strong> — Elections, governorship races, policy outcomes</li>
+            <li><strong>🎵 Music & Entertainment</strong> — Grammy nominations, album releases, chart performance</li>
+            <li><strong>🏀 Other Sports</strong> — NBA, tennis, F1, cricket</li>
+            <li><strong>📱 Tech & Business</strong> — Product launches, earnings, leadership changes</li>
+          </ul>
+          <p>New markets are added every week. If you have an idea for a market, you can suggest it from the app.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="basics" data-q="is skedee legal nigeria regulated">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">Is Skedee legal in Nigeria?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Yes. Skedee operates as a regulated prediction market and holds the appropriate licenses to operate in Nigeria. We work closely with relevant regulatory bodies to ensure full compliance.</p>
+          <p>Prediction markets have a long global history as legitimate financial instruments. Unlike unregulated offshore betting sites, Skedee is a Nigerian company with Nigerian licensing, meaning your funds are protected under Nigerian law.</p>
+          <p>Skedee is only available to users aged <strong>18 and over</strong>. We take responsible trading seriously — if you feel your activity is becoming a problem, please contact us and we will help.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="basics" data-q="minimum age requirement account">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">Who can use Skedee?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Skedee is open to Nigerian residents aged <strong>18 and over</strong>. You'll need a valid Nigerian bank account and phone number to sign up. We verify your identity as part of onboarding to keep the platform safe and compliant.</p>
+          <p>Users outside Nigeria can sign up but will need to complete additional verification. International deposits and withdrawals may have different processing times.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ACCOUNT -->
+    <div class="faq-section" data-cat="account">
+      <div class="faq-section-header">
+        <div class="faq-section-icon"><i class="fa-solid fa-user-circle"></i></div>
+        <div>
+          <div class="faq-section-title">Account</div>
+          <div class="faq-section-count">4 questions</div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-cat="account" data-q="how create sign up account register">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">How do I create an account?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <div class="faq-tag new">Quick</div>
+          <p>Creating an account takes under 2 minutes:</p>
+          <ul>
+            <li>Tap <strong>Sign Up</strong> from any Skedee page</li>
+            <li>Enter your phone number and email</li>
+            <li>Verify your phone with a 6-digit OTP</li>
+            <li>Complete a quick identity check (BVN or NIN)</li>
+            <li>Fund your wallet and start trading</li>
+          </ul>
+          <p>You'll be trading within minutes of signing up.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="account" data-q="forgot password reset login">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">I forgot my password. How do I reset it?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>On the login screen, tap <strong>"Forgot Password"</strong> and enter your registered email or phone number. You'll receive an OTP to reset your password within 60 seconds.</p>
+          <p>If you're not receiving the OTP, check your spam folder or contact <a href="#">support@skedee.ng</a>.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="account" data-q="verify identity kyc bvn nin document">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">Why do you need my BVN or NIN?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Nigerian financial regulations (CBN guidelines) require us to verify the identity of all users before they can make deposits or withdrawals. This is standard KYC (Know Your Customer) practice across all regulated Nigerian fintech platforms.</p>
+          <p>Your BVN or NIN is used <strong>only for identity verification</strong> — we do not have access to your bank account or any financial transactions through it. Your data is encrypted and never shared with third parties.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="account" data-q="delete close account">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">How do I close my account?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>You can request account closure from <strong>Settings → Account → Close Account</strong>. Before closing, you'll need to withdraw any remaining balance and close all open positions.</p>
+          <p>Account closures are processed within 3 business days. If you change your mind, email <a href="#">support@skedee.ng</a> within 24 hours of requesting closure.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- DEPOSITS & WITHDRAWALS -->
+    <div class="faq-section" data-cat="money">
+      <div class="faq-section-header">
+        <div class="faq-section-icon"><i class="ti ti-currency-naira"></i></div>
+        <div>
+          <div class="faq-section-title">Deposits & Withdrawals</div>
+          <div class="faq-section-count">5 questions</div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-cat="money" data-q="how deposit money fund wallet paystack bank transfer">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">How do I deposit money into my wallet?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <div class="faq-tag new">Easy</div>
+          <p>Deposits are processed instantly through <strong>Paystack</strong>, Nigeria's most trusted payment infrastructure. You can fund your wallet via:</p>
+          <ul>
+            <li>Direct bank transfer (all Nigerian banks supported)</li>
+            <li>Debit card (Mastercard, Visa)</li>
+            <li>USSD (*737#, *822#, *966# etc)</li>
+          </ul>
+          <p>The <strong>minimum deposit is ₦500</strong>. There are no fees on deposits — what you send is what lands in your wallet.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="money" data-q="how long withdrawal take how withdraw">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">How do I withdraw my winnings? How long does it take?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <div class="faq-tag popular">Popular</div>
+          <p>Go to <strong>Wallet → Withdraw</strong>, enter the amount, and confirm with your transaction PIN. Withdrawals go directly to your linked Nigerian bank account.</p>
+          <p>Processing times:</p>
+          <ul>
+            <li><strong>Under ₦500,000</strong> — usually instant, max 30 minutes</li>
+            <li><strong>₦500,000–₦5M</strong> — up to 2 hours</li>
+            <li><strong>Above ₦5M</strong> — 1 business day, may require additional verification</li>
+          </ul>
+          <p>The minimum withdrawal is <strong>₦1,000</strong>. Withdrawals are free.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="money" data-q="fees charges trading commission">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">What fees does Skedee charge?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Skedee charges a small <strong>2% trading fee</strong> on winning trades only — meaning you only pay when you profit. There are no fees on losing trades, deposits, or withdrawals.</p>
+          <p>Example: You buy 100 YES shares at ₦60 (cost: ₦6,000). Event happens, shares resolve at ₦100 (payout: ₦10,000). Your profit is ₦4,000. Skedee charges 2% of that profit = <strong>₦80</strong>. You receive ₦9,920.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="money" data-q="deposit limit maximum how much wallet">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">Is there a deposit or wallet limit?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Unverified accounts have a wallet limit of <strong>₦50,000</strong>. Once you complete full KYC verification (BVN/NIN + selfie), your limit increases to <strong>₦5,000,000</strong>.</p>
+          <p>High-volume traders can apply for a Pro account with no wallet cap. Contact <a href="#">support@skedee.ng</a> to apply.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="money" data-q="tax winnings earnings reporting">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">Do I need to pay tax on my winnings?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Skedee does not deduct tax at source. Whether your winnings are taxable under Nigerian law depends on your personal circumstances.</p>
+          <p>We recommend consulting a financial advisor for guidance specific to your situation. Skedee can provide a full transaction history for tax reporting purposes on request.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- TRADING -->
+    <div class="faq-section" data-cat="trading">
+      <div class="faq-section-header">
+        <div class="faq-section-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <div>
+          <div class="faq-section-title">Trading</div>
+          <div class="faq-section-count">6 questions</div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-cat="trading" data-q="how buy yes no shares place order trade">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">How do I place a trade?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Find a market you want to trade. Tap <strong>BUY YES</strong> if you think the event will happen, or <strong>BUY NO</strong> if you think it won't.</p>
+          <p>Enter the amount in Naira you want to spend. The platform will show you exactly how many shares you'll receive and your estimated payout if you're right. Tap <strong>Place Order</strong> to confirm.</p>
+          <p>Your position will appear in your portfolio immediately. You can exit at any time before resolution by selling your shares.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="trading" data-q="can i sell early exit position close before event">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">Can I sell my position before the event ends?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <div class="faq-tag popular">Popular</div>
+          <p><strong>Yes, always.</strong> This is one of the biggest differences between Skedee and traditional betting. You can exit any position at any time while the market is open.</p>
+          <p>If the price has moved in your favour since you bought, you can sell and get your profit early — even before the final whistle. If a market is moving against you, you can cut your losses before the event resolves.</p>
+          <p>Example: You buy Arsenal WIN YES at ₦55. Arsenal scores two quick goals and the market moves to ₦78. You can sell at ₦78 and take your ₦23-per-share profit immediately — without waiting for the game to end.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="trading" data-q="what happens if i lose trade shares worth zero">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">What happens if my trade is wrong?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>If the event resolves against your position, your shares expire at <strong>₦0</strong> and you lose the amount you put in. You can never lose more than your initial stake — there is no margin or leverage on Skedee.</p>
+          <p>To minimise losses, you can always sell your position early if things aren't going your way. A partial recovery is better than a full loss.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="trading" data-q="maximum bet stake position size limit">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">Is there a maximum amount I can trade?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Position limits vary by market and are displayed on each market page. Most sports markets have a per-position limit of <strong>₦500,000</strong> for standard accounts. Political and long-term markets may have different limits.</p>
+          <p>Limits exist to ensure fair, liquid markets and to protect users from overexposure on a single event. Apply for a Pro account if you need higher limits.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="trading" data-q="what is order book spread liquidity">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">What is the order book and spread?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>The <strong>order book</strong> shows all open buy and sell orders in a market — who wants to buy YES at what price, and who wants to sell. It gives you a picture of market depth and liquidity.</p>
+          <p>The <strong>spread</strong> is the gap between the best current buy price and the best sell price. A ₦2 spread means the best YES offer is ₦2 above the best YES bid. Tighter spreads mean more liquid, more efficient markets. Skedee's most active markets typically have spreads of ₦1–₦3.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="trading" data-q="what is ai analyst skedee analyst comments">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">What is the Skedee Analyst in the Comments tab?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <div class="faq-tag new">New Feature</div>
+          <p>The <strong>Skedee Analyst</strong> is an AI-powered market analyst built into every live match page. It monitors all market prices in real time and posts instant analysis when it detects significant price moves — like a sharp spike in the Penalty Awarded market or a sudden drop in a team's win probability.</p>
+          <p>You can also ask it questions directly by typing in the chat input. It knows the current score, all market prices, the match clock, and your open positions — so you can ask things like <strong>"Should I sell my City WIN position now?"</strong> or <strong>"What's driving the Red Card market spike?"</strong></p>
+          <p>It's powered by Claude (Anthropic) and is for informational purposes only. It does not constitute financial advice.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- MARKETS & RESOLUTION -->
+    <div class="faq-section" data-cat="markets">
+      <div class="faq-section-header">
+        <div class="faq-section-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div>
+          <div class="faq-section-title">Markets & Resolution</div>
+          <div class="faq-section-count">5 questions</div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-cat="markets" data-q="how does market resolve settle who decides result">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">How are markets resolved?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <div class="faq-tag popular">Popular</div>
+          <p>Every market has a <strong>Resolution Source</strong> listed on its page — this is the official data source we use to determine the outcome. For football markets, this is the official Premier League / competition data feed. For political markets, it's the official electoral commission announcement.</p>
+          <p>Markets resolve within <strong>30 minutes</strong> of the final result being confirmed by the official source. Winnings are credited to your wallet instantly on resolution.</p>
+          <p>Resolution criteria are set <em>before</em> the market opens and cannot be changed once trading begins. You can always read the full resolution rules on each market's detail page.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="markets" data-q="what if event cancelled postponed voided suspended">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">What if the event is cancelled or postponed?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>If an event is <strong>cancelled or postponed before it starts</strong>, all open positions are voided and your full stake is returned to your wallet — no fees charged.</p>
+          <p>If a match is <strong>abandoned mid-game</strong>, we follow the official competition rules. If the competition declares a void, the market voids. If the result stands (e.g. enough minutes played), the market resolves on that result.</p>
+          <p>Edge cases are always spelled out in each market's resolution rules. When in doubt, check before you trade.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="markets" data-q="dispute resolution wrong result error mistake">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">What if I think a market was resolved incorrectly?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Contact <a href="#">support@skedee.ng</a> within <strong>24 hours</strong> of resolution with your dispute. Include the market name, the outcome you believe is correct, and any supporting evidence (e.g. official source link).</p>
+          <p>Our resolution team will review within 6 hours. If an error occurred, the market will be corrected and affected payouts recalculated. Skedee's final decision is binding.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="markets" data-q="suggest new market request topic idea">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">Can I suggest a new market?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Yes! We love suggestions. Tap <strong>Suggest a Market</strong> from the sidebar in the app, or email your idea to <a href="#">markets@skedee.ng</a>.</p>
+          <p>Good market suggestions have a clear YES/NO question, a verifiable data source for resolution, and a specific end date. If we launch your suggested market, you'll get a ₦500 wallet credit.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="markets" data-q="how long market open trading hours close">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">How long are markets open for trading?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Markets open as soon as they're listed — sometimes days or weeks before the event. Trading stays open right up until the moment the event begins (for pre-match markets) or throughout the event (for live in-play markets).</p>
+          <p>Live markets close automatically at full-time or when the event concludes. A market's open/close status is always shown on its page.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- SAFETY -->
+    <div class="faq-section" data-cat="safety">
+      <div class="faq-section-header">
+        <div class="faq-section-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div>
+          <div class="faq-section-title">Safety & Security</div>
+          <div class="faq-section-count">2 questions</div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-cat="safety" data-q="is my money safe funds secure held where">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">Is my money safe on Skedee?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Yes. All user funds are held in <strong>segregated escrow accounts</strong> with a CBN-licensed institution, completely separate from Skedee's operating funds. This means your money is protected even in the unlikely event that Skedee faces financial difficulties.</p>
+          <p>We use bank-grade 256-bit encryption for all data. Two-factor authentication (2FA) is available and strongly recommended for all accounts.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item" data-cat="safety" data-q="responsible trading gambling problem addiction help">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div class="faq-q-text">What if trading is becoming a problem for me?</div>
+          <div class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>We take responsible trading seriously. If you feel your trading activity is affecting your wellbeing or finances, please reach out — we will not judge you and we will help.</p>
+          <p>You can self-exclude from the platform at any time from <strong>Settings → Responsible Trading → Self-Exclusion</strong>. You can also set daily, weekly, or monthly deposit limits from the same menu.</p>
+          <p>For external support, you can contact the <strong>Lagos State Health Service Commission</strong> or the <strong>National Problem Gambling Helpline</strong>. Your health is more important than any trade.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- NO RESULTS -->
+    <div class="no-results" id="no-results">
+      <div class="no-results-icon">🔍</div>
+      <div class="no-results-title">No results found</div>
+      <div class="no-results-sub">Try a different search term or <a href="mailto:support@skedee.ng" style="color:var(--y)">contact support</a></div>
+    </div>
+
+  </div><!-- end faq-content -->
+</div><!-- end faq-layout -->
+
+<!-- STILL HAVE QUESTIONS -->
+<div class="still-questions fade-up">
+  <div class="sq-title">Still have questions?</div>
+  <div class="sq-sub">Our support team is online Monday–Friday, 8am–10pm WAT.<br>Average response time: under 2 hours.</div>
+  <div class="sq-btns">
+    <button class="btn-primary"><i class="fa-solid fa-envelope" style="margin-right:8px;"></i>Email Support</button>
+    <button class="btn-secondary"><i class="fa-brands fa-whatsapp" style="margin-right:8px;"></i>WhatsApp Us</button>
+    <a href="main.html"><button class="btn-secondary"><i class="fa-solid fa-bolt" style="margin-right:8px;"></i>Start Trading</button></a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">PAYMENT METHODS</div>
+          <a href="https://opayweb.com" target="_blank">Opay</a>
+          <a href="https://paystack.com" target="_blank">Paystack</a>
+          <a href="https://flutterwave.com" target="_blank">Flutterwave</a>
+          <a href="https://palmpay.com" target="_blank">Palmpay</a>
+          <a href="https://privacy-policy.html" target="_blank">Bank Transfer</a>
+        </div>
+
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') === 'dark';
+  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+}
+
+function toggleFAQ(questionEl) {
+  const item = questionEl.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  // Open this one if it was closed
+  if (!isOpen) item.classList.add('open');
+}
+
+function filterCat(cat, el) {
+  document.querySelectorAll('.faq-cat').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('faq-search').value = '';
+
+  const sections = document.querySelectorAll('.faq-section');
+  const items = document.querySelectorAll('.faq-item');
+
+  sections.forEach(s => s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none');
+  items.forEach(i => i.style.display = '');
+  document.getElementById('no-results').style.display = 'none';
+}
+
+function filterFAQ(query) {
+  const q = query.toLowerCase().trim();
+  // Reset category highlight
+  document.querySelectorAll('.faq-cat').forEach(c => c.classList.remove('active'));
+  document.querySelector('.faq-cat').classList.add('active');
+
+  let visibleCount = 0;
+  const sections = document.querySelectorAll('.faq-section');
+
+  sections.forEach(section => {
+    let sectionVisible = false;
+    section.querySelectorAll('.faq-item').forEach(item => {
+      const text = (item.dataset.q + ' ' + item.querySelector('.faq-q-text').textContent + ' ' + item.querySelector('.faq-answer-inner').textContent).toLowerCase();
+      const show = !q || text.includes(q);
+      item.style.display = show ? '' : 'none';
+      if (show) { sectionVisible = true; visibleCount++; }
+    });
+    section.style.display = (!q || sectionVisible) ? '' : 'none';
+  });
+
+  document.getElementById('no-results').style.display = (q && visibleCount === 0) ? 'block' : 'none';
+
+  // Auto-open single result
+  if (visibleCount === 1) {
+    const visible = document.querySelector('.faq-item:not([style*="none"])');
+    if (visible) visible.classList.add('open');
+  }
+}
+
+// Fade-up on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Open first item by default
+document.querySelector('.faq-item')?.classList.add('open');
+</script>
+</body>
+</html>

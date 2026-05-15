@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will the $1.25bn World Bank Loan be Approved? | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --y:#F5C800; --y2:#FFD93D; --y3:#B89200;
+  --bg:#0A0A08; --bg2:#111110; --bg3:#181815; --bg4:#1E1E1A; --bg5:#252520;
+  --border:rgba(245,200,0,0.12); --border2:rgba(245,200,0,0.22); --border3:rgba(255,255,255,0.06);
+  --text:#F0EDE0; --text2:#9A9880; --text3:#5A5845;
+  --green:#22C55E; --red:#EF4444; --blue:#3B82F6;
+  --teal:#14B8A6;
+  --sidebar-w:220px; --rsidebar-w:280px;
+  --font-display:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --font-mono:'Space Mono',monospace; --font-num:'Oswald',sans-serif;
+  --radius:8px; --radius-lg:12px; --radius-xl:16px;
+}
+[data-theme="light"] {
+  --bg:#FAFAF5; --bg2:#FFFFFF; --bg3:#F5F4EE; --bg4:#EEECEA; --bg5:#E5E3DC;
+  --border:rgba(180,145,0,0.18); --border2:rgba(180,145,0,0.35); --border3:rgba(0,0,0,0.06);
+  --text:#1A1A14; --text2:#5C5A48; --text3:#9A9880;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:14px;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:52px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;}
+.logo{font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--y);letter-spacing:-.5px;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.logo-dot{width:8px;height:8px;background:var(--y);border-radius:50%;animation:pulse-dot 1.5s ease infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.topbar-nav{display:flex;align-items:center;gap:2px;margin-left:4px;}
+.topbar-navlink{padding:5px 11px;border-radius:var(--radius);font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:5px;}
+.topbar-navlink:hover{color:var(--text);background:rgba(245,200,0,.06);}
+.topbar-navlink.active{color:var(--y);background:rgba(245,200,0,.08);}
+.search-bar{flex:1;max-width:340px;margin-left:12px;display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:0 12px;height:34px;}
+.search-bar input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:13px;width:100%;}
+.search-bar input::placeholder{color:var(--text3);}
+.search-bar i{color:var(--text3);font-size:13px;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.btn-icon{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;color:var(--text2);font-size:14px;position:relative;}
+.btn-icon:hover{border-color:var(--y);color:var(--y);background:rgba(245,200,0,.06);}
+.notif-badge{position:absolute;top:-4px;right:-4px;width:14px;height:14px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);}
+.theme-toggle{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--y);font-size:14px;transition:all .18s;}
+.theme-toggle:hover{background:rgba(245,200,0,.08);border-color:var(--y);}
+.wallet-pill{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:34px;font-family:var(--font-mono);font-size:12px;}
+.wallet-bal{color:var(--y);font-weight:700;}
+.wallet-label{color:var(--text3);font-size:10px;}
+.avatar{width:34px;height:34px;background:linear-gradient(135deg,var(--y),var(--y3));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:13px;color:#000;cursor:pointer;}
+
+/* ── LAYOUT ── */
+.layout{display:flex;margin-top:52px;min-height:calc(100vh - 52px);}
+
+/* ── LEFT SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);flex-shrink:0;padding:16px 0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;margin-top:4px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;font-size:13px;}
+.sidebar-item .item-badge{margin-left:auto;background:var(--y);color:#000;font-size:9px;font-weight:700;font-family:var(--font-mono);padding:2px 5px;border-radius:4px;}
+.sidebar-item .item-badge.red{background:var(--red);color:#fff;}
+.trending-event{margin:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;cursor:pointer;transition:all .15s;}
+.trending-event:hover{border-color:var(--border2);}
+.trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.trend-change{font-family:var(--font-mono);font-size:10px;color:var(--green);}
+
+/* ── MAIN ── */
+.main{flex:1;background:var(--bg);padding:16px;display:flex;flex-direction:column;gap:14px;}
+
+/* ── HERO CARD ── */
+.hero-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:28px;position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),var(--y),var(--teal),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
+.hero-bg-emoji{position:absolute;right:-10px;top:-10px;font-size:200px;opacity:.04;line-height:1;pointer-events:none;user-select:none;}
+
+.hero-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.hero-cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.3);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--teal);letter-spacing:1.5px;}
+.hero-vol-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,0,.08);border:1px solid var(--border2);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--y);letter-spacing:1px;}
+.hot-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--red);letter-spacing:1px;}
+.new-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--green);letter-spacing:1px;}
+
+.hero-title{font-family:var(--font-display);font-weight:800;font-size:clamp(18px,2.5vw,30px);letter-spacing:-.5px;line-height:1.2;margin-bottom:10px;}
+.hero-sub{font-size:13px;color:var(--text2);line-height:1.75;max-width:680px;margin-bottom:24px;}
+
+/* big YES/NO trade buttons in hero */
+.hero-trade-row{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+.hero-btn-yes{flex:1;min-width:140px;padding:14px 20px;border-radius:var(--radius-lg);border:1px solid rgba(34,197,94,.4);background:rgba(34,197,94,.1);cursor:pointer;transition:all .2s;text-align:center;}
+.hero-btn-yes:hover{background:var(--green);border-color:var(--green);}
+.hero-btn-yes:hover .hb-label{color:#000;}
+.hero-btn-yes:hover .hb-price{color:#000;}
+.hero-btn-no{flex:1;min-width:140px;padding:14px 20px;border-radius:var(--radius-lg);border:1px solid rgba(239,68,68,.35);background:rgba(239,68,68,.08);cursor:pointer;transition:all .2s;text-align:center;}
+.hero-btn-no:hover{background:var(--red);border-color:var(--red);}
+.hero-btn-no:hover .hb-label{color:#fff;}
+.hero-btn-no:hover .hb-price{color:#fff;}
+.hb-label{font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
+.hero-btn-yes .hb-label{color:var(--green);}
+.hero-btn-no .hb-label{color:var(--red);}
+.hb-price{font-family:var(--font-num);font-size:28px;font-weight:700;line-height:1;}
+.hero-btn-yes .hb-price{color:var(--green);}
+.hero-btn-no .hb-price{color:var(--red);}
+.hb-sub{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:4px;}
+
+/* prob bar */
+.hero-prob-bar-wrap{margin-bottom:24px;}
+.hero-prob-label-row{display:flex;justify-content:space-between;margin-bottom:8px;}
+.hpl-yes{font-family:var(--font-num);font-size:24px;font-weight:700;color:var(--green);}
+.hpl-no{font-family:var(--font-num);font-size:24px;font-weight:700;color:var(--red);}
+.hpl-yeslabel{font-family:var(--font-mono);font-size:9px;color:var(--green);letter-spacing:1px;}
+.hpl-nolabel{font-family:var(--font-mono);font-size:9px;color:var(--red);letter-spacing:1px;text-align:right;}
+.hero-prob-bar{height:12px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;}
+.hpb-yes{background:linear-gradient(90deg,var(--green),rgba(34,197,94,.6));border-radius:99px 0 0 99px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.hpb-no{background:linear-gradient(90deg,rgba(239,68,68,.5),var(--red));border-radius:0 99px 99px 0;transition:width .6s cubic-bezier(.4,0,.2,1);}
+
+.hero-stats{display:flex;gap:48px;flex-wrap:wrap;padding:16px 0;border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);margin-bottom:18px;}
+.hstat{display:flex;flex-direction:column;gap:3px;}
+.hstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;}
+.hstat-val{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--text);}
+.hstat-val.yellow{color:var(--y);}
+.hstat-val.teal{color:var(--teal);}
+.hstat-val.green{color:var(--green);}
+.hstat-val.red{color:var(--red);}
+
+.hero-resolution-note{font-size:12px;color:var(--text3);display:flex;align-items:flex-start;gap:7px;line-height:1.6;}
+
+/* ── TABS ── */
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+
+/* ── CONTEXT CARD ── */
+.context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;}
+.context-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;}
+.ctx-icon{font-size:26px;margin-bottom:10px;}
+.ctx-title{font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;}
+.ctx-text{font-size:12px;color:var(--text2);line-height:1.7;}
+.ctx-text strong{color:var(--text);}
+
+/* ── TIMELINE ── */
+.timeline-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;gap:16px;padding-bottom:20px;position:relative;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item:not(:last-child)::before{content:'';position:absolute;left:15px;top:32px;bottom:0;width:1px;background:var(--border3);}
+.tl-dot{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid var(--border);}
+.tl-dot.done{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);}
+.tl-dot.active{background:rgba(245,200,0,.1);border-color:var(--border2);animation:tl-pulse 2s ease-in-out infinite;}
+@keyframes tl-pulse{0%,100%{box-shadow:0 0 0 0 rgba(245,200,0,.2)}50%{box-shadow:0 0 0 6px rgba(245,200,0,0)}}
+.tl-dot.pending{background:var(--bg4);border-color:var(--border3);}
+.tl-body{flex:1;padding-top:4px;}
+.tl-title{font-family:var(--font-display);font-weight:600;font-size:14px;margin-bottom:3px;display:flex;align-items:center;gap:8px;}
+.tl-badge{font-family:var(--font-mono);font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.5px;}
+.tl-badge.done{background:rgba(34,197,94,.12);color:var(--green);}
+.tl-badge.live{background:rgba(245,200,0,.12);color:var(--y);}
+.tl-badge.pending{background:var(--bg4);color:var(--text3);}
+.tl-date{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:5px;}
+.tl-text{font-size:12px;color:var(--text2);line-height:1.6;}
+
+/* ── ARGUMENTS ── */
+.args-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.arg-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;}
+.arg-card.yes{border-top:3px solid rgba(34,197,94,.5);}
+.arg-card.no{border-top:3px solid rgba(239,68,68,.4);}
+.arg-title{font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.arg-list{display:flex;flex-direction:column;gap:8px;}
+.arg-item{display:flex;gap:8px;font-size:12px;color:var(--text2);line-height:1.6;}
+.arg-item strong{color:var(--text);font-weight:500;}
+.arg-dot-yes{width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:5px;}
+.arg-dot-no{width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:5px;}
+
+/* ── RELATED MARKETS ── */
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.related-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;cursor:pointer;transition:all .2s;}
+.related-card:hover{border-color:var(--border2);transform:translateY(-2px);}
+.rel-cat{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;margin-bottom:6px;}
+.rel-title{font-family:var(--font-display);font-weight:600;font-size:12px;color:var(--text);line-height:1.4;margin-bottom:8px;}
+.rel-prob{font-family:var(--font-num);font-size:20px;font-weight:700;color:var(--y);}
+.rel-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:2px;}
+
+/* ── ACTIVITY / COMMENTS ── */
+.card-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
+.card-section-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.activity-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border3);}
+.activity-item:last-child{border-bottom:none;}
+.act-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.act-dot.buy{background:var(--green);}
+.act-dot.sell{background:var(--red);}
+.act-text{flex:1;font-size:12px;color:var(--text2);line-height:1.4;}
+.act-text strong{color:var(--text);font-weight:500;}
+.act-time{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.comment-item{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--border3);}
+.comment-item:last-child{border-bottom:none;}
+.comment-avatar{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:var(--font-display);}
+.comment-body{flex:1;}
+.comment-user{font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;}
+.comment-badge{font-family:var(--font-mono);font-size:8px;padding:2px 5px;border-radius:3px;font-weight:700;}
+.comment-text{font-size:12px;color:var(--text2);margin-top:4px;line-height:1.6;}
+.comment-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:4px;display:flex;align-items:center;gap:10px;}
+
+/* ── RIGHT SIDEBAR ── */
+.right-sidebar{width:var(--rsidebar-w);background:var(--bg2);border-left:1px solid var(--border);flex-shrink:0;padding:16px 12px;display:flex;flex-direction:column;gap:16px;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.rsidebar-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+
+/* prob meter */
+.prob-meter{text-align:center;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:12px;}
+.pm-yes{font-family:var(--font-num);font-size:40px;font-weight:700;color:var(--green);line-height:1;}
+.pm-label{font-family:var(--font-mono);font-size:9px;color:var(--green);letter-spacing:1px;margin-bottom:8px;}
+.pm-bar{height:8px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:6px;}
+.pm-bar-yes{background:var(--green);border-radius:99px 0 0 99px;transition:width .6s;}
+.pm-bar-no{background:var(--red);border-radius:0 99px 99px 0;transition:width .6s;}
+.pm-no-row{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;}
+.pm-no-val{color:var(--red);font-weight:700;}
+.pm-no-label{color:var(--text3);}
+
+.trade-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border3);animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side.buy{background:rgba(34,197,94,.15);color:var(--green);}
+.trade-side.sell{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-market{font-size:10px;color:var(--text2);flex:1;}
+.trade-price{font-family:var(--font-mono);font-size:10px;color:var(--text);font-weight:600;}
+.trade-size{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ── ORDER PANEL ── */
+.order-panel{position:fixed;bottom:0;right:var(--rsidebar-w);z-index:200;width:340px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:20px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.5);}
+.order-panel.open{transform:translateY(0);}
+.order-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.order-panel-title{font-family:var(--font-display);font-weight:700;font-size:15px;}
+.btn-close{width:28px;height:28px;background:var(--bg4);border:none;border-radius:50%;cursor:pointer;color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.btn-close:hover{background:var(--red);color:#fff;}
+.order-market-name{font-size:11px;color:var(--text3);margin-bottom:14px;font-family:var(--font-mono);}
+.order-side-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.order-side-btn{flex:1;padding:8px;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;transition:all .15s;background:var(--bg3);color:var(--text2);}
+.order-side-btn.yes.active{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:var(--green);}
+.order-side-btn.no.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:var(--red);}
+.order-field{margin-bottom:12px;}
+.order-field label{display:block;font-size:11px;color:var(--text3);font-family:var(--font-mono);letter-spacing:.5px;margin-bottom:5px;text-transform:uppercase;}
+.order-field input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;color:var(--text);font-family:var(--font-mono);font-size:14px;font-weight:700;outline:none;transition:border-color .15s;}
+.order-field input:focus{border-color:var(--y);}
+.order-summary{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:14px;}
+.order-summary-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;}
+.order-summary-row .label{color:var(--text3);font-family:var(--font-mono);}
+.order-summary-row .value{color:var(--text);font-family:var(--font-mono);font-weight:600;}
+.order-summary-row .value.green{color:var(--green);}
+.order-summary-row .value.yellow{color:var(--y);}
+.btn-place{width:100%;padding:13px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.5px;transition:all .15s;background:var(--y);color:#000;}
+.btn-place:hover{background:var(--y2);transform:translateY(-1px);}
+
+/* ── PROFILE DROPDOWN ── */
+.profile-dropdown{position:fixed;top:56px;right:16px;z-index:300;width:180px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:8px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+.profile-dropdown.open{display:block;animation:dropIn .2s ease;}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.profile-item{padding:8px 12px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px;transition:all .15s;}
+.profile-item:hover{background:var(--bg3);color:var(--text);}
+.profile-item i{width:14px;text-align:center;color:var(--text3);font-size:12px;}
+
+/* ── MOBILE ── */
+@media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}.context-grid,.args-grid,.related-grid{grid-template-columns:1fr;}}
+*{-webkit-tap-highlight-color:transparent;}
+body{-webkit-font-smoothing:antialiased;}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="../main.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="../main.html" class="topbar-navlink">Markets</a>
+    <a href="10000004.html" class="topbar-navlink">BBNaija S11</a>
+    <a href="10000003.html" class="topbar-navlink">City vs Palace</a>
+    <a href="10000005.html" class="topbar-navlink active">World Bank Loan</a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+    <a href="../faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search markets, events, teams...">
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<div class="layout">
+
+<!-- LEFT SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist</div>
+  <div class="sidebar-item active"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
+
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Find Markets</div>
+  <div class="sidebar-item">⚽ Football</div>
+  <div class="sidebar-item">🏉 Other Sports</div>
+  <div class="sidebar-item">🎬 Entertainment</div>
+  <div class="sidebar-item">🎵 Music</div>
+  <div class="sidebar-item">⚖️ Politics</div>
+  <div class="sidebar-item">🛢️ Commodities</div>
+  <div class="sidebar-item">🪙 Finance</div>
+  <div class="sidebar-item">🌀 Miscellaneous</div>
+
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Trending Now</div>
+  <div class="trending-event">
+    <div class="trend-name">⚖️ World Bank $1.25bn Loan</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦61M vol</div>
+      <div class="trend-change">▲ 8%</div>
+    </div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">⚖️ Tinubu Tax Reform Bill</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦38M vol</div>
+      <div class="trend-change">▲ 3%</div>
+    </div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">💱 Naira/Dollar hit ₦1800?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦88M vol</div>
+      <div class="trend-change">▼ 3%</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO CARD -->
+  <div class="hero-card">
+    <div class="hero-bg-emoji">🏦</div>
+    <div class="hero-top">
+      <div class="hero-cat-tag">⚖️ POLITICS · NIGERIA · FINANCE</div>
+      <div class="hero-vol-tag">Vol ₦61.4M</div>
+      <div class="hot-tag">🔥 TRENDING</div>
+      <div class="new-tag">✦ HIGH STAKES</div>
+    </div>
+
+    <div class="hero-title">Will the $1.25 billion World Bank loan<br>to Nigeria be approved?</div>
+    <div class="hero-sub">The World Bank board is set to vote on a landmark $1.25 billion development loan to Nigeria — one of the largest single tranches in recent history. The funds are earmarked for infrastructure, social protection, and fiscal reform support. Markets are pricing in a <strong style="color:var(--text);">74% chance of approval</strong> following positive signals from Washington this week.</div>
+
+    <!-- PROB BAR -->
+    <div class="hero-prob-bar-wrap">
+      <div class="hero-prob-label-row">
+        <div>
+          <div class="hpl-yeslabel">YES · APPROVED</div>
+          <div class="hpl-yes" id="prob-yes-big">74%</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="hpl-nolabel">NO · REJECTED / DELAYED</div>
+          <div class="hpl-no" id="prob-no-big">26%</div>
+        </div>
+      </div>
+      <div class="hero-prob-bar">
+        <div class="hpb-yes" id="hpb-yes" style="width:74%;"></div>
+        <div class="hpb-no" id="hpb-no" style="width:26%;"></div>
+      </div>
+    </div>
+
+    <!-- BIG BUY BUTTONS -->
+    <div class="hero-trade-row">
+      <div class="hero-btn-yes" onclick="openOrder('World Bank Loan — Approved','YES',74)">
+        <div class="hb-label">BUY YES · APPROVED</div>
+        <div class="hb-price" id="hero-yes-price">₦74</div>
+        <div class="hb-sub">Payout ₦100 if approved</div>
+      </div>
+      <div class="hero-btn-no" onclick="openOrder('World Bank Loan — Rejected / Delayed','NO',26)">
+        <div class="hb-label">BUY NO · REJECTED</div>
+        <div class="hb-price" id="hero-no-price">₦26</div>
+        <div class="hb-sub">Payout ₦100 if rejected</div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-label">Total Volume</div><div class="hstat-val yellow">₦61.4M</div></div>
+      <div class="hstat"><div class="hstat-label">YES Probability</div><div class="hstat-val green" id="prob-stat">74%</div></div>
+      <div class="hstat"><div class="hstat-label">Loan Value</div><div class="hstat-val teal">$1.25B</div></div>
+      <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val">8,204</div></div>
+      <div class="hstat"><div class="hstat-label">Vote Date</div><div class="hstat-val yellow">TBC</div></div>
+      <div class="hstat"><div class="hstat-label">Market Closes</div><div class="hstat-val green">Aug 31</div></div>
+    </div>
+
+    <div class="hero-resolution-note">
+      <i class="fa-solid fa-circle-info" style="color:var(--teal);margin-top:2px;"></i>
+      Resolves YES if the World Bank board officially approves the $1.25bn loan to Nigeria before August 31, 2026. Source: Official World Bank press release. Resolves NO if the vote is rejected, indefinitely deferred, or no decision is reached by the close date.
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('timeline',this)">Timeline</button>
+    <button class="tab" onclick="switchTab('arguments',this)">YES vs NO</button>
+    <button class="tab" onclick="switchTab('chart',this)">Chart</button>
+    <button class="tab" onclick="switchTab('activity',this)">Activity</button>
+    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+    <div class="context-grid">
+      <div class="context-card">
+        <div class="ctx-icon">🏦</div>
+        <div class="ctx-title">What is this loan for?</div>
+        <div class="ctx-text">The <strong>$1.25 billion</strong> package is a development policy loan — the World Bank's largest instrument for broad economic reform. Nigeria plans to use the funds to support social protection spending, infrastructure investment, and fiscal stability amid ongoing subsidy reform fallout.</div>
+      </div>
+      <div class="context-card">
+        <div class="ctx-icon">📊</div>
+        <div class="ctx-title">Why might it be approved?</div>
+        <div class="ctx-text">Nigeria has met key World Bank prior actions — including <strong>fuel subsidy removal</strong>, FX unification, and CBN monetary policy reform. World Bank President Ajay Banga personally praised Nigeria's reform progress in a recent Washington visit by President Tinubu.</div>
+      </div>
+      <div class="context-card">
+        <div class="ctx-icon">⚠️</div>
+        <div class="ctx-title">What could block it?</div>
+        <div class="ctx-text">Concerns remain around <strong>debt sustainability</strong> — Nigeria's debt-to-revenue ratio is among the highest in sub-Saharan Africa. Board members may push for stronger conditionalities or delay pending further fiscal data. A political shock could also derail the timeline.</div>
+      </div>
+    </div>
+
+    <div class="args-grid">
+      <div class="arg-card yes">
+        <div class="arg-title" style="color:var(--green);">✅ Case for YES (Approved)</div>
+        <div class="arg-list">
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Reform track record</strong> — Nigeria has completed all key prior actions the World Bank required: subsidy removal, FX reform, CBN independence.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Political will</strong> — Tinubu administration has been vocal about accessing multilateral financing. Finance Minister Edun has maintained strong World Bank relations.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Precedent</strong> — World Bank approved a $1.5B loan to Nigeria in 2023. The institutional relationship is strong and there is no known opposition on the board.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Market signals</strong> — Bond markets and FX have stabilised, suggesting creditors believe the loan will be approved.</div></div>
+        </div>
+      </div>
+      <div class="arg-card no">
+        <div class="arg-title" style="color:var(--red);">❌ Case for NO (Rejected/Delayed)</div>
+        <div class="arg-list">
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Debt sustainability fears</strong> — Nigeria's debt service-to-revenue ratio exceeds 90%. Some board members have flagged this as a red line.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Conditionality gaps</strong> — Critics argue fuel subsidy savings haven't been redirected to social spending as promised. This could trigger a board delay.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Geopolitical risk</strong> — Any domestic political instability or security deterioration in Nigeria's north could give board members pause.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Procedural delay</strong> — Even if approved in principle, disbursement conditions could push the official vote past this market's close date.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="width:20px;height:1px;background:var(--y);display:inline-block;"></span>Related Markets</div>
+      <div class="related-grid">
+        <div class="related-card" onclick="window.location='../main.html'">
+          <div class="rel-cat">⚖️ POLITICS</div>
+          <div class="rel-title">Will Tinubu sign the tax reform bill before June?</div>
+          <div class="rel-prob">48%</div>
+          <div class="rel-vol">Vol ₦38.2M</div>
+        </div>
+        <div class="related-card" onclick="window.location='../main.html'">
+          <div class="rel-cat">💱 FINANCE</div>
+          <div class="rel-title">Will Naira/Dollar hit ₦1,800 before end of 2026?</div>
+          <div class="rel-prob">48%</div>
+          <div class="rel-vol">Vol ₦88.3M</div>
+        </div>
+        <div class="related-card" onclick="window.location='../main.html'">
+          <div class="rel-cat">💱 FINANCE</div>
+          <div class="rel-title">Will CBN cut interest rates at June MPC meeting?</div>
+          <div class="rel-prob">31%</div>
+          <div class="rel-vol">Vol ₦29.5M</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE TAB -->
+  <div id="tab-timeline" style="display:none;">
+    <div class="timeline-card">
+      <div class="card-section-title" style="font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:20px;">Loan Approval Timeline</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot done">✅</div>
+          <div class="tl-body">
+            <div class="tl-title">Fuel Subsidy Removed <span class="tl-badge done">DONE</span></div>
+            <div class="tl-date">June 2023</div>
+            <div class="tl-text">President Tinubu announced the removal of the petrol subsidy on inauguration day — a key World Bank prior action that had blocked previous loan negotiations for years.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✅</div>
+          <div class="tl-body">
+            <div class="tl-title">FX Unification <span class="tl-badge done">DONE</span></div>
+            <div class="tl-date">July 2023</div>
+            <div class="tl-text">CBN collapsed the multiple exchange rate windows into a single market-determined rate. Naira depreciated sharply but reform conditions were met.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✅</div>
+          <div class="tl-body">
+            <div class="tl-title">World Bank Prior Actions Completed <span class="tl-badge done">DONE</span></div>
+            <div class="tl-date">Q1 2026</div>
+            <div class="tl-text">Nigeria officially notified the World Bank of completion of all agreed prior actions required for the Development Policy Loan package to proceed to board.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot active">⏳</div>
+          <div class="tl-body">
+            <div class="tl-title">World Bank Board Vote <span class="tl-badge live">AWAITING</span></div>
+            <div class="tl-date">Expected Q2–Q3 2026</div>
+            <div class="tl-text">The World Bank Executive Board is scheduled to vote on the $1.25bn DPL. No official date has been confirmed. Sources indicate a vote before July 2026 is likely if documentation is completed.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot pending">💰</div>
+          <div class="tl-body">
+            <div class="tl-title">Disbursement <span class="tl-badge pending">PENDING</span></div>
+            <div class="tl-date">TBC — 30–60 days post-vote</div>
+            <div class="tl-text">If approved, first tranche disbursement would follow within 30–60 days. Funds go directly to the Nigerian government's account at the CBN.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- YES vs NO TAB -->
+  <div id="tab-arguments" style="display:none;">
+    <div class="args-grid">
+      <div class="arg-card yes">
+        <div class="arg-title" style="color:var(--green);">✅ Full Case for YES</div>
+        <div class="arg-list">
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>All prior actions met</strong> — Nigeria completed every structural benchmark the World Bank required before this loan could proceed. No similar loan in Nigeria's history has failed to get board approval after this stage.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Strong reform momentum</strong> — CBN's hawkish rate policy has been praised by the IMF and World Bank. Inflation is declining from its 2024 peak.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Tinubu's Washington ties</strong> — The President's personal rapport with Ajay Banga and the US Treasury has been instrumental. A Tinubu-Banga meeting in April 2026 reportedly produced positive signals.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>No known board opposition</strong> — Unlike some past DPLs, there are no reported dissenting voices among the major shareholders (US, UK, Japan, Germany) on this specific package.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Market consensus</strong> — At 74¢ YES, the market is firmly backing approval. Large institutional traders have been consistently buying YES in the ₦70–₦75 range.</div></div>
+        </div>
+      </div>
+      <div class="arg-card no">
+        <div class="arg-title" style="color:var(--red);">❌ Full Case for NO</div>
+        <div class="arg-list">
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Debt sustainability is a real concern</strong> — Nigeria's debt service consumed over 90% of federal revenue in 2024. Some World Bank board members have formally raised this. A "technical hold" is possible.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Social spending shortfall</strong> — The subsidy savings were supposed to flow to targeted cash transfers. Delivery has been patchy. This is the biggest unresolved conditionality concern.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Security situation</strong> — Escalating insecurity in the northwest and northeast could complicate the World Bank's internal assessment. Their staff security protocols affect field verification.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Bureaucratic delay</strong> — Even supportive loans can miss their windows. If documentation isn't finalised before the August board meeting, this market voids — technically a NO outcome for traders.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART TAB -->
+  <div id="tab-chart" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">YES Probability Over Time</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">How the market's confidence in loan approval has shifted since the market opened</div>
+      <div style="height:260px;position:relative;"><canvas id="probChart"></canvas></div>
+    </div>
+    <div class="card-section" style="margin-top:12px;">
+      <div class="card-section-title">Daily Volume (₦M)</div>
+      <div style="height:180px;position:relative;"><canvas id="volChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY TAB -->
+  <div id="tab-activity" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Market Activity</div>
+      <div id="activity-list"></div>
+    </div>
+  </div>
+
+  <!-- COMMENTS TAB -->
+  <div id="tab-comments" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Community <span style="background:var(--teal);color:#000;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;">54</span></div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
+
+  <!-- RULES TAB -->
+  <div id="tab-rules" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Market Rules & Resolution</div>
+      <div style="display:flex;flex-direction:column;gap:16px;font-size:13px;color:var(--text2);line-height:1.8;">
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Criteria</div>Resolves YES if the World Bank Executive Board officially approves the $1.25 billion Development Policy Loan to Nigeria before August 31, 2026. Resolves NO if the vote is rejected, indefinitely deferred, or no decision is reached by the close date.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Source</div>Official World Bank press release via <strong style="color:var(--text);">worldbank.org</strong> and the World Bank's official X account (@WorldBank). Nigerian government confirmation via the Ministry of Finance is used as a secondary source.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What counts as "approved"?</div>A formal affirmative vote by the World Bank Executive Board. Preliminary agreement, staff-level approval, or press reports citing unnamed sources do NOT trigger resolution. Only the official board decision counts.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What if the amount changes?</div>If the World Bank approves a modified amount (e.g. $1.1bn instead of $1.25bn), the market still resolves YES if the loan is broadly the same instrument. A fundamental restructuring would be reviewed case-by-case.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Disputes</div>Contact support@skedee.ng within 24 hours of resolution. Skedee's decision is final.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- RIGHT SIDEBAR -->
+<div class="right-sidebar">
+
+  <div>
+    <div class="rsidebar-title">Live Probability</div>
+    <div class="prob-meter">
+      <div class="pm-label">YES · APPROVED</div>
+      <div class="pm-yes" id="pm-yes">74%</div>
+      <div class="pm-bar" style="margin-top:8px;">
+        <div class="pm-bar-yes" id="pm-bar-yes" style="width:74%;"></div>
+        <div class="pm-bar-no" id="pm-bar-no" style="width:26%;"></div>
+      </div>
+      <div class="pm-no-row">
+        <div class="pm-no-label">NO · REJECTED</div>
+        <div class="pm-no-val" id="pm-no">26%</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;">
+      <button style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.1);color:var(--green);font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;" onclick="openOrder('World Bank Loan','YES',74)" onmouseover="this.style.background='var(--green)';this.style.color='#000'" onmouseout="this.style.background='rgba(34,197,94,.1)';this.style.color='var(--green)'">BUY YES</button>
+      <button style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);color:var(--red);font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;" onclick="openOrder('World Bank Loan','NO',26)" onmouseover="this.style.background='var(--red)';this.style.color='#fff'" onmouseout="this.style.background='rgba(239,68,68,.08)';this.style.color='var(--red)'">BUY NO</button>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Key Stats</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">VOLUME</span>
+        <span style="color:var(--y);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦61.4M</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TRADERS</span>
+        <span style="color:var(--text);font-family:var(--font-mono);font-size:11px;" id="trader-count">8,204</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">YES PRICE</span>
+        <span style="color:var(--green);font-family:var(--font-mono);font-weight:700;font-size:11px;" id="sb-yes-price">₦74</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">NO PRICE</span>
+        <span style="color:var(--red);font-family:var(--font-mono);font-weight:700;font-size:11px;" id="sb-no-price">₦26</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">CLOSES</span>
+        <span style="color:var(--green);font-family:var(--font-mono);font-size:11px;">Aug 31 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
+  </div>
+
+</div><!-- end right sidebar -->
+</div><!-- end layout -->
+
+<!-- ORDER PANEL -->
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header">
+    <div class="order-panel-title">Place Order</div>
+    <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="order-market-name" id="op-market-name">World Bank Loan — Approved YES</div>
+  <div class="order-side-tabs">
+    <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
+    <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
+  </div>
+  <div class="order-field">
+    <label>Amount (NGN ₦)</label>
+    <input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()">
+  </div>
+  <div class="order-field">
+    <label>Price per Share (₦)</label>
+    <input type="number" id="op-price" value="74" step="1" min="1" max="99" oninput="updateOrderSummary()">
+  </div>
+  <div class="order-summary">
+    <div class="order-summary-row"><span class="label">Shares</span><span class="value" id="op-shares">67.6</span></div>
+    <div class="order-summary-row"><span class="label">Avg Entry</span><span class="value" id="op-entry">₦74</span></div>
+    <div class="order-summary-row"><span class="label">Max Payout</span><span class="value green" id="op-payout">₦6,757</span></div>
+    <div class="order-summary-row"><span class="label">Potential Profit</span><span class="value yellow" id="op-profit">+₦1,757</span></div>
+    <div class="order-summary-row"><span class="label">Wallet After</span><span class="value" id="op-wallet-after">₦4,266,250</span></div>
+  </div>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+</div>
+
+<script>
+let yesPct = 74;
+let walletBalance = 4271250;
+let orderSide = 'YES';
+let probChart, volChart;
+let recentTrades = [];
+
+const ACTIVITY_DATA = [
+  {type:'buy',  text:'<strong>policy_watcher</strong> bought <strong>YES</strong> × 2,000 at ₦73 — "World Bank team just landed in Abuja"',time:'3m'},
+  {type:'buy',  text:'<strong>abuja_insider</strong> opened <strong>YES</strong> × 5,000 at ₦72',time:'7m'},
+  {type:'sell', text:'<strong>hedge_king</strong> sold <strong>YES</strong> × 800 — taking partial profit at ₦74',time:'12m'},
+  {type:'buy',  text:'<strong>naija_macro</strong> bought <strong>YES</strong> × 3,000 at ₦71 — "Tinubu-Banga meeting was productive"',time:'18m'},
+  {type:'buy',  text:'<strong>whale_trader</strong> opened <strong>YES</strong> × 10,000 at ₦70',time:'25m'},
+  {type:'sell', text:'<strong>risk_off_99</strong> bought <strong>NO</strong> × 1,500 at ₦28 — hedging position',time:'31m'},
+  {type:'buy',  text:'<strong>sovereign_fund</strong> bought <strong>YES</strong> × 4,000 at ₦69',time:'38m'},
+];
+
+const COMMENTS_DATA = [
+  {init:'P', user:'policy_watcher', col:'#14B8A6', badge:'ANALYST', badgeCol:'rgba(20,184,166,.2)', badgeText:'var(--teal)', text:"World Bank technical team is currently in Abuja conducting the final verification review. This is standard procedure before a board vote. My reading: approval Q2 2026. I'm heavy YES.", time:'5 min ago', likes:112},
+  {init:'A', user:'abuja_insider',  col:'#F5C800', badge:'TOP TRADER', badgeCol:'rgba(245,200,0,.15)', badgeText:'var(--y)', text:"The ₦74 YES price is the most underpriced thing on Skedee right now. Comparable World Bank DPLs post-prior-action completion have a 95%+ historical approval rate. The 26% NO is pure fear.", time:'14 min ago', likes:87},
+  {init:'N', user:'naija_macro',    col:'#22C55E', badge:null, text:"People buying NO at ₦28 need to understand: the World Bank WANTS to approve this. They've invested 18 months into Nigeria's reform program. Backing out now would embarrass the institution.", time:'22 min ago', likes:64},
+  {init:'R', user:'risk_off_99',    col:'#EF4444', badge:null, text:"Don't sleep on the NO case. Nigeria's debt service ratio is genuinely alarming. If even one major shareholder (US, Germany) asks for a delay to get more data, this thing gets pushed to Q3 and the market voids. I'm hedged.", time:'35 min ago', likes:43},
+  {init:'S', user:'sovereign_fund', col:'#A855F7', badge:'WHALE', badgeCol:'rgba(168,85,247,.15)', badgeText:'var(--purple)', text:"Just added another ₦2M to my YES position. We're buying every dip. The approval is not a question of IF, only WHEN. The only real risk is bureaucratic delay — which is why I check the close date carefully.", time:'48 min ago', likes:156},
+];
+
+const TRADE_SIDES = ['buy','sell'];
+
+function generateTrade() {
+  const side = Math.random() > 0.7 ? 'sell' : 'buy';
+  const price = side === 'buy'
+    ? Math.floor(yesPct + (Math.random()*4-2))
+    : Math.floor(100 - yesPct + (Math.random()*4-2));
+  const size = Math.floor(Math.random()*3000+100);
+  const market = Math.random() > 0.2 ? 'World Bank YES' : 'World Bank NO';
+  return { side, price, size, market };
+}
+
+function renderTrades() {
+  if (!recentTrades.length) for(let i=0;i<8;i++) recentTrades.push(generateTrade());
+  document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t => `
+    <div class="trade-row">
+      <span class="trade-side ${t.side}">${t.side.toUpperCase()}</span>
+      <span class="trade-market">${t.market}</span>
+      <span class="trade-price">₦${t.price}</span>
+      <span class="trade-size">×${t.size.toLocaleString()}</span>
+    </div>`).join('');
+}
+
+function renderActivity() {
+  document.getElementById('activity-list').innerHTML = ACTIVITY_DATA.map(a => `
+    <div class="activity-item">
+      <div class="act-dot ${a.type}"></div>
+      <div class="act-text">${a.text}</div>
+      <div class="act-time">${a.time}</div>
+    </div>`).join('');
+}
+
+function renderComments() {
+  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c => `
+    <div class="comment-item">
+      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+      <div class="comment-body">
+        <div class="comment-user">${c.user}${c.badge?`<span class="comment-badge" style="background:${c.badgeCol};color:${c.badgeText};">${c.badge}</span>`:''}</div>
+        <div class="comment-text">${c.text}</div>
+        <div class="comment-meta"><span>${c.time}</span><span style="color:var(--teal);">👍 ${c.likes}</span><span style="cursor:pointer;color:var(--text3);">Reply</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function drawCharts() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  const gridColor = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
+
+  if (probChart) probChart.destroy();
+  probChart = new Chart(document.getElementById('probChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels:['Apr 1','Apr 8','Apr 15','Apr 22','Apr 29','May 6','May 13','Today'],
+      datasets:[
+        { label:'YES %', data:[55,58,60,62,65,68,71,74], borderColor:'#22C55E', backgroundColor:'rgba(34,197,94,0.07)', borderWidth:2.5, fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'#22C55E' },
+        { label:'NO %',  data:[45,42,40,38,35,32,29,26], borderColor:'#EF4444', backgroundColor:'rgba(239,68,68,0.04)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#EF4444' },
+      ]
+    },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true,labels:{color:tc,font:{size:10},usePointStyle:true}}}, scales:{ x:{ticks:{color:tc,font:{size:10}},grid:{color:gridColor}}, y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:gridColor},min:0,max:100} } }
+  });
+
+  if (volChart) volChart.destroy();
+  volChart = new Chart(document.getElementById('volChart').getContext('2d'), {
+    type:'bar',
+    data:{
+      labels:['Apr 1','Apr 8','Apr 15','Apr 22','Apr 29','May 6','May 13','Today'],
+      datasets:[{ label:'Vol (₦M)', data:[4.2,5.8,6.1,7.4,9.2,10.8,8.9,9.0], backgroundColor:'rgba(20,184,166,0.6)', borderWidth:0, borderRadius:4 }]
+    },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:tc,font:{size:10}},grid:{display:false}}, y:{ticks:{color:tc,font:{size:10},callback:v=>'₦'+v+'M'},grid:{color:gridColor}} } }
+  });
+}
+
+function updateProbUI(pct) {
+  const no = 100 - pct;
+  document.getElementById('prob-yes-big').textContent = pct + '%';
+  document.getElementById('prob-no-big').textContent = no + '%';
+  document.getElementById('hpb-yes').style.width = pct + '%';
+  document.getElementById('hpb-no').style.width = no + '%';
+  document.getElementById('pm-yes').textContent = pct + '%';
+  document.getElementById('pm-no').textContent = no + '%';
+  document.getElementById('pm-bar-yes').style.width = pct + '%';
+  document.getElementById('pm-bar-no').style.width = no + '%';
+  document.getElementById('prob-stat').textContent = pct + '%';
+  document.getElementById('sb-yes-price').textContent = '₦' + pct;
+  document.getElementById('sb-no-price').textContent = '₦' + no;
+  document.getElementById('hero-yes-price').textContent = '₦' + pct;
+  document.getElementById('hero-no-price').textContent = '₦' + no;
+}
+
+function updateLiveData() {
+  const delta = (Math.random() - 0.48) * 1.2;
+  yesPct = Math.max(55, Math.min(92, yesPct + delta));
+  yesPct = Math.round(yesPct);
+  updateProbUI(yesPct);
+  recentTrades.unshift(generateTrade());
+  if (recentTrades.length > 12) recentTrades.pop();
+  renderTrades();
+}
+
+function openOrder(name, side, price) {
+  document.getElementById('op-market-name').textContent = name;
+  document.getElementById('op-price').value = parseInt(price);
+  setOrderSide(side);
+  document.getElementById('order-panel').classList.add('open');
+}
+function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
+function setOrderSide(side) {
+  orderSide = side;
+  document.getElementById('op-yes-btn').classList.toggle('active', side==='YES');
+  document.getElementById('op-no-btn').classList.toggle('active', side==='NO');
+  document.getElementById('op-side-label').textContent = side;
+  updateOrderSummary();
+}
+function updateOrderSummary() {
+  const amt = parseFloat(document.getElementById('op-amount').value)||0;
+  const price = parseFloat(document.getElementById('op-price').value)||1;
+  const shares = amt/price;
+  const payout = shares;
+  const profit = payout - amt;
+  document.getElementById('op-shares').textContent = shares.toFixed(1);
+  document.getElementById('op-entry').textContent = '₦' + Math.round(price).toLocaleString('en-NG');
+  document.getElementById('op-payout').textContent = '₦' + Math.round(payout).toLocaleString('en-NG');
+  document.getElementById('op-profit').textContent = (profit>=0?'+':'')+' ₦'+Math.round(profit).toLocaleString('en-NG');
+  document.getElementById('op-wallet-after').textContent = '₦' + Math.round(walletBalance-amt).toLocaleString('en-NG');
+}
+function placeOrder() {
+  const amt = parseFloat(document.getElementById('op-amount').value)||0;
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  document.getElementById('wallet-display').textContent = '₦' + walletBalance.toLocaleString('en-NG',{maximumFractionDigits:0});
+  closeOrder();
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview','timeline','arguments','chart','activity','comments','rules'].forEach(t=>{
+    const el = document.getElementById('tab-'+t);
+    if (el) el.style.display = t===name?'':'none';
+  });
+  if (name==='chart') setTimeout(drawCharts,50);
+  if (name==='comments') renderComments();
+  if (name==='activity') renderActivity();
+}
+
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  document.body.setAttribute('data-theme', isDark?'light':'dark');
+  document.getElementById('theme-icon').className = isDark?'fa-solid fa-moon':'fa-solid fa-sun';
+}
+function toggleProfile() { document.getElementById('profile-dd').classList.toggle('open'); }
+document.addEventListener('click', e => {
+  if (!e.target.closest('.avatar') && !e.target.closest('.profile-dropdown'))
+    document.getElementById('profile-dd').classList.remove('open');
+});
+
+renderTrades();
+updateOrderSummary();
+setInterval(updateLiveData, 3000);
+</script>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="../about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">PAYMENT METHODS</div>
+          <a href="https://opayweb.com" target="_blank">Opay</a>
+          <a href="https://paystack.com" target="_blank">Paystack</a>
+          <a href="https://flutterwave.com" target="_blank">Flutterwave</a>
+          <a href="https://palmpay.com" target="_blank">Palmpay</a>
+          <a href="https://privacy-policy.html" target="_blank">Bank Transfer</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

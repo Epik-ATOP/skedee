@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --y:#F5C800; --y2:#FFD93D; --y3:#B89200;
+  --bg:#0A0A08; --bg2:#111110; --bg3:#181815; --bg4:#1E1E1A; --bg5:#252520;
+  --border:rgba(245,200,0,0.12); --border2:rgba(245,200,0,0.22); --border3:rgba(255,255,255,0.06);
+  --text:#F0EDE0; --text2:#9A9880; --text3:#5A5845;
+  --green:#22C55E; --red:#EF4444; --blue:#3B82F6;
+  --font-display:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --font-mono:'Space Mono',monospace; --font-num:'Oswald',sans-serif;
+  --r:8px; --rl:12px; --rxl:16px;
+  --sidebar:220px; --topbar:52px;
+}
+[data-theme="light"] {
+  --bg:#FAFAF5; --bg2:#FFFFFF; --bg3:#F5F4EE; --bg4:#EEECEA; --bg5:#E5E3DC;
+  --border:rgba(180,145,0,0.18); --border2:rgba(180,145,0,0.35); --border3:rgba(0,0,0,0.06);
+  --text:#1A1A14; --text2:#5C5A48; --text3:#9A9880;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:14px;scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:var(--topbar);background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 16px;gap:10px;
+}
+.logo{font-family:var(--font-display);font-weight:800;font-size:19px;color:var(--y);letter-spacing:-.5px;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.logo-dot{width:8px;height:8px;background:var(--y);border-radius:50%;animation:pdot 1.5s ease infinite;}
+@keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
+.topbar-nav{display:flex;align-items:center;gap:2px;margin-left:4px;}
+.topbar-navlink{padding:5px 11px;border-radius:var(--r);font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:5px;}
+.topbar-navlink:hover{color:var(--text);background:rgba(245,200,0,0.06);}
+.topbar-navlink.active{color:var(--y);background:rgba(245,200,0,0.08);}
+.upcoming-tag{font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3);padding:1px 5px;border-radius:3px;letter-spacing:.5px;}
+.search-bar{flex:1;max-width:320px;margin-left:8px;display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:0 12px;height:34px;}
+.search-bar input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:13px;width:100%;}
+.search-bar input::placeholder{color:var(--text3);}
+.search-bar i{color:var(--text3);font-size:13px;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.btn-icon{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;color:var(--text2);font-size:14px;position:relative;}
+.btn-icon:hover{border-color:var(--y);color:var(--y);background:rgba(245,200,0,.06);}
+.notif-badge{position:absolute;top:-4px;right:-4px;width:14px;height:14px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);}
+.theme-btn{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--y);font-size:14px;transition:all .18s;}
+.theme-btn:hover{background:rgba(245,200,0,.08);border-color:var(--y);}
+.wallet-pill{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:0 12px;height:34px;font-family:var(--font-mono);font-size:12px;}
+.wallet-bal{color:var(--y);font-weight:700;}
+.wallet-label{color:var(--text3);font-size:10px;}
+.avatar{width:34px;height:34px;background:linear-gradient(135deg,var(--y),var(--y3));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:13px;color:#000;cursor:pointer;}
+
+/* ── LAYOUT ── */
+.layout{display:flex;margin-top:var(--topbar);min-height:calc(100vh - var(--topbar));}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);background:var(--bg2);border-right:1px solid var(--border);flex-shrink:0;padding:16px 0;position:sticky;top:var(--topbar);height:calc(100vh - var(--topbar));overflow-y:auto;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;margin-top:4px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;font-size:13px;}
+.sidebar-item .s-badge{margin-left:auto;background:var(--y);color:#000;font-size:9px;font-weight:700;font-family:var(--font-mono);padding:2px 5px;border-radius:4px;}
+.sidebar-item .s-badge.red{background:var(--red);color:#fff;}
+.sidebar-item .s-badge.blue{background:var(--blue);color:#fff;}
+.sidebar-divider{height:1px;background:var(--border3);margin:12px 10px;}
+
+/* ── MAIN ── */
+.main{flex:1;overflow:hidden;padding:24px 20px 60px;display:flex;flex-direction:column;gap:28px;}
+
+/* ── TICKER STRIP ── */
+.ticker-wrap{overflow:hidden;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);height:34px;display:flex;align-items:center;}
+.ticker-inner{display:flex;align-items:center;gap:0;animation:tickerScroll 40s linear infinite;white-space:nowrap;}
+.ticker-wrap:hover .ticker-inner{animation-play-state:paused;}
+.ticker-item{display:flex;align-items:center;gap:8px;padding:0 20px;border-right:1px solid var(--border3);font-family:var(--font-mono);font-size:11px;color:var(--text2);}
+.ticker-item .t-name{color:var(--text);}
+.ticker-item .t-prob{color:var(--y);font-weight:700;}
+.ticker-item .t-up{color:var(--green);}
+.ticker-item .t-down{color:var(--red);}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── FEATURED CAROUSEL ── */
+.featured-label{display:flex;align-items:center;justify-content:space-between;}
+.section-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2.5px;color:var(--text3);text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.section-label::before{content:'';width:20px;height:1px;background:var(--y);}
+.see-all{font-family:var(--font-mono);font-size:10px;color:var(--y);cursor:pointer;letter-spacing:.5px;display:flex;align-items:center;gap:5px;}
+.see-all:hover{text-decoration:underline;}
+
+.featured-carousel{position:relative;overflow:hidden;border-radius:var(--rxl);}
+.featured-slides{display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1);}
+.featured-slide{
+  min-width:100%;position:relative;overflow:hidden;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--rxl);padding:32px 36px;
+  display:flex;align-items:center;gap:40px;
+  cursor:pointer;transition:border-color .2s;
+}
+.featured-slide:hover{border-color:var(--border2);}
+.featured-slide::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--y),transparent);animation:scanline 3s ease-in-out infinite;}
+@keyframes scanline{0%,100%{opacity:.3}50%{opacity:1}}
+.featured-bg{position:absolute;inset:0;opacity:.04;font-size:180px;display:flex;align-items:center;justify-content:flex-end;padding-right:20px;pointer-events:none;overflow:hidden;line-height:1;}
+
+.featured-left{flex:1;z-index:1;}
+.feat-cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,0,.08);border:1px solid var(--border2);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--y);letter-spacing:1.5px;margin-bottom:14px;}
+.feat-live-dot{width:5px;height:5px;background:var(--red);border-radius:50%;animation:pdot 1.5s infinite;}
+.feat-title{font-family:var(--font-display);font-weight:800;font-size:clamp(20px,2.5vw,30px);letter-spacing:-.5px;line-height:1.15;margin-bottom:10px;}
+.feat-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6;max-width:480px;}
+.feat-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.feat-btn-yes{padding:10px 22px;border-radius:var(--r);border:none;cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.3);transition:all .15s;}
+.feat-btn-yes:hover{background:var(--green);color:#000;}
+.feat-btn-no{padding:10px 22px;border-radius:var(--r);border:none;cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;background:rgba(239,68,68,.08);color:var(--red);border:1px solid rgba(239,68,68,.3);transition:all .15s;}
+.feat-btn-no:hover{background:var(--red);color:#fff;}
+.feat-btn-view{padding:10px 22px;border-radius:var(--r);border:1px solid var(--border2);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;background:transparent;color:var(--text2);transition:all .15s;}
+.feat-btn-view:hover{color:var(--text);border-color:var(--y);}
+
+.featured-right{flex-shrink:0;text-align:center;z-index:1;}
+.feat-prob{font-family:var(--font-num);font-size:72px;color:var(--y);line-height:1;font-weight:700;letter-spacing:1px;}
+.feat-prob-label{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:1px;margin-bottom:8px;}
+.feat-vol{font-family:var(--font-mono);font-size:11px;color:var(--text3);}
+.feat-vol span{color:var(--text2);}
+.feat-change{font-family:var(--font-mono);font-size:11px;margin-top:4px;}
+.feat-change.up{color:var(--green);}
+.feat-change.down{color:var(--red);}
+
+/* carousel dots + arrows */
+.carousel-dots{display:flex;justify-content:center;gap:6px;margin-top:12px;}
+.carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border2);cursor:pointer;transition:all .2s;}
+.carousel-dot.active{background:var(--y);width:20px;border-radius:99px;}
+.carousel-arrows{position:absolute;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;width:100%;padding:0 12px;pointer-events:none;z-index:10;}
+.carousel-arrow{width:36px;height:36px;background:rgba(10,10,8,.7);border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--y);font-size:13px;cursor:pointer;pointer-events:all;transition:all .15s;backdrop-filter:blur(8px);}
+.carousel-arrow:hover{background:rgba(245,200,0,.15);}
+
+/* ── CATEGORY FILTER PILLS ── */
+.cat-pills{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;}
+.cat-pills::-webkit-scrollbar{display:none;}
+.cat-pill{display:flex;align-items:center;gap:6px;padding:7px 16px;border-radius:99px;border:1px solid var(--border);background:var(--bg2);font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+.cat-pill:hover{border-color:var(--border2);color:var(--text);}
+.cat-pill.active{background:var(--y);color:#000;border-color:var(--y);font-weight:700;}
+.cat-pill .pill-count{font-family:var(--font-mono);font-size:9px;background:rgba(0,0,0,.15);padding:1px 5px;border-radius:99px;}
+.cat-pill.active .pill-count{background:rgba(0,0,0,.2);}
+
+/* ── MARKETS GRID ── */
+.markets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+
+.market-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:18px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden;}
+.market-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--y);opacity:0;transition:opacity .2s;}
+.market-card:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.25);}
+.market-card:hover::after{opacity:1;}
+
+.mc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px;}
+.mc-cat{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--text3);text-transform:uppercase;}
+.mc-badge{font-family:var(--font-mono);font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.5px;}
+.mc-badge.live{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25);}
+.mc-badge.upcoming{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.25);}
+.mc-badge.hot{background:rgba(245,200,0,.12);color:var(--y);border:1px solid var(--border2);}
+.mc-badge.new{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.25);}
+
+.mc-title{font-family:var(--font-display);font-weight:600;font-size:13px;color:var(--text);line-height:1.4;margin-bottom:12px;}
+
+.mc-prob-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.mc-prob{font-family:var(--font-num);font-size:28px;color:var(--y);font-weight:700;line-height:1;}
+.mc-prob-bar{flex:1;height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;}
+.mc-prob-fill{height:100%;background:var(--y);border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+
+.mc-price-row{display:flex;gap:6px;margin-bottom:12px;}
+.mc-price{flex:1;background:var(--bg4);border-radius:var(--r);padding:7px 10px;text-align:center;}
+.mc-price.yes{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2);}
+.mc-price.no{background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.2);}
+.mc-price-label{font-size:9px;font-family:var(--font-mono);color:var(--text3);letter-spacing:1px;}
+.mc-price-val{font-family:var(--font-mono);font-weight:700;font-size:15px;margin-top:1px;}
+.mc-price.yes .mc-price-val{color:var(--green);}
+.mc-price.no .mc-price-val{color:var(--red);}
+
+.mc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border3);}
+.mc-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.mc-change{font-family:var(--font-mono);font-size:9px;}
+.mc-change.up{color:var(--green);}
+.mc-change.down{color:var(--red);}
+.mc-change.flat{color:var(--text3);}
+
+/* commodity card variant */
+.market-card.commodity .mc-prob{color:var(--blue);}
+.market-card.commodity .mc-prob-fill{background:var(--blue);}
+
+/* match card variant */
+.match-mini{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.match-mini-team{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.match-mini-logo{font-size:24px;line-height:1;}
+.match-mini-name{font-size:10px;color:var(--text2);font-weight:500;text-align:center;}
+.match-mini-score{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--text);text-align:center;flex-shrink:0;padding:0 8px;}
+.match-mini-vs{font-family:var(--font-mono);font-size:11px;color:var(--text3);text-align:center;padding:0 8px;}
+
+/* ── STATS STRIP ── */
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border3);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;}
+.stat-strip-item{background:var(--bg2);padding:16px;text-align:center;}
+.stat-strip-num{font-family:var(--font-num);font-size:26px;color:var(--y);font-weight:700;line-height:1;}
+.stat-strip-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;}
+
+/* ── FOOTER ── */
+.site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 0 20px;}
+.footer-inner{max-width:1400px;margin:0 auto;padding:0 40px;display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.footer-logo{font-family:var(--font-display);font-weight:800;font-size:32px;color:var(--text3);letter-spacing:-1px;margin-bottom:20px;opacity:.35;}
+.footer-cols{display:flex;gap:48px;margin-bottom:24px;}
+.footer-col{display:flex;flex-direction:column;gap:10px;}
+.footer-col-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:4px;}
+.footer-col a{font-size:13px;color:var(--text3);transition:color .15s;display:flex;align-items:center;gap:6px;}
+.footer-col a:hover{color:var(--text);}
+.footer-copy{font-family:var(--font-mono);font-size:11px;color:var(--text3);opacity:.6;}
+.footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+.store-badge img{height:42px;border-radius:10px;transition:opacity .15s;}
+.store-badge:hover img{opacity:.85;}
+[data-theme="dark"] .store-badge img{filter:brightness(.92);}
+.footer-disclaimer{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text3);}
+
+/* ── MOBILE SEARCH STRIP ── */
+.mobile-search-strip{display:none;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:0 12px;height:40px;align-items:center;gap:8px;}
+.mobile-search-strip input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:14px;width:100%;}
+.mobile-search-strip input::placeholder{color:var(--text3);}
+.mobile-search-strip i{color:var(--text3);font-size:13px;}
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--bg2);border-top:1px solid var(--border);padding:6px 0 max(6px,env(safe-area-inset-bottom));}
+.mbn-items{display:flex;justify-content:space-around;align-items:center;}
+.mbn-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 10px;color:var(--text3);font-size:9px;font-family:var(--font-mono);letter-spacing:.5px;cursor:pointer;transition:color .15s;text-decoration:none;flex:1;-webkit-tap-highlight-color:transparent;}
+.mbn-item i{font-size:18px;}
+.mbn-item.active{color:var(--y);}
+.mbn-item:hover{color:var(--text);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1000px){.markets-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:760px){
+  .sidebar{display:none;}
+  .topbar-nav{display:none;}
+  .search-bar{display:none;}
+  .wallet-pill{display:none;}
+  .topbar{padding:0 12px;gap:6px;}
+  .markets-grid{grid-template-columns:1fr;}
+  .stats-strip{grid-template-columns:repeat(2,1fr);}
+  .featured-right{display:none;}
+  .featured-slide{padding:20px 16px;gap:0;}
+  .feat-title{font-size:18px;}
+  .feat-sub{font-size:12px;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .feat-btns{gap:6px;}
+  .feat-btn-yes,.feat-btn-no,.feat-btn-view{padding:8px 14px;font-size:12px;}
+  .footer-inner{flex-direction:column;padding:0 16px;}
+  .footer-right{align-items:flex-start;}
+  .footer-cols{flex-wrap:wrap;gap:24px;}
+  .main{padding:14px 12px 90px;gap:20px;}
+  .mobile-search-strip{display:flex;}
+  .mobile-bottom-nav{display:block;}
+}
+
+/* fade-up */
+.fade-up{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="main.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="main.html" class="topbar-navlink active">Markets</a>
+    <a href="markets/10000002.html" class="topbar-navlink">Spurs vs Leeds <span style="font-family:var(--font-mono);font-size:8px;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;">LIVE</span></a>
+    <a href="markets/10000001.html" class="topbar-navlink">City vs Palace <span class="upcoming-tag">UPCOMING</span></a>
+    <a href="about.html" class="topbar-navlink">About</a>
+    <a href="faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" id="main-search" placeholder="Search markets..." oninput="searchMarkets(this.value)">
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon" title="Notifications"><i class="fa-solid fa-bell"></i><span class="notif-badge">3</span></div>
+    <div class="theme-btn" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal">₦4,271,250</div></div></div>
+    <a href="signup.html"><div class="avatar">TK</div></a>
+  </div>
+</div>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item active" onclick="filterCat('all',this)"><i class="fa-solid fa-border-all"></i> All Markets <span class="s-badge">24</span></div>
+  <div class="sidebar-item" onclick="filterCat('live',this)"><i class="fa-solid fa-circle" style="color:var(--red);font-size:8px;"></i> Live Now <span class="s-badge red">3</span></div>
+  <div class="sidebar-item" onclick="filterCat('trending',this)"><i class="fa-solid fa-fire"></i> Trending <span class="s-badge">HOT</span></div>
+  <div class="sidebar-item" onclick="filterCat('new',this)"><i class="fa-solid fa-bolt"></i> New <span class="s-badge blue">8</span></div>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-label">Find Markets</div>
+  <div class="sidebar-item" onclick="filterCat('football',this)">⚽ Football</div>
+  <div class="sidebar-item" onclick="filterCat('sports',this)">🏉 Other Sports</div>
+  <div class="sidebar-item" onclick="filterCat('entertainment',this)">🎬 Entertainment</div>
+  <div class="sidebar-item" onclick="filterCat('music',this)">🎵 Music</div>
+  <div class="sidebar-item" onclick="filterCat('politics',this)">⚖️ Politics</div>
+  <div class="sidebar-item" onclick="filterCat('commodities',this)">🛢️ Commodities</div>
+  <div class="sidebar-item" onclick="filterCat('finance',this)">🪙 Finance</div>
+  <div class="sidebar-item" onclick="filterCat('misc',this)">🌀 Miscellaneous</div>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-label">My Account</div>
+  <div class="sidebar-item"><i class="fa-solid fa-wallet"></i> Portfolio</div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i> Trade History</div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i> Watchlist</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- MOBILE SEARCH STRIP -->
+  <div class="mobile-search-strip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search markets..." oninput="document.getElementById('main-search').value=this.value;renderMarkets()">
+  </div>
+
+  <!-- TICKER STRIP -->
+  <div class="ticker-wrap">
+    <div class="ticker-inner" id="ticker">
+      <!-- populated by JS, duplicated for infinite loop -->
+    </div>
+  </div>
+
+<!-- FEATURED -->
+  <div>
+    <div class="featured-label" style="margin-bottom:14px;">
+      <div class="section-label">⚡ Featured Markets</div>
+      <div class="see-all">See all <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></div>
+    </div>
+    <div style="position:relative;">
+      <div class="featured-carousel" id="carousel">
+        <div class="featured-slides" id="slides">
+          <!-- Featured slides injected by JS -->
+        </div>
+      </div>
+      <div class="carousel-arrows">
+        <div class="carousel-arrow" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></div>
+        <div class="carousel-arrow" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></div>
+      </div>
+    </div>
+    <div class="carousel-dots" id="dots"></div>
+  </div>
+
+  <!-- CATEGORY PILLS -->
+  <div class="cat-pills" id="cat-pills">
+    <div class="cat-pill active" onclick="filterCat('all',this)">🌍 All <span class="pill-count">24</span></div>
+    <div class="cat-pill" onclick="filterCat('live',this)">🔴 Live <span class="pill-count">3</span></div>
+    <div class="cat-pill" onclick="filterCat('football',this)">⚽ Football <span class="pill-count">5</span></div>
+    <div class="cat-pill" onclick="filterCat('sports',this)">🏆 Sports <span class="pill-count">2</span></div>
+    <div class="cat-pill" onclick="filterCat('music',this)">🎵 Music <span class="pill-count">3</span></div>
+    <div class="cat-pill" onclick="filterCat('entertainment',this)">🎬 Entertainment <span class="pill-count">2</span></div>
+    <div class="cat-pill" onclick="filterCat('politics',this)">⚖️ Politics <span class="pill-count">4</span></div>
+    <div class="cat-pill" onclick="filterCat('commodities',this)">🛢️ Commodities <span class="pill-count">7</span></div>
+    <div class="cat-pill" onclick="filterCat('finance',this)">💱 Finance <span class="pill-count">2</span></div>
+  </div>
+
+  <!-- MARKETS SECTION TITLE -->
+  <div style="display:flex;align-items:center;justify-content:space-between;">
+    <div class="section-label" id="markets-section-label">All Markets</div>
+    <div style="display:flex;gap:6px;align-items:center;">
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">Sort:</div>
+      <select id="sort-select" onchange="sortMarkets(this.value)" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);color:var(--text2);font-family:var(--font-mono);font-size:10px;padding:4px 8px;outline:none;cursor:pointer;">
+        <option value="trending">Trending</option>
+        <option value="volume">Volume</option>
+        <option value="newest">Newest</option>
+        <option value="closing">Closing Soon</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- MARKETS GRID -->
+  <div class="markets-grid" id="markets-grid"></div>
+
+  <!-- LOAD MORE -->
+  <div style="text-align:center;" id="load-more-wrap">
+    <button onclick="loadMore()" style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:12px 32px;color:var(--y);font-family:var(--font-display);font-weight:700;font-size:14px;cursor:pointer;transition:all .15s;" onmouseover="this.style.background='rgba(245,200,0,0.06)'" onmouseout="this.style.background='var(--bg2)'">
+      Load More Markets <i class="fa-solid fa-chevron-down" style="font-size:11px;margin-left:4px;"></i>
+    </button>
+  </div>
+
+</div><!-- end main -->
+</div><!-- end layout -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">PAYMENT METHODS</div>
+          <a href="https://opayweb.com" target="_blank">Opay</a>
+          <a href="https://paystack.com" target="_blank">Paystack</a>
+          <a href="https://flutterwave.com" target="_blank">Flutterwave</a>
+          <a href="https://palmpay.com" target="_blank">Palmpay</a>
+          <a href="https://privacy-policy.html" target="_blank">Bank Transfer</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <div class="mbn-items">
+    <a href="main.html" class="mbn-item active">
+      <i class="fa-solid fa-border-all"></i>
+      <span>Markets</span>
+    </a>
+    <div class="mbn-item" onclick="filterCat('live',this);document.querySelectorAll('.mbn-item').forEach(x=>x.classList.remove('active'));this.classList.add('active')">
+      <i class="fa-solid fa-circle-dot" style="color:var(--red)"></i>
+      <span>Live</span>
+    </div>
+    <div class="mbn-item" onclick="filterCat('trending',this);document.querySelectorAll('.mbn-item').forEach(x=>x.classList.remove('active'));this.classList.add('active')">
+      <i class="fa-solid fa-fire"></i>
+      <span>Trending</span>
+    </div>
+    <a href="signup.html" class="mbn-item">
+      <i class="fa-solid fa-user"></i>
+      <span>Account</span>
+    </a>
+  </div>
+</nav>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────
+const FEATURED = [
+  {
+    emoji:'⚽', cat:'FOOTBALL · LIVE', live:true,
+    title:'LaLiga: Alaves vs Barcelona',
+    sub:'Barcelona are massive favourites away at Alaves. Can the minnows pull off the shock of the season?',
+    prob:88, vol:'₦94.2M', change:'+5%', changeDir:'up',
+    bg:'⚽', yesLabel:'BUY YES ₦88', noLabel:'BUY NO ₦12',
+    link:'markets/10000002.html'
+  },
+  {
+    emoji:'🎵', cat:'MUSIC · ENTERTAINMENT', live:false,
+    title:'Will Rema drop a new song this month?',
+    sub:"Rema has been teasing new material on his socials. The market is leaning YES but it's far from certain.",
+    prob:61, vol:'₦28.7M', change:'+12%', changeDir:'up',
+    bg:'🎵', yesLabel:'BUY YES ₦61', noLabel:'BUY NO ₦39',
+    link:'#'
+  },
+  {
+    emoji:'⚖️', cat:'POLITICS · NIGERIA', live:false,
+    title:'Will the $1.25bn World Bank loan to Nigeria be approved?',
+    sub:'The World Bank board is set to vote on a major development loan. Approval odds have spiked this week.',
+    prob:74, vol:'₦61.4M', change:'+8%', changeDir:'up',
+    bg:'⚖️', yesLabel:'BUY YES ₦74', noLabel:'BUY NO ₦26',
+    link:'#'
+  }
+];
+
+const ALL_MARKETS = [
+  // FOOTBALL
+  { id:1, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'LaLiga: Alaves vs FC Barcelona', badge:'live', yes:0.88, no:0.12, vol:'₦94.2M', change:'+5%', dir:'up', link:'markets/10000002.html', isMatch:true, t1:'🔴','t1n':'Alaves', t2:'🔵', t2n:'Barça', score:'0 — 2' },
+  { id:2, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Premier League: Man City vs Crystal Palace', badge:'upcoming', yes:0.58, no:0.42, vol:'₦12.1M', change:'0%', dir:'flat', link:'markets/10000001.html', isMatch:true, t1:'🔵', t1n:'City', t2:'🦅', t2n:'Palace', score:'VS' },
+  { id:3, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'UEFA: Freiburg vs Aston Villa', badge:'upcoming', yes:0.34, no:0.66, vol:'₦8.4M', change:'+2%', dir:'up', link:'#', isMatch:true, t1:'🏟️', t1n:'Freiburg', t2:'🦁', t2n:'Villa', score:'VS' },
+  { id:4, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Premier League: Spurs vs Leeds United', badge:'live', yes:0.74, no:0.26, vol:'₦184.3M', change:'+6%', dir:'up', link:'markets/10000002.html', isMatch:true, t1:'🐓', t1n:'Spurs', t2:'🦚', t2n:'Leeds', score:'2 — 1' },
+  { id:5, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Barcelona to win La Liga 2025/26', badge:'hot', yes:0.71, no:0.29, vol:'₦52.8M', change:'+3%', dir:'up', link:'#' },
+
+  // MUSIC
+  { id:6, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Rema drop a new song this month?', badge:'hot', yes:0.61, no:0.39, vol:'₦28.7M', change:'+12%', dir:'up', link:'#' },
+  { id:7, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Wizkid drop a new album this year?', badge:'new', yes:0.71, no:0.29, vol:'₦55.9M', change:'+4%', dir:'up', link:'#' },
+  { id:8, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Burna Boy win a Grammy 2026?', badge:'new', yes:0.44, no:0.56, vol:'₦31.4M', change:'-2%', dir:'down', link:'#' },
+
+  // ENTERTAINMENT
+  { id:9, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:'When will BBNaija auditions begin?', badge:'new', yes:0.67, no:0.33, vol:'₦19.2M', change:'+7%', dir:'up', link:'#' },
+  { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn box office?", badge:'hot', yes:0.52, no:0.48, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
+
+  // POLITICS
+  { id:11, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.25bn World Bank loan be approved?', badge:'hot', yes:0.74, no:0.26, vol:'₦61.4M', change:'+8%', dir:'up', link:'#' },
+  { id:12, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Labour Party wins 2027 Nigerian Presidential Election', badge:'new', yes:0.29, no:0.71, vol:'₦124.7M', change:'-1%', dir:'down', link:'#' },
+  { id:13, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Tinubu sign the tax reform bill before June?', badge:'new', yes:0.48, no:0.52, vol:'₦38.2M', change:'0%', dir:'flat', link:'#' },
+  { id:14, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Obi run for President in 2027?', badge:'new', yes:0.62, no:0.38, vol:'₦47.1M', change:'+5%', dir:'up', link:'#' },
+
+  // COMMODITIES
+  { id:15, cat:'commodities', emoji:'🛢️', catLabel:'COMMODITIES', title:'Will crude oil price exceed $90/barrel in June?', badge:'hot', yes:0.42, no:0.58, vol:'₦33.8M', change:'-4%', dir:'down', link:'#', isCommodity:true },
+  { id:16, cat:'commodities', emoji:'⛽', catLabel:'COMMODITIES', title:'Will petrol pump price exceed ₦1,200/litre by July?', badge:'new', yes:0.55, no:0.45, vol:'₦22.4M', change:'+6%', dir:'up', link:'#', isCommodity:true },
+  { id:17, cat:'commodities', emoji:'🌾', catLabel:'COMMODITIES', title:'Will a 50kg bag of rice exceed ₦120,000 by August?', badge:'new', yes:0.38, no:0.62, vol:'₦18.7M', change:'+2%', dir:'up', link:'#', isCommodity:true },
+  { id:18, cat:'commodities', emoji:'🫘', catLabel:'COMMODITIES', title:'Will beans price rise above ₦90,000 per bag in Q3?', badge:'new', yes:0.44, no:0.56, vol:'₦12.3M', change:'+1%', dir:'up', link:'#', isCommodity:true },
+  { id:19, cat:'commodities', emoji:'🥚', catLabel:'COMMODITIES', title:'Will a crate of eggs exceed ₦3,500 before September?', badge:'new', yes:0.61, no:0.39, vol:'₦9.8M', change:'+3%', dir:'up', link:'#', isCommodity:true },
+  { id:20, cat:'commodities', emoji:'🍌', catLabel:'COMMODITIES', title:'Will plantain prices drop below ₦800/bunch by June?', badge:'new', yes:0.29, no:0.71, vol:'₦7.1M', change:'-2%', dir:'down', link:'#', isCommodity:true },
+  { id:21, cat:'commodities', emoji:'🌽', catLabel:'COMMODITIES', title:'Will food inflation fall below 30% by end of 2026?', badge:'new', yes:0.33, no:0.67, vol:'₦16.4M', change:'+1%', dir:'up', link:'#', isCommodity:true },
+
+  // FINANCE
+  { id:22, cat:'finance', emoji:'💱', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,800 before end of 2026?', badge:'hot', yes:0.48, no:0.52, vol:'₦88.3M', change:'-3%', dir:'down', link:'#', isCommodity:true },
+  { id:23, cat:'finance', emoji:'📈', catLabel:'FINANCE', title:'Will CBN cut interest rates at June MPC meeting?', badge:'new', yes:0.31, no:0.69, vol:'₦29.5M', change:'+4%', dir:'up', link:'#', isCommodity:true },
+
+  // SPORTS
+  { id:24, cat:'sports', emoji:'🏀', catLabel:'BASKETBALL', title:'Will the Lakers win the NBA Championship 2026?', badge:'hot', yes:0.18, no:0.82, vol:'₦22.8M', change:'-2%', dir:'down', link:'#' },
+  { id:25, cat:'sports', emoji:'🎾', catLabel:'TENNIS', title:'Will Djokovic win Wimbledon 2026?', badge:'new', yes:0.34, no:0.66, vol:'₦15.2M', change:'+1%', dir:'up', link:'#' },
+];
+
+let visibleCount = 12;
+let currentFilter = 'all';
+let currentSort = 'trending';
+let currentSlide = 0;
+let slideTimer;
+
+// ── TICKER ─────────────────────────────────────────────────
+function buildTicker() {
+  const items = ALL_MARKETS.slice(0,12);
+  let html = '';
+  // duplicate for seamless loop
+  for (let pass = 0; pass < 2; pass++) {
+    items.forEach(m => {
+      const dir = m.dir === 'up' ? 't-up' : m.dir === 'down' ? 't-down' : '';
+      html += `<div class="ticker-item"><span class="t-name">${m.emoji} ${m.title.substring(0,32)}${m.title.length>32?'…':''}</span><span class="t-prob">${Math.round(m.yes*100)}%</span><span class="${dir}">${m.dir==='up'?'▲':m.dir==='down'?'▼':'—'} ${m.change}</span></div>`;
+    });
+  }
+  document.getElementById('ticker').innerHTML = html;
+}
+
+// ── FEATURED CAROUSEL ──────────────────────────────────────
+function buildFeatured() {
+  const slidesEl = document.getElementById('slides');
+  const dotsEl = document.getElementById('dots');
+  slidesEl.innerHTML = '';
+  dotsEl.innerHTML = '';
+
+  FEATURED.forEach((f, i) => {
+    const liveTag = f.live ? `<div class="feat-live-dot" style="margin-right:4px;"></div>LIVE · ` : '';
+    slidesEl.innerHTML += `
+      <div class="featured-slide" onclick="window.location='${f.link}'">
+        <div class="featured-bg">${f.bg}</div>
+        <div class="featured-left">
+          <div class="feat-cat-tag">${liveTag}${f.cat}</div>
+          <div class="feat-title">${f.title}</div>
+          <div class="feat-sub">${f.sub}</div>
+          <div class="feat-btns">
+            <button class="feat-btn-yes" onclick="event.stopPropagation()">${f.yesLabel}</button>
+            <button class="feat-btn-no" onclick="event.stopPropagation()">${f.noLabel}</button>
+            <button class="feat-btn-view" onclick="window.location='${f.link}';event.stopPropagation()">View Market →</button>
+          </div>
+        </div>
+        <div class="featured-right">
+          <div class="feat-prob-label">YES PROBABILITY</div>
+          <div class="feat-prob">${f.prob}%</div>
+          <div class="feat-vol">Vol <span>${f.vol}</span></div>
+          <div class="feat-change ${f.changeDir}">${f.changeDir === 'up' ? '▲' : '▼'} ${f.change} today</div>
+        </div>
+      </div>`;
+    dotsEl.innerHTML += `<div class="carousel-dot ${i===0?'active':''}" onclick="goToSlide(${i})"></div>`;
+  });
+
+  startSlideTimer();
+}
+
+function goToSlide(n) {
+  currentSlide = n;
+  document.getElementById('slides').style.transform = `translateX(-${n*100}%)`;
+  document.querySelectorAll('.carousel-dot').forEach((d,i) => d.classList.toggle('active', i===n));
+  resetSlideTimer();
+}
+function nextSlide() { goToSlide((currentSlide+1) % FEATURED.length); }
+function prevSlide() { goToSlide((currentSlide-1+FEATURED.length) % FEATURED.length); }
+function startSlideTimer() { slideTimer = setInterval(nextSlide, 5000); }
+function resetSlideTimer() { clearInterval(slideTimer); startSlideTimer(); }
+
+// ── MARKET CARDS ───────────────────────────────────────────
+function renderMarkets() {
+  let markets = [...ALL_MARKETS];
+
+  // filter
+  if (currentFilter !== 'all') {
+    if (currentFilter === 'live') markets = markets.filter(m => m.badge === 'live');
+    else if (currentFilter === 'trending') markets = markets.filter(m => m.badge === 'hot');
+    else if (currentFilter === 'new') markets = markets.filter(m => m.badge === 'new');
+    else markets = markets.filter(m => m.cat === currentFilter);
+  }
+
+  // search
+  const q = document.getElementById('main-search').value.toLowerCase().trim();
+  if (q) markets = markets.filter(m => m.title.toLowerCase().includes(q) || m.catLabel.toLowerCase().includes(q));
+
+  // sort
+  if (currentSort === 'volume') markets.sort((a,b) => parseFloat(b.vol.replace(/[₦,MBK]/g,'')) - parseFloat(a.vol.replace(/[₦,MBK]/g,'')));
+  else if (currentSort === 'newest') markets.sort((a,b) => b.id - a.id);
+  else if (currentSort === 'closing') markets.sort((a,b) => a.yes - b.yes);
+
+  const grid = document.getElementById('markets-grid');
+  const slice = markets.slice(0, visibleCount);
+
+  if (slice.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text3);font-family:var(--font-mono);font-size:12px;">No markets found for this filter</div>`;
+    document.getElementById('load-more-wrap').style.display = 'none';
+    return;
+  }
+
+  grid.innerHTML = slice.map(m => buildCard(m)).join('');
+  document.getElementById('load-more-wrap').style.display = markets.length > visibleCount ? '' : 'none';
+
+  // animate in
+  setTimeout(() => grid.querySelectorAll('.market-card').forEach((c,i) => {
+    setTimeout(() => c.classList.add('visible'), i*40);
+  }), 30);
+}
+
+function buildCard(m) {
+  const pct = Math.round(m.yes * 100);
+  const badgeClass = m.badge === 'live' ? 'live' : m.badge === 'upcoming' ? 'upcoming' : m.badge === 'hot' ? 'hot' : 'new';
+  const badgeLabel = m.badge === 'live' ? '● LIVE' : m.badge === 'upcoming' ? 'UPCOMING' : m.badge === 'hot' ? '🔥 HOT' : '✦ NEW';
+  const changeClass = m.dir === 'up' ? 'up' : m.dir === 'down' ? 'down' : 'flat';
+  const changeIcon = m.dir === 'up' ? '▲' : m.dir === 'down' ? '▼' : '—';
+  const cardClass = m.isCommodity ? 'market-card commodity fade-up' : 'market-card fade-up';
+
+  let matchHtml = '';
+  if (m.isMatch) {
+    matchHtml = `
+      <div class="match-mini">
+        <div class="match-mini-team">
+          <div class="match-mini-logo">${m.t1}</div>
+          <div class="match-mini-name">${m.t1n}</div>
+        </div>
+        <div class="${m.score === 'VS' ? 'match-mini-vs' : 'match-mini-score'}">${m.score}</div>
+        <div class="match-mini-team">
+          <div class="match-mini-logo">${m.t2}</div>
+          <div class="match-mini-name">${m.t2n}</div>
+        </div>
+      </div>`;
+  }
+
+  return `
+    <div class="${cardClass}" onclick="window.location='${m.link}'">
+      <div class="mc-top">
+        <div class="mc-cat">${m.emoji} ${m.catLabel}</div>
+        <div class="mc-badge ${badgeClass}">${badgeLabel}</div>
+      </div>
+      ${matchHtml}
+      <div class="mc-title">${m.title}</div>
+      <div class="mc-prob-row">
+        <div class="mc-prob">${pct}%</div>
+        <div class="mc-prob-bar"><div class="mc-prob-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="mc-price-row">
+        <div class="mc-price yes"><div class="mc-price-label">YES</div><div class="mc-price-val">₦${pct}</div></div>
+        <div class="mc-price no"><div class="mc-price-label">NO</div><div class="mc-price-val">₦${100-pct}</div></div>
+      </div>
+      <div class="mc-footer">
+        <div class="mc-vol">Vol ${m.vol}</div>
+        <div class="mc-change ${changeClass}">${changeIcon} ${m.change}</div>
+      </div>
+    </div>`;
+}
+
+// ── CONTROLS ───────────────────────────────────────────────
+function filterCat(cat, el) {
+  currentFilter = cat;
+  visibleCount = 12;
+
+  // sync sidebar + pills
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+
+  if (el.classList.contains('sidebar-item')) {
+    el.classList.add('active');
+    document.querySelectorAll('.cat-pill').forEach(p => {
+      if (p.textContent.toLowerCase().includes(cat) || (cat==='all' && p.textContent.includes('All'))) p.classList.add('active');
+    });
+  } else {
+    el.classList.add('active');
+    document.querySelectorAll('.sidebar-item').forEach(s => {
+      if (s.textContent.toLowerCase().includes(cat) || (cat==='all' && s.textContent.includes('All'))) s.classList.add('active');
+    });
+  }
+
+  const labels = { all:'All Markets', live:'🔴 Live Now', football:'⚽ Football', sports:'🏆 Sports', music:'🎵 Music', entertainment:'🎬 Entertainment', politics:'⚖️ Politics', commodities:'🛢️ Commodities', finance:'💱 Finance', trending:'🔥 Trending', new:'✦ New Markets' };
+  document.getElementById('markets-section-label').textContent = labels[cat] || 'Markets';
+  renderMarkets();
+}
+
+function sortMarkets(val) { currentSort = val; renderMarkets(); }
+function searchMarkets(q) { renderMarkets(); }
+function loadMore() { visibleCount += 9; renderMarkets(); }
+
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+}
+
+// fade-up observer
+const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+// ── INIT ───────────────────────────────────────────────────
+buildTicker();
+buildFeatured();
+renderMarkets();
+</script>
+</body>
+</html>

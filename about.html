@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root {
+  --y: #F5C800;
+  --y2: #FFD93D;
+  --y3: #B89200;
+  --bg: #0A0A08;
+  --bg2: #111110;
+  --bg3: #181815;
+  --bg4: #1E1E1A;
+  --bg5: #252520;
+  --border: rgba(245,200,0,0.12);
+  --border2: rgba(245,200,0,0.22);
+  --border3: rgba(255,255,255,0.06);
+  --text: #F0EDE0;
+  --text2: #9A9880;
+  --text3: #5A5845;
+  --green: #22C55E;
+  --red: #EF4444;
+  --blue: #3B82F6;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-num: 'Oswald', sans-serif;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+[data-theme="light"] {
+  --bg: #FAFAF5; --bg2: #FFFFFF; --bg3: #F5F4EE;
+  --bg4: #EEECEA; --bg5: #E5E3DC;
+  --border: rgba(180,145,0,0.18); --border2: rgba(180,145,0,0.35);
+  --border3: rgba(0,0,0,0.06);
+  --text: #1A1A14; --text2: #5C5A48; --text3: #9A9880;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:14px; scroll-behavior: smooth; }
+body { font-family:var(--font-body); background:var(--bg); color:var(--text); overflow-x:hidden; }
+a { color:inherit; text-decoration:none; }
+::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:99px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  height: 56px;
+  background: rgba(10,10,8,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display:flex; align-items:center;
+  padding: 0 40px; gap: 32px;
+}
+[data-theme="light"] nav { background: rgba(250,250,245,0.85); }
+.nav-logo {
+  font-family:var(--font-display); font-weight:800; font-size:20px;
+  color:var(--y); letter-spacing:-0.5px;
+  display:flex; align-items:center; gap:7px; margin-right:8px;
+}
+.logo-dot { width:8px; height:8px; background:var(--y); border-radius:50%; animation: pulse-dot 1.5s ease infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+
+.nav-links { display:flex; align-items:center; gap:4px; }
+.nav-link {
+  padding: 6px 14px; border-radius:var(--radius);
+  font-size:13px; font-weight:500; color:var(--text2);
+  transition:all 0.15s; cursor:pointer;
+}
+.nav-link:hover { color:var(--text); background:rgba(245,200,0,0.06); }
+.nav-link.active { color:var(--y); }
+
+.nav-right { margin-left:auto; display:flex; align-items:center; gap:10px; }
+.btn-launch {
+  padding: 8px 20px; border-radius:var(--radius);
+  background:var(--y); color:#000; border:none; cursor:pointer;
+  font-family:var(--font-display); font-weight:700; font-size:13px;
+  transition:all 0.15s; letter-spacing:0.3px;
+}
+.btn-launch:hover { background:var(--y2); transform:translateY(-1px); }
+.theme-toggle {
+  width:34px; height:34px; background:var(--bg3); border:1px solid var(--border);
+  border-radius:var(--radius); display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--y); font-size:14px; transition:all 0.15s;
+}
+.theme-toggle:hover { background:rgba(245,200,0,0.08); }
+.btn-auth {
+  padding: 7px 14px; border-radius:var(--radius);
+  border: 1px solid var(--border2); background:transparent;
+  font-size:12px; font-weight:500; color:var(--text2);
+  cursor:pointer; transition:all 0.15s; white-space:nowrap;
+}
+.btn-auth:hover { color:var(--y); border-color:var(--y); background:rgba(245,200,0,0.04); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding: 120px 24px 80px;
+  position:relative; overflow:hidden;
+}
+.hero-grid {
+  position:absolute; inset:0; opacity:0.04;
+  background-image:
+    linear-gradient(var(--y) 1px, transparent 1px),
+    linear-gradient(90deg, var(--y) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-glow {
+  position:absolute; top:20%; left:50%; transform:translateX(-50%);
+  width:600px; height:600px; border-radius:50%;
+  background: radial-gradient(circle, rgba(245,200,0,0.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(245,200,0,0.08); border:1px solid var(--border2);
+  border-radius:99px; padding:6px 16px; margin-bottom:28px;
+  font-family:var(--font-mono); font-size:11px; color:var(--y); letter-spacing:1px;
+}
+.hero-tag-dot { width:6px; height:6px; background:var(--y); border-radius:50%; animation:pulse-dot 1.5s infinite; }
+.hero-title {
+  font-family:var(--font-display); font-weight:800;
+  font-size: clamp(48px, 8vw, 100px);
+  line-height:0.95; letter-spacing:-3px; margin-bottom:28px;
+  color:var(--text);
+}
+.hero-title span { color:var(--y); }
+.hero-title .line2 { display:block; }
+.hero-sub {
+  font-size:clamp(16px, 2.5vw, 20px); color:var(--text2);
+  max-width:560px; line-height:1.7; margin-bottom:44px;
+}
+.hero-ctas { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.btn-primary {
+  padding:14px 32px; border-radius:var(--radius-lg); border:none; cursor:pointer;
+  font-family:var(--font-display); font-weight:700; font-size:16px;
+  background:var(--y); color:#000; transition:all 0.2s; letter-spacing:0.3px;
+}
+.btn-primary:hover { background:var(--y2); transform:translateY(-2px); box-shadow:0 8px 30px rgba(245,200,0,0.25); }
+.btn-secondary {
+  padding:14px 32px; border-radius:var(--radius-lg);
+  border:1px solid var(--border2); cursor:pointer;
+  font-family:var(--font-display); font-weight:700; font-size:16px;
+  background:transparent; color:var(--text2); transition:all 0.2s;
+}
+.btn-secondary:hover { color:var(--text); border-color:var(--y); background:rgba(245,200,0,0.04); }
+
+.hero-scroll {
+  position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  color:var(--text3); font-family:var(--font-mono); font-size:9px; letter-spacing:2px;
+  animation: bob 2s ease-in-out infinite;
+}
+@keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  padding: 32px 40px;
+  display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+}
+.stat-item {
+  text-align:center; padding: 0 24px;
+  border-right:1px solid var(--border3);
+}
+.stat-item:last-child { border-right:none; }
+.stat-num {
+  font-family:var(--font-num); font-weight:700;
+  font-size:42px; color:var(--y); letter-spacing:1px; line-height:1;
+  margin-bottom:6px;
+}
+.stat-label { font-family:var(--font-mono); font-size:10px; color:var(--text3); letter-spacing:2px; text-transform:uppercase; }
+
+/* ── SECTION COMMON ── */
+section { padding: 100px 40px; max-width:1100px; margin:0 auto; }
+.section-tag {
+  font-family:var(--font-mono); font-size:10px; letter-spacing:3px;
+  color:var(--y); text-transform:uppercase; margin-bottom:16px;
+  display:flex; align-items:center; gap:8px;
+}
+.section-tag::before { content:''; width:24px; height:1px; background:var(--y); }
+.section-title {
+  font-family:var(--font-display); font-weight:800;
+  font-size:clamp(32px, 5vw, 52px);
+  line-height:1.05; letter-spacing:-1.5px; margin-bottom:20px;
+}
+.section-title span { color:var(--y); }
+.section-sub { font-size:16px; color:var(--text2); line-height:1.8; max-width:560px; }
+
+/* ── WHAT IS SKEDEE ── */
+.what-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  margin-top:60px;
+}
+.what-visual {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--radius-xl); padding:28px; position:relative; overflow:hidden;
+}
+.what-visual::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--y), transparent);
+  animation: scan 3s ease-in-out infinite;
+}
+@keyframes scan { 0%,100%{opacity:0.3} 50%{opacity:1} }
+.mock-market {
+  background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius-lg);
+  padding:16px; margin-bottom:10px; transition:all 0.2s;
+}
+.mock-market:hover { border-color:var(--border2); }
+.mock-market-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.mock-market-name { font-family:var(--font-display); font-weight:600; font-size:13px; }
+.mock-market-prob { font-family:var(--font-num); font-size:22px; color:var(--y); font-weight:700; }
+.mock-bar { height:5px; background:var(--bg5); border-radius:99px; overflow:hidden; margin-bottom:10px; }
+.mock-bar-fill { height:100%; background:var(--y); border-radius:99px; }
+.mock-btns { display:flex; gap:6px; }
+.mock-btn-y { flex:1; padding:7px; border-radius:6px; background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.3); color:var(--green); font-size:11px; font-weight:700; font-family:var(--font-display); text-align:center; cursor:pointer; }
+.mock-btn-n { flex:1; padding:7px; border-radius:6px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.3); color:var(--red); font-size:11px; font-weight:700; font-family:var(--font-display); text-align:center; cursor:pointer; }
+
+.what-points { display:flex; flex-direction:column; gap:28px; }
+.what-point { display:flex; gap:16px; align-items:flex-start; }
+.what-point-icon {
+  width:40px; height:40px; flex-shrink:0;
+  background:rgba(245,200,0,0.1); border:1px solid var(--border2);
+  border-radius:var(--radius); display:flex; align-items:center; justify-content:center;
+  color:var(--y); font-size:16px;
+}
+.what-point-title { font-family:var(--font-display); font-weight:700; font-size:15px; margin-bottom:5px; }
+.what-point-text { font-size:13px; color:var(--text2); line-height:1.7; }
+
+/* ── HOW IT WORKS ── */
+.how-section { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:100px 40px; }
+.how-inner { max-width:1100px; margin:0 auto; }
+.how-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:60px; position:relative; }
+.how-steps::before {
+  content:'';
+  position:absolute; top:32px; left:16.6%; right:16.6%; height:1px;
+  background:linear-gradient(90deg, transparent, var(--border2), var(--y), var(--border2), transparent);
+}
+.how-step { padding:40px 32px; background:var(--bg3); position:relative; }
+.how-step:first-child { border-radius:var(--radius-xl) 0 0 var(--radius-xl); }
+.how-step:last-child { border-radius:0 var(--radius-xl) var(--radius-xl) 0; }
+.how-step-num {
+  width:64px; height:64px; border-radius:50%;
+  background:var(--bg4); border:2px solid var(--border2);
+  font-family:var(--font-num); font-size:26px; font-weight:700; color:var(--y);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:24px; position:relative; z-index:1;
+}
+.how-step.active .how-step-num { background:var(--y); color:#000; border-color:var(--y); box-shadow:0 0 20px rgba(245,200,0,0.3); }
+.how-step-title { font-family:var(--font-display); font-weight:700; font-size:18px; margin-bottom:10px; }
+.how-step-text { font-size:13px; color:var(--text2); line-height:1.8; }
+.how-step-icon { font-size:28px; margin-bottom:14px; }
+
+/* ── MARKETS PREVIEW ── */
+.markets-preview { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:52px; }
+.preview-card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--radius-xl); padding:20px;
+  transition:all 0.2s; cursor:pointer; position:relative; overflow:hidden;
+}
+.preview-card::after { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:var(--y); opacity:0; transition:opacity 0.2s; }
+.preview-card:hover { border-color:var(--border2); transform:translateY(-3px); }
+.preview-card:hover::after { opacity:1; }
+.preview-cat { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:10px; }
+.preview-title { font-family:var(--font-display); font-weight:600; font-size:14px; margin-bottom:12px; line-height:1.4; }
+.preview-prob { font-family:var(--font-num); font-size:30px; color:var(--y); font-weight:700; margin-bottom:8px; }
+.preview-bar { height:4px; background:var(--bg4); border-radius:99px; overflow:hidden; margin-bottom:12px; }
+.preview-bar-fill { height:100%; background:var(--y); border-radius:99px; }
+.preview-meta { display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:9px; color:var(--text3); }
+
+/* ── VALUES ── */
+.values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:52px; }
+.value-card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--radius-xl); padding:28px;
+  transition:all 0.2s;
+}
+.value-card:hover { border-color:var(--border2); background:var(--bg3); }
+.value-icon { font-size:32px; margin-bottom:16px; }
+.value-title { font-family:var(--font-display); font-weight:700; font-size:17px; margin-bottom:10px; }
+.value-text { font-size:13px; color:var(--text2); line-height:1.8; }
+
+/* ── TEAM ── */
+.team-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:52px; }
+.team-card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--radius-xl); padding:24px 20px; text-align:center;
+  transition:all 0.2s;
+}
+.team-card:hover { border-color:var(--border2); transform:translateY(-3px); }
+.team-avatar {
+  width:64px; height:64px; border-radius:50%; margin:0 auto 14px;
+  background:linear-gradient(135deg, var(--y), var(--y3));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:800; font-size:22px; color:#000;
+}
+.team-name { font-family:var(--font-display); font-weight:700; font-size:15px; margin-bottom:4px; }
+.team-role { font-family:var(--font-mono); font-size:10px; color:var(--y); letter-spacing:1px; margin-bottom:10px; }
+.team-bio { font-size:12px; color:var(--text3); line-height:1.6; }
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  margin: 0 40px 100px;
+  max-width: 1020px;
+  margin-left:auto; margin-right:auto;
+  background:linear-gradient(135deg, rgba(245,200,0,0.1), rgba(245,200,0,0.03));
+  border:1px solid var(--border2); border-radius:var(--radius-xl);
+  padding:60px; text-align:center; position:relative; overflow:hidden;
+}
+.cta-banner::before {
+  content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+  background:radial-gradient(circle at center, rgba(245,200,0,0.05) 0%, transparent 60%);
+  animation:rotate 20s linear infinite;
+}
+@keyframes rotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.cta-title { font-family:var(--font-display); font-weight:800; font-size:clamp(28px,4vw,48px); letter-spacing:-1px; margin-bottom:16px; position:relative; }
+.cta-sub { font-size:16px; color:var(--text2); margin-bottom:36px; position:relative; }
+.cta-btns { display:flex; gap:12px; justify-content:center; position:relative; flex-wrap:wrap; }
+
+/* ── FOOTER ── */
+.site-footer { background:var(--bg2); border-top:1px solid var(--border); padding:40px 0 24px; }
+.footer-inner { max-width:1100px; margin:0 auto; padding:0 40px; display:flex; align-items:flex-start; justify-content:space-between; gap:40px; flex-wrap:wrap; }
+.footer-logo { font-family:var(--font-display); font-weight:800; font-size:36px; color:var(--text3); letter-spacing:-1px; margin-bottom:24px; opacity:0.35; }
+.footer-cols { display:flex; gap:48px; margin-bottom:28px; }
+.footer-col { display:flex; flex-direction:column; gap:10px; }
+.footer-col-title { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:4px; }
+.footer-col a { font-size:13px; color:var(--text3); transition:color 0.15s; display:flex; align-items:center; gap:6px; }
+.footer-col a:hover { color:var(--text); }
+.footer-copy { font-family:var(--font-mono); font-size:11px; color:var(--text3); opacity:0.6; }
+.footer-right { display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
+.store-badge img { height:44px; border-radius:10px; transition:opacity 0.15s; }
+.store-badge:hover img { opacity:0.85; }
+[data-theme="dark"] .store-badge img { filter:brightness(0.92); }
+.footer-disclaimer { font-family:var(--font-mono); font-size:13px; font-weight:700; color:var(--text3); margin-top:4px; }
+
+/* ── MOBILE ── */
+* { -webkit-tap-highlight-color:transparent; }
+@media(max-width:900px) {
+  nav { padding:0 20px; }
+  .nav-links { display:none; }
+  .hero { padding:100px 20px 60px; }
+  .stats-bar { grid-template-columns:1fr 1fr; gap:24px; padding:32px 20px; }
+  .stat-item { border-right:none; }
+  section { padding:70px 20px; }
+  .what-grid { grid-template-columns:1fr; gap:40px; }
+  .how-section { padding:70px 20px; }
+  .how-steps { grid-template-columns:1fr; gap:2px; }
+  .how-steps::before { display:none; }
+  .how-step:first-child { border-radius:var(--radius-xl) var(--radius-xl) 0 0; }
+  .how-step:last-child { border-radius:0 0 var(--radius-xl) var(--radius-xl); }
+  .markets-preview { grid-template-columns:1fr; }
+  .values-grid { grid-template-columns:1fr; }
+  .team-grid { grid-template-columns:1fr 1fr; }
+  .cta-banner { margin:0 20px 60px; padding:40px 24px; }
+  .footer-inner { flex-direction:column; }
+  .footer-right { align-items:flex-start; }
+}
+
+/* ── ANIMATIONS ── */
+.fade-up {
+  opacity:0; transform:translateY(24px);
+  transition:opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-dot"></div> <a href="market.html">Skedee    </a>
+  </div>
+  <div class="nav-links">
+    <a href="markets/10000002.html" class="nav-link">Markets</a>
+    <a href="about.html" class="nav-link active">About</a>
+    <a href="#" class="nav-link">Blog</a>
+    <a href="#" class="nav-link">Careers</a>
+    <a href="faq.html" class="nav-link">FAQ</a>
+    <a href="#" class="nav-link">Privacy Policy</a>
+  </div>
+  <div class="nav-right">
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <i class="fa-solid fa-sun" id="theme-icon"></i>
+    </div>
+    <a href="signup.html"><button class="btn-auth">Log in / Sign Up</button></a>
+    <a href="main.html"><button class="btn-launch">Open App</button></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag">
+    <div class="hero-tag-dot"></div>
+    Nigeria's Prediction Market
+  </div>
+  <h1 class="hero-title">
+    Trade on<br>
+    <span>anything</span><br>
+    <span class="line2" style="color:var(--text2);font-size:0.65em;letter-spacing:-1px;">that happens.</span>
+  </h1>
+  <p class="hero-sub">
+    Skedee is a real-money prediction market where you can trade on the outcomes of sports, politics, entertainment, and anything else!  
+  </p>
+  <div class="hero-ctas">
+    <a href="main.html"><button class="btn-primary">Start Trading</button></a>
+    <button class="btn-secondary" onclick="document.getElementById('what').scrollIntoView({behavior:'smooth'})">Learn More <i class="fa-solid fa-arrow-down" style="font-size:11px;margin-left:4px;"></i></button>
+  </div>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <i class="fa-solid fa-chevron-down"></i>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item fade-up">
+    <div class="stat-num">₦2.4B+</div>
+    <div class="stat-label">Total Volume Traded</div>
+  </div>
+  <div class="stat-item fade-up" style="transition-delay:0.1s">
+    <div class="stat-num">50K+</div>
+    <div class="stat-label">Active Traders</div>
+  </div>
+  <div class="stat-item fade-up" style="transition-delay:0.2s">
+    <div class="stat-num">100+</div>
+    <div class="stat-label">Live Markets</div>
+  </div>
+  <div class="stat-item fade-up" style="transition-delay:0.3s">
+    <div class="stat-num">99.9%</div>
+    <div class="stat-label">Uptime</div>
+  </div>
+</div>
+
+<!-- WHAT IS SKEDEE -->
+<section id="what">
+  <div class="section-tag">What we do</div>
+  <h2 class="section-title">Not a betting app.<br><span>A prediction market.</span></h2>
+  <p class="section-sub">Skedee is different. You're not betting against the house — you're trading with other users. Prices move in real time based on what the market believes. Buy YES if you think it happens. Buy NO if you don't.</p>
+
+  <div class="what-grid">
+    <div class="what-visual fade-up">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;margin-bottom:14px;">LIVE MARKETS</div>
+      <div class="mock-market">
+        <div class="mock-market-top">
+          <div class="mock-market-name">Barcelona vs Real Madrid</div>
+          <div class="mock-market-prob">58%</div>
+        </div>
+        <div class="mock-bar"><div class="mock-bar-fill" style="width:58%"></div></div>
+        <div class="mock-btns"><div class="mock-btn-y">BUY YES ₦58</div><div class="mock-btn-n">BUY NO ₦42</div></div>
+      </div>
+      <div class="mock-market">
+        <div class="mock-market-top">
+          <div class="mock-market-name">Over 2.5 Goals</div>
+          <div class="mock-market-prob">66%</div>
+        </div>
+        <div class="mock-bar"><div class="mock-bar-fill" style="width:66%"></div></div>
+        <div class="mock-btns"><div class="mock-btn-y">BUY YES ₦66</div><div class="mock-btn-n">BUY NO ₦34</div></div>
+      </div>
+      <div class="mock-market">
+        <div class="mock-market-top">
+          <div class="mock-market-name">Tinubu Re-elected 2027</div>
+          <div class="mock-market-prob">41%</div>
+        </div>
+        <div class="mock-bar"><div class="mock-bar-fill" style="width:41%"></div></div>
+        <div class="mock-btns"><div class="mock-btn-y">BUY YES ₦41</div><div class="mock-btn-n">BUY NO ₦59</div></div>
+      </div>
+      <div style="margin-top:10px;text-align:center;font-family:var(--font-mono);font-size:9px;color:var(--text3);">+ many more markets</div>
+    </div>
+
+    <div class="what-points fade-up" style="transition-delay:0.15s">
+      <div class="what-point">
+        <div class="what-point-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+        <div>
+          <div class="what-point-title">Prices reflect real probability</div>
+          <div class="what-point-text">Every market price (₦1–₦99) represents the crowd's belief that something will happen. ₦74 means 74% chance. No bookmaker margin.</div>
+        </div>
+      </div>
+      <div class="what-point">
+        <div class="what-point-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+        <div>
+          <div class="what-point-title">Buy, sell, exit anytime</div>
+          <div class="what-point-text">Unlike traditional betting, you can exit your position before the event ends. Lock in profit or cut losses — you're always in control.</div>
+        </div>
+      </div>
+      <div class="what-point">
+        <div class="what-point-icon"><i class="ti ti-currency-naira"></i></div>
+        <div>
+          <div class="what-point-title">100% Naira, built for Nigeria</div>
+          <div class="what-point-text">Deposit, trade, and withdraw in ₦NGN. No dollar conversion, no crypto wallets. Instant bank transfers via Paystack.</div>
+        </div>
+      </div>
+      <div class="what-point">
+        <div class="what-point-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div>
+          <div class="what-point-title">Secure & transparent</div>
+          <div class="what-point-text">All market resolutions are verified by independent data sources. Funds are held in escrow and never touched until settlement.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="how-section">
+  <div class="how-inner">
+    <div class="section-tag">How it works</div>
+    <h2 class="section-title">Three steps to <span>your first trade</span></h2>
+    <div class="how-steps">
+      <div class="how-step active fade-up">
+        <div class="how-step-icon">🏦</div>
+        <div class="how-step-num">01</div>
+        <div class="how-step-title">Fund your wallet</div>
+        <div class="how-step-text">Create an account and deposit Naira instantly via bank transfer, USSD, or card through Paystack. <b>Minimum deposit is ₦500.</b></div>
+      </div>
+      <div class="how-step fade-up" style="transition-delay:0.15s">
+        <div class="how-step-icon">🔍</div>
+        <div class="how-step-num">02</div>
+        <div class="how-step-title">Pick a market</div>
+        <div class="how-step-text">Browse hundreds of markets across sports, politics, entertainment and more. Find an event you have an edge on and study the odds.</div>
+      </div>
+      <div class="how-step fade-up" style="transition-delay:0.3s">
+        <div class="how-step-icon">⚡</div>
+        <div class="how-step-num">03</div>
+        <div class="how-step-title">Trade & cash out</div>
+        <div class="how-step-text">Buy YES or NO shares. Watch prices move in real time. Sell before the event or hold until resolution. Winnings land instantly.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MARKETS PREVIEW -->
+<section>
+  <div class="section-tag">Markets</div>
+  <h2 class="section-title">Trade on <span>anything.</span></h2>
+  <p class="section-sub">Choose from Premier League matches or Nigerian elections. If it can happen, there's a market for it on Skedee.</p>
+  <p>_____</p>
+  <p class="section-sub"><h6>Terms and conditions apply.</h6></p>
+  <div class="markets-preview">
+    <div class="preview-card fade-up">
+      <div class="preview-cat">⚽ Football</div>
+      <div class="preview-title">Man City wins Premier League 2025/26</div>
+      <div class="preview-prob">62%</div>
+      <div class="preview-bar"><div class="preview-bar-fill" style="width:62%"></div></div>
+      <div class="preview-meta"><span>Vol ₦48.2M</span><span>Closes May 2026</span></div>
+    </div>
+    <div class="preview-card fade-up" style="transition-delay:0.1s">
+      <div class="preview-cat">🗳️ Politics</div>
+      <div class="preview-title">Labour Party wins 2027 Nigerian Presidential Election</div>
+      <div class="preview-prob">29%</div>
+      <div class="preview-bar"><div class="preview-bar-fill" style="width:29%"></div></div>
+      <div class="preview-meta"><span>Vol ₦124.7M</span><span>Closes Feb 2027</span></div>
+    </div>
+    <div class="preview-card fade-up" style="transition-delay:0.2s">
+      <div class="preview-cat">🎵 Music</div>
+      <div class="preview-title">Burna Boy wins Grammy for Best Global Album 2026</div>
+      <div class="preview-prob">44%</div>
+      <div class="preview-bar"><div class="preview-bar-fill" style="width:44%"></div></div>
+      <div class="preview-meta"><span>Vol ₦31.4M</span><span>Closes Feb 2026</span></div>
+    </div>
+    <div class="preview-card fade-up" style="transition-delay:0.1s">
+      <div class="preview-cat">🏀 Basketball</div>
+      <div class="preview-title">Lakers win the NBA Championship 2026</div>
+      <div class="preview-prob">18%</div>
+      <div class="preview-bar"><div class="preview-bar-fill" style="width:18%"></div></div>
+      <div class="preview-meta"><span>Vol ₦22.8M</span><span>Closes Jun 2026</span></div>
+    </div>
+    <div class="preview-card fade-up" style="transition-delay:0.2s">
+      <div class="preview-cat">📱 Tech</div>
+      <div class="preview-title">Apple releases foldable iPhone in 2026</div>
+      <div class="preview-prob">37%</div>
+      <div class="preview-bar"><div class="preview-bar-fill" style="width:37%"></div></div>
+      <div class="preview-meta"><span>Vol ₦18.3M</span><span>Closes Dec 2026</span></div>
+    </div>
+    <div class="preview-card fade-up" style="transition-delay:0.3s">
+      <div class="preview-cat">🎬 Entertainment</div>
+      <div class="preview-title">Wizkid drops a new album before end of 2026</div>
+      <div class="preview-prob">71%</div>
+      <div class="preview-bar"><div class="preview-bar-fill" style="width:71%"></div></div>
+      <div class="preview-meta"><span>Vol ₦55.9M</span><span>Closes Dec 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<div class="how-section">
+  <div class="how-inner">
+    <div class="section-tag">Our Values</div>
+    <h2 class="section-title">Built on <span>principles</span></h2>
+    <div class="values-grid">
+      <div class="value-card fade-up">
+        <div class="value-icon">🎯</div>
+        <div class="value-title">Accuracy of Markets</div>
+        <div class="value-text">Skedee prediction markets are accurate and correctly forecasting real time events to resolve fairly and precisely.</div>
+      </div>
+      <div class="value-card fade-up" style="transition-delay:0.1s">
+        <div class="value-icon">🌍</div>
+        <div class="value-title">Built for Africa</div>
+        <div class="value-text">Skedee is designed first for Nigerian users with Naira pricing, local payment methods, and markets that matter.</div>
+      </div>
+      <div class="value-card fade-up" style="transition-delay:0.2s">
+        <div class="value-icon">⚖️</div>
+        <div class="value-title">Trader first</div>
+        <div class="value-text">No hidden fees. No manipulated odds. You trade against other users at fair market prices. We make money only when the platform thrives, not when you lose.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CTA BANNER -->
+<div class="cta-banner fade-up">
+  <h2 class="cta-title">Ready to start trading?</h2>
+  <p class="cta-sub">Join 50,000+ Nigerians already on Skedee. Only a few minutes to get started!</p>
+  <div class="cta-btns">
+    <a href="market.html"><button class="btn-primary" style="font-size:15px;padding:14px 36px;">Open the App <i class="fa-solid fa-arrow-right-long"></i></button></a>
+    <button class="btn-secondary" style="font-size:15px;padding:14px 36px;">Read the FAQ</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">PAYMENT METHODS</div>
+          <a href="https://opayweb.com" target="_blank">Opay</a>
+          <a href="https://paystack.com" target="_blank">Paystack</a>
+          <a href="https://flutterwave.com" target="_blank">Flutterwave</a>
+          <a href="https://palmpay.com" target="_blank">Palmpay</a>
+          <a href="https://privacy-policy.html" target="_blank">Bank Transfer</a>
+        </div>
+
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') === 'dark';
+  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+}
+
+// Scroll-triggered fade-up animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Animated stat counters
+function animateCounter(el, target, prefix='', suffix='') {
+  const isDecimal = target.toString().includes('.');
+  const num = parseFloat(target);
+  const duration = 2000;
+  const steps = 60;
+  const increment = num / steps;
+  let current = 0;
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= num) { current = num; clearInterval(timer); }
+    el.textContent = prefix + (isDecimal ? current.toFixed(1) : Math.floor(current).toLocaleString()) + suffix;
+  }, duration / steps);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      statsObserver.unobserve(e.target);
+      const nums = e.target.querySelectorAll('.stat-num');
+      nums[0] && animateCounter(nums[0], 2.4, '₦', 'B+');
+      nums[1] && animateCounter(nums[1], 50, '', 'K+');
+      nums[2] && animateCounter(nums[2], 100, '', '+');
+      nums[3] && animateCounter(nums[3], 99.9, '', '%');
+    }
+  });
+}, { threshold: 0.5 });
+const statsBar = document.querySelector('.stats-bar');
+if (statsBar) statsObserver.observe(statsBar);
+</script>
+</body>
+</html>

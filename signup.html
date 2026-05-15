@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up — Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --y: #F5C800; --y2: #FFD93D; --y3: #B89200;
+  --bg: #0A0A08; --bg2: #111110; --bg3: #181815; --bg4: #1E1E1A;
+  --border: rgba(245,200,0,0.12); --border2: rgba(245,200,0,0.25); --border3: rgba(255,255,255,0.06);
+  --text: #F0EDE0; --text2: #9A9880; --text3: #5A5845;
+  --green: #22C55E; --red: #EF4444;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --radius: 10px; --radius-lg: 14px;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { font-size:14px; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 80px 16px 40px;
+  position: relative;
+  transition: background 0.3s, color 0.3s;
+}
+
+[data-theme="light"] {
+  --bg: #FAFAF5; --bg2: #FFFFFF; --bg3: #F5F4EE; --bg4: #EEECEA;
+  --border: rgba(180,145,0,0.18); --border2: rgba(180,145,0,0.35); --border3: rgba(0,0,0,0.06);
+  --text: #1A1A14; --text2: #5C5A48; --text3: #9A9880;
+}
+
+/* top bar */
+.top-bar {
+  position: fixed; top: 16px; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; z-index: 100; pointer-events: none;
+}
+.back-btn {
+  pointer-events: all;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--y); color: #000;
+  font-family: var(--font-display); font-weight: 700; font-size: 13px;
+  padding: 8px 16px; border-radius: 99px;
+  text-decoration: none; transition: all 0.15s;
+  box-shadow: 0 2px 12px rgba(245,200,0,0.25);
+}
+.back-btn:hover { background: var(--y2); transform: translateY(-1px); }
+.theme-toggle {
+  pointer-events: all;
+  width: 38px; height: 38px;
+  background: var(--y); border: none;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #000; font-size: 15px;
+  transition: all 0.15s; box-shadow: 0 2px 12px rgba(245,200,0,0.25);
+}
+.theme-toggle:hover { background: var(--y2); transform: translateY(-1px); }
+.bg-glow {
+  position:fixed; top:-20%; left:50%; transform:translateX(-50%);
+  width:700px; height:500px; border-radius:50%;
+  background:radial-gradient(circle, rgba(245,200,0,0.06) 0%, transparent 70%);
+  pointer-events:none;
+}
+.bg-grid {
+  position:fixed; inset:0; opacity:0.025;
+  background-image: linear-gradient(var(--y) 1px, transparent 1px), linear-gradient(90deg, var(--y) 1px, transparent 1px);
+  background-size:50px 50px; pointer-events:none;
+}
+
+/* CARD */
+.card {
+  width: 100%; max-width: 420px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 32px;
+  position: relative;
+  z-index: 1;
+}
+.card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  border-radius:20px 20px 0 0;
+  background:linear-gradient(90deg, transparent, var(--y), transparent);
+}
+
+/* LOGO */
+.logo {
+  display:flex; align-items:center; gap:8px; margin-bottom:28px;
+  font-family:var(--font-display); font-weight:800; font-size:22px; color:var(--y);
+}
+.logo-dot { width:9px; height:9px; background:var(--y); border-radius:50%; animation:pulse 1.5s ease infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.65)} }
+
+/* HEADING */
+.heading { font-family:var(--font-display); font-weight:800; font-size:26px; letter-spacing:-0.5px; margin-bottom:6px; }
+.subheading { font-size:13px; color:var(--text3); margin-bottom:28px; }
+
+/* METHOD TOGGLE */
+.method-toggle {
+  display:flex; gap:4px; background:var(--bg4);
+  border-radius:var(--radius); padding:4px; margin-bottom:24px;
+}
+.method-btn {
+  flex:1; padding:8px; border-radius:8px; border:none; cursor:pointer;
+  font-family:var(--font-display); font-weight:600; font-size:13px;
+  color:var(--text3); background:transparent; transition:all 0.2s;
+}
+.method-btn.active {
+  background:var(--bg2); color:var(--y);
+  box-shadow:0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* FORM */
+.form-group { margin-bottom:16px; }
+label {
+  display:block; font-family:var(--font-mono); font-size:9px;
+  letter-spacing:1.5px; color:var(--text3); text-transform:uppercase;
+  margin-bottom:7px;
+}
+
+.input-wrap { position:relative; display:flex; align-items:center; }
+.input-wrap .prefix {
+  position:absolute; left:14px;
+  font-family:var(--font-mono); font-size:13px; font-weight:700; color:var(--text2);
+  pointer-events:none; z-index:1; user-select:none;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+  width:100%; background:var(--bg3); border:1px solid var(--border);
+  border-radius:var(--radius); padding:12px 14px;
+  color:var(--text); font-family:var(--font-body); font-size:14px;
+  outline:none; transition:all 0.2s;
+  -webkit-appearance:none;
+  appearance:none;
+}
+input:focus { border-color:var(--y); box-shadow:0 0 0 3px rgba(245,200,0,0.07); }
+input.error { border-color:var(--red); box-shadow:0 0 0 3px rgba(239,68,68,0.07); }
+input.valid { border-color:rgba(34,197,94,0.4); }
+
+/* phone prefix padding */
+.has-prefix input { padding-left:52px; }
+
+/* password eye toggle */
+.eye-btn {
+  position:absolute; right:14px; background:none; border:none;
+  cursor:pointer; color:var(--text3); font-size:14px; padding:4px;
+  transition:color 0.15s;
+}
+.eye-btn:hover { color:var(--text2); }
+
+/* error msg */
+.err-msg {
+  font-size:11px; color:var(--red); margin-top:5px;
+  display:none; font-family:var(--font-mono);
+}
+.err-msg.show { display:block; }
+
+/* password strength */
+.pw-strength { margin-top:8px; display:none; }
+.pw-strength.show { display:block; }
+.pw-bars { display:flex; gap:4px; margin-bottom:4px; }
+.pw-bar { flex:1; height:3px; background:var(--bg4); border-radius:99px; transition:background 0.3s; }
+.pw-label { font-family:var(--font-mono); font-size:9px; color:var(--text3); }
+
+/* terms */
+.terms {
+  display:flex; align-items:flex-start; gap:10px; margin-bottom:20px; cursor:pointer;
+}
+.terms input[type="checkbox"] { display:none; }
+.checkbox {
+  width:18px; height:18px; flex-shrink:0; margin-top:1px;
+  background:var(--bg3); border:1px solid var(--border2);
+  border-radius:5px; display:flex; align-items:center; justify-content:center;
+  transition:all 0.15s; cursor:pointer;
+}
+.checkbox.checked { background:var(--y); border-color:var(--y); }
+.checkbox svg { display:none; }
+.checkbox.checked svg { display:block; }
+.terms-text { font-size:12px; color:var(--text3); line-height:1.6; }
+.terms-text a { color:var(--y); text-decoration:underline; text-underline-offset:2px; }
+
+/* submit btn */
+.btn-submit {
+  width:100%; padding:14px; border-radius:var(--radius);
+  border:none; cursor:pointer;
+  font-family:var(--font-display); font-weight:800; font-size:15px;
+  letter-spacing:0.3px; transition:all 0.2s;
+  background:var(--y); color:#000;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.btn-submit:hover:not(:disabled) { background:var(--y2); transform:translateY(-1px); box-shadow:0 6px 24px rgba(245,200,0,0.2); }
+.btn-submit:active:not(:disabled) { transform:translateY(0); }
+.btn-submit:disabled { opacity:0.5; cursor:not-allowed; }
+
+/* spinner */
+.spinner {
+  width:16px; height:16px; border:2px solid rgba(0,0,0,0.2);
+  border-top-color:#000; border-radius:50%;
+  animation:spin 0.7s linear infinite; display:none;
+}
+@keyframes spin { to{transform:rotate(360deg)} }
+
+/* divider */
+.divider { display:flex; align-items:center; gap:12px; margin:20px 0; }
+.divider-line { flex:1; height:1px; background:var(--border3); }
+.divider-text { font-family:var(--font-mono); font-size:9px; color:var(--text3); letter-spacing:1px; }
+
+/* login link */
+.login-link { text-align:center; font-size:13px; color:var(--text3); }
+.login-link a { color:var(--y); font-weight:600; text-decoration:none; }
+.login-link a:hover { text-decoration:underline; }
+
+/* success state */
+.success-state {
+  text-align:center; display:none; padding:16px 0;
+}
+.success-icon { font-size:48px; margin-bottom:16px; }
+.success-title { font-family:var(--font-display); font-weight:800; font-size:22px; margin-bottom:8px; }
+.success-sub { font-size:13px; color:var(--text3); line-height:1.7; margin-bottom:24px; }
+.btn-go {
+  display:inline-block; padding:12px 28px; border-radius:var(--radius);
+  background:var(--y); color:#000; font-family:var(--font-display);
+  font-weight:700; font-size:14px; text-decoration:none; transition:all 0.15s;
+}
+.btn-go:hover { background:var(--y2); }
+
+/* disclaimer */
+.disclaimer {
+  margin-top:20px; text-align:center;
+  font-family:var(--font-mono); font-size:9px; color:var(--text3); letter-spacing:0.5px;
+}
+
+@media(max-width:480px) {
+  .card { padding:28px 20px; border-radius:16px; }
+  .heading { font-size:22px; }
+}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<div class="top-bar">
+  <a href="about.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+    <i class="fa-solid fa-sun" id="theme-icon"></i>
+  </button>
+</div>
+
+<div class="card">
+
+  <!-- FORM STATE -->
+  <div id="form-state">
+    <div class="heading">Create account</div>
+    <div class="subheading">Start trading in under 2 minutes.</div>
+
+    <!-- METHOD TOGGLE -->
+    <div class="method-toggle">
+      <button class="method-btn active" id="btn-phone" onclick="switchMethod('phone')">📱 Phone</button>
+      <button class="method-btn" id="btn-email" onclick="switchMethod('email')">✉️ Email</button>
+    </div>
+
+    <!-- PHONE FIELD -->
+    <div class="form-group" id="phone-group">
+      <label>Phone Number</label>
+      <div class="input-wrap has-prefix">
+        <span class="prefix">+234</span>
+        <input type="tel" id="phone" placeholder="0801 234 5678" maxlength="11" oninput="validatePhone()" autocomplete="tel">
+      </div>
+      <div class="err-msg" id="phone-err">Enter a valid Nigerian number (e.g. 08012345678)</div>
+    </div>
+
+    <!-- EMAIL FIELD -->
+    <div class="form-group" id="email-group" style="display:none;">
+      <label>Email Address</label>
+      <div class="input-wrap">
+        <input type="email" id="email" placeholder="you@example.com" oninput="validateEmail()" autocomplete="email">
+      </div>
+      <div class="err-msg" id="email-err">Enter a valid email address</div>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="form-group">
+      <label>Password</label>
+      <div class="input-wrap">
+        <input type="password" id="password" placeholder="Min. 8 characters" oninput="checkStrength()" autocomplete="new-password">
+        <button class="eye-btn" onclick="togglePW('password', this)" type="button" tabindex="-1">
+          <i class="fa-regular fa-eye"></i>
+        </button>
+      </div>
+      <div class="pw-strength" id="pw-strength">
+        <div class="pw-bars">
+          <div class="pw-bar" id="bar1"></div>
+          <div class="pw-bar" id="bar2"></div>
+          <div class="pw-bar" id="bar3"></div>
+          <div class="pw-bar" id="bar4"></div>
+        </div>
+        <div class="pw-label" id="pw-label">Weak</div>
+      </div>
+      <div class="err-msg" id="pw-err">Password must be at least 8 characters</div>
+    </div>
+
+    <!-- TERMS -->
+    <div class="terms" onclick="toggleTerms()">
+      <div class="checkbox" id="checkbox">
+        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+          <path d="M1 4L3.5 6.5L9 1" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="terms-text">
+        I agree to Skedee's <a href="#" onclick="event.stopPropagation()">Terms of Service</a> and <a href="#" onclick="event.stopPropagation()">Privacy Policy</a>. I confirm I am 18 or older.
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <button class="btn-submit" id="submit-btn" onclick="submitForm()" disabled>
+      <span id="btn-text">Create Account</span>
+      <div class="spinner" id="spinner"></div>
+    </button>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-text">ALREADY HAVE AN ACCOUNT?</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="login-link"><a href="#">Log in instead →</a></div>
+
+    <div class="disclaimer">18+ · Trade Responsibly · Skedee Inc. 2026</div>
+  </div>
+
+  <!-- SUCCESS STATE -->
+  <div class="success-state" id="success-state">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">You're in!</div>
+    <div class="success-sub">Your account is ready.<br>Time to make your first trade.</div>
+    <a href="main.html" class="btn-go">Go to Markets →</a>
+    <div class="disclaimer" style="margin-top:16px;">Welcome to Skedee</div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+}
+
+let method = 'phone';
+let termsChecked = false;
+
+function switchMethod(m) {
+  method = m;
+  document.getElementById('phone-group').style.display = m === 'phone' ? '' : 'none';
+  document.getElementById('email-group').style.display = m === 'email' ? '' : 'none';
+  document.getElementById('btn-phone').classList.toggle('active', m === 'phone');
+  document.getElementById('btn-email').classList.toggle('active', m === 'email');
+  // Clear errors
+  ['phone','email','pw'].forEach(id => {
+    const el = document.getElementById(id+'-err');
+    if (el) el.classList.remove('show');
+  });
+  checkSubmit();
+}
+
+function validatePhone() {
+  const val = document.getElementById('phone').value.replace(/\s/g,'');
+  const valid = /^0[789][01]\d{8}$/.test(val);
+  const input = document.getElementById('phone');
+  const err = document.getElementById('phone-err');
+  input.classList.toggle('valid', valid);
+  input.classList.toggle('error', val.length >= 11 && !valid);
+  err.classList.toggle('show', val.length >= 11 && !valid);
+  checkSubmit();
+}
+
+function validateEmail() {
+  const val = document.getElementById('email').value;
+  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  const input = document.getElementById('email');
+  const err = document.getElementById('email-err');
+  input.classList.toggle('valid', valid);
+  input.classList.toggle('error', val.length > 4 && !valid);
+  err.classList.toggle('show', val.length > 4 && !valid);
+  checkSubmit();
+}
+
+function checkStrength() {
+  const val = document.getElementById('password').value;
+  const strength = document.getElementById('pw-strength');
+  const err = document.getElementById('pw-err');
+  const label = document.getElementById('pw-label');
+  const bars = [1,2,3,4].map(i => document.getElementById('bar'+i));
+
+  strength.classList.toggle('show', val.length > 0);
+  err.classList.toggle('show', val.length > 0 && val.length < 8);
+
+  let score = 0;
+  if (val.length >= 8) score++;
+  if (val.length >= 12) score++;
+  if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+  if (/[0-9]/.test(val) && /[^a-zA-Z0-9]/.test(val)) score++;
+
+  const colors = ['#EF4444','#F97316','#EAB308','#22C55E'];
+  const labels = ['Weak','Fair','Good','Strong'];
+  bars.forEach((b, i) => b.style.background = i < score ? colors[score-1] : 'var(--bg4)');
+  label.textContent = score > 0 ? labels[score-1] : 'Weak';
+  label.style.color = score > 0 ? colors[score-1] : 'var(--text3)';
+
+  checkSubmit();
+}
+
+function toggleTerms() {
+  termsChecked = !termsChecked;
+  const cb = document.getElementById('checkbox');
+  cb.classList.toggle('checked', termsChecked);
+  checkSubmit();
+}
+
+function checkSubmit() {
+  const pwOk = document.getElementById('password').value.length >= 8;
+  let inputOk = false;
+  if (method === 'phone') {
+    const val = document.getElementById('phone').value.replace(/\s/g,'');
+    inputOk = /^0[789][01]\d{8}$/.test(val);
+  } else {
+    const val = document.getElementById('email').value;
+    inputOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  }
+  document.getElementById('submit-btn').disabled = !(inputOk && pwOk && termsChecked);
+}
+
+function togglePW(id, btn) {
+  const input = document.getElementById(id);
+  const isText = input.type === 'text';
+  input.type = isText ? 'password' : 'text';
+  btn.innerHTML = isText ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>';
+}
+
+function submitForm() {
+  const btn = document.getElementById('submit-btn');
+  const spinner = document.getElementById('spinner');
+  const btnText = document.getElementById('btn-text');
+
+  btn.disabled = true;
+  spinner.style.display = 'block';
+  btnText.textContent = 'Creating account...';
+
+  // Simulate API call
+  setTimeout(() => {
+    document.getElementById('form-state').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+  }, 1800);
+}
+</script>
+</body>
+</html>

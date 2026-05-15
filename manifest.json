@@ -1,0 +1,25 @@
+{
+  "name": "Skedee",
+  "short_name": "Skedee",
+  "description": "Nigeria's live prediction market",
+  "start_url": "/main.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A0A08",
+  "theme_color": "#F5C800",
+  "icons": [
+    {
+      "src": "assets/skedee-1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/skedee-1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

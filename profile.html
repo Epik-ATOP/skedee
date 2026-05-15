@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TK — Trader Profile | Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --y:#F5C800; --y2:#FFD93D; --y3:#B89200;
+  --bg:#0A0A08; --bg2:#111110; --bg3:#181815; --bg4:#1E1E1A; --bg5:#252520;
+  --border:rgba(245,200,0,0.12); --border2:rgba(245,200,0,0.22); --border3:rgba(255,255,255,0.06);
+  --text:#F0EDE0; --text2:#9A9880; --text3:#5A5845;
+  --green:#22C55E; --red:#EF4444; --blue:#3B82F6; --purple:#A855F7;
+  --font-display:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --font-mono:'Space Mono',monospace; --font-num:'Oswald',sans-serif;
+  --radius:8px; --radius-lg:12px; --radius-xl:16px;
+}
+[data-theme="light"] {
+  --bg:#FAFAF5; --bg2:#FFFFFF; --bg3:#F5F4EE; --bg4:#EEECEA; --bg5:#E5E3DC;
+  --border:rgba(180,145,0,0.18); --border2:rgba(180,145,0,0.35); --border3:rgba(0,0,0,0.06);
+  --text:#1A1A14; --text2:#5C5A48; --text3:#9A9880;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:14px;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:52px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;}
+.logo{font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--y);letter-spacing:-.5px;display:flex;align-items:center;gap:6px;}
+.logo-dot{width:8px;height:8px;background:var(--y);border-radius:50%;animation:pulse-dot 1.5s ease infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.topbar-nav{display:flex;align-items:center;gap:2px;margin-left:4px;}
+.topbar-navlink{padding:5px 11px;border-radius:var(--radius);font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;}
+.topbar-navlink:hover{color:var(--text);background:rgba(245,200,0,.06);}
+.topbar-navlink.active{color:var(--y);background:rgba(245,200,0,.08);}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.btn-icon{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;color:var(--text2);font-size:14px;}
+.btn-icon:hover{border-color:var(--y);color:var(--y);}
+.theme-toggle{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--y);font-size:14px;transition:all .18s;}
+.theme-toggle:hover{background:rgba(245,200,0,.08);border-color:var(--y);}
+.wallet-pill{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:34px;font-family:var(--font-mono);font-size:12px;}
+.wallet-bal{color:var(--y);font-weight:700;}
+.wallet-label{color:var(--text3);font-size:10px;}
+.avatar{width:34px;height:34px;background:linear-gradient(135deg,var(--y),var(--y3));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:13px;color:#000;cursor:pointer;}
+
+/* ── PAGE ── */
+.page{margin-top:52px;max-width:1100px;margin-left:auto;margin-right:auto;padding:32px 20px 80px;}
+
+/* ── HERO BANNER ── */
+.profile-banner{
+  height:160px;border-radius:var(--radius-xl) var(--radius-xl) 0 0;
+  background:linear-gradient(135deg,#0A0A08 0%,#1a1608 40%,#2a1f00 100%);
+  position:relative;overflow:hidden;border:1px solid var(--border);border-bottom:none;
+}
+.banner-pattern{
+  position:absolute;inset:0;opacity:.15;
+  background-image:linear-gradient(var(--y) 1px,transparent 1px),linear-gradient(90deg,var(--y) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.banner-glow{
+  position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
+  width:300px;height:120px;
+  background:radial-gradient(circle,rgba(245,200,0,.06) 0%,transparent 70%);
+}
+
+/* ── PROFILE CARD ── */
+.profile-card{
+  background:var(--bg2);border:1px solid var(--border);border-top:none;
+  border-radius:0 0 var(--radius-xl) var(--radius-xl);
+  padding:0 28px 28px;margin-bottom:20px;
+}
+.profile-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
+.profile-avatar-wrap{position:relative;margin-top:-44px;}
+.profile-avatar{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,var(--y),var(--y3));
+  border:4px solid var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:800;font-size:32px;color:#000;
+}
+.profile-verified{
+  position:absolute;bottom:2px;right:2px;
+  width:24px;height:24px;background:var(--blue);border-radius:50%;
+  border:2px solid var(--bg2);display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:#fff;
+}
+.profile-actions{display:flex;gap:8px;padding-top:12px;}
+.btn-follow{
+  padding:8px 20px;border-radius:var(--radius);
+  background:var(--y);color:#000;border:none;cursor:pointer;
+  font-family:var(--font-display);font-weight:700;font-size:13px;
+  transition:all .15s;
+}
+.btn-follow:hover{background:var(--y2);transform:translateY(-1px);}
+.btn-share{
+  padding:8px 16px;border-radius:var(--radius);
+  background:transparent;color:var(--text2);border:1px solid var(--border);
+  cursor:pointer;font-family:var(--font-display);font-weight:600;font-size:13px;
+  transition:all .15s;
+}
+.btn-share:hover{border-color:var(--border2);color:var(--text);}
+
+.profile-name{font-family:var(--font-display);font-weight:800;font-size:26px;letter-spacing:-.5px;margin-bottom:2px;display:flex;align-items:center;gap:10px;}
+.profile-handle{font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-bottom:10px;}
+.profile-bio{font-size:13px;color:var(--text2);line-height:1.7;max-width:520px;margin-bottom:14px;}
+.profile-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.profile-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;padding:3px 10px;border-radius:99px;border:1px solid var(--border);color:var(--text3);}
+.profile-tag.yellow{border-color:var(--border2);color:var(--y);background:rgba(245,200,0,.06);}
+.profile-tag.green{border-color:rgba(34,197,94,.3);color:var(--green);background:rgba(34,197,94,.05);}
+.profile-tag.blue{border-color:rgba(59,130,246,.3);color:var(--blue);background:rgba(59,130,246,.05);}
+
+.profile-meta{display:flex;align-items:center;gap:20px;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.profile-meta i{margin-right:4px;}
+
+/* ── STATS ROW ── */
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px;}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;text-align:center;transition:all .2s;}
+.stat-card:hover{border-color:var(--border2);}
+.stat-val{font-family:var(--font-num);font-size:26px;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px;}
+.stat-val.yellow{color:var(--y);}
+.stat-val.green{color:var(--green);}
+.stat-val.red{color:var(--red);}
+.stat-val.purple{color:var(--purple);}
+.stat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;}
+.stat-sub{font-family:var(--font-mono);font-size:9px;margin-top:4px;}
+.stat-sub.green{color:var(--green);}
+.stat-sub.red{color:var(--red);}
+
+/* ── RANK BADGE ── */
+.rank-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,rgba(245,200,0,.15),rgba(245,200,0,.05));
+  border:1px solid var(--border2);border-radius:var(--radius-lg);
+  padding:12px 16px;margin-bottom:20px;
+}
+.rank-icon{font-size:24px;}
+.rank-title{font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--y);}
+.rank-sub{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:2px;}
+
+/* ── TABS ── */
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;margin-bottom:16px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+
+/* ── MAIN GRID ── */
+.main-grid{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start;}
+
+/* ── TRADE HISTORY ── */
+.section-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+.section-title-right{font-family:var(--font-mono);font-size:10px;color:var(--text3);font-weight:400;}
+
+.trade-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border3);}
+.trade-item:last-child{border-bottom:none;}
+.trade-icon{width:36px;height:36px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.trade-icon.win{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);}
+.trade-icon.loss{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);}
+.trade-icon.open{background:rgba(245,200,0,.08);border:1px solid var(--border2);}
+.trade-body{flex:1;}
+.trade-market{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px;}
+.trade-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);display:flex;align-items:center;gap:8px;}
+.trade-side-chip{font-family:var(--font-mono);font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side-chip.yes{background:rgba(34,197,94,.12);color:var(--green);}
+.trade-side-chip.no{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-pnl{text-align:right;flex-shrink:0;}
+.trade-pnl-val{font-family:var(--font-num);font-size:18px;font-weight:700;}
+.trade-pnl-val.green{color:var(--green);}
+.trade-pnl-val.red{color:var(--red);}
+.trade-pnl-val.open{color:var(--y);}
+.trade-pnl-sub{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:2px;}
+
+/* ── P/L CHART ── */
+.chart-wrap{height:180px;position:relative;margin-bottom:4px;}
+
+/* ── BADGES ── */
+.badges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.badge-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;text-align:center;transition:all .2s;}
+.badge-item:hover{border-color:var(--border2);}
+.badge-item.earned{border-color:rgba(245,200,0,.25);background:rgba(245,200,0,.04);}
+.badge-item.locked{opacity:.4;}
+.badge-emoji{font-size:26px;margin-bottom:8px;}
+.badge-name{font-family:var(--font-display);font-weight:600;font-size:11px;color:var(--text);margin-bottom:3px;}
+.badge-desc{font-size:10px;color:var(--text3);line-height:1.5;}
+
+/* ── RIGHT SIDEBAR CARDS ── */
+.side-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:16px;margin-bottom:12px;}
+.side-card-title{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+
+/* follower row */
+.follow-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border3);}
+.follow-row:last-child{border-bottom:none;}
+.follow-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--font-display);flex-shrink:0;}
+.follow-name{font-size:12px;color:var(--text);font-weight:500;flex:1;}
+.follow-stat{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* win rate arc — CSS only */
+.winrate-wrap{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;padding:8px 0;}
+.winrate-circle{position:relative;width:100px;height:100px;}
+.winrate-circle svg{transform:rotate(-90deg);}
+.winrate-circle-bg{fill:none;stroke:var(--bg4);stroke-width:8;}
+.winrate-circle-fill{fill:none;stroke:var(--green);stroke-width:8;stroke-linecap:round;stroke-dasharray:283;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1);}
+.winrate-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+.winrate-pct{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--green);}
+.winrate-sub{font-family:var(--font-mono);font-size:8px;color:var(--text3);}
+.winrate-breakdown{display:flex;gap:16px;font-family:var(--font-mono);font-size:10px;}
+.wr-wins{color:var(--green);}
+.wr-losses{color:var(--red);}
+
+/* fav markets */
+.fav-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border3);}
+.fav-item:last-child{border-bottom:none;}
+.fav-emoji{font-size:14px;width:20px;text-align:center;}
+.fav-name{font-size:12px;color:var(--text2);flex:1;}
+.fav-trades{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ── P/L STATS GRID ── */
+.pnl-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border3);}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .main-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .topbar-nav{display:none;}
+  .badges-grid{grid-template-columns:1fr 1fr;}
+  .wallet-pill{display:none;}
+  .page{padding:16px 12px 80px;}
+  .profile-banner{height:120px;}
+  .profile-card{padding:0 14px 20px;}
+  .profile-avatar{width:72px;height:72px;font-size:24px;}
+  .profile-avatar-wrap{margin-top:-36px;}
+  .profile-top{flex-direction:column;align-items:flex-start;gap:0;}
+  .profile-actions{margin-top:12px;padding-top:0;flex-wrap:wrap;}
+  .profile-name{font-size:20px;}
+  .profile-bio{font-size:12px;}
+  .profile-meta{flex-wrap:wrap;gap:8px 14px;}
+  .stat-val{font-size:20px;}
+  .tab{padding:6px 10px;font-size:11px;}
+  .pnl-stats-grid{grid-template-columns:repeat(2,1fr);}
+  .rank-badge{gap:10px;}
+}
+
+.fade-up{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="main.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="main.html" class="topbar-navlink">Markets</a>
+    <a href="about.html" class="topbar-navlink">About</a>
+    <a href="faq.html" class="topbar-navlink">FAQ</a>
+    <a href="profile.html" class="topbar-navlink active">Profile</a>
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal">₦4,271,250</div></div></div>
+    <div class="avatar">TK</div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- BANNER + PROFILE CARD -->
+  <div class="profile-banner fade-up">
+    <div class="banner-pattern"></div>
+    <div class="banner-glow"></div>
+  </div>
+
+  <div class="profile-card fade-up">
+    <div class="profile-top">
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar">TK</div>
+          <div class="profile-verified"><i class="fa-solid fa-check" style="font-size:9px;"></i></div>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button class="btn-follow" id="follow-btn" onclick="toggleFollow()">
+          <i class="fa-solid fa-user-plus" style="margin-right:6px;font-size:11px;"></i>Follow
+        </button>
+        <button class="btn-share" onclick="copyProfile()">
+          <i class="fa-solid fa-share-nodes" style="margin-right:6px;font-size:11px;"></i>Share
+        </button>
+        <a href="account.html"><button class="btn-share"><i class="fa-solid fa-gear" style="margin-right:6px;font-size:11px;"></i>Account</button></a>
+      </div>
+    </div>
+
+    <div class="profile-name">
+      Tunde K.
+      ⭐ <span style="background:linear-gradient(135deg,var(--y),var(--y3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:14px;">TOP TRADER</span>
+    </div>
+    <div class="profile-handle">@tunde_k · Skedee since January 2026</div>
+    <div class="profile-bio">Quant trader turned prediction market enthusiast. Built Skedee because Nigeria needed a real prediction market. I trade what I know — football, Nigerian politics, and macroeconomics. Long-term thinker, data-driven.</div>
+    <div class="profile-tags">
+      <div class="profile-tag yellow">⚽ FOOTBALL</div>
+      <div class="profile-tag yellow">⚖️ POLITICS</div>
+      <div class="profile-tag green">📈 MACRO</div>
+      <div class="profile-tag blue">💱 FX</div>
+      <div class="profile-tag">🎵 MUSIC</div>
+      <div class="profile-tag">🛢️ COMMODITIES</div>
+    </div>
+    <div class="profile-meta">
+      <span><i class="fa-solid fa-location-dot"></i>Lagos, Nigeria</span>
+      <span><i class="fa-solid fa-users"></i><strong style="color:var(--text);">1,204</strong> followers</span>
+      <span><i class="fa-solid fa-user-check"></i>Following <strong style="color:var(--text);">48</strong></span>
+      <span><i class="fa-solid fa-calendar"></i>Joined Jan 2026</span>
+    </div>
+  </div>
+
+  <!-- RANK BADGE -->
+  <div class="rank-badge fade-up">
+    <div class="rank-icon">🏆</div>
+    <div>
+      <div class="rank-title">Rank #12 on Skedee</div>
+      <div class="rank-sub">Top 0.03% of all traders · This month</div>
+    </div>
+    <div style="margin-left:auto;text-align:right;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);">TRADER SCORE</div>
+      <div style="font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--y);">9,841</div>
+    </div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="stats-row fade-up">
+    <div class="stat-card">
+      <div class="stat-val yellow">₦4.27M</div>
+      <div class="stat-label">Portfolio Value</div>
+      <div class="stat-sub green">▲ +12.4% this month</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val green">+₦847K</div>
+      <div class="stat-label">Total Profit</div>
+      <div class="stat-sub green">▲ +₦124K this week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val purple">247</div>
+      <div class="stat-label">Total Trades</div>
+      <div class="stat-sub" style="color:var(--text3);">Across 18 markets</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val green">68%</div>
+      <div class="stat-label">Win Rate</div>
+      <div class="stat-sub green">168W / 79L</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val yellow">₦2.1M</div>
+      <div class="stat-label">Volume Traded</div>
+      <div class="stat-sub" style="color:var(--text3);">Lifetime</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar fade-up">
+    <button class="tab active" onclick="switchTab('trades',this)">Trade History</button>
+    <button class="tab" onclick="switchTab('pnl',this)">P/L Chart</button>
+    <button class="tab" onclick="switchTab('badges',this)">Badges</button>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- LEFT CONTENT -->
+    <div>
+
+      <!-- TRADE HISTORY TAB -->
+      <div id="tab-trades">
+        <div class="section-card fade-up">
+          <div class="section-title">
+            Recent Trades
+            <span class="section-title-right">247 total</span>
+          </div>
+
+          <div class="trade-item">
+            <div class="trade-icon win">⚽</div>
+            <div class="trade-body">
+              <div class="trade-market">Spurs vs Leeds — Spurs Win</div>
+              <div class="trade-meta">
+                <span class="trade-side-chip yes">YES</span>
+                <span>Entered ₦68 · Exited ₦74</span>
+                <span>100 shares</span>
+                <span>Today, 14:32</span>
+              </div>
+            </div>
+            <div class="trade-pnl">
+              <div class="trade-pnl-val green">+₦600</div>
+              <div class="trade-pnl-sub">+8.8% ROI</div>
+            </div>
+          </div>
+
+          <div class="trade-item">
+            <div class="trade-icon win">⚽</div>
+            <div class="trade-body">
+              <div class="trade-market">Man City vs Palace — Over 2.5 Goals</div>
+              <div class="trade-meta">
+                <span class="trade-side-chip yes">YES</span>
+                <span>Entered ₦52 · Resolved ₦100</span>
+                <span>200 shares</span>
+                <span>Today, 09:15</span>
+              </div>
+            </div>
+            <div class="trade-pnl">
+              <div class="trade-pnl-val green">+₦9,600</div>
+              <div class="trade-pnl-sub">+92.3% ROI</div>
+            </div>
+          </div>
+
+          <div class="trade-item">
+            <div class="trade-icon open">⚖️</div>
+            <div class="trade-body">
+              <div class="trade-market">World Bank $1.25bn Loan — Approved</div>
+              <div class="trade-meta">
+                <span class="trade-side-chip yes">YES</span>
+                <span>Entered ₦70 · Current ₦74</span>
+                <span>500 shares</span>
+                <span>May 12, 18:40</span>
+              </div>
+            </div>
+            <div class="trade-pnl">
+              <div class="trade-pnl-val open">+₦2,000</div>
+              <div class="trade-pnl-sub">OPEN · +5.7%</div>
+            </div>
+          </div>
+
+          <div class="trade-item">
+            <div class="trade-icon win">🎵</div>
+            <div class="trade-body">
+              <div class="trade-market">Wizkid New Album 2026</div>
+              <div class="trade-meta">
+                <span class="trade-side-chip yes">YES</span>
+                <span>Entered ₦55 · Exited ₦71</span>
+                <span>300 shares</span>
+                <span>May 11, 10:22</span>
+              </div>
+            </div>
+            <div class="trade-pnl">
+              <div class="trade-pnl-val green">+₦4,800</div>
+              <div class="trade-pnl-sub">+29.1% ROI</div>
+            </div>
+          </div>
+
+          <div class="trade-item">
+            <div class="trade-icon loss">⚽</div>
+            <div class="trade-body">
+              <div class="trade-market">Spurs vs Leeds — Red Card Shown</div>
+              <div class="trade-meta">
+                <span class="trade-side-chip yes">YES</span>
+                <span>Entered ₦28 · Resolved ₦0</span>
+                <span>40 shares</span>
+                <span>Today, 16:00</span>
+              </div>
+            </div>
+            <div class="trade-pnl">
+              <div class="trade-pnl-val red">-₦1,120</div>
+              <div class="trade-pnl-sub">-100% · LOSS</div>
+            </div>
+          </div>
+
+          <div class="trade-item">
+            <div class="trade-icon win">💱</div>
+            <div class="trade-body">
+              <div class="trade-market">Naira/Dollar hits ₦1,800 in 2026</div>
+              <div class="trade-meta">
+                <span class="trade-side-chip no">NO</span>
+                <span>Entered ₦44 · Exited ₦52</span>
+                <span>150 shares</span>
+                <span>May 10, 08:55</span>
+              </div>
+            </div>
+            <div class="trade-pnl">
+              <div class="trade-pnl-val green">+₦1,200</div>
+              <div class="trade-pnl-sub">+18.2% ROI</div>
+            </div>
+          </div>
+
+          <div class="trade-item">
+            <div class="trade-icon loss">🎬</div>
+            <div class="trade-body">
+              <div class="trade-market">BBNaija S11 Auditions — May 14th</div>
+              <div class="trade-meta">
+                <span class="trade-side-chip yes">YES</span>
+                <span>Entered ₦12 · Resolved ₦0</span>
+                <span>80 shares</span>
+                <span>May 14, 08:00</span>
+              </div>
+            </div>
+            <div class="trade-pnl">
+              <div class="trade-pnl-val red">-₦960</div>
+              <div class="trade-pnl-sub">-100% · LOSS</div>
+            </div>
+          </div>
+
+          <div style="text-align:center;padding:16px 0 0;">
+            <button style="background:none;border:1px solid var(--border);border-radius:var(--radius);padding:8px 24px;color:var(--text2);font-family:var(--font-mono);font-size:10px;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='var(--border2)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+              View All 247 Trades
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- P/L CHART TAB -->
+      <div id="tab-pnl" style="display:none;">
+        <div class="section-card fade-up">
+          <div class="section-title">Cumulative P/L <span class="section-title-right">Last 30 days</span></div>
+          <div class="chart-wrap"><canvas id="pnlChart"></canvas></div>
+          <div class="pnl-stats-grid">
+            <div style="text-align:center;">
+              <div style="font-family:var(--font-num);font-size:20px;font-weight:700;color:var(--green);">+₦847K</div>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;">TOTAL PROFIT</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:var(--font-num);font-size:20px;font-weight:700;color:var(--red);">-₦124K</div>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;">TOTAL LOSSES</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:var(--font-num);font-size:20px;font-weight:700;color:var(--y);">₦5,814</div>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;">AVG WIN SIZE</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:var(--font-num);font-size:20px;font-weight:700;color:var(--text2);">3.2×</div>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;">WIN/LOSS RATIO</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGES TAB -->
+      <div id="tab-badges" style="display:none;">
+        <div class="section-card fade-up">
+          <div class="section-title">Badges & Achievements <span class="section-title-right">9 of 16 earned</span></div>
+          <div class="badges-grid">
+            <div class="badge-item earned">
+              <div class="badge-emoji">🏆</div>
+              <div class="badge-name">Top 50 Trader</div>
+              <div class="badge-desc">Ranked in the top 50 traders on Skedee</div>
+            </div>
+            <div class="badge-item earned">
+              <div class="badge-emoji">🎯</div>
+              <div class="badge-name">Sharp Shooter</div>
+              <div class="badge-desc">Win rate above 65% with 50+ trades</div>
+            </div>
+            <div class="badge-item earned">
+              <div class="badge-emoji">🐋</div>
+              <div class="badge-name">Whale</div>
+              <div class="badge-desc">Traded over ₦1M in total volume</div>
+            </div>
+            <div class="badge-item earned">
+              <div class="badge-emoji">⚽</div>
+              <div class="badge-name">Football Oracle</div>
+              <div class="badge-desc">10+ correct football market calls</div>
+            </div>
+            <div class="badge-item earned">
+              <div class="badge-emoji">⚖️</div>
+              <div class="badge-name">Policy Wonk</div>
+              <div class="badge-desc">5+ correct political market calls</div>
+            </div>
+            <div class="badge-item earned">
+              <div class="badge-emoji">🔥</div>
+              <div class="badge-name">On Fire</div>
+              <div class="badge-desc">5 winning trades in a row</div>
+            </div>
+            <div class="badge-item earned">
+              <div class="badge-emoji">🌅</div>
+              <div class="badge-name">Early Adopter</div>
+              <div class="badge-desc">Joined Skedee in the first month</div>
+            </div>
+            <div class="badge-item earned">
+              <div class="badge-emoji">💎</div>
+              <div class="badge-name">Diamond Hands</div>
+              <div class="badge-desc">Held a position to full resolution 20+ times</div>
+            </div>
+            <div class="badge-item earned">
+              <div class="badge-emoji">📊</div>
+              <div class="badge-name">Data Driven</div>
+              <div class="badge-desc">Traded across 5+ different market categories</div>
+            </div>
+            <div class="badge-item locked">
+              <div class="badge-emoji">🤫</div>
+              <div class="badge-name">Insider</div>
+              <div class="badge-desc">Call a market correctly before a major news spike</div>
+            </div>
+            <div class="badge-item locked">
+              <div class="badge-emoji">🌍</div>
+              <div class="badge-name">Global Trader</div>
+              <div class="badge-desc">Trade on 3+ international markets</div>
+            </div>
+            <div class="badge-item locked">
+              <div class="badge-emoji">👑</div>
+              <div class="badge-name">Legend</div>
+              <div class="badge-desc">Reach top 10 on Skedee leaderboard</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDEBAR -->
+    <div>
+
+      <!-- WIN RATE -->
+      <div class="side-card fade-up">
+        <div class="side-card-title">Win Rate</div>
+        <div class="winrate-wrap">
+          <div class="winrate-circle">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="winrate-circle-bg" cx="50" cy="50" r="45"/>
+              <circle class="winrate-circle-fill" cx="50" cy="50" r="45" id="wr-arc" style="stroke-dashoffset:91;"/>
+            </svg>
+            <div class="winrate-label">
+              <div class="winrate-pct">68%</div>
+              <div class="winrate-sub">WIN RATE</div>
+            </div>
+          </div>
+          <div class="winrate-breakdown">
+            <div class="wr-wins">✅ 168 wins</div>
+            <div class="wr-losses">❌ 79 losses</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAVOURITE MARKETS -->
+      <div class="side-card fade-up">
+        <div class="side-card-title">Favourite Categories</div>
+        <div class="fav-item"><div class="fav-emoji">⚽</div><div class="fav-name">Football</div><div class="fav-trades">104 trades</div></div>
+        <div class="fav-item"><div class="fav-emoji">⚖️</div><div class="fav-name">Politics</div><div class="fav-trades">58 trades</div></div>
+        <div class="fav-item"><div class="fav-emoji">💱</div><div class="fav-name">Finance / FX</div><div class="fav-trades">42 trades</div></div>
+        <div class="fav-item"><div class="fav-emoji">🎵</div><div class="fav-name">Music</div><div class="fav-trades">28 trades</div></div>
+        <div class="fav-item"><div class="fav-emoji">🛢️</div><div class="fav-name">Commodities</div><div class="fav-trades">15 trades</div></div>
+      </div>
+
+      <!-- FOLLOWERS -->
+      <div class="side-card fade-up">
+        <div class="side-card-title">Notable Followers</div>
+        <div class="follow-row">
+          <div class="follow-avatar" style="background:rgba(168,85,247,.2);color:#A855F7;">W</div>
+          <div class="follow-name">whale_trader</div>
+          <div class="follow-stat">₦2.1M vol</div>
+        </div>
+        <div class="follow-row">
+          <div class="follow-avatar" style="background:rgba(34,197,94,.15);color:var(--green);">P</div>
+          <div class="follow-name">policy_watcher</div>
+          <div class="follow-stat">₦890K vol</div>
+        </div>
+        <div class="follow-row">
+          <div class="follow-avatar" style="background:rgba(59,130,246,.15);color:var(--blue);">S</div>
+          <div class="follow-name">sharp_88</div>
+          <div class="follow-stat">₦640K vol</div>
+        </div>
+        <div class="follow-row">
+          <div class="follow-avatar" style="background:rgba(245,200,0,.15);color:var(--y);">N</div>
+          <div class="follow-name">naija_macro</div>
+          <div class="follow-stat">₦420K vol</div>
+        </div>
+        <div style="margin-top:10px;text-align:center;">
+          <span style="font-family:var(--font-mono);font-size:9px;color:var(--text3);cursor:pointer;">+ 1,200 more followers</span>
+        </div>
+      </div>
+
+      <!-- RECENT PAYOUT -->
+      <div class="side-card fade-up">
+        <div class="side-card-title">Recent Payouts</div>
+        <div class="fav-item">
+          <div class="fav-emoji">💰</div>
+          <div class="fav-name" style="font-size:11px;">City vs Palace · Over 2.5</div>
+          <div class="fav-trades" style="color:var(--green);font-weight:700;">+₦9,600</div>
+        </div>
+        <div class="fav-item">
+          <div class="fav-emoji">💰</div>
+          <div class="fav-name" style="font-size:11px;">Wizkid Album YES</div>
+          <div class="fav-trades" style="color:var(--green);font-weight:700;">+₦4,800</div>
+        </div>
+        <div class="fav-item">
+          <div class="fav-emoji">💰</div>
+          <div class="fav-name" style="font-size:11px;">Naira/Dollar NO</div>
+          <div class="fav-trades" style="color:var(--green);font-weight:700;">+₦1,200</div>
+        </div>
+        <div class="fav-item">
+          <div class="fav-emoji">💰</div>
+          <div class="fav-name" style="font-size:11px;">Spurs Win YES</div>
+          <div class="fav-trades" style="color:var(--green);font-weight:700;">+₦600</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  document.body.setAttribute('data-theme', isDark?'light':'dark');
+  document.getElementById('theme-icon').className = isDark?'fa-solid fa-moon':'fa-solid fa-sun';
+}
+
+let following = false;
+function toggleFollow() {
+  following = !following;
+  const btn = document.getElementById('follow-btn');
+  btn.innerHTML = following
+    ? '<i class="fa-solid fa-user-check" style="margin-right:6px;font-size:11px;"></i>Following'
+    : '<i class="fa-solid fa-user-plus" style="margin-right:6px;font-size:11px;"></i>Follow';
+  btn.style.background = following ? 'var(--bg4)' : 'var(--y)';
+  btn.style.color = following ? 'var(--text2)' : '#000';
+  btn.style.border = following ? '1px solid var(--border)' : 'none';
+}
+
+function copyProfile() {
+  navigator.clipboard?.writeText(window.location.href).catch(()=>{});
+  const btn = event.target.closest('button');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<i class="fa-solid fa-check" style="margin-right:6px;"></i>Copied!';
+  setTimeout(()=>btn.innerHTML=orig, 2000);
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  ['trades','pnl','badges'].forEach(t=>{
+    const el = document.getElementById('tab-'+t);
+    if (el) el.style.display = t===name?'':'none';
+  });
+  if (name==='pnl') setTimeout(drawPnlChart, 50);
+}
+
+function drawPnlChart() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  const gridColor = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
+  const existing = Chart.getChart('pnlChart');
+  if (existing) existing.destroy();
+
+  const labels = Array.from({length:30},(_,i)=>`Apr ${i+15>30?'May '+(i-15):i+15}`).filter((_,i)=>i%3===0);
+  const data = [0,12000,28000,22000,41000,38000,55000,70000,65000,82000];
+
+  new Chart(document.getElementById('pnlChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels,
+      datasets:[{
+        label:'Cumulative P/L',
+        data,
+        borderColor:'#22C55E',
+        backgroundColor:'rgba(34,197,94,0.08)',
+        borderWidth:2.5,
+        fill:true,
+        tension:0.4,
+        pointRadius:4,
+        pointBackgroundColor:'#22C55E',
+        pointBorderColor:'var(--bg2)',
+        pointBorderWidth:2,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>'₦'+ctx.raw.toLocaleString('en-NG')}}},
+      scales:{
+        x:{ticks:{color:tc,font:{size:10}},grid:{color:gridColor}},
+        y:{ticks:{color:tc,font:{size:10},callback:v=>'₦'+v.toLocaleString()},grid:{color:gridColor}}
+      }
+    }
+  });
+}
+
+// Win rate arc animation
+setTimeout(() => {
+  const arc = document.getElementById('wr-arc');
+  if (arc) {
+    // 68% win rate: dashoffset = 283 * (1 - 0.68) = 90.56
+    arc.style.strokeDashoffset = '90.5';
+  }
+}, 300);
+
+// Fade up observer
+const obs = new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
