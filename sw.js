@@ -1,6 +1,6 @@
 const CACHE = 'skedee-v3';
 const ASSETS = [
-  '/main.html',
+  '/index.html',
   '/about.html',
   '/faq.html',
   '/signup.html',
