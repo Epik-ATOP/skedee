@@ -8,146 +8,12 @@
 <link rel="manifest" href="../manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 :root {
-  --y: #F5C800;
-  --y2: #FFD93D;
-  --y3: #B89200;
-  --bg: #0A0A08;
-  --bg2: #111110;
-  --bg3: #181815;
-  --bg4: #1E1E1A;
-  --bg5: #252520;
-  --border: rgba(245,200,0,0.12);
-  --border2: rgba(245,200,0,0.22);
-  --border3: rgba(255,255,255,0.06);
-  --text: #F0EDE0;
-  --text2: #9A9880;
-  --text3: #5A5845;
-  --green: #22C55E;
-  --red: #EF4444;
-  --blue: #3B82F6;
-  --purple: #8556f4;
   --sidebar-w: 220px;
   --rsidebar-w: 280px;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-mono: 'Space Mono', monospace;
-  --radius: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-}
-
-[data-theme="light"] {
-  --bg: #FAFAF5;
-  --bg2: #FFFFFF;
-  --bg3: #F5F4EE;
-  --bg4: #EEECEA;
-  --bg5: #E5E3DC;
-  --border: rgba(180,145,0,0.18);
-  --border2: rgba(180,145,0,0.35);
-  --border3: rgba(0,0,0,0.06);
-  --text: #1A1A14;
-  --text2: #5C5A48;
-  --text3: #9A9880;
-}
-
-* { margin:0; padding:0; box-sizing:border-box; }
-html { font-size:14px; }
-
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-  transition: background 0.3s, color 0.3s;
-}
-
-a { color: inherit; text-decoration: none; }
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
-
-/* =================== TOPBAR =================== */
-.topbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 52px;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center;
-  padding: 0 16px;
-  gap: 12px;
-}
-
-.logo {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 18px;
-  color: var(--y);
-  letter-spacing: -0.5px;
-  display: flex; align-items: center; gap: 6px;
-  white-space: nowrap;
-}
-.logo-dot { width:8px; height:8px; background:var(--y); border-radius:50%; animation: pulse-dot 1.5s ease infinite; }
-@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
-
-.search-bar {
-  flex: 1; max-width: 340px; margin-left: 12px;
-  display: flex; align-items: center; gap: 8px;
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 0 12px; height: 34px;
-}
-.search-bar input {
-  background: none; border: none; outline: none;
-  color: var(--text); font-family: var(--font-body); font-size: 13px;
-  width: 100%;
-}
-.search-bar input::placeholder { color: var(--text3); }
-.search-bar i { color: var(--text3); font-size: 13px; }
-
-.topbar-right { margin-left: auto; display:flex; align-items:center; gap:8px; }
-
-.btn-icon {
-  width: 34px; height: 34px;
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--radius); display:flex; align-items:center; justify-content:center;
-  cursor: pointer; transition: all 0.18s; color: var(--text2); font-size:14px;
-  position: relative;
-}
-.btn-icon:hover { border-color: var(--y); color: var(--y); background: rgba(245,200,0,0.06); }
-.notif-badge {
-  position:absolute; top:-4px; right:-4px;
-  width:14px; height:14px; background:var(--red);
-  border-radius:50%; font-size:9px; font-weight:700;
-  color:#fff; display:flex; align-items:center; justify-content:center;
-  font-family: var(--font-mono);
-}
-
-.theme-toggle {
-  width:34px; height:34px; background:var(--bg3); border:1px solid var(--border);
-  border-radius:var(--radius); display:flex; align-items:center; justify-content:center;
-  cursor:pointer; transition:all 0.18s; color:var(--y); font-size:14px;
-}
-.theme-toggle:hover { background:rgba(245,200,0,0.08); border-color:var(--y); }
-
-.wallet-pill {
-  display:flex; align-items:center; gap:8px;
-  background: var(--bg3); border: 1px solid var(--border2);
-  border-radius: var(--radius); padding: 0 12px; height: 34px;
-  font-family: var(--font-mono); font-size: 12px;
-}
-.wallet-bal { color: var(--y); font-weight: 700; }
-.wallet-label { color: var(--text3); font-size: 10px; }
-
-.avatar {
-  width:34px; height:34px; background: linear-gradient(135deg, var(--y), var(--y3));
-  border-radius: 50%; display:flex; align-items:center; justify-content:center;
-  font-family: var(--font-display); font-weight:700; font-size:13px;
-  color: #000; cursor:pointer;
 }
 
 /* =================== LAYOUT =================== */
@@ -1348,6 +1214,7 @@ a { color: inherit; text-decoration: none; }
   <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
 </div>
 
+<script src="../script.js"></script>
 <script>
 const MARKETS = [
   { id:'spurs_win', title:'Man City Win', yes:0.74, no:0.26, vol:'₦133.8M', liq:'₦21.3M', spread:'₦2', trend:1, history:[0.5,0.52,0.54,0.51,0.58,0.62,0.65,0.68,0.72,0.74] },

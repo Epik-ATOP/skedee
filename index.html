@@ -10,28 +10,11 @@
 <meta name="theme-color" content="#F5C800">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 <style>
 :root {
-  --y:#F5C800; --y2:#FFD93D; --y3:#B89200;
-  --bg:#0A0A08; --bg2:#111110; --bg3:#181815; --bg4:#1E1E1A; --bg5:#252520;
-  --border:rgba(245,200,0,0.12); --border2:rgba(245,200,0,0.22); --border3:rgba(255,255,255,0.06);
-  --text:#F0EDE0; --text2:#9A9880; --text3:#5A5845;
-  --green:#22C55E; --red:#EF4444; --blue:#3B82F6;
-  --font-display:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
-  --font-mono:'Space Mono',monospace; --font-num:'Oswald',sans-serif;
-  --r:8px; --rl:12px; --rxl:16px;
   --sidebar:220px; --topbar:52px;
 }
-[data-theme="light"] {
-  --bg:#FAFAF5; --bg2:#FFFFFF; --bg3:#F5F4EE; --bg4:#EEECEA; --bg5:#E5E3DC;
-  --border:rgba(180,145,0,0.18); --border2:rgba(180,145,0,0.35); --border3:rgba(0,0,0,0.06);
-  --text:#1A1A14; --text2:#5C5A48; --text3:#9A9880;
-}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html{font-size:14px;scroll-behavior:smooth;}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;}
-a{color:inherit;text-decoration:none;}
-::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
 
 /* ── TOPBAR ── */
 .topbar{
@@ -40,8 +23,6 @@ a{color:inherit;text-decoration:none;}
   display:flex;align-items:center;padding:0 16px;gap:10px;
 }
 .logo{font-family:var(--font-display);font-weight:800;font-size:19px;color:var(--y);letter-spacing:-.5px;display:flex;align-items:center;gap:6px;white-space:nowrap;}
-.logo-dot{width:8px;height:8px;background:var(--y);border-radius:50%;animation:pdot 1.5s ease infinite;}
-@keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
 .topbar-nav{display:flex;align-items:center;gap:2px;margin-left:4px;}
 .topbar-navlink{padding:5px 11px;border-radius:var(--r);font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:5px;}
 .topbar-navlink:hover{color:var(--text);background:rgba(245,200,0,0.06);}
@@ -263,9 +244,6 @@ a{color:inherit;text-decoration:none;}
   .mobile-bottom-nav{display:block;}
 }
 
-/* fade-up */
-.fade-up{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;}
-.fade-up.visible{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body data-theme="dark">
@@ -463,6 +441,7 @@ a{color:inherit;text-decoration:none;}
   </div>
 </nav>
 
+<script src="script.js"></script>
 <script>
 // ── DATA ──────────────────────────────────────────────────
 const FEATURED = [
@@ -714,16 +693,6 @@ function filterCat(cat, el) {
 function sortMarkets(val) { currentSort = val; renderMarkets(); }
 function searchMarkets(q) { renderMarkets(); }
 function loadMore() { visibleCount += 9; renderMarkets(); }
-
-function toggleTheme() {
-  const isDark = document.body.getAttribute('data-theme') !== 'light';
-  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-}
-
-// fade-up observer
-const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:.08});
-document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
 // ── INIT ───────────────────────────────────────────────────
 buildTicker();
