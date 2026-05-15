@@ -85,7 +85,7 @@ a{color:inherit;text-decoration:none;}
 .main{flex:1;overflow-y:auto;background:var(--bg);padding:16px;display:flex;flex-direction:column;gap:14px;}
 
 /* ── MATCH CARD ── */
-.match-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:hidden;}
+.match-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:visible;}
 .match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--y),transparent);animation:scan 3s ease-in-out infinite;}
 @keyframes scan{0%,100%{opacity:.3}50%{opacity:1}}
 .match-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
@@ -98,6 +98,7 @@ a{color:inherit;text-decoration:none;}
 .match-center{display:flex;align-items:center;justify-content:center;gap:20px;}
 .team-block{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
 .team-logo{width:52px;height:52px;border-radius:50%;border:2px solid var(--border2);padding:6px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.team-logo img{width:100%;height:100%;object-fit:contain;}
 .team-name{font-family:var(--font-display);font-weight:700;font-size:14px;text-align:center;}
 .team-record{font-family:var(--font-mono);font-size:10px;}
 .score-block{display:flex;flex-direction:column;align-items:center;gap:8px;}
@@ -346,9 +347,9 @@ body{-webkit-font-smoothing:antialiased;}
 <!-- NOTIF DROPDOWN -->
 <div class="notif-dropdown" id="notif-dd">
   <div style="font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:10px;padding:0 4px;">Notifications</div>
-  <div class="notif-item"><div class="notif-text">⚡ Villa vs Liverpool is LIVE — Salah opens the scoring!</div><div class="notif-time">Just now</div></div>
-  <div class="notif-item"><div class="notif-text">📈 Volume spike on <strong>Liverpool Win</strong> — ₦88 YES</div><div class="notif-time">8 min ago</div></div>
-  <div class="notif-item"><div class="notif-text">🔴 Liverpool 2–0 up at Villa Park</div><div class="notif-time">22 min ago</div></div>
+  <div class="notif-item"><div class="notif-text">⚡ Villa vs Liverpool is LIVE — Kick off at Villa Park!</div><div class="notif-time">Just now</div></div>
+  <div class="notif-item"><div class="notif-text">📈 Volume spike on <strong>Liverpool Win</strong> — ₦88 YES</div><div class="notif-time">4 min ago</div></div>
+  <div class="notif-item"><div class="notif-text">🟡 Villa 0–0 Liverpool — Tight start at Villa Park</div><div class="notif-time">6 min ago</div></div>
 </div>
 <div class="profile-dropdown" id="profile-dd">
   <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
@@ -411,7 +412,7 @@ body{-webkit-font-smoothing:antialiased;}
 <div class="main">
 
   <!-- MATCH CARD -->
-  <div class="match-card" style="position:sticky;top:0;z-index:50;padding:14px 24px;">
+  <div class="match-card">
     <div class="match-card-top">
       <div class="league-badge"><span>⚽</span> PREMIER LEAGUE</div>
       <div style="display:flex;align-items:center;gap:12px;">
@@ -425,7 +426,7 @@ body{-webkit-font-smoothing:antialiased;}
 
     <div class="match-center">
       <div class="team-block">
-        <div class="team-logo">🦁</div>
+        <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Aston_Villa_FC_new_crest.svg" alt="Aston Villa"></div>
         <div class="team-name">Aston Villa</div>
         <div class="team-record" style="color:var(--text2);">Form: W L D W L</div>
       </div>
@@ -446,7 +447,7 @@ body{-webkit-font-smoothing:antialiased;}
         <div class="match-status-pill" id="match-status" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#EF4444;">1ST HALF</div>
       </div>
       <div class="team-block">
-        <div class="team-logo">🔴</div>
+        <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg" alt="Liverpool"></div>
         <div class="team-name">Liverpool</div>
         <div class="team-record" style="color:var(--green);">Form: W W W D W</div>
       </div>
@@ -466,6 +467,10 @@ body{-webkit-font-smoothing:antialiased;}
         <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Total Volume: </span>
         <span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦94,200,000</span>
       </div>
+      <div class="meta-item" id="espn-badge" style="display:none;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:5px;padding:3px 8px;">
+        <i class="fa-solid fa-satellite-dish" style="color:var(--green);font-size:10px;"></i>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--green);font-weight:700;letter-spacing:.5px;">LIVE DATA</span>
+      </div>
     </div>
   </div>
 
@@ -473,7 +478,7 @@ body{-webkit-font-smoothing:antialiased;}
   <div class="stats-row">
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦94M</div><div class="stat-box-sub">▲ +5% today</div></div>
     <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">9</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
-    <div class="stat-box"><div class="stat-box-label">Liverpool Win Prob</div><div class="stat-box-val yellow" id="liv-prob-stat">88%</div><div class="stat-box-sub" style="color:var(--green);">▲ Rising</div></div>
+    <div class="stat-box"><div class="stat-box-label">Villa Win Prob</div><div class="stat-box-val yellow" id="liv-prob-stat">39%</div><div class="stat-box-sub" style="color:var(--green);">▲ Rising</div></div>
     <div class="stat-box"><div class="stat-box-label">Your P/L</div><div class="stat-box-val" style="color:var(--text3);">₦0</div><div class="stat-box-sub" style="color:var(--text3);">No positions yet</div></div>
   </div>
 
@@ -496,14 +501,14 @@ body{-webkit-font-smoothing:antialiased;}
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">Based on ₦94M volume</div>
       </div>
       <div class="sentiment-bar">
-        <div class="sentiment-villa" style="width:7%;"></div>
-        <div class="sentiment-draw" style="width:5%;"></div>
-        <div class="sentiment-liverpool" style="width:88%;"></div>
+        <div class="sentiment-villa" style="width:39%;"></div>
+        <div class="sentiment-draw" style="width:24%;"></div>
+        <div class="sentiment-liverpool" style="width:36%;"></div>
       </div>
       <div class="sentiment-labels">
-        <span style="color:#9B59B6;font-weight:700;">Villa Win 7%</span>
-        <span>Draw 5%</span>
-        <span style="color:#C8102E;font-weight:700;">Liverpool Win 88%</span>
+        <span style="color:#9B59B6;font-weight:700;">Villa Win 39%</span>
+        <span>Draw 24%</span>
+        <span style="color:#C8102E;font-weight:700;">Liverpool Win 36%</span>
       </div>
     </div>
 
@@ -789,6 +794,7 @@ function updateMatchUI() {
 
 function tickMatchClock() {
   if (match.state === 'FT') return;
+  if (espnActive) return; // ESPN is driving the score, skip simulation
 
   if (match.state === 'LIVE_1H') {
     if (match.minute < 45) { match.minute++; }
@@ -844,9 +850,9 @@ function tickCountdown() {
 
 /* ── MARKETS DATA ── */
 const MARKETS = [
-  { id:'liv_win',      title:'Liverpool Win',            yes:0.88, no:0.12, vol:'₦94.2M',  liq:'₦18.6M', spread:'₦2',  trend:1,  history:[0.70,0.74,0.78,0.80,0.83,0.85,0.86,0.87,0.88,0.88] },
-  { id:'villa_win',    title:'Aston Villa Win',          yes:0.07, no:0.93, vol:'₦41.3M',  liq:'₦8.2M',  spread:'₦2',  trend:-1, history:[0.18,0.16,0.13,0.11,0.10,0.09,0.08,0.07,0.07,0.07] },
-  { id:'draw',         title:'Draw at Full Time',        yes:0.05, no:0.95, vol:'₦22.8M',  liq:'₦4.6M',  spread:'₦2',  trend:-1, history:[0.12,0.10,0.09,0.08,0.07,0.06,0.06,0.05,0.05,0.05] },
+  { id:'liv_win',      title:'Liverpool Win',            yes:0.36, no:0.64, vol:'₦94.2M',  liq:'₦18.6M', spread:'₦2',  trend:-1, history:[0.72,0.68,0.63,0.58,0.52,0.47,0.43,0.40,0.37,0.36] },
+  { id:'villa_win',    title:'Aston Villa Win',          yes:0.39, no:0.61, vol:'₦41.3M',  liq:'₦8.2M',  spread:'₦2',  trend:1,  history:[0.12,0.16,0.19,0.23,0.27,0.31,0.34,0.36,0.38,0.39] },
+  { id:'draw',         title:'Draw at Full Time',        yes:0.24, no:0.76, vol:'₦22.8M',  liq:'₦4.6M',  spread:'₦2',  trend:1,  history:[0.16,0.16,0.17,0.18,0.19,0.21,0.22,0.23,0.24,0.24] },
   { id:'over25',       title:'Over 2.5 Goals',           yes:0.74, no:0.26, vol:'₦56.4M',  liq:'₦11.2M', spread:'₦2',  trend:1,  history:[0.55,0.58,0.60,0.63,0.66,0.68,0.70,0.72,0.73,0.74] },
   { id:'btts',         title:'Both Teams To Score',      yes:0.45, no:0.55, vol:'₦38.7M',  liq:'₦7.4M',  spread:'₦3',  trend:0,  history:[0.44,0.45,0.45,0.46,0.45,0.45,0.44,0.45,0.45,0.45] },
   { id:'liv_first',    title:'Liverpool First To Score', yes:0.81, no:0.19, vol:'₦29.1M',  liq:'₦5.8M',  spread:'₦3',  trend:1,  history:[0.72,0.74,0.76,0.77,0.78,0.79,0.80,0.80,0.81,0.81] },
@@ -1087,6 +1093,65 @@ document.addEventListener('click', e => {
   if (!e.target.closest('.avatar') && !e.target.closest('.profile-dropdown')) document.getElementById('profile-dd').classList.remove('open');
 });
 
+/* ── ESPN LIVE SCORE ── */
+let espnActive = false;
+let espnLastHome = -1;
+let espnLastAway = -1;
+
+async function fetchLiveScore() {
+  try {
+    const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard');
+    if (!res.ok) return;
+    const data = await res.json();
+
+    const event = (data.events || []).find(e =>
+      (e.name || '').toLowerCase().includes('aston villa') &&
+      (e.name || '').toLowerCase().includes('liverpool')
+    );
+    if (!event) return;
+
+    const comp = event.competitions[0];
+    const status = comp.status;
+    const stateStr = status.type.state; // 'pre' | 'in' | 'post'
+    const period = status.period || 1;
+    const minuteParsed = parseInt((status.displayClock || '0:00').split(':')[0]) || 0;
+
+    const home = comp.competitors.find(c => c.homeAway === 'home');
+    const away = comp.competitors.find(c => c.homeAway === 'away');
+    const homeScore = parseInt(home?.score ?? '0');
+    const awayScore = parseInt(away?.score ?? '0');
+
+    // Detect and announce goals
+    if (espnLastHome !== -1 && homeScore > espnLastHome)
+      addMatchEvent(minuteParsed, 'goal', `<strong>GOAL — Aston Villa!</strong> Villa ${homeScore}–${awayScore} Liverpool`);
+    if (espnLastAway !== -1 && awayScore > espnLastAway)
+      addMatchEvent(minuteParsed, 'goal', `<strong>GOAL — Liverpool!</strong> Villa ${homeScore}–${awayScore} Liverpool`);
+    espnLastHome = homeScore;
+    espnLastAway = awayScore;
+
+    match.homeScore = homeScore;
+    match.awayScore = awayScore;
+    match.minute    = minuteParsed;
+    match.stoppage  = 0;
+
+    if (stateStr === 'pre')       match.state = 'UPCOMING';
+    else if (stateStr === 'in')   match.state = period <= 1 ? 'LIVE_1H' : 'LIVE_2H';
+    else                          match.state = 'FT';
+
+    if (!espnActive) {
+      espnActive = true;
+      clearInterval(countdownInterval);
+      clearInterval(matchClockInterval);
+      addMatchEvent(0, 'whistle', '<strong>Live data connected</strong> — score updating from ESPN every 60 seconds.');
+      document.getElementById('espn-badge').style.display = 'flex';
+    }
+
+    updateMatchUI();
+  } catch (_) {
+    // silent fallback to simulation
+  }
+}
+
 /* ── INIT ── */
 renderMarkets();
 renderOrderBook();
@@ -1097,6 +1162,8 @@ updateMatchUI();
 tickCountdown();
 countdownInterval = setInterval(tickCountdown, 1000);
 setInterval(updateLiveData, 2200);
+fetchLiveScore();
+setInterval(fetchLiveScore, 60000);
 </script>
 </body>
 </html>
