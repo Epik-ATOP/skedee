@@ -411,69 +411,11 @@ body{-webkit-font-smoothing:antialiased;}
   <!-- DETERMINED BANNER -->
   <div style="background:linear-gradient(135deg,rgba(245,200,0,.10),rgba(245,200,0,.04));border:2px solid var(--border2);border-radius:var(--radius-xl);padding:28px 32px;text-align:center;position:relative;">
     <div style="position:absolute;inset:0;overflow:hidden;border-radius:var(--radius-xl);pointer-events:none;display:flex;align-items:center;justify-content:center;font-size:180px;opacity:.03;line-height:1;">⚖️</div>
-    <i class="fa-solid fa-gavel" style="font-size:34px;color:var(--y);display:block;margin-bottom:10px;"></i>
-    <div style="font-family:var(--font-display);font-weight:800;font-size:36px;color:var(--y);margin-bottom:14px;">DETERMINED!</div>
+    <div style="font-family:var(--font-display);font-weight:800;font-size:32px;color:var(--y);display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+      <i class="fa-solid fa-gavel"></i> DETERMINED!
+    </div>
     <div style="font-family:var(--font-num);font-size:32px;font-weight:700;color:var(--text);letter-spacing:4px;margin-bottom:10px;">MCI &nbsp;3 — 0&nbsp; CRY</div>
     <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;">Full Time · Premier League · Etihad Stadium</div>
-  </div>
-
-  <!-- MATCH CARD -->
-  <div class="match-card" style="position:sticky;top:0;z-index:50;padding:14px 24px;">
-    <div class="match-card-top">
-      <div class="league-badge"><span>⚽</span> PREMIER LEAGUE</div>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div class="live-indicator" id="live-indicator">
-          <div class="live-dot" id="live-dot" style="background:var(--blue);"></div>
-          <span id="live-label">UPCOMING</span>
-        </div>
-        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Etihad Stadium</div>
-      </div>
-    </div>
-
-    <div class="match-center">
-      <div class="team-block">
-        <div class="team-logo">🔵</div>
-        <div class="team-name">Man City</div>
-        <div class="team-record" style="color:var(--green);">Form: W W D W W</div>
-      </div>
-      <div class="score-block">
-        <div class="ticker-score">
-          <span class="ticker-abbr">MCI</span>
-          <span class="ticker-dash">—</span>
-          <span class="ticker-goals" id="score-home">0</span>
-          <span class="ticker-sep">|</span>
-          <span class="ticker-goals" id="score-away">0</span>
-          <span class="ticker-dash">—</span>
-          <span class="ticker-abbr">CRY</span>
-        </div>
-        <div class="match-clock">
-          <i id="clock-icon" class="fa-solid fa-calendar-clock" style="font-size:11px;"></i>
-          <span id="clock-display" style="font-size:11px;">Loading...</span>
-        </div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:#3B82F6;">UPCOMING</div>
-      </div>
-      <div class="team-block">
-        <div class="team-logo">🦅</div>
-        <div class="team-name">Crystal Palace</div>
-        <div class="team-record" style="color:var(--red);">Form: D W L D W</div>
-      </div>
-    </div>
-
-    <!-- EVENT FEED -->
-    <div class="event-feed-wrap" id="event-feed-wrap" style="display:none;">
-      <div class="event-feed-title">Match Events</div>
-      <div class="event-feed" id="event-feed"></div>
-    </div>
-
-    <div class="match-meta">
-      <div class="meta-item"><i class="fa-solid fa-location-dot"></i>Etihad Stadium, Manchester</div>
-      <div class="meta-item"><i class="fa-solid fa-cloud-sun"></i>11°C, Overcast</div>
-      <div class="meta-item"><i class="fa-solid fa-users"></i>53,400 Attendance</div>
-      <div class="meta-item" style="margin-left:auto;">
-        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Total Volume: </span>
-        <span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦12,140,000</span>
-      </div>
-    </div>
   </div>
 
   <!-- STATS ROW -->
