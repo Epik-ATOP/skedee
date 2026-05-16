@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will Dollar Hit ₦1,500 Before July? | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --orange:#F97316;
+  --sidebar-w:220px; --rsidebar-w:280px;
+}
+
+/* ── LAYOUT ── */
+.layout{display:flex;margin-top:52px;min-height:calc(100vh - 52px);}
+
+/* ── LEFT SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);flex-shrink:0;padding:16px 0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;margin-top:4px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;font-size:13px;}
+.sidebar-item .item-badge{margin-left:auto;background:var(--y);color:#000;font-size:9px;font-weight:700;font-family:var(--font-mono);padding:2px 5px;border-radius:4px;}
+.sidebar-item .item-badge.red{background:var(--red);color:#fff;}
+.trending-event{margin:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;cursor:pointer;transition:all .15s;}
+.trending-event:hover{border-color:var(--border2);}
+.trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.trend-change{font-family:var(--font-mono);font-size:10px;color:var(--green);}
+
+/* ── MAIN ── */
+.main{flex:1;background:var(--bg);padding:16px;display:flex;flex-direction:column;gap:14px;}
+
+/* ── HERO CARD ── */
+.hero-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:28px;position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--orange),var(--y),var(--orange),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
+.hero-bg-emoji{position:absolute;right:-10px;top:-10px;font-size:200px;opacity:.04;line-height:1;pointer-events:none;user-select:none;}
+
+.hero-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.hero-cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--orange);letter-spacing:1.5px;}
+.hero-vol-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,0,.08);border:1px solid var(--border2);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--y);letter-spacing:1px;}
+.hot-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--red);letter-spacing:1px;}
+.urgent-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.35);border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--orange);letter-spacing:1px;animation:urgentPulse 2s ease-in-out infinite;}
+@keyframes urgentPulse{0%,100%{opacity:1}50%{opacity:.6}}
+
+.hero-title{font-family:var(--font-display);font-weight:800;font-size:clamp(18px,2.5vw,30px);letter-spacing:-.5px;line-height:1.2;margin-bottom:10px;}
+.hero-sub{font-size:13px;color:var(--text2);line-height:1.75;max-width:680px;margin-bottom:24px;}
+
+/* BIG YES/NO TRADE BUTTONS */
+.hero-trade-row{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+.hero-btn-yes{flex:1;min-width:140px;padding:14px 20px;border-radius:var(--radius-lg);border:1px solid rgba(34,197,94,.4);background:rgba(34,197,94,.1);cursor:pointer;transition:all .2s;text-align:center;}
+.hero-btn-yes:hover{background:var(--green);border-color:var(--green);}
+.hero-btn-yes:hover .hb-label{color:#000;}
+.hero-btn-yes:hover .hb-price{color:#000;}
+.hero-btn-no{flex:1;min-width:140px;padding:14px 20px;border-radius:var(--radius-lg);border:1px solid rgba(239,68,68,.35);background:rgba(239,68,68,.08);cursor:pointer;transition:all .2s;text-align:center;}
+.hero-btn-no:hover{background:var(--red);border-color:var(--red);}
+.hero-btn-no:hover .hb-label{color:#fff;}
+.hero-btn-no:hover .hb-price{color:#fff;}
+.hb-label{font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
+.hero-btn-yes .hb-label{color:var(--green);}
+.hero-btn-no .hb-label{color:var(--red);}
+.hb-price{font-family:var(--font-num);font-size:28px;font-weight:700;line-height:1;}
+.hero-btn-yes .hb-price{color:var(--green);}
+.hero-btn-no .hb-price{color:var(--red);}
+.hb-sub{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:4px;}
+
+/* PROB BAR */
+.hero-prob-bar-wrap{margin-bottom:24px;}
+.hero-prob-label-row{display:flex;justify-content:space-between;margin-bottom:8px;}
+.hpl-yes{font-family:var(--font-num);font-size:24px;font-weight:700;color:var(--green);}
+.hpl-no{font-family:var(--font-num);font-size:24px;font-weight:700;color:var(--red);}
+.hpl-yeslabel{font-family:var(--font-mono);font-size:9px;color:var(--green);letter-spacing:1px;}
+.hpl-nolabel{font-family:var(--font-mono);font-size:9px;color:var(--red);letter-spacing:1px;text-align:right;}
+.hero-prob-bar{height:12px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;}
+.hpb-yes{background:linear-gradient(90deg,var(--green),rgba(34,197,94,.6));border-radius:99px 0 0 99px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.hpb-no{background:linear-gradient(90deg,rgba(239,68,68,.5),var(--red));border-radius:0 99px 99px 0;transition:width .6s cubic-bezier(.4,0,.2,1);}
+
+.hero-stats{display:flex;gap:48px;flex-wrap:wrap;padding:16px 0;border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);margin-bottom:18px;}
+.hstat{display:flex;flex-direction:column;gap:3px;}
+.hstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;}
+.hstat-val{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--text);}
+.hstat-val.yellow{color:var(--y);}
+.hstat-val.orange{color:var(--orange);}
+.hstat-val.green{color:var(--green);}
+.hstat-val.red{color:var(--red);}
+
+.hero-resolution-note{font-size:12px;color:var(--text3);display:flex;align-items:flex-start;gap:7px;line-height:1.6;}
+
+/* RATE GAUGE */
+.price-gauge-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:24px;}
+.gauge-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.gauge-title{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;}
+.gauge-current{font-family:var(--font-num);font-size:28px;font-weight:700;color:var(--orange);}
+.gauge-current-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.gauge-bar-wrap{position:relative;height:20px;background:var(--bg4);border-radius:99px;overflow:visible;margin:8px 0;}
+.gauge-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#22C55E,#F59E0B,var(--orange));transition:width .6s cubic-bezier(.4,0,.2,1);}
+.gauge-target-line{position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--red);border-radius:2px;}
+.gauge-target-label{position:absolute;top:-18px;font-family:var(--font-mono);font-size:8px;color:var(--red);white-space:nowrap;transform:translateX(-50%);}
+.gauge-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ── TABS ── */
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+
+/* ── CONTEXT CARDS ── */
+.context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;}
+.context-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;}
+.ctx-icon{font-size:26px;margin-bottom:10px;}
+.ctx-title{font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;}
+.ctx-text{font-size:12px;color:var(--text2);line-height:1.7;}
+.ctx-text strong{color:var(--text);}
+
+/* RATE HISTORY TABLE */
+.price-table{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
+.price-table-header{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:10px 16px;background:var(--bg3);border-bottom:1px solid var(--border3);font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.price-table-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:10px 16px;border-bottom:1px solid var(--border3);font-size:12px;transition:background .15s;}
+.price-table-row:last-child{border-bottom:none;}
+.price-table-row:hover{background:var(--bg3);}
+.price-table-row .col-date{color:var(--text3);font-family:var(--font-mono);font-size:10px;}
+.price-table-row .col-price{font-family:var(--font-num);font-weight:700;color:var(--text);}
+.price-table-row .col-change{font-family:var(--font-mono);font-size:10px;}
+.price-table-row .col-source{font-size:10px;color:var(--text3);}
+
+/* ── TIMELINE ── */
+.timeline-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;gap:16px;padding-bottom:20px;position:relative;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item:not(:last-child)::before{content:'';position:absolute;left:15px;top:32px;bottom:0;width:1px;background:var(--border3);}
+.tl-dot{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid var(--border);}
+.tl-dot.done{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);}
+.tl-dot.active{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.4);animation:tl-pulse 2s ease-in-out infinite;}
+@keyframes tl-pulse{0%,100%{box-shadow:0 0 0 0 rgba(249,115,22,.2)}50%{box-shadow:0 0 0 6px rgba(249,115,22,0)}}
+.tl-dot.pending{background:var(--bg4);border-color:var(--border3);}
+.tl-body{flex:1;padding-top:4px;}
+.tl-title{font-family:var(--font-display);font-weight:600;font-size:14px;margin-bottom:3px;display:flex;align-items:center;gap:8px;}
+.tl-badge{font-family:var(--font-mono);font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.5px;}
+.tl-badge.done{background:rgba(34,197,94,.12);color:var(--green);}
+.tl-badge.live{background:rgba(249,115,22,.12);color:var(--orange);}
+.tl-badge.pending{background:var(--bg4);color:var(--text3);}
+.tl-date{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:5px;}
+.tl-text{font-size:12px;color:var(--text2);line-height:1.6;}
+
+/* ── ARGUMENTS ── */
+.args-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.arg-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;}
+.arg-card.yes{border-top:3px solid rgba(34,197,94,.5);}
+.arg-card.no{border-top:3px solid rgba(239,68,68,.4);}
+.arg-title{font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.arg-list{display:flex;flex-direction:column;gap:8px;}
+.arg-item{display:flex;gap:8px;font-size:12px;color:var(--text2);line-height:1.6;}
+.arg-item strong{color:var(--text);font-weight:500;}
+.arg-dot-yes{width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:5px;}
+.arg-dot-no{width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:5px;}
+
+/* ── RELATED MARKETS ── */
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.related-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;cursor:pointer;transition:all .2s;}
+.related-card:hover{border-color:var(--border2);transform:translateY(-2px);}
+.rel-cat{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;margin-bottom:6px;}
+.rel-title{font-family:var(--font-display);font-weight:600;font-size:12px;color:var(--text);line-height:1.4;margin-bottom:8px;}
+.rel-prob{font-family:var(--font-num);font-size:20px;font-weight:700;color:var(--y);}
+.rel-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:2px;}
+
+/* ── ACTIVITY / COMMENTS ── */
+.card-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
+.card-section-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.activity-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border3);}
+.activity-item:last-child{border-bottom:none;}
+.act-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.act-dot.buy{background:var(--green);}
+.act-dot.sell{background:var(--red);}
+.act-text{flex:1;font-size:12px;color:var(--text2);line-height:1.4;}
+.act-text strong{color:var(--text);font-weight:500;}
+.act-time{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.comment-item{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--border3);}
+.comment-item:last-child{border-bottom:none;}
+.comment-avatar{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:var(--font-display);}
+.comment-body{flex:1;}
+.comment-user{font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;}
+.comment-badge{font-family:var(--font-mono);font-size:8px;padding:2px 5px;border-radius:3px;font-weight:700;}
+.comment-text{font-size:12px;color:var(--text2);margin-top:4px;line-height:1.6;}
+.comment-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:4px;display:flex;align-items:center;gap:10px;}
+
+/* ── RIGHT SIDEBAR ── */
+.right-sidebar{width:var(--rsidebar-w);background:var(--bg2);border-left:1px solid var(--border);flex-shrink:0;padding:16px 12px;display:flex;flex-direction:column;gap:16px;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.rsidebar-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+
+.prob-meter{text-align:center;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:12px;}
+.pm-yes{font-family:var(--font-num);font-size:40px;font-weight:700;color:var(--green);line-height:1;}
+.pm-label{font-family:var(--font-mono);font-size:9px;color:var(--green);letter-spacing:1px;margin-bottom:8px;}
+.pm-bar{height:8px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:6px;}
+.pm-bar-yes{background:var(--green);border-radius:99px 0 0 99px;transition:width .6s;}
+.pm-bar-no{background:var(--red);border-radius:0 99px 99px 0;transition:width .6s;}
+.pm-no-row{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;}
+.pm-no-val{color:var(--red);font-weight:700;}
+.pm-no-label{color:var(--text3);}
+
+.trade-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border3);animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side.buy{background:rgba(34,197,94,.15);color:var(--green);}
+.trade-side.sell{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-market{font-size:10px;color:var(--text2);flex:1;}
+.trade-price{font-family:var(--font-mono);font-size:10px;color:var(--text);font-weight:600;}
+.trade-size{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* COUNTDOWN CHIP */
+.countdown-chip{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);border-radius:var(--radius);padding:10px 12px;text-align:center;}
+.cd-label{font-family:var(--font-mono);font-size:8px;color:var(--orange);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
+.cd-val{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--orange);}
+.cd-sub{font-family:var(--font-mono);font-size:8px;color:var(--text3);margin-top:2px;}
+
+/* ── ORDER PANEL ── */
+.order-panel{position:fixed;bottom:0;right:var(--rsidebar-w);z-index:200;width:340px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:20px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.5);}
+.order-panel.open{transform:translateY(0);}
+.order-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.order-panel-title{font-family:var(--font-display);font-weight:700;font-size:15px;}
+.btn-close{width:28px;height:28px;background:var(--bg4);border:none;border-radius:50%;cursor:pointer;color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.btn-close:hover{background:var(--red);color:#fff;}
+.order-market-name{font-size:11px;color:var(--text3);margin-bottom:14px;font-family:var(--font-mono);}
+.order-side-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.order-side-btn{flex:1;padding:8px;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;transition:all .15s;background:var(--bg3);color:var(--text2);}
+.order-side-btn.yes.active{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:var(--green);}
+.order-side-btn.no.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:var(--red);}
+.order-field{margin-bottom:12px;}
+.order-field label{display:block;font-size:11px;color:var(--text3);font-family:var(--font-mono);letter-spacing:.5px;margin-bottom:5px;text-transform:uppercase;}
+.order-field input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;color:var(--text);font-family:var(--font-mono);font-size:14px;font-weight:700;outline:none;transition:border-color .15s;}
+.order-field input:focus{border-color:var(--y);}
+.order-summary{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:14px;}
+.order-summary-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;}
+.order-summary-row .label{color:var(--text3);font-family:var(--font-mono);}
+.order-summary-row .value{color:var(--text);font-family:var(--font-mono);font-weight:600;}
+.order-summary-row .value.green{color:var(--green);}
+.order-summary-row .value.yellow{color:var(--y);}
+.btn-place{width:100%;padding:13px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.5px;transition:all .15s;background:var(--y);color:#000;}
+.btn-place:hover{background:var(--y2);transform:translateY(-1px);}
+
+/* ── PROFILE DROPDOWN ── */
+.profile-dropdown{position:fixed;top:56px;right:16px;z-index:300;width:180px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:8px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+.profile-dropdown.open{display:block;animation:dropIn .2s ease;}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.profile-item{padding:8px 12px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px;transition:all .15s;}
+.profile-item:hover{background:var(--bg3);color:var(--text);}
+.profile-item i{width:14px;text-align:center;color:var(--text3);font-size:12px;}
+
+/* ── MOBILE ── */
+@media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}.context-grid,.args-grid,.related-grid{grid-template-columns:1fr;}}
+*{-webkit-tap-highlight-color:transparent;}
+body{-webkit-font-smoothing:antialiased;}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="../index.html" class="topbar-navlink">Markets</a>
+    <a href="10000004.html" class="topbar-navlink">BBNaija S11</a>
+    <a href="10000005.html" class="topbar-navlink">World Bank Loan</a>
+    <a href="10000007.html" class="topbar-navlink">Fuel Price</a>
+    <a href="10000008.html" class="topbar-navlink active">Naira/Dollar</a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+    <a href="../faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search markets, events, teams...">
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<div class="layout">
+
+<!-- LEFT SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist</div>
+  <div class="sidebar-item active"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
+
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Find Markets</div>
+  <div class="sidebar-item">⚽ Football</div>
+  <div class="sidebar-item">🏉 Other Sports</div>
+  <div class="sidebar-item">🎬 Entertainment</div>
+  <div class="sidebar-item">🎵 Music</div>
+  <div class="sidebar-item">⚖️ Politics</div>
+  <div class="sidebar-item">🛢️ Commodities</div>
+  <div class="sidebar-item">🪙 Finance</div>
+  <div class="sidebar-item">🌀 Miscellaneous</div>
+
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Trending Now</div>
+  <div class="trending-event">
+    <div class="trend-name">💱 Dollar hits ₦1,500?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦88M vol</div>
+      <div class="trend-change">▲ 6%</div>
+    </div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">⛽ Fuel Price ₦1,300?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦47M vol</div>
+      <div class="trend-change">▲ 11%</div>
+    </div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">⚖️ World Bank $1.25bn Loan</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦61M vol</div>
+      <div class="trend-change">▲ 8%</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO CARD -->
+  <div class="hero-card">
+    <div class="hero-bg-emoji">💱</div>
+    <div class="hero-top">
+      <div class="hero-cat-tag">💱 FINANCE · FOREX</div>
+      <div class="hero-vol-tag">Vol ₦88.3M</div>
+      <div class="hot-tag">🔥 TRENDING</div>
+      <div class="urgent-tag">⏳ CLOSES IN 45 DAYS</div>
+    </div>
+
+    <div class="hero-title">Will Dollar to Naira hit <i>₦1,500</i> before July?</div>
+    <div class="hero-sub">The official USD/NGN spot rate is hovering around <strong style="color:var(--orange);">₦1,415/$</strong> as of this week. Will it reach the ₦1,500 mark before June ends?</div>
+
+    <!-- RATE GAUGE -->
+    <div class="price-gauge-wrap">
+      <div class="gauge-header">
+        <div>
+          <div class="gauge-title">Current USD/NGN Spot Rate (FMDQ)</div>
+          <div class="gauge-current-label">as at May 16, 2026</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="gauge-current" id="gauge-price">₦1,415</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--orange);">▲ ₦35 this month</div>
+        </div>
+      </div>
+      <div class="gauge-bar-wrap">
+        <div class="gauge-fill" id="gauge-fill" style="width:64.4%;"></div>
+        <div class="gauge-target-line" style="left:75%;">
+          <div class="gauge-target-label">₦1,500 TARGET</div>
+        </div>
+      </div>
+      <div class="gauge-labels">
+        <span>₦900</span>
+        <span>₦1,050</span>
+        <span>₦1,200</span>
+        <span style="color:var(--orange);">₦1,350</span>
+        <span style="color:var(--red);">₦1,500+</span>
+      </div>
+    </div>
+
+    <!-- PROB BAR -->
+    <div class="hero-prob-bar-wrap">
+      <div class="hero-prob-label-row">
+        <div>
+          <div class="hpl-yeslabel">YES · HITS ₦1,500</div>
+          <div class="hpl-yes" id="prob-yes-big">52%</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="hpl-nolabel">NO · STAYS BELOW ₦1,500</div>
+          <div class="hpl-no" id="prob-no-big">48%</div>
+        </div>
+      </div>
+      <div class="hero-prob-bar">
+        <div class="hpb-yes" id="hpb-yes" style="width:52%;"></div>
+        <div class="hpb-no" id="hpb-no" style="width:48%;"></div>
+      </div>
+    </div>
+
+    <!-- BIG BUY BUTTONS -->
+    <div class="hero-trade-row">
+      <div class="hero-btn-yes" onclick="openOrder('Dollar/Naira &gt; ₦1,500 — YES','YES',52)">
+        <div class="hb-label">BUY YES · HITS ₦1,500</div>
+        <div class="hb-price" id="hero-yes-price">₦52</div>
+        <div class="hb-sub">Payout ₦100 if rate reaches ₦1,500</div>
+      </div>
+      <div class="hero-btn-no" onclick="openOrder('Dollar/Naira &gt; ₦1,500 — NO','NO',48)">
+        <div class="hb-label">BUY NO · STAYS BELOW</div>
+        <div class="hb-price" id="hero-no-price">₦48</div>
+        <div class="hb-sub">Payout ₦100 if naira holds</div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-label">Total Volume</div><div class="hstat-val yellow">₦88.3M</div></div>
+      <div class="hstat"><div class="hstat-label">YES Probability</div><div class="hstat-val green" id="prob-stat">52%</div></div>
+      <div class="hstat"><div class="hstat-label">Current Rate</div><div class="hstat-val orange">₦1,415/$</div></div>
+      <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val" id="trader-count">9,247</div></div>
+      <div class="hstat"><div class="hstat-label">Market Closes</div><div class="hstat-val yellow">Jun 30</div></div>
+    </div>
+
+    <div class="hero-resolution-note">
+      <i class="fa-solid fa-circle-info" style="color:var(--orange);margin-top:2px;"></i>
+      Resolves YES if the official CBN or FMDQ spot rate reaches or exceeds ₦1,500 per US dollar at any point before midnight on June 30, 2026. Source: CBN official website and FMDQ Securities Exchange daily fixings. Resolves NO if the rate remains strictly below ₦1,500 through close of market.
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('timeline',this)">Timeline</button>
+    <button class="tab" onclick="switchTab('arguments',this)">YES vs NO</button>
+    <button class="tab" onclick="switchTab('chart',this)">Chart</button>
+    <button class="tab" onclick="switchTab('activity',this)">Activity</button>
+    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+    <div class="context-grid">
+      <div class="context-card">
+        <div class="ctx-icon">💱</div>
+        <div class="ctx-title">Where is the rate now?</div>
+        <div class="ctx-text">The official FMDQ spot rate stands at <strong>₦1,415/$</strong> as of May 16, 2026. The parallel market is trading slightly higher at <strong>₦1,430–₦1,440</strong>. The gap to ₦1,500 is just ₦85 — roughly two months of recent depreciation at the current trajectory.</div>
+      </div>
+      <div class="context-card">
+        <div class="ctx-icon">📉</div>
+        <div class="ctx-title">What's weakening the naira?</div>
+        <div class="ctx-text">Nigeria's trade deficit remains wide as oil production stays below OPEC quota. <strong>FX demand from importers</strong> is consistently outstripping supply. NNPCL's monthly dollar requirements for fuel imports alone exceed $1bn, putting structural pressure on the official window.</div>
+      </div>
+      <div class="context-card">
+        <div class="ctx-icon">🛡️</div>
+        <div class="ctx-title">What could keep it below?</div>
+        <div class="ctx-text">The CBN has <strong>intervened repeatedly</strong> near key psychological levels. Diaspora remittances are picking up ahead of the festive season. A rise in Brent crude prices could boost Nigeria's FX earnings and reduce NNPCL's import burden significantly.</div>
+      </div>
+    </div>
+
+    <!-- RATE HISTORY TABLE -->
+    <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="width:20px;height:1px;background:var(--y);display:inline-block;"></span>USD/NGN Rate History (2023–2026)</div>
+    <div class="price-table" style="margin-bottom:14px;">
+      <div class="price-table-header">
+        <span>Date</span><span>Rate (₦/$)</span><span>Change</span><span>Event</span>
+      </div>
+      <div class="price-table-row">
+        <span class="col-date">Jan 2023</span>
+        <span class="col-price">₦460</span>
+        <span class="col-change" style="color:var(--text3);">— fixed</span>
+        <span class="col-source">Pre-float official rate</span>
+      </div>
+      <div class="price-table-row">
+        <span class="col-date">Jun 2023</span>
+        <span class="col-price">₦757</span>
+        <span class="col-change" style="color:var(--red);">+₦297 ▲</span>
+        <span class="col-source">CBN float on inauguration day</span>
+      </div>
+      <div class="price-table-row">
+        <span class="col-date">Dec 2023</span>
+        <span class="col-price">₦890</span>
+        <span class="col-change" style="color:var(--red);">+₦133 ▲</span>
+        <span class="col-source">Continued devaluation pressure</span>
+      </div>
+      <div class="price-table-row">
+        <span class="col-date">Jun 2024</span>
+        <span class="col-price">₦1,050</span>
+        <span class="col-change" style="color:var(--red);">+₦160 ▲</span>
+        <span class="col-source">Import demand surge, low oil output</span>
+      </div>
+      <div class="price-table-row">
+        <span class="col-date">Dec 2024</span>
+        <span class="col-price">₦1,280</span>
+        <span class="col-change" style="color:var(--red);">+₦230 ▲</span>
+        <span class="col-source">Worsening FX supply deficit</span>
+      </div>
+      <div class="price-table-row">
+        <span class="col-date">Jan 2026</span>
+        <span class="col-price">₦1,380</span>
+        <span class="col-change" style="color:var(--red);">+₦100 ▲</span>
+        <span class="col-source">Q1 2026 import pressure</span>
+      </div>
+      <div class="price-table-row" style="background:rgba(249,115,22,.04);">
+        <span class="col-date" style="color:var(--orange);">May 2026</span>
+        <span class="col-price" style="color:var(--orange);">₦1,415</span>
+        <span class="col-change" style="color:var(--red);">+₦35 ▲</span>
+        <span class="col-source" style="color:var(--orange);">Current · FX demand elevated</span>
+      </div>
+    </div>
+
+    <div class="args-grid">
+      <div class="arg-card yes">
+        <div class="arg-title" style="color:var(--green);">✅ Case for YES (Hits ₦1,500)</div>
+        <div class="arg-list">
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Depreciation momentum is intact</strong> — The naira has weakened almost every month since the 2023 float. The structural FX imbalance — too much demand, not enough supply — has not been resolved.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>NNPCL's dollar appetite is enormous</strong> — NNPCL spends over $1bn/month importing refined petrol. At current prices, this alone is enough to strain the official FX window and drive rate pressure.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Only ₦85 to target</strong> — At the rate of ₦35/month depreciation, the naira could reach ₦1,500 within 2–3 months — well inside this market's June 30 close.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>CBN reserves are thin</strong> — Gross reserves have dipped below $34bn. The CBN's capacity to defend psychological levels through dollar intervention is more limited than in previous cycles.</div></div>
+        </div>
+      </div>
+      <div class="arg-card no">
+        <div class="arg-title" style="color:var(--red);">❌ Case for NO (Stays Below ₦1,500)</div>
+        <div class="arg-list">
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>CBN has defended every key level so far</strong> — ₦1,000, ₦1,200, and ₦1,350 all saw heavy CBN dollar sales. A round-number level like ₦1,500 will attract an outsized defence.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Rate has been stable for 6 weeks</strong> — Since early April the spot rate has traded in a ₦1,395–₦1,425 range. Stability can persist; markets sometimes plateau for longer than traders expect.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Remittances are picking up</strong> — Diaspora inflows via official channels have risen for three consecutive months, adding meaningful dollar supply to the FMDQ window.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Oil could surprise to the upside</strong> — If Brent climbs back above $95, Nigeria's FX earnings from crude sales would increase, easing the supply crunch and delaying a ₦1,500 breach past the market close.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="width:20px;height:1px;background:var(--y);display:inline-block;"></span>Related Markets</div>
+      <div class="related-grid">
+        <div class="related-card" onclick="window.location='10000007.html'">
+          <div class="rel-cat">⛽ ENERGY</div>
+          <div class="rel-title">Will Petrol Price Exceed ₦1,300/litre Before June?</div>
+          <div class="rel-prob">58%</div>
+          <div class="rel-vol">Vol ₦47.2M</div>
+        </div>
+        <div class="related-card" onclick="window.location='10000005.html'">
+          <div class="rel-cat">⚖️ FINANCE</div>
+          <div class="rel-title">Will the $1.25bn World Bank Loan be Approved?</div>
+          <div class="rel-prob">74%</div>
+          <div class="rel-vol">Vol ₦61.4M</div>
+        </div>
+        <div class="related-card" onclick="window.location='../index.html'">
+          <div class="rel-cat">💱 FINANCE</div>
+          <div class="rel-title">Will Naira/Dollar hit ₦1,800 before end of 2026?</div>
+          <div class="rel-prob">41%</div>
+          <div class="rel-vol">Vol ₦34.7M</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE TAB -->
+  <div id="tab-timeline" style="display:none;">
+    <div class="timeline-card">
+      <div class="card-section-title" style="font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:20px;">Naira Devaluation Timeline</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot done">✅</div>
+          <div class="tl-body">
+            <div class="tl-title">CBN Float Announced <span class="tl-badge done">DONE</span></div>
+            <div class="tl-date">June 2023</div>
+            <div class="tl-text">President Tinubu's administration directed the CBN to float the naira on day one. The official rate jumped from ₦460 to ₦757 overnight — ending years of dual-market distortion and triggering a managed float era.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✅</div>
+          <div class="tl-body">
+            <div class="tl-title">Rate Crosses ₦1,000 <span class="tl-badge done">DONE</span></div>
+            <div class="tl-date">Mid-2024</div>
+            <div class="tl-text">The naira broke through the symbolic ₦1,000 level amid widening FX supply deficits and rising import demand. The CBN intervened intermittently but did not prevent the crossing. Market confidence in a floor deteriorated sharply.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✅</div>
+          <div class="tl-body">
+            <div class="tl-title">Rate Hits ₦1,300 <span class="tl-badge done">DONE</span></div>
+            <div class="tl-date">Late 2024</div>
+            <div class="tl-text">Despite multiple CBN interventions and FX policy tweaks, the naira depreciated past ₦1,300. Business costs surged, import inflation accelerated, and the World Bank downgraded Nigeria's growth outlook citing FX instability.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot active">💱</div>
+          <div class="tl-body">
+            <div class="tl-title">₦1,500 Threshold — In Play <span class="tl-badge live">WATCHING</span></div>
+            <div class="tl-date">May–June 2026</div>
+            <div class="tl-text">At ₦1,415, the official rate is within one month's average depreciation of the ₦1,500 level. The CBN is expected to resist this round number. Whether it holds is the question this market is pricing.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot pending">🔮</div>
+          <div class="tl-body">
+            <div class="tl-title">Market Resolution <span class="tl-badge pending">JUN 30</span></div>
+            <div class="tl-date">June 30, 2026</div>
+            <div class="tl-text">This market closes at midnight on June 30. If the official CBN or FMDQ spot rate reaches ₦1,500 at any point before then, YES resolves. If the naira holds, NO wins.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- YES vs NO TAB -->
+  <div id="tab-arguments" style="display:none;">
+    <div class="args-grid">
+      <div class="arg-card yes">
+        <div class="arg-title" style="color:var(--green);">✅ Full Case for YES</div>
+        <div class="arg-list">
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Structural FX deficit, not a blip</strong> — Nigeria's monthly FX demand consistently exceeds supply by an estimated $500M–$800M. Until oil production meaningfully recovers or import substitution takes hold, this gap will persist.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>NNPCL's import costs are dollar-denominated</strong> — The fuel import bill alone exceeds $1bn/month. That demand cannot be turned off; it goes directly into the FMDQ window and weakens the naira regardless of CBN intentions.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>₦85 gap is small at current trajectory</strong> — At the observed depreciation rate of ₦30–₦40/month, the ₦1,500 level could be reached in 2–3 months — within the June 30 market window.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>CBN intervention capacity is limited</strong> — With reserves below $34bn and external debt service obligations heavy, the CBN cannot sustain large-scale dollar sales indefinitely. Prior defences eventually gave way.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>52¢ YES is mispriced if probability is above 58%</strong> — The market is nearly 50/50. If you believe the structural forces are as powerful as they appear, YES at 52 offers a meaningful edge before this market tightens.</div></div>
+        </div>
+      </div>
+      <div class="arg-card no">
+        <div class="arg-title" style="color:var(--red);">❌ Full Case for NO</div>
+        <div class="arg-list">
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>The CBN has defended every round number</strong> — ₦1,000, ₦1,200, ₦1,350 all saw heavy interventions. Defending ₦1,500 is not just a FX decision — it's a political one. The Presidency will not want that headline before the 2027 cycle begins.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Six weeks of stability is significant</strong> — The rate has barely moved since early April. Markets that have stabilised often stay stable longer than bears expect, especially heading into a summer lull in FX demand.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Remittance supply is growing</strong> — Official channels have seen three consecutive months of inflow growth. If this continues through June, the dollar supply side could surprise positively and ease spot pressure.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Crude oil is a wildcard</strong> — A geopolitical catalyst or OPEC+ cut announcement could push Brent to $100+. Nigeria's FX earnings are very sensitive to crude prices — a $10 move adds roughly $400M/month in oil revenue.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>48¢ NO is not expensive</strong> — This market is priced as nearly a coin flip. If you weight the CBN's track record at round numbers plus the stability of recent weeks, NO at 48 is defensible and well-compensated.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART TAB -->
+  <div id="tab-chart" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">YES Probability Over Time</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">Market confidence that USD/NGN reaches ₦1,500 before July 1</div>
+      <div style="height:260px;position:relative;"><canvas id="probChart"></canvas></div>
+    </div>
+    <div class="card-section" style="margin-top:12px;">
+      <div class="card-section-title">Daily Volume (₦M)</div>
+      <div style="height:180px;position:relative;"><canvas id="volChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY TAB -->
+  <div id="tab-activity" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Market Activity</div>
+      <div id="activity-list"></div>
+    </div>
+  </div>
+
+  <!-- COMMENTS TAB -->
+  <div id="tab-comments" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Community <span style="background:var(--orange);color:#fff;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;">54</span></div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
+
+  <!-- RULES TAB -->
+  <div id="tab-rules" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Market Rules & Resolution</div>
+      <div style="display:flex;flex-direction:column;gap:16px;font-size:13px;color:var(--text2);line-height:1.8;">
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Criteria</div>Resolves YES if the official CBN or FMDQ Securities Exchange spot rate for USD/NGN reaches or exceeds ₦1,500 per US dollar at any point before midnight on June 30, 2026. Resolves NO if the rate remains strictly below ₦1,500 through close of market.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Source</div>The CBN official website (<strong style="color:var(--text);">cbn.gov.ng</strong>) and FMDQ Securities Exchange daily fixing publications are the primary sources. Bloomberg and Reuters FX data are used for secondary verification.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What counts as "hitting ₦1,500"?</div>An official FMDQ spot fixing or CBN reference rate published at or above ₦1,500/$1. Parallel market, bureau de change, or informal rates do not count. The source must be official and verifiable.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What if it spikes intraday and retreats?</div>An intraday touch of ₦1,500 on the FMDQ platform during official trading hours counts as YES resolution, even if the official close rate is below ₦1,500. The key test is whether the official market transacted at ₦1,500 or above.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What if the CBN announces a new FX policy?</div>Any official FX window rate that reaches ₦1,500 counts regardless of how the CBN labels or structures its FX framework at the time of resolution.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Disputes</div>Contact support@skedee.ng within 24 hours of resolution. Skedee's decision is final.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- RIGHT SIDEBAR -->
+<div class="right-sidebar">
+
+  <div>
+    <div class="rsidebar-title">Live Probability</div>
+    <div class="prob-meter">
+      <div class="pm-label">YES · HITS ₦1,500</div>
+      <div class="pm-yes" id="pm-yes">52%</div>
+      <div class="pm-bar" style="margin-top:8px;">
+        <div class="pm-bar-yes" id="pm-bar-yes" style="width:52%;"></div>
+        <div class="pm-bar-no" id="pm-bar-no" style="width:48%;"></div>
+      </div>
+      <div class="pm-no-row">
+        <div class="pm-no-label">NO · STAYS BELOW</div>
+        <div class="pm-no-val" id="pm-no">48%</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;">
+      <button style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.1);color:var(--green);font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;" onclick="openOrder('Dollar ₦1,500','YES',52)" onmouseover="this.style.background='var(--green)';this.style.color='#000'" onmouseout="this.style.background='rgba(34,197,94,.1)';this.style.color='var(--green)'">BUY YES</button>
+      <button style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);color:var(--red);font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;" onclick="openOrder('Dollar ₦1,500','NO',48)" onmouseover="this.style.background='var(--red)';this.style.color='#fff'" onmouseout="this.style.background='rgba(239,68,68,.08)';this.style.color='var(--red)'">BUY NO</button>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Countdown</div>
+    <div class="countdown-chip">
+      <div class="cd-label">Closes In</div>
+      <div class="cd-val" id="countdown-val">45d 00h 00m</div>
+      <div class="cd-sub">June 30, 2026 · 23:59</div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Key Stats</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">VOLUME</span>
+        <span style="color:var(--y);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦88.3M</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TRADERS</span>
+        <span style="color:var(--text);font-family:var(--font-mono);font-size:11px;">9,247</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">YES PRICE</span>
+        <span style="color:var(--green);font-family:var(--font-mono);font-weight:700;font-size:11px;" id="sb-yes-price">₦52</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">NO PRICE</span>
+        <span style="color:var(--red);font-family:var(--font-mono);font-weight:700;font-size:11px;" id="sb-no-price">₦48</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">CURRENT RATE</span>
+        <span style="color:var(--orange);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦1,415/$</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">CLOSES</span>
+        <span style="color:var(--orange);font-family:var(--font-mono);font-size:11px;">Jun 30 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
+  </div>
+
+</div><!-- end right sidebar -->
+</div><!-- end layout -->
+
+<!-- ORDER PANEL -->
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header">
+    <div class="order-panel-title">Place Order</div>
+    <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="order-market-name" id="op-market-name">Dollar ₦1,500 — YES</div>
+  <div class="order-side-tabs">
+    <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
+    <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
+  </div>
+  <div class="order-field">
+    <label>Amount (NGN ₦)</label>
+    <input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()">
+  </div>
+  <div class="order-field">
+    <label>Price per Share (₦)</label>
+    <input type="number" id="op-price" value="52" step="1" min="1" max="99" oninput="updateOrderSummary()">
+  </div>
+  <div class="order-summary">
+    <div class="order-summary-row"><span class="label">Shares</span><span class="value" id="op-shares">96.2</span></div>
+    <div class="order-summary-row"><span class="label">Avg Entry</span><span class="value" id="op-entry">₦52</span></div>
+    <div class="order-summary-row"><span class="label">Max Payout</span><span class="value green" id="op-payout">₦9,615</span></div>
+    <div class="order-summary-row"><span class="label">Potential Profit</span><span class="value yellow" id="op-profit">+₦4,615</span></div>
+    <div class="order-summary-row"><span class="label">Wallet After</span><span class="value" id="op-wallet-after">₦4,266,250</span></div>
+  </div>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+</div>
+
+<script src="../script.js"></script>
+<script>
+let yesPct = 52;
+let walletBalance = 4271250;
+let orderSide = 'YES';
+let probChart, volChart;
+let recentTrades = [];
+let gaugeRate = 1415;
+
+const ACTIVITY_DATA = [
+  {type:'buy',  text:'<strong>fx_hawk</strong> bought <strong>YES</strong> × 4,500 at ₦51 — "CBN reserves can\'t hold this level indefinitely"',time:'3m'},
+  {type:'buy',  text:'<strong>dollar_long</strong> opened <strong>YES</strong> × 7,000 at ₦50 — "NNPCL import bill alone breaks ₦1,500"',time:'9m'},
+  {type:'sell', text:'<strong>naira_bull</strong> bought <strong>NO</strong> × 3,000 at ₦48 — "CBN will defend ₦1,500 like a political line"',time:'14m'},
+  {type:'buy',  text:'<strong>rate_hawk</strong> bought <strong>YES</strong> × 9,000 at ₦49 — "FMDQ fixing tells the real story"',time:'22m'},
+  {type:'sell', text:'<strong>remit_rx</strong> bought <strong>NO</strong> × 2,500 at ₦49 — "Diaspora inflows picking up, supply side improving"',time:'31m'},
+  {type:'sell', text:'<strong>cbncritique</strong> sold <strong>YES</strong> × 1,800 — taking profit at ₦52',time:'40m'},
+  {type:'buy',  text:'<strong>macro_ng</strong> bought <strong>YES</strong> × 6,200 at ₦48 — "structural deficit doesn\'t resolve in 45 days"',time:'53m'},
+];
+
+const COMMENTS_DATA = [
+  {init:'F', user:'fx_hawk', col:'#F97316', badge:'ANALYST', badgeCol:'rgba(249,115,22,.2)', badgeText:'var(--orange)', text:"People keep saying CBN will defend ₦1,500. They said that about ₦1,000. And ₦1,200. And ₦1,350. Each time they do defend it — for a while — then the fundamentals win. The structural FX deficit isn't going away in 45 days. I'm heavy YES.", time:'5 min ago', likes:112},
+  {init:'N', user:'naira_bull', col:'#22C55E', badge:'TOP TRADER', badgeCol:'rgba(34,197,94,.15)', badgeText:'var(--green)', text:"I'm NO and comfortable. ₦1,500 is not just a FX number — it's a political headline. The Tinubu administration has 2027 in mind. They will inject dollars, jawbone the market, do whatever it takes to keep that number from showing up on the front page.", time:'18 min ago', likes:74},
+  {init:'R', user:'rate_hawk', col:'#3B82F6', badge:null, text:"For context: the ₦1,415 official rate vs ₦1,435 parallel is a ₦20 premium. That gap has been shrinking, not widening. When the parallel market leads the official rate up, we usually see a big FMDQ move within 2–4 weeks. Watch the parallel spread.", time:'29 min ago', likes:58},
+  {init:'D', user:'dollar_long', col:'#F5C800', badge:'WHALE', badgeCol:'rgba(245,200,0,.15)', badgeText:'var(--y)', text:"Bought ₦5M YES at 50. Simple thesis: NNPCL's monthly dollar demand is $1.2bn. Nigeria's FX earnings from crude are maybe $900M/month. That's a $300M structural monthly deficit. The naira cannot hold at ₦1,415 for long under those conditions.", time:'44 min ago', likes:143},
+  {init:'C', user:'cbncritique', col:'#A855F7', badge:null, text:"The CBN will intervene. But at what cost? Every dollar they sell at ₦1,415 is a dollar less in reserves. The question is whether they have the firepower to hold through June. I think they do — but it won't be pretty. Took profit, may re-enter after any dip.", time:'58 min ago', likes:91},
+];
+
+function generateTrade() {
+  const side = Math.random() > 0.6 ? 'sell' : 'buy';
+  const price = side === 'buy'
+    ? Math.floor(yesPct + (Math.random()*4-2))
+    : Math.floor(100 - yesPct + (Math.random()*4-2));
+  const size = Math.floor(Math.random()*5000+300);
+  const market = Math.random() > 0.3 ? 'Dollar ₦1,500 YES' : 'Dollar ₦1,500 NO';
+  return { side, price, size, market };
+}
+
+function renderTrades() {
+  if (!recentTrades.length) for(let i=0;i<8;i++) recentTrades.push(generateTrade());
+  document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t => `
+    <div class="trade-row">
+      <span class="trade-side ${t.side}">${t.side.toUpperCase()}</span>
+      <span class="trade-market">${t.market}</span>
+      <span class="trade-price">₦${t.price}</span>
+      <span class="trade-size">×${t.size.toLocaleString()}</span>
+    </div>`).join('');
+}
+
+function renderActivity() {
+  document.getElementById('activity-list').innerHTML = ACTIVITY_DATA.map(a => `
+    <div class="activity-item">
+      <div class="act-dot ${a.type}"></div>
+      <div class="act-text">${a.text}</div>
+      <div class="act-time">${a.time}</div>
+    </div>`).join('');
+}
+
+function renderComments() {
+  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c => `
+    <div class="comment-item">
+      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+      <div class="comment-body">
+        <div class="comment-user">${c.user}${c.badge?`<span class="comment-badge" style="background:${c.badgeCol};color:${c.badgeText};">${c.badge}</span>`:''}</div>
+        <div class="comment-text">${c.text}</div>
+        <div class="comment-meta"><span>${c.time}</span><span style="color:var(--orange);">👍 ${c.likes}</span><span style="cursor:pointer;color:var(--text3);">Reply</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function drawCharts() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  const gridColor = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
+
+  if (probChart) probChart.destroy();
+  probChart = new Chart(document.getElementById('probChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels:['Apr 15','Apr 20','Apr 25','Apr 30','May 3','May 7','May 10','May 13','Today'],
+      datasets:[
+        { label:'YES %', data:[40,42,45,47,49,50,51,52,52], borderColor:'#22C55E', backgroundColor:'rgba(34,197,94,0.07)', borderWidth:2.5, fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'#22C55E' },
+        { label:'NO %',  data:[60,58,55,53,51,50,49,48,48], borderColor:'#EF4444', backgroundColor:'rgba(239,68,68,0.04)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#EF4444' },
+      ]
+    },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true,labels:{color:tc,font:{size:10},usePointStyle:true}}}, scales:{ x:{ticks:{color:tc,font:{size:10}},grid:{color:gridColor}}, y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:gridColor},min:0,max:100} } }
+  });
+
+  if (volChart) volChart.destroy();
+  volChart = new Chart(document.getElementById('volChart').getContext('2d'), {
+    type:'bar',
+    data:{
+      labels:['Apr 15','Apr 20','Apr 25','Apr 30','May 3','May 7','May 10','May 13','Today'],
+      datasets:[{ label:'Vol (₦M)', data:[4.2,5.1,6.8,7.4,8.2,9.6,11.2,13.8,15.7], backgroundColor:'rgba(249,115,22,0.6)', borderWidth:0, borderRadius:4 }]
+    },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:tc,font:{size:10}},grid:{display:false}}, y:{ticks:{color:tc,font:{size:10},callback:v=>'₦'+v+'M'},grid:{color:gridColor}} } }
+  });
+}
+
+function updateProbUI(pct) {
+  const no = 100 - pct;
+  document.getElementById('prob-yes-big').textContent = pct + '%';
+  document.getElementById('prob-no-big').textContent = no + '%';
+  document.getElementById('hpb-yes').style.width = pct + '%';
+  document.getElementById('hpb-no').style.width = no + '%';
+  document.getElementById('pm-yes').textContent = pct + '%';
+  document.getElementById('pm-no').textContent = no + '%';
+  document.getElementById('pm-bar-yes').style.width = pct + '%';
+  document.getElementById('pm-bar-no').style.width = no + '%';
+  document.getElementById('prob-stat').textContent = pct + '%';
+  document.getElementById('sb-yes-price').textContent = '₦' + pct;
+  document.getElementById('sb-no-price').textContent = '₦' + no;
+  document.getElementById('hero-yes-price').textContent = '₦' + pct;
+  document.getElementById('hero-no-price').textContent = '₦' + no;
+}
+
+function updateCountdown() {
+  const close = new Date('2026-06-30T23:59:00');
+  const now = new Date();
+  const diff = close - now;
+  if (diff <= 0) { document.getElementById('countdown-val').textContent = 'CLOSED'; return; }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  document.getElementById('countdown-val').textContent = `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m`;
+}
+
+function updateGauge(rate) {
+  const min = 900, max = 1700;
+  const pct = Math.min(100, Math.max(0, (rate - min) / (max - min) * 100));
+  document.getElementById('gauge-fill').style.width = pct + '%';
+  document.getElementById('gauge-price').textContent = '₦' + rate.toLocaleString();
+}
+
+function updateLiveData() {
+  const delta = (Math.random() - 0.48) * 1.5;
+  yesPct = Math.max(38, Math.min(72, yesPct + delta));
+  yesPct = Math.round(yesPct);
+  updateProbUI(yesPct);
+  recentTrades.unshift(generateTrade());
+  if (recentTrades.length > 12) recentTrades.pop();
+  renderTrades();
+}
+
+function openOrder(name, side, price) {
+  document.getElementById('op-market-name').textContent = name;
+  document.getElementById('op-price').value = parseInt(price);
+  setOrderSide(side);
+  document.getElementById('order-panel').classList.add('open');
+}
+function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
+function setOrderSide(side) {
+  orderSide = side;
+  document.getElementById('op-yes-btn').classList.toggle('active', side==='YES');
+  document.getElementById('op-no-btn').classList.toggle('active', side==='NO');
+  document.getElementById('op-side-label').textContent = side;
+  updateOrderSummary();
+}
+function updateOrderSummary() {
+  const amt = parseFloat(document.getElementById('op-amount').value)||0;
+  const price = parseFloat(document.getElementById('op-price').value)||1;
+  const shares = amt/price;
+  const payout = shares;
+  const profit = payout - amt;
+  document.getElementById('op-shares').textContent = shares.toFixed(1);
+  document.getElementById('op-entry').textContent = '₦' + Math.round(price).toLocaleString('en-NG');
+  document.getElementById('op-payout').textContent = '₦' + Math.round(payout).toLocaleString('en-NG');
+  document.getElementById('op-profit').textContent = (profit>=0?'+':'')+' ₦'+Math.round(profit).toLocaleString('en-NG');
+  document.getElementById('op-wallet-after').textContent = '₦' + Math.round(walletBalance-amt).toLocaleString('en-NG');
+}
+function placeOrder() {
+  const amt = parseFloat(document.getElementById('op-amount').value)||0;
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  document.getElementById('wallet-display').textContent = '₦' + walletBalance.toLocaleString('en-NG',{maximumFractionDigits:0});
+  closeOrder();
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview','timeline','arguments','chart','activity','comments','rules'].forEach(t=>{
+    const el = document.getElementById('tab-'+t);
+    if (el) el.style.display = t===name?'':'none';
+  });
+  if (name==='chart') setTimeout(drawCharts,50);
+  if (name==='comments') renderComments();
+  if (name==='activity') renderActivity();
+}
+
+function toggleProfile() { document.getElementById('profile-dd').classList.toggle('open'); }
+document.addEventListener('click', e => {
+  if (!e.target.closest('.avatar') && !e.target.closest('.profile-dropdown'))
+    document.getElementById('profile-dd').classList.remove('open');
+});
+
+updateGauge(1415);
+updateCountdown();
+renderTrades();
+updateOrderSummary();
+setInterval(updateLiveData, 3000);
+setInterval(updateCountdown, 60000);
+setInterval(() => {
+  gaugeRate = Math.max(1395, Math.min(1435, gaugeRate + (Math.random() - 0.48) * 3));
+  updateGauge(Math.round(gaugeRate));
+}, 5000);
+</script>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="../about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="../terms-of-service.html">Terms of Service</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">PAYMENT METHODS</div>
+          <a href="https://opayweb.com" target="_blank">Opay</a>
+          <a href="https://paystack.com" target="_blank">Paystack</a>
+          <a href="https://flutterwave.com" target="_blank">Flutterwave</a>
+          <a href="https://palmpay.com" target="_blank">Palmpay</a>
+          <a href="privacy-policy.html" target="_blank">Bank Transfer</a>
+          <a href="https://fairmoney.io" target="_blank">FairMoney</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
