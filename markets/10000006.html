@@ -248,6 +248,14 @@
 *{-webkit-tap-highlight-color:transparent;}
 body{-webkit-font-smoothing:antialiased;}
 
+/* ── DETERMINED BANNER ── */
+.determined-banner{background:linear-gradient(135deg,rgba(245,200,0,.1),rgba(245,200,0,.04));border:2px solid rgba(245,200,0,.5);border-radius:var(--radius-xl);padding:16px 24px;text-align:center;margin-top:14px;}
+.det-icon{color:var(--y);font-size:18px;margin-bottom:4px;}
+.det-label{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:4px;}
+.det-text{font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--y);letter-spacing:3px;}
+.det-score{font-family:var(--font-num);font-size:26px;font-weight:700;color:var(--text);margin:8px 0 4px;letter-spacing:2px;}
+.det-sub{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:1px;}
+
 /* ── FLASH ── */
 @keyframes flash-green{0%,100%{background:transparent}50%{background:rgba(34,197,94,.1)}}
 .flash-green{animation:flash-green .6s ease;}
@@ -279,7 +287,7 @@ body{-webkit-font-smoothing:antialiased;}
     <a href="../index.html" class="topbar-navlink">Markets</a>
     <a href="10000002.html" class="topbar-navlink">Spurs vs Leeds <span style="font-family:var(--font-mono);font-size:8px;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;">LIVE</span></a>
     <a href="10000003.html" class="topbar-navlink">City vs Palace <span class="upcoming-tag">UPCOMING</span></a>
-    <a href="10000006.html" class="topbar-navlink active">Villa vs Liverpool <span style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;letter-spacing:.5px;" id="nav-status-tag">LIVE</span></a>
+    <a href="10000006.html" class="topbar-navlink active">Villa vs Liverpool <span style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:var(--bg4);color:var(--text3);border:1px solid var(--border);padding:1px 5px;border-radius:3px;letter-spacing:.5px;" id="nav-status-tag">FT</span></a>
     <a href="../about.html" class="topbar-navlink">About</a>
     <a href="../faq.html" class="topbar-navlink">FAQ</a>
   </div>
@@ -374,8 +382,8 @@ body{-webkit-font-smoothing:antialiased;}
       <div class="league-badge"><span>⚽</span> PREMIER LEAGUE</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <div class="live-indicator" id="live-indicator">
-          <div class="live-dot" id="live-dot" style="background:var(--red);animation:live-pulse 1.5s ease-out infinite;box-shadow:0 0 0 0 rgba(239,68,68,.4);"></div>
-          <span id="live-label" style="color:var(--red);">LIVE</span>
+          <div class="live-dot" id="live-dot" style="background:var(--text3);"></div>
+          <span id="live-label" style="color:var(--text3);">FULL TIME</span>
         </div>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Villa Park</div>
       </div>
@@ -391,23 +399,32 @@ body{-webkit-font-smoothing:antialiased;}
         <div class="ticker-score">
           <span class="ticker-abbr">AVL</span>
           <span class="ticker-dash">—</span>
-          <span class="ticker-goals" id="score-home">0</span>
+          <span class="ticker-goals" id="score-home">4</span>
           <span class="ticker-sep">|</span>
-          <span class="ticker-goals" id="score-away">0</span>
+          <span class="ticker-goals" id="score-away">2</span>
           <span class="ticker-dash">—</span>
           <span class="ticker-abbr">LIV</span>
         </div>
         <div class="match-clock">
-          <i id="clock-icon" class="fa-solid fa-stopwatch" style="font-size:11px;"></i>
-          <span id="clock-display" style="font-size:11px;">Loading...</span>
+          <i id="clock-icon" class="fa-solid fa-flag-checkered" style="font-size:11px;"></i>
+          <span id="clock-display" style="font-size:11px;">FT</span>
         </div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#EF4444;">1ST HALF</div>
+        <div class="match-status-pill" id="match-status" style="background:var(--bg4);border-color:var(--border);color:var(--text3);">FULL TIME</div>
       </div>
       <div class="team-block">
         <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg" alt="Liverpool"></div>
         <div class="team-name">Liverpool</div>
         <div class="team-record" style="color:var(--green);">Form: W W W D W</div>
       </div>
+    </div>
+
+    <!-- DETERMINED BANNER -->
+    <div class="determined-banner">
+      <div class="det-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+      <div class="det-label">Market Resolved</div>
+      <div class="det-text">DETERMINED!</div>
+      <div class="det-score">AVL &nbsp; 4 &nbsp;·&nbsp; 2 &nbsp; LIV</div>
+      <div class="det-sub">Aston Villa Win · Full Time</div>
     </div>
 
     <!-- EVENT FEED -->
@@ -638,11 +655,11 @@ body{-webkit-font-smoothing:antialiased;}
 const KICKOFF_TIME = new Date();
 
 const match = {
-  state: 'UPCOMING',
-  minute: 0,
+  state: 'FT',
+  minute: 90,
   stoppage: 0,
-  homeScore: 0,
-  awayScore: 0,
+  homeScore: 4,
+  awayScore: 2,
 };
 
 const SCRIPTED_EVENTS = [
@@ -789,6 +806,7 @@ function tickMatchClock() {
 }
 
 function tickCountdown() {
+  if (match.state === 'FT') { clearInterval(countdownInterval); return; }
   const diff = KICKOFF_TIME - Date.now();
   if (diff <= 0) {
     clearInterval(countdownInterval);
