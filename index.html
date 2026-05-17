@@ -254,7 +254,7 @@
   <div class="topbar-nav">
     <a href="index.html" class="topbar-navlink active">Markets</a>
     <a href="markets/10000002.html" class="topbar-navlink">Spurs vs Leeds <span style="font-family:var(--font-mono);font-size:8px;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;">LIVE</span></a>
-    <a href="markets/10000006.html" class="topbar-navlink">Villa vs Liverpool <span style="font-family:var(--font-mono);font-size:8px;background:var(--bg3);color:var(--text3);border:1px solid var(--border);padding:1px 5px;border-radius:3px;">FT</span></a>
+    <a href="markets/10000009.html" class="topbar-navlink">Man Utd vs Forest <span style="font-family:var(--font-mono);font-size:8px;background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3);padding:1px 5px;border-radius:3px;">TODAY</span></a>
     <a href="about.html" class="topbar-navlink">About</a>
     <a href="faq.html" class="topbar-navlink">FAQ</a>
   </div>
@@ -449,25 +449,25 @@
 // ── DATA ──────────────────────────────────────────────────
 const FEATURED = [
   {
-    emoji:'⚽', cat:'FOOTBALL · PREMIER LEAGUE · UPCOMING', live:false,
+    emoji:'⚽', cat:'FOOTBALL · PREMIER LEAGUE · TODAY', live:false,
     title:'Man Utd vs Nottingham Forest',
-    sub:"Manchester United host Nottingham Forest at Old Trafford in a crucial Premier League clash. Can Forest continue their impressive run against the Red Devils?",
-    prob:52, vol:'₦9.3M', change:'+2%', changeDir:'up',
-    bg:'⚽', yesLabel:'BUY YES ₦52', noLabel:'BUY NO ₦48',
-    link:'#'
+    sub:"Manchester United host Nottingham Forest at Old Trafford — a crucial end-of-season clash. Man Utd are 62% favourites heading into kick-off at 12:30 PM.",
+    prob:62, vol:'₦9.3M', change:'+2%', changeDir:'up',
+    bg:'⚽', yesLabel:'BUY MAN UTD ₦62', noLabel:'BUY FOREST ₦38',
+    link:'markets/10000009.html'
   },
   {
-    emoji:'🎵', cat:'MUSIC · ENTERTAINMENT', live:false,
-    title:'Will Rema drop a new song this month?',
-    sub:"Rema has been teasing new material on his socials. The market is leaning YES but it's far from certain.",
-    prob:61, vol:'₦28.7M', change:'+12%', changeDir:'up',
-    bg:'🎵', yesLabel:'BUY YES ₦61', noLabel:'BUY NO ₦39',
+    emoji:'🎬', cat:'ENTERTAINMENT · REALITY TV', live:false,
+    title:'When will BBNaija auditions begin?',
+    sub:"Big Brother Naija Season 9 is on the horizon. The market is pricing in a June or July start — will Multichoice announce audition dates soon?",
+    prob:67, vol:'₦19.2M', change:'+7%', changeDir:'up',
+    bg:'🎬', yesLabel:'BUY YES ₦67', noLabel:'BUY NO ₦33',
     link:'#'
   },
   {
     emoji:'⚖️', cat:'POLITICS · NIGERIA', live:false,
-    title:'Will the $1.25bn World Bank loan to Nigeria be approved?',
-    sub:'The World Bank board is set to vote on a major development loan. Approval odds have spiked this week.',
+    title:'Will the $1.45bn loan to Nigeria be approved?',
+    sub:'The World Bank board is set to vote on a major $1.45bn development loan to Nigeria. Approval odds have spiked this week on positive signals from Washington.',
     prob:74, vol:'₦61.4M', change:'+8%', changeDir:'up',
     bg:'⚖️', yesLabel:'BUY YES ₦74', noLabel:'BUY NO ₦26',
     link:'#'
@@ -476,8 +476,11 @@ const FEATURED = [
 
 const ALL_MARKETS = [
   // FOOTBALL
-  { id:1, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Aston Villa vs Liverpool', badge:'hot', yes:0.39, no:0.61, vol:'₦94.2M', change:'+5%', dir:'up', link:'markets/10000006.html', isMatch:true, t1:'<img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Aston_Villa_FC_new_crest.svg" alt="Aston Villa">', t1n:'Villa', t2:'<img src="https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg" alt="Liverpool">', t2n:'Liverpool', score:'4 — 2' },
-  { id:2, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Premier League: Man Utd vs Nottm Forest', badge:'upcoming', yes:0.52, no:0.48, vol:'₦9.3M', change:'+2%', dir:'up', link:'#', isMatch:true, t1:'<img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Man Utd">', t1n:'Man Utd', t2:'<img src="https://upload.wikimedia.org/wikipedia/en/e/e5/Nottingham_Forest_F.C._logo.svg" alt="Nottm Forest">', t2n:'Forest', score:'VS' },
+  { id:2, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Premier League: Man Utd vs Nottm Forest', badge:'upcoming', yes:0.617, no:0.383, vol:'₦9.3M', change:'+2%', dir:'up', link:'markets/10000009.html', isMatch:true, t1:'<img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Man Utd">', t1n:'Man Utd', t2:'<img src="https://upload.wikimedia.org/wikipedia/en/e/e5/Nottingham_Forest_F.C._logo.svg" alt="Nottm Forest">', t2n:'Forest', score:'VS' },
+  { id:30, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Premier League: Crystal Palace vs Brentford', badge:'upcoming', yes:0.213, no:0.787, vol:'₦4.6M', change:'+3%', dir:'up', link:'markets/10000010.html', isMatch:true, t1:'<img src="https://upload.wikimedia.org/wikipedia/en/a/a2/Crystal_Palace_FC_logo_%282022%29.svg" alt="Crystal Palace">', t1n:'Palace', t2:'<img src="https://upload.wikimedia.org/wikipedia/en/2/2a/Brentford_FC_crest.svg" alt="Brentford">', t2n:'Brentford', score:'VS' },
+  { id:31, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Premier League: Sunderland vs Everton', badge:'upcoming', yes:0.237, no:0.763, vol:'₦3.7M', change:'+4%', dir:'up', link:'markets/10000011.html', isMatch:true, t1:'<img src="https://upload.wikimedia.org/wikipedia/en/7/77/Logo_Sunderland.svg" alt="Sunderland">', t1n:'Sunderland', t2:'<img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="Everton">', t2n:'Everton', score:'VS' },
+  { id:32, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Premier League: Brighton vs Leeds United', badge:'upcoming', yes:0.387, no:0.613, vol:'₦4.2M', change:'+6%', dir:'up', link:'markets/10000012.html', isMatch:true, t1:'<img src="https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg" alt="Brighton">', t1n:'Brighton', t2:'<img src="https://upload.wikimedia.org/wikipedia/en/5/54/Leeds_United_F.C._logo.svg" alt="Leeds">', t2n:'Leeds', score:'VS' },
+  { id:33, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Premier League: West Ham vs Newcastle', badge:'upcoming', yes:0.206, no:0.794, vol:'₦5.9M', change:'+5%', dir:'up', link:'markets/10000013.html', isMatch:true, t1:'<img src="https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg" alt="West Ham">', t1n:'West Ham', t2:'<img src="https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg" alt="Newcastle">', t2n:'Newcastle', score:'VS' },
   { id:3, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'UEFA: Freiburg vs Aston Villa', badge:'upcoming', yes:0.34, no:0.66, vol:'₦8.4M', change:'+2%', dir:'up', link:'#', isMatch:true, t1:'🏟️', t1n:'Freiburg', t2:'<img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Aston_Villa_FC_new_crest.svg" alt="Aston Villa">', t2n:'Villa', score:'VS' },
   { id:4, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Premier League: Spurs vs Leeds United', badge:'live', yes:0.74, no:0.26, vol:'₦184.3M', change:'+6%', dir:'up', link:'markets/10000002.html', isMatch:true, t1:'<img src="https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg" alt="Spurs">', t1n:'Spurs', t2:'<img src="https://upload.wikimedia.org/wikipedia/en/5/54/Leeds_United_F.C._logo.svg" alt="Leeds">', t2n:'Leeds', score:'2 — 1' },
   { id:5, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Barcelona to win La Liga 2025/26', badge:'hot', yes:0.71, no:0.29, vol:'₦52.8M', change:'+3%', dir:'up', link:'#' },
@@ -492,7 +495,7 @@ const ALL_MARKETS = [
   { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn box office?", badge:'hot', yes:0.52, no:0.48, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
 
   // POLITICS
-  { id:11, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.25bn World Bank loan be approved?', badge:'hot', yes:0.74, no:0.26, vol:'₦61.4M', change:'+8%', dir:'up', link:'#' },
+  { id:11, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.45bn loan to Nigeria be approved?', badge:'hot', yes:0.74, no:0.26, vol:'₦61.4M', change:'+8%', dir:'up', link:'#' },
   { id:12, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Labour Party wins 2027 Nigerian Presidential Election', badge:'new', yes:0.29, no:0.71, vol:'₦124.7M', change:'-1%', dir:'down', link:'#' },
   { id:13, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Tinubu sign the tax reform bill before June?', badge:'new', yes:0.48, no:0.52, vol:'₦38.2M', change:'0%', dir:'flat', link:'#' },
   { id:14, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Obi run for President in 2027?', badge:'new', yes:0.62, no:0.38, vol:'₦47.1M', change:'+5%', dir:'up', link:'#' },
