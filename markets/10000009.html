@@ -202,6 +202,14 @@
 @media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
 *{-webkit-tap-highlight-color:transparent;}
 body{-webkit-font-smoothing:antialiased;}
+
+/* ── DETERMINED BANNER ── */
+.determined-banner{background:linear-gradient(135deg,rgba(245,200,0,.1),rgba(245,200,0,.04));border:2px solid rgba(245,200,0,.5);border-radius:var(--radius-xl);padding:16px 24px;text-align:center;margin-top:14px;}
+.det-icon{color:var(--y);font-size:18px;margin-bottom:4px;}
+.det-label{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:4px;}
+.det-text{font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--y);letter-spacing:3px;}
+.det-score{font-family:var(--font-num);font-size:26px;font-weight:700;color:var(--text);margin:8px 0 4px;letter-spacing:2px;}
+.det-sub{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:1px;}
 @keyframes flash-green{0%,100%{background:transparent}50%{background:rgba(34,197,94,.1)}}
 .flash-green{animation:flash-green .6s ease;}
 </style>
@@ -213,7 +221,7 @@ body{-webkit-font-smoothing:antialiased;}
   <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
   <div class="topbar-nav">
     <a href="../index.html" class="topbar-navlink">Markets</a>
-    <a href="10000009.html" class="topbar-navlink active">Man Utd vs Forest <span id="nav-status-tag" style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3);padding:1px 5px;border-radius:3px;letter-spacing:.5px;">UPCOMING</span></a>
+    <a href="10000009.html" class="topbar-navlink active">Man Utd vs Forest <span id="nav-status-tag" style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(245,200,0,.15);color:var(--y);border:1px solid rgba(245,200,0,.4);padding:1px 5px;border-radius:3px;letter-spacing:.5px;">FT</span></a>
     <a href="../about.html" class="topbar-navlink">About</a>
     <a href="../faq.html" class="topbar-navlink">FAQ</a>
   </div>
@@ -237,8 +245,8 @@ body{-webkit-font-smoothing:antialiased;}
 
 <div class="notif-dropdown" id="notif-dd">
   <div style="font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:10px;padding:0 4px;">Notifications</div>
-  <div class="notif-item"><div class="notif-text">⚡ Man Utd vs Forest kicks off at 12:30 PM today — get your positions in!</div><div class="notif-time">Just now</div></div>
-  <div class="notif-item"><div class="notif-text">📈 Volume spike on <strong>Man Utd Win</strong> — ₦62 YES</div><div class="notif-time">5 min ago</div></div>
+  <div class="notif-item"><div class="notif-text">🏁 FULL TIME — Man Utd 3–2 Forest. Market DETERMINED. Man Utd Win resolves YES!</div><div class="notif-time">Just now</div></div>
+  <div class="notif-item"><div class="notif-text">💰 Man Utd Win YES holders — your positions are being settled at ₦100.</div><div class="notif-time">2 min ago</div></div>
   <div class="notif-item"><div class="notif-text">🟡 Old Trafford fully sold out — 74,000 fans expected</div><div class="notif-time">12 min ago</div></div>
 </div>
 <div class="profile-dropdown" id="profile-dd">
@@ -277,7 +285,7 @@ body{-webkit-font-smoothing:antialiased;}
       <div class="trend-name">⚽ Man Utd vs Forest</div>
       <div style="display:flex;justify-content:space-between;margin-top:3px;">
         <div class="trend-vol">₦9.3M vol</div>
-        <div class="trend-change">12:30 PM</div>
+        <div class="trend-change" style="color:var(--y);">FT 3–2</div>
       </div>
     </div>
     <div class="trending-event">
@@ -342,6 +350,15 @@ body{-webkit-font-smoothing:antialiased;}
       </div>
     </div>
 
+    <!-- DETERMINED BANNER -->
+    <div class="determined-banner">
+      <div class="det-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+      <div class="det-label">Market Resolved</div>
+      <div class="det-text">DETERMINED!</div>
+      <div class="det-score">MUN &nbsp; 3 &nbsp;·&nbsp; 2 &nbsp; NTM</div>
+      <div class="det-sub">Man Utd Win · Full Time</div>
+    </div>
+
     <!-- EVENT FEED -->
     <div class="event-feed-wrap" id="event-feed-wrap" style="display:none;">
       <div class="event-feed-title">Match Events</div>
@@ -363,7 +380,7 @@ body{-webkit-font-smoothing:antialiased;}
   <div class="stats-row">
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦9.3M</div><div class="stat-box-sub">▲ +2% today</div></div>
     <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">8</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
-    <div class="stat-box"><div class="stat-box-label">Man Utd Win</div><div class="stat-box-val yellow" id="home-prob-stat">62%</div><div class="stat-box-sub" style="color:var(--green);">▲ Rising</div></div>
+    <div class="stat-box"><div class="stat-box-label">Man Utd Win</div><div class="stat-box-val yellow" id="home-prob-stat">88%</div><div class="stat-box-sub" style="color:var(--green);">▲ Rising</div></div>
     <div class="stat-box"><div class="stat-box-label">Your P/L</div><div class="stat-box-val" style="color:var(--text3);">₦0</div><div class="stat-box-sub" style="color:var(--text3);">No positions yet</div></div>
   </div>
 
@@ -398,7 +415,7 @@ body{-webkit-font-smoothing:antialiased;}
     <div class="trending-strip">
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🔥 Hot Markets</div>
       <div class="trending-pills">
-        <div class="trend-pill" onclick="openOrder('Man Utd Win','YES',62)"><div class="trend-pill-name">Man Utd Win</div><div class="trend-pill-prob">₦62 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Man Utd Win','YES',88)"><div class="trend-pill-name">Man Utd Win</div><div class="trend-pill-prob">₦88 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Over 2.5 Goals','YES',53)"><div class="trend-pill-name">Over 2.5 Goals</div><div class="trend-pill-prob">₦53 YES</div></div>
         <div class="trend-pill" onclick="openOrder('BTTS','YES',48)"><div class="trend-pill-name">BTTS</div><div class="trend-pill-prob">₦48 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Red Card','YES',17)"><div class="trend-pill-name">Red Card</div><div class="trend-pill-prob">₦17 YES</div></div>
@@ -459,7 +476,7 @@ body{-webkit-font-smoothing:antialiased;}
   <div>
     <div class="rsidebar-section-title">Order Book — Man Utd Win <span style="color:var(--blue);font-size:10px;">PRE</span></div>
     <div id="order-book-asks"></div>
-    <div class="ob-spread" id="ob-spread">Spread: ₦2 · Mid: ₦62</div>
+    <div class="ob-spread" id="ob-spread">Spread: ₦2 · Mid: ₦88</div>
     <div id="order-book-bids"></div>
   </div>
   <div style="border-top:1px solid var(--border3);padding-top:16px;">
@@ -529,11 +546,11 @@ body{-webkit-font-smoothing:antialiased;}
   </div>
   <div class="order-field">
     <label>Price per Share (₦)</label>
-    <input type="number" id="op-price" value="62" step="1" min="1" max="99" oninput="updateOrderSummary()">
+    <input type="number" id="op-price" value="88" step="1" min="1" max="99" oninput="updateOrderSummary()">
   </div>
   <div class="order-summary">
     <div class="order-summary-row"><span class="label">Shares</span><span class="value" id="op-shares">80.6</span></div>
-    <div class="order-summary-row"><span class="label">Avg Entry</span><span class="value" id="op-entry">₦62</span></div>
+    <div class="order-summary-row"><span class="label">Avg Entry</span><span class="value" id="op-entry">₦88</span></div>
     <div class="order-summary-row"><span class="label">Max Payout</span><span class="value green" id="op-payout">₦8,065</span></div>
     <div class="order-summary-row"><span class="label">Potential Profit</span><span class="value yellow" id="op-profit">+₦3,065</span></div>
     <div class="order-summary-row"><span class="label">Wallet After</span><span class="value" id="op-wallet-after">₦4,266,250</span></div>
@@ -546,11 +563,12 @@ body{-webkit-font-smoothing:antialiased;}
 const KICKOFF_TIME = new Date('2026-05-17T11:30:00Z');
 
 const match = {
-  state: 'UPCOMING',
-  minute: 0,
+  state: 'FT',
+  minute: 90,
+  seconds: 0,
   stoppage: 0,
-  homeScore: 0,
-  awayScore: 0,
+  homeScore: 3,
+  awayScore: 2,
 };
 
 const SCRIPTED_EVENTS = [];
@@ -599,7 +617,8 @@ function updateMatchUI() {
     navTag.textContent = 'UPCOMING';
     navTag.style.cssText = 'font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3);padding:1px 5px;border-radius:3px;letter-spacing:.5px;';
   } else if (match.state === 'LIVE_1H' || match.state === 'LIVE_2H') {
-    const minStr = match.stoppage > 0 ? `${match.minute}+${match.stoppage}'` : `${match.minute}'`;
+    const secStr = String(match.seconds || 0).padStart(2, '0');
+    const minStr = match.stoppage > 0 ? `${match.minute}+${match.stoppage}'` : `${match.minute}' ${secStr}"`;
     clockEl.textContent = minStr;
     clockEl.style.fontSize = '';
     clockIcon.className = 'fa-solid fa-stopwatch';
@@ -632,7 +651,10 @@ function updateMatchUI() {
 }
 
 function tickMatchClock() {
-  if (match.state === 'FT') return;
+  if (match.state === 'FT' || match.state === 'HT' || match.state === 'UPCOMING') return;
+  match.seconds++;
+  if (match.seconds < 60) { updateMatchUI(); return; }
+  match.seconds = 0;
   if (match.state === 'LIVE_1H') {
     if (match.minute < 45) { match.minute++; }
     else { match.stoppage++; if (match.stoppage > 4) { match.state = 'HT'; match.stoppage = 0; } }
@@ -645,7 +667,7 @@ function tickMatchClock() {
     if (!firedEvents.has(key) && match.minute >= ev.min) {
       firedEvents.add(key);
       if (ev.type === 'goal') { if (ev.team === 'home') match.homeScore++; else if (ev.team === 'away') match.awayScore++; }
-      if (ev.type === 'whistle' && ev.min === 45) { match.state = 'HT'; setTimeout(() => { match.state = 'LIVE_2H'; match.minute = 45; updateMatchUI(); }, 15000); }
+      if (ev.type === 'whistle' && ev.min === 45) { match.state = 'HT'; setTimeout(() => { match.state = 'LIVE_2H'; match.minute = 45; match.seconds = 0; updateMatchUI(); }, 15000); }
       if (ev.type === 'whistle' && ev.min === 90) { match.state = 'FT'; }
       addMatchEvent(ev.min, ev.type, ev.text);
     }
@@ -662,7 +684,7 @@ function tickCountdown() {
     match.minute = 0;
     addMatchEvent(0, 'whistle', '<strong>Kick Off!</strong> Man United vs Nottingham Forest is underway at Old Trafford!');
     updateMatchUI();
-    matchClockInterval = setInterval(tickMatchClock, 60000);
+    matchClockInterval = setInterval(tickMatchClock, 1000);
     return;
   }
   const h = Math.floor(diff / 3600000);
@@ -675,7 +697,7 @@ function tickCountdown() {
 }
 
 const MARKETS = [
-  { id:'manu_win',    title:'Man Utd Win',             yes:0.617, no:0.383, vol:'₦9.3M',  liq:'₦1.8M', spread:'₦2', trend:1,  history:[0.55,0.57,0.58,0.59,0.60,0.61,0.61,0.61,0.62,0.617] },
+  { id:'manu_win',    title:'Man Utd Win',             yes:0.88,  no:0.12,  vol:'₦9.3M',  liq:'₦1.8M', spread:'₦2', trend:1,  history:[0.55,0.57,0.60,0.63,0.67,0.72,0.78,0.83,0.87,0.88] },
   { id:'forest_win',  title:'Nottm Forest Win',         yes:0.189, no:0.811, vol:'₦4.2M',  liq:'₦0.8M', spread:'₦2', trend:-1, history:[0.21,0.21,0.20,0.20,0.19,0.19,0.19,0.19,0.19,0.189] },
   { id:'draw',        title:'Draw at Full Time',         yes:0.194, no:0.806, vol:'₦3.1M',  liq:'₦0.6M', spread:'₦2', trend:0,  history:[0.20,0.20,0.20,0.20,0.19,0.19,0.19,0.19,0.19,0.194] },
   { id:'over25',      title:'Over 2.5 Goals',            yes:0.53,  no:0.47,  vol:'₦6.4M',  liq:'₦1.2M', spread:'₦2', trend:1,  history:[0.49,0.50,0.50,0.51,0.51,0.52,0.52,0.52,0.53,0.53]  },
@@ -686,7 +708,7 @@ const MARKETS = [
 ];
 
 const ORDER_BOOK_DATA = {
-  asks:[{p:'₦64',s:720,t:1340},{p:'₦63',s:980,t:1820},{p:'₦62',s:2400,t:4200},{p:'₦61',s:560,t:900}],
+  asks:[{p:'₦90',s:720,t:1340},{p:'₦89',s:980,t:1820},{p:'₦88',s:2400,t:4200},{p:'₦87',s:560,t:900}],
   bids:[{p:'₦60',s:1200,t:2100},{p:'₦59',s:680,t:1100},{p:'₦58',s:920,t:1500},{p:'₦57',s:280,t:420}]
 };
 
@@ -708,7 +730,7 @@ const COMMENTS_DATA = [
 
 let orderSide = 'YES';
 let currentMarketName = '';
-let currentOrderPrice = 62;
+let currentOrderPrice = 88;
 let walletBalance = 4271250;
 let miniCharts = {};
 let probChart;
@@ -855,7 +877,7 @@ function drawProbChart() {
   const tc = isDark ? '#9A9880' : '#5C5A48';
   probChart = new Chart(document.getElementById('probChart').getContext('2d'), {
     type:'line',
-    data:{ labels:['7D ago','5D ago','4D ago','3D ago','2D ago','Yesterday','Today'], datasets:[{label:'Man Utd Win %',data:[55,57,58,59,60,61,62],borderColor:'#DA291C',backgroundColor:'rgba(218,41,28,0.08)',borderWidth:2,fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:'#DA291C'}] },
+    data:{ labels:['7D ago','5D ago','4D ago','3D ago','2D ago','Yesterday','Today'], datasets:[{label:'Man Utd Win %',data:[55,57,58,59,60,61,88],borderColor:'#DA291C',backgroundColor:'rgba(218,41,28,0.08)',borderWidth:2,fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:'#DA291C'}] },
     options:{ responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},min:0,max:100}} }
   });
 }
@@ -908,7 +930,11 @@ document.addEventListener('click', e => {
 
 // INIT
 updateMatchUI();
-countdownInterval = setInterval(tickCountdown, 1000);
+if (match.state === 'LIVE_1H' || match.state === 'LIVE_2H') {
+  matchClockInterval = setInterval(tickMatchClock, 1000);
+} else {
+  countdownInterval = setInterval(tickCountdown, 1000);
+}
 renderMarkets();
 renderOrderBook();
 renderActivity();
