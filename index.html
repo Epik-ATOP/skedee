@@ -345,7 +345,7 @@
     <div class="cat-pill" onclick="filterCat('entertainment',this)">🎬 Entertainment <span class="pill-count">2</span></div>
     <div class="cat-pill" onclick="filterCat('politics',this)">⚖️ Politics <span class="pill-count">4</span></div>
     <div class="cat-pill" onclick="filterCat('commodities',this)">🛢️ Commodities <span class="pill-count">7</span></div>
-    <div class="cat-pill" onclick="filterCat('finance',this)">💱 Finance <span class="pill-count">2</span></div>
+    <div class="cat-pill" onclick="filterCat('finance',this)">🪙 Finance <span class="pill-count">2</span></div>
   </div>
 
   <!-- MARKETS SECTION TITLE -->
@@ -510,7 +510,7 @@ const ALL_MARKETS = [
   { id:21, cat:'commodities', emoji:'🌽', catLabel:'COMMODITIES', title:'Will food inflation fall below 30% by end of 2026?', badge:'new', yes:0.33, no:0.67, vol:'₦16.4M', change:'+1%', dir:'up', link:'#', isCommodity:true },
 
   // FINANCE
-  { id:22, cat:'finance', emoji:'💱', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,800 before end of 2026?', badge:'hot', yes:0.48, no:0.52, vol:'₦88.3M', change:'-3%', dir:'down', link:'#', isCommodity:true },
+  { id:22, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,800 before end of 2026?', badge:'hot', yes:0.48, no:0.52, vol:'₦88.3M', change:'-3%', dir:'down', link:'#', isCommodity:true },
   { id:23, cat:'finance', emoji:'📈', catLabel:'FINANCE', title:'Will CBN cut interest rates at June MPC meeting?', badge:'new', yes:0.31, no:0.69, vol:'₦29.5M', change:'+4%', dir:'up', link:'#', isCommodity:true },
 
   // SPORTS
@@ -691,7 +691,7 @@ function filterCat(cat, el) {
     });
   }
 
-  const labels = { all:'All Markets', live:'🔴 Live Now', football:'⚽ Football', sports:'🏆 Sports', music:'🎵 Music', entertainment:'🎬 Entertainment', politics:'⚖️ Politics', commodities:'🛢️ Commodities', finance:'💱 Finance', trending:'🔥 Trending', new:'✦ New Markets' };
+  const labels = { all:'All Markets', live:'🔴 Live Now', football:'⚽ Football', sports:'🏆 Sports', music:'🎵 Music', entertainment:'🎬 Entertainment', politics:'⚖️ Politics', commodities:'🛢️ Commodities', finance:'🪙 Finance', trending:'🔥 Trending', new:'✦ New Markets' };
   document.getElementById('markets-section-label').textContent = labels[cat] || 'Markets';
   renderMarkets();
 }
