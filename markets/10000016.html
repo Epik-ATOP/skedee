@@ -293,7 +293,53 @@ body{-webkit-font-smoothing:antialiased;}
   <div style="border-top:1px solid var(--border3);padding-top:16px;"><div class="rsidebar-section-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div><div id="recent-trades"></div></div>
 </div>
 </div>
-<footer class="site-footer"><div class="footer-inner"><div class="footer-left"><div class="footer-logo">Skedee</div><div class="footer-cols"><div class="footer-col"><div class="footer-col-title">COMPANY</div><a href="../about.html">About</a><a href="../faq.html">FAQ</a></div></div><div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div></div><div class="footer-right"><div class="footer-disclaimer">18+ | Trade Responsibly</div></div></div></footer>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">PAYMENT METHODS</div>
+          <a href="https://opayweb.com" target="_blank">Opay</a>
+          <a href="https://paystack.com" target="_blank">Paystack</a>
+          <a href="https://flutterwave.com" target="_blank">Flutterwave</a>
+          <a href="https://palmpay.com" target="_blank">Palmpay</a>
+          <a href="https://privacy-policy.html" target="_blank">Bank Transfer</a>
+          <a href="https://fairmoney.io" target="_blank">FairMoney</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
 <div class="order-panel" id="order-panel">
   <div class="order-panel-header"><div class="order-panel-title">Place Order</div><button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button></div>
   <div class="order-market-name" id="op-market-name">Fulham Win</div>
@@ -310,6 +356,7 @@ body{-webkit-font-smoothing:antialiased;}
   <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
 </div>
 <script src="../script.js"></script>
+<script src="../sportmonks.js"></script>
 <script>
 const KICKOFF_TIME=new Date('2026-05-24T15:00:00Z');
 const match={state:'UPCOMING',minute:0,stoppage:0,homeScore:0,awayScore:0};
@@ -343,6 +390,9 @@ function toggleNotif(){document.getElementById('notif-dd').classList.toggle('ope
 function toggleProfile(){document.getElementById('profile-dd').classList.toggle('open');document.getElementById('notif-dd').classList.remove('open');}
 document.addEventListener('click',e=>{if(!e.target.closest('.btn-icon')&&!e.target.closest('.notif-dropdown'))document.getElementById('notif-dd').classList.remove('open');if(!e.target.closest('.avatar')&&!e.target.closest('.profile-dropdown'))document.getElementById('profile-dd').classList.remove('open');});
 updateMatchUI();countdownInterval=setInterval(tickCountdown,1000);renderMarkets();renderOrderBook();renderActivity();renderTrades();setInterval(updateLiveData,8000);
+const SM_FIXTURE_ID=null;/* TODO: paste Sportmonks fixture ID — open sm-lookup.html to find it */const SM_HOME_NAME='Fulham',SM_AWAY_NAME='Newcastle';const _smSeen=new Set();async function smInit(){if(!SM_FIXTURE_ID)return;const p=await smGetProbs(SM_FIXTURE_ID);if(p){const r=smRound(p);MARKETS.forEach(m=>{const t=m.title.toLowerCase(),hk=smTeamKey(SM_HOME_NAME),ak=smTeamKey(SM_AWAY_NAME);if(t.includes(hk)&&t.includes('win')){m.yes=p.home;m.no=1-p.home;}else if(t.includes(ak)&&t.includes('win')){m.yes=p.away;m.no=1-p.away;}else if(m.id==='draw'){m.yes=p.draw;m.no=1-p.draw;}});renderMarkets();document.getElementById('home-prob-stat').textContent=Math.round(MARKETS[0].yes*100)+'%';const bars=document.querySelectorAll('.sentiment-home,.sentiment-draw,.sentiment-away');[r.home,r.draw,r.away].forEach((v,i)=>{if(bars[i])bars[i].style.width=v+'%';});const lbs=document.querySelectorAll('.sentiment-labels span');if(lbs[0])lbs[0].textContent=SM_HOME_NAME+' '+r.home+'%';if(lbs[1])lbs[1].textContent='Draw '+r.draw+'%';if(lbs[2])lbs[2].textContent=SM_AWAY_NAME+' '+r.away+'%';const ob=document.querySelector('.ob-spread');if(ob)ob.textContent='Spread: ₦2 · Mid: ₦'+Math.round(MARKETS[0].yes*100);console.log('[SM] probs:',r);}const now=Date.now(),kick=KICKOFF_TIME.getTime();if(now>=kick-7200000&&now<=kick+7200000)smStartPoll(SM_FIXTURE_ID,smHandleLive,30000);}
+function smHandleLive(f){const sc=smParseScore(f);match.homeScore=sc.home;match.awayScore=sc.away;const st=smParseState(f);if(st==='live'&&match.state==='UPCOMING'){match.state='LIVE_1H';match.minute=0;clearInterval(countdownInterval);if(!matchClockInterval)matchClockInterval=setInterval(tickMatchClock,60000);}else if(st==='ht'){match.state='HT';}else if(st==='live'&&match.state==='HT'){match.state='LIVE_2H';match.minute=45;}else if(st==='finished'&&match.state!=='FT'){match.state='FT';}updateMatchUI();smParseEvents(f).forEach(e=>{if(_smSeen.has(e.id))return;_smSeen.add(e.id);const isG=['Goal','Own Goal','Penalty'].includes(e.label);addMatchEvent(e.minute,isG?'goal':'whistle','<strong>'+e.playerName+'</strong> — '+e.emoji+' '+e.label);});}
+smInit();
 </script>
 </body>
 </html>
