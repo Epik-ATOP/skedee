@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Matchday — All Markets | Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png"><link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<style>
+body{-webkit-font-smoothing:antialiased;}
+.page-wrap{margin-top:52px;min-height:calc(100vh - 52px);background:var(--bg);display:flex;flex-direction:column;}
+
+/* Hero banner */
+.search-hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:36px 32px 28px;position:relative;overflow:hidden;}
+.search-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--y),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.3}50%{opacity:1}}
+.search-hero-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding-right:40px;font-size:160px;opacity:.04;pointer-events:none;overflow:hidden;line-height:1;}
+.hero-breadcrumb{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.hero-breadcrumb a{color:var(--text3);transition:color .15s;}
+.hero-breadcrumb a:hover{color:var(--y);}
+.hero-title{font-family:var(--font-display);font-weight:800;font-size:clamp(22px,3vw,36px);letter-spacing:-.5px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+.hero-badge{background:rgba(245,200,0,.15);border:1px solid rgba(245,200,0,.35);color:var(--y);font-family:var(--font-mono);font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:1px;}
+.hero-sub{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:24px;max-width:600px;}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap;}
+.hstat{display:flex;flex-direction:column;gap:2px;}
+.hstat-val{font-family:var(--font-num);font-size:22px;color:var(--y);font-weight:700;line-height:1;}
+.hstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+
+/* Search + filters bar */
+.filters-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:52px;z-index:100;backdrop-filter:blur(10px);}
+.search-input-wrap{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:0 14px;height:38px;flex:1;max-width:400px;transition:border-color .15s;}
+.search-input-wrap:focus-within{border-color:var(--y);}
+.search-input-wrap i{color:var(--text3);font-size:13px;}
+.search-input-wrap input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:13px;width:100%;}
+.search-input-wrap input::placeholder{color:var(--text3);}
+.filter-tags{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex-wrap:wrap;}
+.filter-tag{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--bg3);font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+.filter-tag:hover{border-color:var(--border2);color:var(--text);}
+.filter-tag.active{background:var(--y);color:#000;border-color:var(--y);font-weight:700;}
+.filter-tag .tag-count{font-family:var(--font-mono);font-size:9px;opacity:.7;margin-left:2px;}
+.results-count{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto;white-space:nowrap;}
+
+/* Content */
+.content{max-width:1280px;margin:0 auto;width:100%;padding:28px 32px 60px;display:flex;flex-direction:column;gap:32px;}
+
+/* Section headings */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.section-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2.5px;color:var(--text3);text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';width:20px;height:1px;background:var(--y);}
+.section-count{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+
+/* Matchday grid */
+.matchday-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;}
+.match-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;text-decoration:none;display:block;}
+.match-card:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.25);}
+.match-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--y);opacity:0;transition:opacity .2s;}
+.match-card:hover::after{opacity:1;}
+.mc-league{font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;color:var(--text3);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+.mc-badge{font-family:var(--font-mono);font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;}
+.mc-badge.upcoming{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.25);}
+.mc-badge.live{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25);}
+.teams-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.team-col{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
+.team-logo-sm{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--border);padding:5px;background:var(--bg3);display:flex;align-items:center;justify-content:center;}
+.team-logo-sm img{width:100%;height:100%;object-fit:contain;}
+.team-nm{font-size:11px;font-weight:600;color:var(--text);text-align:center;}
+.vs-block{font-family:var(--font-mono);font-size:11px;color:var(--text3);padding:0 8px;text-align:center;flex-shrink:0;}
+.kickoff{font-family:var(--font-mono);font-size:9px;color:var(--y);font-weight:700;text-align:center;margin-top:2px;}
+.prob-bar-row{display:flex;height:6px;border-radius:99px;overflow:hidden;margin-bottom:6px;}
+.prob-bar-h{border-radius:0;}
+.prob-bar-d{background:rgba(100,100,100,.35);}
+.prob-bar-a{border-radius:0;}
+.prob-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.mc-meta{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border3);}
+.mc-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.mc-time{font-family:var(--font-mono);font-size:9px;color:var(--y);font-weight:700;}
+
+/* All-markets list */
+.all-markets-list{display:flex;flex-direction:column;gap:8px;}
+.mkt-row{display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;cursor:pointer;transition:all .15s;text-decoration:none;}
+.mkt-row:hover{border-color:var(--border2);background:var(--bg3);}
+.mkt-emoji{font-size:18px;flex-shrink:0;width:28px;text-align:center;}
+.mkt-info{flex:1;min-width:0;}
+.mkt-cat{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+.mkt-title{font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mkt-right{display:flex;align-items:center;gap:16px;flex-shrink:0;}
+.mkt-prob{font-family:var(--font-num);font-size:22px;color:var(--y);font-weight:700;line-height:1;}
+.mkt-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);text-align:right;margin-top:2px;}
+.mkt-badge{font-family:var(--font-mono);font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;}
+.mkt-badge.upcoming{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.25);}
+.mkt-badge.live{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25);}
+.mkt-badge.hot{background:rgba(245,200,0,.12);color:var(--y);border:1px solid rgba(245,200,0,.3);}
+.mkt-badge.new{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.25);}
+
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3);font-family:var(--font-mono);font-size:12px;}
+.empty-icon{font-size:36px;margin-bottom:12px;}
+
+@media(max-width:760px){
+  .search-hero{padding:24px 16px 20px;}
+  .filters-bar{padding:12px 16px;}
+  .content{padding:20px 16px 80px;}
+  .matchday-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:20px;}
+  .results-count{display:none;}
+  .filter-tags{flex-wrap:nowrap;}
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="index.html" class="topbar-navlink">Markets</a>
+    <a href="search.html" class="topbar-navlink active">Final Matchday <span style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(245,200,0,.15);color:var(--y);border:1px solid rgba(245,200,0,.3);padding:1px 5px;border-radius:3px;">SUN</span></a>
+    <a href="about.html" class="topbar-navlink">About</a>
+  </div>
+  <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="topbar-search" placeholder="Search markets..." oninput="handleSearch(this.value)"></div>
+  <div class="topbar-right">
+    <div class="btn-icon" onclick="toggleNotif()"><i class="fa-solid fa-bell"></i><span class="notif-badge">3</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="notif-dropdown" id="notif-dd"><div style="font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:10px;padding:0 4px;">Notifications</div><div class="notif-item"><div class="notif-text">🏆 Final Matchday — 10 matches this Sunday at 4PM!</div><div class="notif-time">Just now</div></div><div class="notif-item"><div class="notif-text">⚽ Man City vs Aston Villa — ₦38M volume and rising</div><div class="notif-time">10 min ago</div></div><div class="notif-item"><div class="notif-text">📈 Liverpool vs Brentford — Liverpool now 72% favourites</div><div class="notif-time">30 min ago</div></div></div>
+<div class="profile-dropdown" id="profile-dd"><div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div><div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div><div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div><div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div></div>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="search-hero">
+    <div class="search-hero-bg">🏆</div>
+    <div class="hero-breadcrumb">
+      <a href="index.html">Home</a>
+      <i class="fa-solid fa-chevron-right" style="font-size:8px;"></i>
+      <span style="color:var(--y);">Final Matchday</span>
+    </div>
+    <div class="hero-title">
+      Final Matchday of the Season
+      <span class="hero-badge">SUNDAY</span>
+    </div>
+    <div class="hero-sub">10 Premier League matches kicking off simultaneously this Sunday at 4PM BST. Title race, relegation battle, and European places — it all comes down to this.</div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-val">10</div><div class="hstat-label">Matches</div></div>
+      <div class="hstat"><div class="hstat-val">₦280M+</div><div class="hstat-label">Total Volume</div></div>
+      <div class="hstat"><div class="hstat-val" id="hero-markets-count">50+</div><div class="hstat-label">Open Markets</div></div>
+      <div class="hstat"><div class="hstat-val">4:00 PM</div><div class="hstat-label">Kickoff BST</div></div>
+    </div>
+  </div>
+
+  <!-- FILTERS BAR -->
+  <div class="filters-bar">
+    <div class="search-input-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="main-search" placeholder="Search teams, markets…" oninput="handleSearch(this.value)" autocomplete="off">
+    </div>
+    <div class="filter-tags" id="filter-tags">
+      <div class="filter-tag active" data-filter="all" onclick="setFilter('all',this)">🌍 All <span class="tag-count">34</span></div>
+      <div class="filter-tag" data-filter="sunday" onclick="setFilter('sunday',this)">🏆 Sunday Matches <span class="tag-count">10</span></div>
+      <div class="filter-tag" data-filter="football" onclick="setFilter('football',this)">⚽ All Football <span class="tag-count">15</span></div>
+      <div class="filter-tag" data-filter="music" onclick="setFilter('music',this)">🎵 Music <span class="tag-count">3</span></div>
+      <div class="filter-tag" data-filter="entertainment" onclick="setFilter('entertainment',this)">🎬 Entertainment <span class="tag-count">2</span></div>
+      <div class="filter-tag" data-filter="politics" onclick="setFilter('politics',this)">⚖️ Politics <span class="tag-count">4</span></div>
+      <div class="filter-tag" data-filter="commodities" onclick="setFilter('commodities',this)">🛢️ Commodities <span class="tag-count">7</span></div>
+    </div>
+    <div class="results-count" id="results-count">Showing <strong id="results-num">34</strong> markets</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content" id="content">
+    <!-- injected by JS -->
+  </div>
+
+</div>
+
+<footer class="site-footer"><div class="footer-inner"><div class="footer-left"><div class="footer-logo">Skedee</div><div class="footer-cols"><div class="footer-col"><div class="footer-col-title">COMPANY</div><a href="about.html">About</a><a href="faq.html">FAQ</a></div></div><div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div></div><div class="footer-right"><div class="footer-disclaimer">18+ | Trade Responsibly</div></div></div></footer>
+
+<script src="script.js"></script>
+<script>
+// ── DATA ──────────────────────────────────────────────────────────
+const SUNDAY_MATCHES = [
+  { id:10000014, home:'Man City', homeAbbr:'MCI', homeColor:'#6CABDD', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg', away:'Aston Villa', awayAbbr:'AVL', awayColor:'#95003C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/9/9a/Aston_Villa_FC_new_crest.svg', homeProb:65, drawProb:18, awayProb:17, vol:'₦38M', link:'markets/10000014.html' },
+  { id:10000015, home:'Brighton', homeAbbr:'BHA', homeColor:'#0057B8', homeLogo:'https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg', away:'Man United', awayAbbr:'MUN', awayColor:'#DA291C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg', homeProb:52, drawProb:24, awayProb:24, vol:'₦22M', link:'markets/10000015.html' },
+  { id:10000016, home:'Fulham', homeAbbr:'FUL', homeColor:'#BBBBBB', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/eb/Fulham_FC_%28shield%29.svg', away:'Newcastle', awayAbbr:'NEW', awayColor:'#888888', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg', homeProb:40, drawProb:28, awayProb:32, vol:'₦14M', link:'markets/10000016.html' },
+  { id:10000017, home:'Spurs', homeAbbr:'TOT', homeColor:'#CCCCCC', homeLogo:'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg', away:'Everton', awayAbbr:'EVE', awayColor:'#003399', awayLogo:'https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg', homeProb:58, drawProb:24, awayProb:18, vol:'₦18M', link:'markets/10000017.html' },
+  { id:10000018, home:'Liverpool', homeAbbr:'LIV', homeColor:'#C8102E', homeLogo:'https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg', away:'Brentford', awayAbbr:'BRE', awayColor:'#E30613', awayLogo:'https://upload.wikimedia.org/wikipedia/en/2/2a/Brentford_FC_crest.svg', homeProb:72, drawProb:16, awayProb:12, vol:'₦44M', link:'markets/10000018.html' },
+  { id:10000019, home:'Burnley', homeAbbr:'BUR', homeColor:'#6C1D45', homeLogo:'https://upload.wikimedia.org/wikipedia/en/6/6d/Burnley_FC_Logo.svg', away:'Wolves', awayAbbr:'WOL', awayColor:'#FDB913', awayLogo:'https://upload.wikimedia.org/wikipedia/en/f/fc/Wolverhampton_Wanderers.svg', homeProb:35, drawProb:30, awayProb:35, vol:'₦8M', link:'markets/10000019.html' },
+  { id:10000020, home:'Nottm Forest', homeAbbr:'NFO', homeColor:'#DD0000', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/e5/Nottingham_Forest_F.C._logo.svg', away:'Bournemouth', awayAbbr:'BOU', awayColor:'#DA291C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/e/e5/AFC_Bournemouth_%282013%29.svg', homeProb:46, drawProb:28, awayProb:26, vol:'₦11M', link:'markets/10000020.html' },
+  { id:10000021, home:'West Ham', homeAbbr:'WHU', homeColor:'#7A263A', homeLogo:'https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg', away:'Leeds', awayAbbr:'LEE', awayColor:'#FFCD00', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/54/Leeds_United_F.C._logo.svg', homeProb:45, drawProb:28, awayProb:27, vol:'₦9M', link:'markets/10000021.html' },
+  { id:10000022, home:'Sunderland', homeAbbr:'SUN', homeColor:'#EB172B', homeLogo:'https://upload.wikimedia.org/wikipedia/en/7/77/Logo_Sunderland.svg', away:'Chelsea', awayAbbr:'CHE', awayColor:'#034694', awayLogo:'https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg', homeProb:26, drawProb:24, awayProb:50, vol:'₦16M', link:'markets/10000022.html' },
+  { id:10000023, home:'Crystal Palace', homeAbbr:'CRY', homeColor:'#1B458F', homeLogo:'https://upload.wikimedia.org/wikipedia/en/a/a2/Crystal_Palace_FC_logo_%282022%29.svg', away:'Arsenal', awayAbbr:'ARS', awayColor:'#EF0107', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg', homeProb:28, drawProb:24, awayProb:48, vol:'₦26M', link:'markets/10000023.html' },
+];
+
+const OTHER_MARKETS = [
+  { id:2, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Newcastle vs West Ham', badge:'upcoming', yes:0.58, vol:'₦5.9M', change:'+5%', dir:'up', link:'markets/10000013.html' },
+  { id:30, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Crystal Palace vs Brentford', badge:'upcoming', yes:0.213, vol:'₦4.6M', change:'+3%', dir:'up', link:'markets/10000010.html' },
+  { id:31, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Sunderland vs Everton', badge:'upcoming', yes:0.237, vol:'₦3.7M', change:'+4%', dir:'up', link:'markets/10000011.html' },
+  { id:32, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Brighton vs Leeds United', badge:'upcoming', yes:0.387, vol:'₦4.2M', change:'+6%', dir:'up', link:'markets/10000012.html' },
+  { id:4, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Spurs vs Leeds United', badge:'live', yes:0.74, vol:'₦184.3M', change:'+6%', dir:'up', link:'markets/10000002.html' },
+  { id:5, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Barcelona to win La Liga 2025/26', badge:'hot', yes:0.71, vol:'₦52.8M', change:'+3%', dir:'up', link:'#' },
+  { id:6, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Rema drop a new song this month?', badge:'hot', yes:0.61, vol:'₦28.7M', change:'+12%', dir:'up', link:'#' },
+  { id:7, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Wizkid drop a new album this year?', badge:'new', yes:0.71, vol:'₦55.9M', change:'+4%', dir:'up', link:'#' },
+  { id:8, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Burna Boy win a Grammy 2026?', badge:'new', yes:0.44, vol:'₦31.4M', change:'-2%', dir:'down', link:'#' },
+  { id:9, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:'When will BBNaija auditions begin?', badge:'new', yes:0.67, vol:'₦19.2M', change:'+7%', dir:'up', link:'#' },
+  { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn?", badge:'hot', yes:0.52, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
+  { id:11, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.45bn loan to Nigeria be approved?', badge:'hot', yes:0.74, vol:'₦61.4M', change:'+8%', dir:'up', link:'#' },
+  { id:12, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Labour Party wins 2027 Nigerian Presidential Election', badge:'new', yes:0.29, vol:'₦124.7M', change:'-1%', dir:'down', link:'#' },
+  { id:13, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Tinubu sign the tax reform bill before June?', badge:'new', yes:0.48, vol:'₦38.2M', change:'0%', dir:'flat', link:'#' },
+  { id:14, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Obi run for President in 2027?', badge:'new', yes:0.62, vol:'₦47.1M', change:'+5%', dir:'up', link:'#' },
+  { id:15, cat:'commodities', emoji:'🛢️', catLabel:'COMMODITIES', title:'Will crude oil exceed $90/barrel in June?', badge:'hot', yes:0.42, vol:'₦33.8M', change:'-4%', dir:'down', link:'#' },
+  { id:16, cat:'commodities', emoji:'⛽', catLabel:'COMMODITIES', title:'Will petrol exceed ₦1,200/litre by July?', badge:'new', yes:0.55, vol:'₦22.4M', change:'+6%', dir:'up', link:'#' },
+  { id:17, cat:'commodities', emoji:'🌾', catLabel:'COMMODITIES', title:'Will a 50kg bag of rice exceed ₦120,000 by August?', badge:'new', yes:0.38, vol:'₦18.7M', change:'+2%', dir:'up', link:'#' },
+  { id:18, cat:'commodities', emoji:'🫘', catLabel:'COMMODITIES', title:'Will beans exceed ₦90,000 per bag in Q3?', badge:'new', yes:0.44, vol:'₦12.3M', change:'+1%', dir:'up', link:'#' },
+  { id:19, cat:'commodities', emoji:'🥚', catLabel:'COMMODITIES', title:'Will a crate of eggs exceed ₦3,500 before September?', badge:'new', yes:0.61, vol:'₦9.8M', change:'+3%', dir:'up', link:'#' },
+  { id:20, cat:'commodities', emoji:'🍌', catLabel:'COMMODITIES', title:'Will plantain prices drop below ₦800/bunch by June?', badge:'new', yes:0.29, vol:'₦7.1M', change:'-2%', dir:'down', link:'#' },
+  { id:21, cat:'commodities', emoji:'🌽', catLabel:'COMMODITIES', title:'Will food inflation fall below 30% by end of 2026?', badge:'new', yes:0.33, vol:'₦16.4M', change:'+1%', dir:'up', link:'#' },
+  { id:22, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,800 before end of 2026?', badge:'hot', yes:0.48, vol:'₦88.3M', change:'-3%', dir:'down', link:'#' },
+  { id:23, cat:'finance', emoji:'📈', catLabel:'FINANCE', title:'Will CBN cut interest rates at June MPC meeting?', badge:'new', yes:0.31, vol:'₦29.5M', change:'+4%', dir:'up', link:'#' },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────
+let currentFilter = 'all';
+let currentQuery = '';
+
+// ── RENDERING ─────────────────────────────────────────────────────
+function buildMatchCard(m) {
+  return `
+    <a class="match-card" href="${m.link}">
+      <div class="mc-league">
+        <span>⚽ PREMIER LEAGUE · MATCHDAY 38</span>
+        <span class="mc-badge upcoming">UPCOMING</span>
+      </div>
+      <div class="teams-row">
+        <div class="team-col">
+          <div class="team-logo-sm"><img src="${m.homeLogo}" alt="${m.home}"></div>
+          <div class="team-nm">${m.home}</div>
+        </div>
+        <div class="vs-block">
+          <div style="font-weight:700;font-size:13px;color:var(--text3);">VS</div>
+          <div class="kickoff">4:00 PM</div>
+        </div>
+        <div class="team-col">
+          <div class="team-logo-sm"><img src="${m.awayLogo}" alt="${m.away}"></div>
+          <div class="team-nm">${m.away}</div>
+        </div>
+      </div>
+      <div class="prob-bar-row">
+        <div class="prob-bar-h" style="width:${m.homeProb}%;background:${m.homeColor};"></div>
+        <div class="prob-bar-d" style="width:${m.drawProb}%;"></div>
+        <div class="prob-bar-a" style="width:${m.awayProb}%;background:${m.awayColor};"></div>
+      </div>
+      <div class="prob-labels">
+        <span style="color:${m.homeColor};font-weight:700;">${m.homeAbbr} ${m.homeProb}%</span>
+        <span>Draw ${m.drawProb}%</span>
+        <span style="color:${m.awayColor};font-weight:700;">${m.awayAbbr} ${m.awayProb}%</span>
+      </div>
+      <div class="mc-meta">
+        <span class="mc-vol">Vol ${m.vol}</span>
+        <span class="mc-time"><i class="fa-solid fa-futbol" style="font-size:9px;margin-right:3px;"></i>Sunday 4PM BST</span>
+      </div>
+    </a>`;
+}
+
+function buildMktRow(m) {
+  const pct = Math.round(m.yes * 100);
+  const badgeCls = m.badge === 'live' ? 'live' : m.badge === 'hot' ? 'hot' : m.badge === 'upcoming' ? 'upcoming' : 'new';
+  const badgeTxt = m.badge === 'live' ? '● LIVE' : m.badge === 'hot' ? '🔥 HOT' : m.badge === 'upcoming' ? 'UPCOMING' : '✦ NEW';
+  return `
+    <a class="mkt-row" href="${m.link}">
+      <div class="mkt-emoji">${m.emoji}</div>
+      <div class="mkt-info">
+        <div class="mkt-cat">${m.catLabel}</div>
+        <div class="mkt-title">${m.title}</div>
+      </div>
+      <div class="mkt-right">
+        <div>
+          <div class="mkt-prob">${pct}%</div>
+          <div class="mkt-vol">Vol ${m.vol}</div>
+        </div>
+        <span class="mkt-badge ${badgeCls}">${badgeTxt}</span>
+      </div>
+    </a>`;
+}
+
+function matchesQuery(text) {
+  if (!currentQuery) return true;
+  return text.toLowerCase().includes(currentQuery.toLowerCase());
+}
+
+function render() {
+  const q = currentQuery;
+  const f = currentFilter;
+
+  // Filter Sunday matches
+  let sundayMatches = SUNDAY_MATCHES.filter(m => {
+    if (f === 'football' || f === 'sunday') return true;
+    if (f === 'all') return true;
+    return false;
+  }).filter(m => !q || matchesQuery(m.home + ' ' + m.away));
+
+  // Filter other markets
+  let otherMarkets = OTHER_MARKETS.filter(m => {
+    if (f === 'sunday') return false;
+    if (f === 'all') return true;
+    if (f === 'football') return m.cat === 'football';
+    return m.cat === f;
+  }).filter(m => !q || matchesQuery(m.title + ' ' + m.catLabel));
+
+  const content = document.getElementById('content');
+  let html = '';
+
+  const total = sundayMatches.length + otherMarkets.length;
+  document.getElementById('results-num').textContent = total;
+
+  if (total === 0) {
+    content.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div>No markets match "<strong>${q}</strong>"<br><span style="font-size:10px;margin-top:8px;display:block;">Try a team name, category, or keyword</span></div>`;
+    return;
+  }
+
+  // Sunday Matchday section
+  if (sundayMatches.length > 0) {
+    html += `<div>
+      <div class="section-head">
+        <div class="section-title">🏆 Sunday Final Matchday</div>
+        <div class="section-count">${sundayMatches.length} matches · Sunday 4PM BST</div>
+      </div>
+      <div class="matchday-grid">
+        ${sundayMatches.map(buildMatchCard).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Other markets section
+  if (otherMarkets.length > 0) {
+    const catName = f === 'football' ? 'Other Football' : f === 'all' ? 'All Other Markets' : 'Markets';
+    html += `<div>
+      <div class="section-head">
+        <div class="section-title">${catName}</div>
+        <div class="section-count">${otherMarkets.length} markets</div>
+      </div>
+      <div class="all-markets-list">
+        ${otherMarkets.map(buildMktRow).join('')}
+      </div>
+    </div>`;
+  }
+
+  content.innerHTML = html;
+}
+
+function setFilter(filter, el) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function handleSearch(val) {
+  currentQuery = val;
+  // sync topbar
+  document.getElementById('topbar-search').value = val;
+  document.getElementById('main-search').value = val;
+  render();
+}
+
+function toggleTheme(){const isDark=document.body.getAttribute('data-theme')!=='light';document.body.setAttribute('data-theme',isDark?'light':'dark');document.getElementById('theme-icon').className=isDark?'fa-solid fa-moon':'fa-solid fa-sun';}
+function toggleNotif(){document.getElementById('notif-dd').classList.toggle('open');document.getElementById('profile-dd').classList.remove('open');}
+function toggleProfile(){document.getElementById('profile-dd').classList.toggle('open');document.getElementById('notif-dd').classList.remove('open');}
+document.addEventListener('click',e=>{if(!e.target.closest('.btn-icon')&&!e.target.closest('.notif-dropdown'))document.getElementById('notif-dd').classList.remove('open');if(!e.target.closest('.avatar')&&!e.target.closest('.profile-dropdown'))document.getElementById('profile-dd').classList.remove('open');});
+
+// Init
+render();
+</script>
+</body>
+</html>
