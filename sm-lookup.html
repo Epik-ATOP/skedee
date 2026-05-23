@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sportmonks Fixture Lookup — Skedee</title>
+<title>Odds API Check — Skedee</title>
 <link rel="icon" type="image/png" href="assets/skedee-1.png">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,12 +14,7 @@ h1{font-family:var(--font-display);font-weight:800;font-size:28px;margin-bottom:
 .sub{color:var(--text2);font-size:14px;margin-bottom:32px;}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;}
 .card-title{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:16px;}
-.field-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.field{display:flex;flex-direction:column;gap:5px;}
-.field label{font-size:11px;font-family:var(--font-mono);color:var(--text3);letter-spacing:1px;}
-.field input{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 14px;color:var(--text);font-family:var(--font-mono);font-size:13px;outline:none;min-width:220px;transition:border-color .15s;}
-.field input:focus{border-color:var(--y);}
-.btn{background:var(--y);color:#000;border:none;border-radius:var(--radius);padding:10px 24px;font-family:var(--font-display);font-weight:700;font-size:14px;cursor:pointer;transition:opacity .15s;align-self:flex-end;}
+.btn{background:var(--y);color:#000;border:none;border-radius:var(--radius);padding:10px 24px;font-family:var(--font-display);font-weight:700;font-size:14px;cursor:pointer;transition:opacity .15s;}
 .btn:hover{opacity:.85;}
 .btn:disabled{opacity:.5;cursor:not-allowed;}
 .status{font-family:var(--font-mono);font-size:12px;color:var(--text3);margin-top:12px;min-height:18px;}
@@ -29,18 +24,22 @@ table{width:100%;border-collapse:collapse;margin-top:0;}
 th{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;}
 td{padding:12px;border-bottom:1px solid var(--border3);font-size:13px;vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
-.fixture-id{font-family:var(--font-mono);font-size:12px;color:var(--y);font-weight:700;}
 .match-name{font-weight:600;}
-.copy-btn{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:10px;color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;}
-.copy-btn:hover{border-color:var(--y);color:var(--y);}
-.copy-btn.copied{background:rgba(34,197,94,.1);border-color:var(--green);color:var(--green);}
-.no-results{text-align:center;padding:32px;color:var(--text3);font-family:var(--font-mono);font-size:12px;}
+.odds-cell{font-family:var(--font-mono);font-size:12px;color:var(--y);}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:5px;font-family:var(--font-mono);font-size:10px;font-weight:700;}
+.status-badge.upcoming{background:rgba(245,200,0,.1);color:var(--y);border:1px solid rgba(245,200,0,.3);}
+.status-badge.live{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3);}
 .skedee-col{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
 .skedee-col a{color:var(--y);text-decoration:none;}
 .skedee-col a:hover{text-decoration:underline;}
 .tip-box{background:rgba(245,200,0,.06);border:1px solid rgba(245,200,0,.2);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;font-size:13px;color:var(--text2);line-height:1.6;}
 .tip-box strong{color:var(--y);}
 code{font-family:var(--font-mono);background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:12px;color:var(--text);}
+.no-results{text-align:center;padding:32px;color:var(--text3);font-family:var(--font-mono);font-size:12px;}
+.prob-bar{display:flex;gap:2px;height:6px;border-radius:3px;overflow:hidden;width:120px;}
+.prob-h{background:#6CABDD;border-radius:2px;}
+.prob-d{background:#888;}
+.prob-a{background:#E8534A;border-radius:2px;}
 </style>
 </head>
 <body data-theme="dark">
@@ -48,80 +47,74 @@ code{font-family:var(--font-mono);background:var(--bg3);padding:1px 6px;border-r
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
     <a href="index.html" style="font-family:var(--font-display);font-weight:800;font-size:20px;color:var(--y);text-decoration:none;">Skedee</a>
     <span style="color:var(--border2);">/</span>
-    <span style="font-family:var(--font-mono);font-size:12px;color:var(--text3);">Sportmonks Lookup</span>
+    <span style="font-family:var(--font-mono);font-size:12px;color:var(--text3);">Odds API Check</span>
   </div>
-  <h1>Fixture ID Lookup</h1>
-  <p class="sub">Find Sportmonks fixture IDs for your market pages. Paste each ID into the matching market file.</p>
+  <h1>Live Odds Check</h1>
+  <p class="sub">Verify that The Odds API is returning EPL games and odds through the Cloudflare proxy.</p>
 
   <div class="tip-box">
-    <strong>Before you start:</strong> make sure your API token is set in <code>sportmonks.js</code> — replace <code>PASTE_YOUR_TOKEN_HERE</code> with your actual token. Then hit Search below and copy the fixture IDs to each market page's <code>SM_FIXTURE_ID</code>.
+    <strong>Setup checklist:</strong><br>
+    1. Deploy <code>sm-worker.js</code> to Cloudflare Workers<br>
+    2. Set <code>SM_TOKEN</code> (Variable/Secret) to your <a href="https://the-odds-api.com" target="_blank" style="color:var(--y);">the-odds-api.com</a> key<br>
+    3. Click <strong>Check Odds API</strong> below — EPL games with h2h odds should appear<br>
+    4. If you see your Sunday games listed, everything is wired up correctly ✓
   </div>
 
   <div class="card">
-    <div class="card-title">Search Fixtures</div>
-    <div class="field-row">
-      <div class="field">
-        <label>Date</label>
-        <input type="date" id="date-input" value="2026-05-24">
-      </div>
-      <button class="btn" id="search-btn" onclick="search()">
-        <i class="fa-solid fa-magnifying-glass" style="margin-right:6px;"></i>Search Premier League
-      </button>
-    </div>
+    <div class="card-title">EPL Odds Feed</div>
+    <button class="btn" id="search-btn" onclick="checkOdds()">
+      <i class="fa-solid fa-satellite-dish" style="margin-right:6px;"></i>Check Odds API
+    </button>
     <div class="status" id="status"></div>
   </div>
 
   <div class="card" id="results-card" style="display:none;">
-    <div class="card-title">Results — Premier League Fixtures</div>
+    <div class="card-title">EPL Games with Odds</div>
     <table>
       <thead>
         <tr>
           <th>#</th>
           <th>Match</th>
-          <th>Sportmonks Fixture ID</th>
+          <th>Kick-off (UTC)</th>
+          <th>Fair Probs (H / D / A)</th>
           <th>Skedee Page</th>
-          <th></th>
         </tr>
       </thead>
       <tbody id="results-body"></tbody>
     </table>
-    <div class="no-results" id="no-results" style="display:none;">No Premier League fixtures found for this date.</div>
+    <div class="no-results" id="no-results" style="display:none;">No EPL games with odds found.</div>
   </div>
 
   <div class="card">
-    <div class="card-title">After You Have the IDs</div>
+    <div class="card-title">How It Works Now</div>
     <p style="font-size:13px;color:var(--text2);line-height:1.7;">
-      Open each market HTML file and find this line near the bottom:<br>
-      <code>const SM_FIXTURE_ID = null;</code><br><br>
-      Replace <code>null</code> with the fixture ID number you copied, e.g.:<br>
-      <code>const SM_FIXTURE_ID = 19135821;</code><br><br>
-      Save the file. The page will now automatically load real odds from Sportmonks when you open it, and switch to live polling when the match kicks off.
+      Each market page already has <code>SM_HOME_NAME</code> and <code>SM_AWAY_NAME</code> set.
+      No fixture IDs needed — the page looks up odds automatically using the team names.<br><br>
+      Odds are fetched once on page load to seed probabilities. During match window
+      (±2 hrs around kick-off), live scores are polled every 30 seconds via
+      <code>smStartPoll()</code>. The simulated match clock runs independently
+      since The Odds API doesn't provide in-game events.
     </p>
   </div>
 </div>
 
 <script src="sportmonks.js"></script>
 <script>
-// Map of known Skedee Sunday matches for auto-matching
+// Map of Skedee Sunday matches for auto-matching in results
 const SKEDEE_MATCHES = [
-  { page:'markets/10000014.html', label:'Man City vs Aston Villa', home:'Manchester City', away:'Aston Villa' },
-  { page:'markets/10000015.html', label:'Brighton vs Man United',  home:'Brighton',         away:'Manchester United' },
-  { page:'markets/10000016.html', label:'Fulham vs Newcastle',     home:'Fulham',           away:'Newcastle' },
-  { page:'markets/10000017.html', label:'Spurs vs Everton',        home:'Tottenham',        away:'Everton' },
-  { page:'markets/10000018.html', label:'Liverpool vs Brentford',  home:'Liverpool',        away:'Brentford' },
-  { page:'markets/10000019.html', label:'Burnley vs Wolves',       home:'Burnley',          away:'Wolverhampton' },
+  { page:'markets/10000014.html', label:'Man City vs Aston Villa', home:'Manchester City',   away:'Aston Villa' },
+  { page:'markets/10000015.html', label:'Brighton vs Man United',  home:'Brighton',           away:'Manchester United' },
+  { page:'markets/10000016.html', label:'Fulham vs Newcastle',     home:'Fulham',             away:'Newcastle United' },
+  { page:'markets/10000017.html', label:'Spurs vs Everton',        home:'Tottenham Hotspur',  away:'Everton' },
+  { page:'markets/10000018.html', label:'Liverpool vs Brentford',  home:'Liverpool',          away:'Brentford' },
+  { page:'markets/10000019.html', label:'Burnley vs Wolves',       home:'Burnley',            away:'Wolverhampton Wanderers' },
   { page:'markets/10000020.html', label:'Nottm Forest vs Bournemouth', home:'Nottingham Forest', away:'Bournemouth' },
-  { page:'markets/10000021.html', label:'West Ham vs Leeds',       home:'West Ham',         away:'Leeds' },
-  { page:'markets/10000022.html', label:'Sunderland vs Chelsea',   home:'Sunderland',       away:'Chelsea' },
-  { page:'markets/10000023.html', label:'Crystal Palace vs Arsenal', home:'Crystal Palace', away:'Arsenal' },
+  { page:'markets/10000021.html', label:'West Ham vs Leeds',       home:'West Ham United',    away:'Leeds United' },
+  { page:'markets/10000022.html', label:'Sunderland vs Chelsea',   home:'Sunderland',         away:'Chelsea' },
+  { page:'markets/10000023.html', label:'Crystal Palace vs Arsenal', home:'Crystal Palace',   away:'Arsenal' },
 ];
 
 function norm(s) { return s.toLowerCase().replace(/[^a-z0-9]/g,''); }
-function teamMatch(fixtureTeamName, skedeeTeamName) {
-  const a = norm(fixtureTeamName), b = norm(skedeeTeamName);
-  const words = b.split('').length > 4 ? [b.slice(0,5)] : [b];
-  return words.some(w => a.includes(w) || b.includes(norm(fixtureTeamName).slice(0,5)));
-}
 
 function guessPage(home, away) {
   const hn = norm(home), an = norm(away);
@@ -134,10 +127,7 @@ function guessPage(home, away) {
   return null;
 }
 
-async function search() {
-  const date = document.getElementById('date-input').value;
-  if (!date) return;
-
+async function checkOdds() {
   const btn = document.getElementById('search-btn');
   const status = document.getElementById('status');
   btn.disabled = true;
@@ -145,20 +135,10 @@ async function search() {
   status.textContent = '';
   status.className = 'status';
 
-  // Try with PL filter first, fall back to all fixtures if empty
-  let fixtures = await smGetFixturesByDate(date);
-  let note = '';
-  if (!fixtures.length) {
-    // Retry without league filter — catches wrong league ID or all-sports plan
-    try {
-      const json = await _smFetch(`/fixtures/date/${date}?include=participants`);
-      fixtures = json.data ?? [];
-      if (fixtures.length) note = ` (showing all sports — filter manually for Premier League)`;
-    } catch(e) { /* still empty */ }
-  }
+  const games = await smGetUpcomingGames();
 
   btn.disabled = false;
-  btn.innerHTML = '<i class="fa-solid fa-magnifying-glass" style="margin-right:6px;"></i>Search Premier League';
+  btn.innerHTML = '<i class="fa-solid fa-satellite-dish" style="margin-right:6px;"></i>Check Odds API';
 
   const card = document.getElementById('results-card');
   const body = document.getElementById('results-body');
@@ -166,52 +146,67 @@ async function search() {
   card.style.display = '';
   body.innerHTML = '';
 
-  if (!fixtures.length) {
+  if (!games.length) {
     noRes.style.display = '';
-    status.textContent = 'No fixtures returned — open browser console (F12) to see the exact error. If it says "CORS" or "Failed to fetch", open this page via a local server (VS Code Live Server or python -m http.server 8080).';
+    status.textContent = 'No games returned — check browser console (F12) for errors. If you see CORS or Failed to fetch, run this page via a local server (VS Code Live Server).';
     status.className = 'status err';
     return;
   }
 
   noRes.style.display = 'none';
-  status.textContent = `Found ${fixtures.length} fixture(s)${note}`;
+  status.textContent = `✓ Got ${games.length} game(s) from The Odds API`;
   status.className = 'status ok';
 
-  fixtures.forEach((f, i) => {
-    const participants = f.participants?.data ?? [];
-    const homeTeam = participants.find(p => p.meta?.location === 'home') ?? participants[0];
-    const awayTeam = participants.find(p => p.meta?.location === 'away') ?? participants[1];
-    const homeName = homeTeam?.name ?? '?';
-    const awayName = awayTeam?.name ?? '?';
-    const skedee = guessPage(homeName, awayName);
+  games.forEach((g, i) => {
+    const skedee = guessPage(g.home_team, g.away_team);
+
+    // Get best bookmaker h2h odds
+    const PREF = ['pinnacle','betfair_ex_uk','bet365','williamhill','unibet'];
+    const bks = [...(g.bookmakers ?? [])];
+    bks.sort((a,b) => {
+      const ai = PREF.indexOf(a.key??''), bi = PREF.indexOf(b.key??'');
+      return (ai<0?99:ai)-(bi<0?99:bi);
+    });
+    const market = bks[0]?.markets?.find(m=>m.key==='h2h');
+    const outcomes = market?.outcomes ?? [];
+    const homeOut = outcomes.find(o=>o.name===g.home_team);
+    const awayOut = outcomes.find(o=>o.name===g.away_team);
+    const drawOut = outcomes.find(o=>o.name==='Draw');
+
+    let probHtml = '<span style="color:var(--text3)">—</span>';
+    if (homeOut && awayOut) {
+      const h=homeOut.price, a=awayOut.price, d=drawOut?.price??null;
+      const hi=1/h, ai=1/a, di=d?1/d:0, t=hi+di+ai;
+      const ph=Math.round(hi/t*100), pa=Math.round(ai/t*100), pd=100-ph-pa;
+      probHtml = `
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div class="prob-bar">
+            <div class="prob-h" style="width:${ph}%"></div>
+            <div class="prob-d" style="width:${pd}%"></div>
+            <div class="prob-a" style="width:${pa}%"></div>
+          </div>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--text2)">${ph}% / ${pd}% / ${pa}%</span>
+        </div>`;
+    }
+
+    const kickoff = g.commence_time
+      ? new Date(g.commence_time).toLocaleString('en-GB',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC'}) + ' UTC'
+      : '—';
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td style="color:var(--text3);font-family:var(--font-mono);font-size:11px;">${i+1}</td>
-      <td><div class="match-name">${homeName} vs ${awayName}</div></td>
-      <td><span class="fixture-id">${f.id}</span></td>
-      <td class="skedee-col">${skedee ? `<a href="${skedee.page}" target="_blank">${skedee.label}</a>` : '<span style="color:var(--text3);">—</span>'}</td>
-      <td><button class="copy-btn" onclick="copyId(this, '${f.id}')">Copy ID</button></td>
+      <td><div class="match-name">${g.home_team} vs ${g.away_team}</div></td>
+      <td style="font-family:var(--font-mono);font-size:11px;color:var(--text2);">${kickoff}</td>
+      <td>${probHtml}</td>
+      <td class="skedee-col">${skedee ? `<a href="${skedee.page}" target="_blank">${skedee.label}</a>` : '<span style="color:var(--text3)">—</span>'}</td>
     `;
     body.appendChild(tr);
   });
 }
 
-function copyId(btn, id) {
-  navigator.clipboard.writeText(id).then(() => {
-    btn.textContent = '✓ Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = 'Copy ID';
-      btn.classList.remove('copied');
-    }, 2000);
-  });
-}
-
-// Auto-search on load if date is set
-window.addEventListener('DOMContentLoaded', () => {
-  if (SM_TOKEN !== 'PASTE_YOUR_TOKEN_HERE') search();
-});
+// Auto-check on load
+window.addEventListener('DOMContentLoaded', () => checkOdds());
 </script>
 </body>
 </html>

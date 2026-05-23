@@ -1,16 +1,12 @@
 /**
- * Skedee — Sportmonks API Proxy
+ * Skedee — The Odds API Proxy
  * Deploy this as a Cloudflare Worker.
  *
  * SETUP:
- * 1. Go to https://workers.cloudflare.com → Create a Worker
- * 2. Paste this entire file into the editor, click Deploy
- * 3. Go to Settings → Variables → Add variable:
- *      Name:  SM_TOKEN
- *      Value: (your Sportmonks API token)
- *      → click Encrypt, then Save
- * 4. Copy your Worker URL (looks like https://skedee-sm.YOUR_NAME.workers.dev)
- * 5. Open sportmonks.js and set SM_PROXY to that URL
+ * 1. Paste this into your Cloudflare Worker (Edit code → replace all → Deploy)
+ * 2. Go to Settings → Variables and Secrets → edit SM_TOKEN:
+ *      Set its value to your The Odds API key (from the-odds-api.com)
+ * 3. Your Worker URL stays the same: https://skedee-sm.atypeofperson08.workers.dev
  */
 
 export default {
@@ -31,23 +27,22 @@ export default {
       return new Response('Method not allowed', { status: 405 });
     }
 
-    // ── Build Sportmonks URL ────────────────────────────────────────────────
-    const url     = new URL(request.url);
-    const smPath  = url.pathname + url.search;
-    const sep     = smPath.includes('?') ? '&' : '?';
-    const smUrl   = `https://api.sportmonks.com/v3/football${smPath}${sep}api_token=${env.SM_TOKEN}`;
+    // ── Proxy to The Odds API ───────────────────────────────────────────────
+    const url    = new URL(request.url);
+    const path   = url.pathname + url.search;
+    const sep    = path.includes('?') ? '&' : '?';
+    const target = `https://api.the-odds-api.com${path}${sep}apiKey=${env.SM_TOKEN}`;
 
-    // ── Proxy request ───────────────────────────────────────────────────────
     try {
-      const smRes  = await fetch(smUrl, { headers: { Accept: 'application/json' } });
-      const body   = await smRes.text();
+      const res  = await fetch(target, { headers: { Accept: 'application/json' } });
+      const body = await res.text();
 
       return new Response(body, {
-        status: smRes.status,
+        status: res.status,
         headers: {
           'Content-Type':                'application/json',
           'Access-Control-Allow-Origin': '*',
-          'Cache-Control':               'public, max-age=60', // cache 60s
+          'Cache-Control':               'public, max-age=60',
         },
       });
 

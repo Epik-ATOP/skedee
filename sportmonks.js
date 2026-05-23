@@ -1,59 +1,95 @@
-/* ── SPORTMONKS API INTEGRATION ──────────────────────────────────────────
-   Docs: https://docs.sportmonks.com/football
+/* ── THE ODDS API INTEGRATION ─────────────────────────────────────────────
+   Docs: https://the-odds-api.com/lol-odds-api/
 
    HOW TO USE:
    1. Deploy sm-worker.js as a Cloudflare Worker (see instructions inside)
-   2. Paste your Worker URL below as SM_PROXY (e.g. https://skedee-sm.you.workers.dev)
-   3. In each market page, set SM_FIXTURE_ID to the Sportmonks fixture ID
-      → Open sm-lookup.html to find the right ID for each match
-   4. Probabilities and live events load automatically on page open
+   2. Go to Settings → Variables and Secrets → set SM_TOKEN to your Odds API key
+      (get a free key at the-odds-api.com — 500 requests/month on free tier)
+   3. Each market page has SM_HOME_NAME and SM_AWAY_NAME set already —
+      no fixture IDs needed! Odds load automatically by team name.
 
-   WHY A PROXY? Sportmonks blocks direct browser requests (CORS policy).
-   The Worker sits between the browser and Sportmonks, adds your API token
-   server-side, and returns CORS-safe responses. Your token never appears
-   in browser code.
+   WHY A PROXY? The Odds API blocks direct browser requests (CORS policy).
+   The Worker sits between the browser and the API, adds your key server-side,
+   and returns CORS-safe responses. Your key never appears in browser code.
    ──────────────────────────────────────────────────────────────────────── */
 
-// ← Paste your Cloudflare Worker URL here after deploying sm-worker.js
+// Cloudflare Worker URL (proxies requests to The Odds API)
 const SM_PROXY = 'https://skedee-sm.atypeofperson08.workers.dev';
-// e.g. 'https://skedee-sm.yourname.workers.dev'
-
 const SM_BASE  = SM_PROXY;
-const SM_PL_ID = 8; // Premier League ID on Sportmonks
 
-// ── EVENT TYPE IDs ────────────────────────────────────────────────────────
-const SME = {
-  GOAL:       14,
-  OWN_GOAL:   15,
-  PENALTY:    16,
-  YELLOW:     18,
-  RED:        19,
-  YELLOW_RED: 20,
-  SUB:        24,
+// Premier League sport key on The Odds API
+const SM_SPORT = 'soccer_epl';
+
+// ── TEAM NAME ALIASES ─────────────────────────────────────────────────────
+// Maps the short names used in each market page → full names The Odds API uses
+const SM_ALIASES = {
+  'man city':              'Manchester City',
+  'manchester city':       'Manchester City',
+  'aston villa':           'Aston Villa',
+  'brighton':              'Brighton and Hove Albion',
+  'brighton & hove albion':'Brighton and Hove Albion',
+  'man united':            'Manchester United',
+  'man utd':               'Manchester United',
+  'manchester united':     'Manchester United',
+  'fulham':                'Fulham',
+  'newcastle':             'Newcastle United',
+  'newcastle united':      'Newcastle United',
+  'spurs':                 'Tottenham Hotspur',
+  'tottenham':             'Tottenham Hotspur',
+  'tottenham hotspur':     'Tottenham Hotspur',
+  'everton':               'Everton',
+  'liverpool':             'Liverpool',
+  'brentford':             'Brentford',
+  'burnley':               'Burnley',
+  'wolves':                'Wolverhampton Wanderers',
+  'wolverhampton':         'Wolverhampton Wanderers',
+  'wolverhampton wanderers':'Wolverhampton Wanderers',
+  'nottm forest':          'Nottingham Forest',
+  'nottingham forest':     'Nottingham Forest',
+  'bournemouth':           'Bournemouth',
+  'west ham':              'West Ham United',
+  'west ham united':       'West Ham United',
+  'leeds':                 'Leeds United',
+  'leeds united':          'Leeds United',
+  'sunderland':            'Sunderland',
+  'chelsea':               'Chelsea',
+  'crystal palace':        'Crystal Palace',
+  'arsenal':               'Arsenal',
 };
 
 // ── INTERNAL HELPERS ──────────────────────────────────────────────────────
 
-function _smReady() {
-  if (SM_PROXY === 'PASTE_YOUR_WORKER_URL_HERE') {
-    console.warn('[Sportmonks] ⚠ Worker URL not set — deploy sm-worker.js to Cloudflare and paste the URL into SM_PROXY in sportmonks.js');
-    return false;
-  }
-  return true;
+/** Resolve a short team name to The Odds API full name */
+function _smAlias(name) {
+  return SM_ALIASES[name.toLowerCase()] ?? name;
 }
 
+/** Route a request through the Cloudflare Worker proxy */
 async function _smFetch(path) {
-  // Route through the Cloudflare Worker proxy (handles auth + CORS)
   const res = await fetch(`${SM_BASE}${path}`);
-  if (!res.ok) throw new Error(`Sportmonks HTTP ${res.status} on: ${path}`);
+  if (!res.ok) throw new Error(`Odds API HTTP ${res.status} — ${path}`);
   return res.json();
+}
+
+/** Find a game in an Odds API response array by home/away team (fuzzy) */
+function _smFindGame(games, homeTeam, awayTeam) {
+  const hn = _smAlias(homeTeam).toLowerCase();
+  const an = _smAlias(awayTeam).toLowerCase();
+  return games.find(g => {
+    const gh = g.home_team.toLowerCase();
+    const ga = g.away_team.toLowerCase();
+    // Accept if either name is a substring of the other (first 5 chars)
+    const hOk = gh.includes(hn.slice(0,6)) || hn.includes(gh.slice(0,6));
+    const aOk = ga.includes(an.slice(0,6)) || an.includes(ga.slice(0,6));
+    return hOk && aOk;
+  }) ?? null;
 }
 
 // ── ODDS UTILITIES ────────────────────────────────────────────────────────
 
 /** Convert decimal odds (home/draw/away) to fair probabilities (removes vig) */
 function smOddsToProbs(h, d, a) {
-  const hi = 1/h, di = 1/d, ai = 1/a, t = hi + di + ai;
+  const hi = 1/h, di = d ? 1/d : 0, ai = 1/a, t = hi + di + ai;
   return { home: hi/t, draw: di/t, away: ai/t };
 }
 
@@ -66,7 +102,7 @@ function smRound(p) {
   return { home: h, draw: d, away: a };
 }
 
-/** Extract a short keyword from a team name for fuzzy market matching.
+/** Extract a short keyword from a team name for fuzzy market title matching.
  *  e.g. "Crystal Palace" → "palace", "Man City" → "city", "West Ham" → "west" */
 function smTeamKey(name) {
   const words = name.toLowerCase().split(/\s+/).filter(w => w.length >= 4);
@@ -76,179 +112,147 @@ function smTeamKey(name) {
 // ── PRE-MATCH ODDS → PROBABILITIES ───────────────────────────────────────
 
 /**
- * Fetch pre-match 1X2 odds for a fixture and return fair probabilities.
+ * Fetch pre-match h2h odds for a fixture (by team names) and return fair probabilities.
  * Returns { home, draw, away } as decimals (0–1), or null if unavailable.
  */
-async function smGetProbs(fixtureId) {
-  if (!_smReady()) return null;
+async function smGetProbs(homeTeam, awayTeam) {
   try {
-    const json = await _smFetch(`/odds/pre-match/fixtures/${fixtureId}?include=bookmaker;market`);
-    if (!json.data?.length) { console.warn('[SM] No odds data for fixture', fixtureId); return null; }
-
-    // Find 1X2 / Match Winner market rows
-    const rows = json.data.filter(o =>
-      o.market_id === 1 ||
-      o.market?.data?.name?.match(/1x2|match.?winner/i)
+    const games = await _smFetch(
+      `/v4/sports/${SM_SPORT}/odds/?regions=uk&markets=h2h&oddsFormat=decimal`
     );
-    if (!rows.length) { console.warn('[SM] No 1X2 market found for fixture', fixtureId); return null; }
+    const game = _smFindGame(games, homeTeam, awayTeam);
+    if (!game) {
+      console.warn('[OA] Game not found in odds list:', homeTeam, 'vs', awayTeam);
+      return null;
+    }
 
-    // Prefer well-known bookmakers for accuracy
-    const PREF = ['Pinnacle', 'Bet365', 'William Hill', 'Betway', '1xBet', 'Unibet'];
-    rows.sort((a, b) => {
-      const ai = PREF.indexOf(a.bookmaker?.data?.name ?? '');
-      const bi = PREF.indexOf(b.bookmaker?.data?.name ?? '');
+    // Prefer well-known/sharp bookmakers for accuracy
+    const PREF = ['pinnacle', 'betfair_ex_uk', 'bet365', 'williamhill', 'unibet', 'betway', 'onexbet'];
+    const bks = [...(game.bookmakers ?? [])];
+    bks.sort((a, b) => {
+      const ai = PREF.indexOf(a.key ?? '');
+      const bi = PREF.indexOf(b.key ?? '');
       return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi);
     });
 
-    const vals = rows[0].values ?? [];
-    const get  = (...labels) => vals.find(v => labels.includes(v.label))?.value;
-    const h = parseFloat(get('1', 'Home', 'home'));
-    const d = parseFloat(get('X', 'Draw', 'draw'));
-    const a = parseFloat(get('2', 'Away', 'away'));
+    const market = bks[0]?.markets?.find(m => m.key === 'h2h');
+    if (!market) {
+      console.warn('[OA] No h2h market found for', homeTeam, 'vs', awayTeam);
+      return null;
+    }
 
-    if ([h, d, a].some(isNaN)) { console.warn('[SM] Could not parse odds values', vals); return null; }
+    const outcomes = market.outcomes ?? [];
+    // Match outcomes by exact team name from the game object
+    const homeOut = outcomes.find(o => o.name === game.home_team);
+    const awayOut = outcomes.find(o => o.name === game.away_team);
+    const drawOut = outcomes.find(o => o.name === 'Draw');
 
+    if (!homeOut || !awayOut) {
+      console.warn('[OA] Could not match outcomes:', outcomes.map(o => o.name), '|', game.home_team, game.away_team);
+      return null;
+    }
+
+    const h = homeOut.price, a = awayOut.price, d = drawOut?.price ?? null;
     const probs = smOddsToProbs(h, d, a);
-    console.log(`[SM] Odds for fixture ${fixtureId}: H=${h} D=${d} A=${a} → ${JSON.stringify(smRound(probs))}`);
+    console.log(`[OA] ${homeTeam} vs ${awayTeam}: H=${h} D=${d} A=${a} →`, smRound(probs));
     return probs;
 
   } catch(e) {
-    console.warn('[SM] getProbs error:', e.message);
+    console.warn('[OA] getProbs error:', e.message);
     return null;
   }
 }
 
-// ── LIVE FIXTURE DATA ─────────────────────────────────────────────────────
+// ── LIVE SCORE DATA ───────────────────────────────────────────────────────
 
 /**
- * Fetch live fixture data: score, events, match state.
- * Returns the raw Sportmonks fixture object.
+ * Fetch live/recent score data for a fixture (by team names).
+ * Returns the Odds API game object, or null if not found.
  */
-async function smGetLive(fixtureId) {
-  if (!_smReady()) return null;
+async function smGetLive(homeTeam, awayTeam) {
   try {
-    const json = await _smFetch(`/fixtures/${fixtureId}?include=events.type;events.player;scores;state;periods`);
-    return json.data ?? null;
+    const games = await _smFetch(`/v4/sports/${SM_SPORT}/scores/?daysFrom=1`);
+    return _smFindGame(games, homeTeam, awayTeam);
   } catch(e) {
-    console.warn('[SM] getLive error:', e.message);
+    console.warn('[OA] getLive error:', e.message);
     return null;
   }
 }
 
 /**
- * Parse score out of a live fixture object.
+ * Parse score out of an Odds API scores object.
  * Returns { home, away } as integers.
  */
-function smParseScore(fixture) {
-  const scores = fixture.scores?.data ?? [];
-
-  // Try CURRENT aggregate score first
-  const cur = scores.find(s => s.description === 'CURRENT' || s.description === 'LIVE');
-  if (cur?.score) {
-    return {
-      home: parseInt(cur.score.goals ?? cur.score.home ?? 0) || 0,
-      away: parseInt(cur.score.participant === 'away' ? cur.score.goals : cur.score.away ?? 0) || 0,
-    };
-  }
-
-  // Fallback: sum period scores by participant
-  let home = 0, away = 0;
-  scores.forEach(s => {
-    const g = parseInt(s.score?.goals ?? 0) || 0;
-    if (s.participant === 'home' || s.score?.participant === 'home') home += g;
-    if (s.participant === 'away' || s.score?.participant === 'away') away += g;
-  });
-  return { home, away };
+function smParseScore(game) {
+  if (!game?.scores?.length) return { home: 0, away: 0 };
+  const hEntry = (game.scores ?? []).find(s =>
+    s.name.toLowerCase() === (game.home_team ?? '').toLowerCase()
+  );
+  const aEntry = (game.scores ?? []).find(s =>
+    s.name.toLowerCase() === (game.away_team ?? '').toLowerCase()
+  );
+  return {
+    home: parseInt(hEntry?.score ?? 0) || 0,
+    away: parseInt(aEntry?.score ?? 0) || 0,
+  };
 }
 
 /**
- * Parse match state from fixture.
- * Returns: 'pre' | 'live' | 'ht' | 'finished'
+ * Parse match state from an Odds API scores object.
+ * Returns: 'pre' | 'live' | 'finished'
+ * Note: The Odds API does not distinguish HT — use the simulated clock for that.
  */
-function smParseState(fixture) {
-  const s = fixture.state?.data?.short_name ?? fixture.state?.data?.name ?? '';
-  if (['FT','AET','AP','POST','CANCL'].includes(s)) return 'finished';
-  if (s === 'HT') return 'ht';
-  if (['LIVE','1H','2H','ET','PEN_LIVE','BREAK'].includes(s)) return 'live';
+function smParseState(game) {
+  if (!game) return 'pre';
+  if (game.completed) return 'finished';
+  const now = Date.now();
+  const kick = new Date(game.commence_time).getTime();
+  if (now < kick) return 'pre';
+  // OA only populates scores[] when a game is in-progress or finished
+  if (game.scores?.length) return 'live';
   return 'pre';
 }
 
 /**
- * Parse match events into friendly objects, newest first.
- * Returns array of { id, minute, playerName, emoji, label }
+ * The Odds API does not provide match events (goals, cards, etc.).
+ * Returns empty array so caller code doesn't break.
  */
-function smParseEvents(fixture) {
-  const map = {
-    [SME.GOAL]:       { emoji: '⚽', label: 'Goal' },
-    [SME.OWN_GOAL]:   { emoji: '⚽', label: 'Own Goal' },
-    [SME.PENALTY]:    { emoji: '⚽', label: 'Penalty' },
-    [SME.YELLOW]:     { emoji: '🟨', label: 'Yellow Card' },
-    [SME.RED]:        { emoji: '🟥', label: 'Red Card' },
-    [SME.YELLOW_RED]: { emoji: '🟥', label: '2nd Yellow / Red' },
-    [SME.SUB]:        { emoji: '🔄', label: 'Substitution' },
-  };
-
-  return (fixture.events?.data ?? [])
-    .filter(e => map[e.type_id])
-    .map(e => ({
-      id:         e.id,
-      minute:     e.minute ?? e.extra_minute ?? '?',
-      playerName: e.player?.data?.display_name ?? e.player?.data?.name ?? 'Unknown',
-      ...map[e.type_id],
-    }))
-    .sort((a, b) => (parseInt(b.minute) || 0) - (parseInt(a.minute) || 0));
-}
-
-// ── FIXTURE ID LOOKUP ────────────────────────────────────────────────────
-
-/**
- * Search for a Premier League fixture by date.
- * date: 'YYYY-MM-DD'
- * Returns the full list of fixture objects for that date in the PL.
- */
-async function smGetFixturesByDate(date) {
-  if (!_smReady()) return [];
-  try {
-    const json = await _smFetch(`/fixtures/date/${date}?filters=leagueIds:${SM_PL_ID}&include=participants`);
-    return json.data ?? [];
-  } catch(e) {
-    console.warn('[SM] getFixturesByDate error:', e.message);
-    return [];
-  }
-}
-
-/**
- * Find a single fixture ID by date + team names (fuzzy match).
- * Useful for scripting. For manual lookup use sm-lookup.html.
- */
-async function smFindFixture(date, homeTeam, awayTeam) {
-  const fixtures = await smGetFixturesByDate(date);
-  const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-  const hn = norm(homeTeam).slice(0, 6), an = norm(awayTeam).slice(0, 6);
-
-  const found = fixtures.find(f => {
-    const teams = (f.participants?.data ?? []).map(p => norm(p.name));
-    return teams.some(t => t.includes(hn) || hn.includes(t.slice(0, 5))) &&
-           teams.some(t => t.includes(an) || an.includes(t.slice(0, 5)));
-  });
-  return found?.id ?? null;
+function smParseEvents(_game) {
+  return [];
 }
 
 // ── LIVE POLLING ──────────────────────────────────────────────────────────
 
 /**
- * Poll a live fixture every intervalMs milliseconds.
- * Calls onUpdate(fixtureData) on each tick.
+ * Poll live scores every intervalMs milliseconds.
+ * Calls onUpdate(gameData) on each successful tick.
  * Returns a stop() function to cancel polling.
  */
-function smStartPoll(fixtureId, onUpdate, intervalMs = 30000) {
+function smStartPoll(homeTeam, awayTeam, onUpdate, intervalMs = 30000) {
   let active = true;
   const tick = async () => {
     if (!active) return;
-    const data = await smGetLive(fixtureId);
+    const data = await smGetLive(homeTeam, awayTeam);
     if (data) onUpdate(data);
     if (active) setTimeout(tick, intervalMs);
   };
   tick(); // immediate first call
   return () => { active = false; };
+}
+
+// ── FIXTURE LOOKUP (for sm-lookup.html) ───────────────────────────────────
+
+/**
+ * Fetch all upcoming EPL games with odds (for the lookup tool).
+ * Returns the raw Odds API response array.
+ */
+async function smGetUpcomingGames() {
+  try {
+    return await _smFetch(
+      `/v4/sports/${SM_SPORT}/odds/?regions=uk&markets=h2h&oddsFormat=decimal`
+    );
+  } catch(e) {
+    console.warn('[OA] getUpcomingGames error:', e.message);
+    return [];
+  }
 }
