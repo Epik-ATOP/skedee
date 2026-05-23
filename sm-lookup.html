@@ -145,7 +145,18 @@ async function search() {
   status.textContent = '';
   status.className = 'status';
 
-  const fixtures = await smGetFixturesByDate(date);
+  // Try with PL filter first, fall back to all fixtures if empty
+  let fixtures = await smGetFixturesByDate(date);
+  let note = '';
+  if (!fixtures.length) {
+    // Retry without league filter — catches wrong league ID or all-sports plan
+    try {
+      const json = await _smFetch(`/fixtures/date/${date}?include=participants`);
+      fixtures = json.data ?? [];
+      if (fixtures.length) note = ` (showing all sports — filter manually for Premier League)`;
+    } catch(e) { /* still empty */ }
+  }
+
   btn.disabled = false;
   btn.innerHTML = '<i class="fa-solid fa-magnifying-glass" style="margin-right:6px;"></i>Search Premier League';
 
@@ -157,13 +168,13 @@ async function search() {
 
   if (!fixtures.length) {
     noRes.style.display = '';
-    status.textContent = 'No fixtures returned — check your token in sportmonks.js';
+    status.textContent = 'No fixtures returned — open browser console (F12) to see the exact error. If it says "CORS" or "Failed to fetch", open this page via a local server (VS Code Live Server or python -m http.server 8080).';
     status.className = 'status err';
     return;
   }
 
   noRes.style.display = 'none';
-  status.textContent = `Found ${fixtures.length} fixture(s)`;
+  status.textContent = `Found ${fixtures.length} fixture(s)${note}`;
   status.className = 'status ok';
 
   fixtures.forEach((f, i) => {

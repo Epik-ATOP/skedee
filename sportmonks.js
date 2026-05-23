@@ -2,14 +2,23 @@
    Docs: https://docs.sportmonks.com/football
 
    HOW TO USE:
-   1. Paste your API token below (SM_TOKEN)
-   2. In each market page, set SM_FIXTURE_ID to the Sportmonks fixture ID
+   1. Deploy sm-worker.js as a Cloudflare Worker (see instructions inside)
+   2. Paste your Worker URL below as SM_PROXY (e.g. https://skedee-sm.you.workers.dev)
+   3. In each market page, set SM_FIXTURE_ID to the Sportmonks fixture ID
       → Open sm-lookup.html to find the right ID for each match
-   3. Probabilities and live events load automatically on page open
+   4. Probabilities and live events load automatically on page open
+
+   WHY A PROXY? Sportmonks blocks direct browser requests (CORS policy).
+   The Worker sits between the browser and Sportmonks, adds your API token
+   server-side, and returns CORS-safe responses. Your token never appears
+   in browser code.
    ──────────────────────────────────────────────────────────────────────── */
 
-const SM_TOKEN = 'YyvOC1SCbZt9oNMgldqpCAwoBdcaDOzGEtdhLRu2HywaSOztpTVRS2BuwQO2';
-const SM_BASE  = 'https://api.sportmonks.com/v3/football';
+// ← Paste your Cloudflare Worker URL here after deploying sm-worker.js
+const SM_PROXY = 'https://skedee-sm.atypeofperson08.workers.dev';
+// e.g. 'https://skedee-sm.yourname.workers.dev'
+
+const SM_BASE  = SM_PROXY;
 const SM_PL_ID = 8; // Premier League ID on Sportmonks
 
 // ── EVENT TYPE IDs ────────────────────────────────────────────────────────
@@ -26,16 +35,16 @@ const SME = {
 // ── INTERNAL HELPERS ──────────────────────────────────────────────────────
 
 function _smReady() {
-  if (SM_TOKEN === 'PASTE_YOUR_TOKEN_HERE') {
-    console.warn('[Sportmonks] ⚠ API token not set — open sportmonks.js and paste your token');
+  if (SM_PROXY === 'PASTE_YOUR_WORKER_URL_HERE') {
+    console.warn('[Sportmonks] ⚠ Worker URL not set — deploy sm-worker.js to Cloudflare and paste the URL into SM_PROXY in sportmonks.js');
     return false;
   }
   return true;
 }
 
 async function _smFetch(path) {
-  const sep = path.includes('?') ? '&' : '?';
-  const res  = await fetch(`${SM_BASE}${path}${sep}api_token=${SM_TOKEN}`);
+  // Route through the Cloudflare Worker proxy (handles auth + CORS)
+  const res = await fetch(`${SM_BASE}${path}`);
   if (!res.ok) throw new Error(`Sportmonks HTTP ${res.status} on: ${path}`);
   return res.json();
 }
