@@ -444,7 +444,7 @@ body{-webkit-font-smoothing:antialiased;}
 <script src="../sportmonks.js"></script>
 <script>
 const KICKOFF_TIME = new Date('2026-05-24T15:00:00Z');
-const match = { state:'LIVE_1H', minute:1, stoppage:0, homeScore:0, awayScore:0 };
+state:'LIVE_1H', minute:35, stoppage:0, homeScore:1, awayScore:0 };
 const firedEvents = new Set();
 let matchClockInterval = null, countdownInterval = null;
 
@@ -597,7 +597,7 @@ countdownInterval = setInterval(tickCountdown, 1000);
 renderMarkets(); renderOrderBook(); renderActivity(); renderTrades();
 setInterval(updateLiveData, 8000);
 const SM_HOME_NAME='Man City',SM_AWAY_NAME='Aston Villa';const _smSeen=new Set();async function smInit(){const p=await smGetProbs(SM_HOME_NAME,SM_AWAY_NAME);if(p){const r=smRound(p);MARKETS.forEach(m=>{const t=m.title.toLowerCase(),hk=smTeamKey(SM_HOME_NAME),ak=smTeamKey(SM_AWAY_NAME);if(t.includes(hk)&&t.includes('win')){m.yes=p.home;m.no=1-p.home;}else if(t.includes(ak)&&t.includes('win')){m.yes=p.away;m.no=1-p.away;}else if(m.id==='draw'){m.yes=p.draw;m.no=1-p.draw;}});renderMarkets();document.getElementById('home-prob-stat').textContent=Math.round(MARKETS[0].yes*100)+'%';const bars=document.querySelectorAll('.sentiment-home,.sentiment-draw,.sentiment-away');[r.home,r.draw,r.away].forEach((v,i)=>{if(bars[i])bars[i].style.width=v+'%';});const lbs=document.querySelectorAll('.sentiment-labels span');if(lbs[0])lbs[0].textContent=SM_HOME_NAME+' '+r.home+'%';if(lbs[1])lbs[1].textContent='Draw '+r.draw+'%';if(lbs[2])lbs[2].textContent=SM_AWAY_NAME+' '+r.away+'%';const ob=document.querySelector('.ob-spread');if(ob)ob.textContent='Spread: ₦2 · Mid: ₦'+Math.round(MARKETS[0].yes*100);console.log('[SM] probs:',r);}const now=Date.now(),kick=KICKOFF_TIME.getTime();if(now>=kick-7200000&&now<=kick+7200000)smStartPoll(SM_HOME_NAME,SM_AWAY_NAME,smHandleLive,30000);}
-function smHandleLive(f){const sc=smParseScore(f);match.homeScore=sc.home;match.awayScore=sc.away;const st=smParseState(f);if(st==='live'&&match.state==='UPCOMING'){match.state='LIVE_1H';match.minute=0;clearInterval(countdownInterval);if(!matchClockInterval)matchClockInterval=setInterval(tickMatchClock,60000);}else if(st==='ht'){match.state='HT';}else if(st==='live'&&match.state==='HT'){match.state='LIVE_2H';match.minute=45;}else if(st==='finished'&&match.state!=='FT'){match.state='FT';}updateMatchUI();smParseEvents(f).forEach(e=>{if(_smSeen.has(e.id))return;_smSeen.add(e.id);const isG=['Goal','Own Goal','Penalty'].includes(e.label);addMatchEvent(e.minute,isG?'goal':'whistle','<strong>'+e.playerName+'</strong> — '+e.emoji+' '+e.label);});}
+function smHandleLive(f){const sc=smParseScore(f);match.homeScore=sc.home;match.awayScore=sc.away;const st=smParseState(f);if(st==='live'&&match.state==='UPCOMING'){match.state='LIVE_1H';match.minute=0;clearInterval(countdownInterval);if(!matchClockInterval)matchClockInterval=setInterval(tickMatchClock,60000);}else if(st==='ht'){match.state='HT';}else if(st==='live'&&match.state==='HT'){match.state='LIVE_2H';match.minute=45;}else if(st==='finished'&&match.state!=='FT'){match.state='FT';}if(f&&f.commence_time&&(match.state==='LIVE_1H'||match.state==='LIVE_2H')){const _el=Math.floor((Date.now()-new Date(f.commence_time).getTime())/60000);if(_el>=1&&_el<=95)match.minute=_el;}updateMatchUI();smParseEvents(f).forEach(e=>{if(_smSeen.has(e.id))return;_smSeen.add(e.id);const isG=['Goal','Own Goal','Penalty'].includes(e.label);addMatchEvent(e.minute,isG?'goal':'whistle','<strong>'+e.playerName+'</strong> — '+e.emoji+' '+e.label);});}
 smInit();
 </script>
 </body>
