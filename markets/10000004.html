@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -453,7 +453,7 @@ body{-webkit-font-smoothing:antialiased;}
           <a href="careers.html">Careers</a>
           <a href="../faq.html">FAQ</a>
           <a href="privacy-policy.html">Privacy Policy</a>
-          <a href="../terms-of-service.html">Terms of Service</a>
+          <a href="../terms.html">Terms of Service</a>
         </div>
         <div class="footer-col">
           <div class="footer-col-title">SOCIALS</div>
@@ -769,7 +769,7 @@ function switchTab(name, btn) {
 }
 
 /* ── LIVE UPDATES ── */
-function updateLiveData() {
+function updateLiveData() {if(match.state==='FT')return;
   DATE_MARKETS.forEach(m => {
     const delta = (Math.random()-.48)*0.008;
     m.prob = Math.max(0.01, Math.min(0.60, m.prob+delta));

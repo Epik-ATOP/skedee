@@ -1,0 +1,647 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms & Conditions | Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --y:#F5C800; --y2:#FFD93D; --y3:#B89200;
+  --bg:#0A0A08; --bg2:#111110; --bg3:#181815; --bg4:#1E1E1A;
+  --border:rgba(245,200,0,0.12); --border2:rgba(245,200,0,0.22); --border3:rgba(255,255,255,0.06);
+  --text:#F0EDE0; --text2:#9A9880; --text3:#5A5845;
+  --green:#22C55E; --red:#EF4444; --blue:#3B82F6;
+  --font-display:'Syne',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'Space Mono',monospace;
+  --font-num:'Oswald',sans-serif;
+  --radius:8px; --radius-lg:12px; --radius-xl:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:14px;scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:52px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;}
+.logo{font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--y);letter-spacing:-.5px;display:flex;align-items:center;gap:6px;}
+.logo-dot{width:8px;height:8px;background:var(--y);border-radius:50%;animation:pulse-dot 1.5s ease infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.topbar-nav{display:flex;align-items:center;gap:2px;margin-left:8px;}
+.topbar-navlink{padding:5px 11px;border-radius:var(--radius);font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;}
+.topbar-navlink:hover{color:var(--text);background:rgba(245,200,0,.06);}
+.topbar-navlink.active{color:var(--y);background:rgba(245,200,0,.08);}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.pdf-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius);background:var(--y);color:#000;font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;border:none;transition:all .15s;}
+.pdf-btn:hover{background:var(--y2);transform:translateY(-1px);}
+
+/* ── PAGE LAYOUT ── */
+.page{margin-top:52px;display:flex;min-height:calc(100vh - 52px);}
+
+/* ── LEFT NAV ── */
+.toc-nav{width:260px;flex-shrink:0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:24px 0;background:var(--bg2);border-right:1px solid var(--border);}
+.toc-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 20px;margin-bottom:10px;}
+.toc-item{display:flex;align-items:center;gap:8px;padding:7px 20px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .15s;border-left:2px solid transparent;}
+.toc-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.toc-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.toc-num{font-family:var(--font-mono);font-size:10px;color:var(--text3);width:20px;flex-shrink:0;}
+.toc-item.active .toc-num{color:var(--y);}
+.toc-divider{height:1px;background:var(--border3);margin:12px 16px;}
+
+/* ── MAIN CONTENT ── */
+.content{flex:1;padding:48px 60px 80px;max-width:860px;}
+
+/* ── HERO ── */
+.hero{margin-bottom:52px;position:relative;}
+.hero-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--y);}
+.hero-title{font-family:var(--font-display);font-weight:800;font-size:44px;letter-spacing:-1.5px;line-height:1.05;margin-bottom:16px;}
+.hero-title span{color:var(--y);}
+.hero-meta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:28px;}
+.meta-chip{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:.5px;}
+.meta-chip i{color:var(--text3);font-size:10px;}
+.hero-summary{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:hidden;}
+.hero-summary::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--y);}
+.hero-summary-text{font-size:13px;color:var(--text2);line-height:1.8;}
+.hero-summary-text strong{color:var(--text);}
+.hero-warning{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:var(--radius-lg);padding:14px 18px;margin-top:14px;display:flex;align-items:flex-start;gap:10px;}
+.hero-warning i{color:var(--red);font-size:14px;margin-top:1px;flex-shrink:0;}
+.hero-warning-text{font-family:var(--font-mono);font-size:10px;color:var(--red);letter-spacing:.3px;line-height:1.7;font-weight:700;}
+
+/* ── SECTIONS ── */
+.section{margin-bottom:52px;scroll-margin-top:72px;}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border3);}
+.section-num{font-family:var(--font-num);font-size:32px;font-weight:700;color:var(--y);line-height:1;min-width:40px;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-.3px;}
+.section-body{display:flex;flex-direction:column;gap:14px;}
+
+/* ── SUBSECTIONS ── */
+.subsection{margin-bottom:16px;}
+.subsection-title{font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.subsection-title::before{content:'';width:4px;height:4px;background:var(--y);border-radius:50%;flex-shrink:0;}
+
+/* ── BODY TEXT ── */
+.body-text{font-size:13px;color:var(--text2);line-height:1.85;}
+.body-text strong{color:var(--text);font-weight:600;}
+
+/* ── BULLET LIST ── */
+.bullet-list{display:flex;flex-direction:column;gap:8px;padding-left:4px;}
+.bullet-item{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-dot{width:5px;height:5px;background:var(--y);border-radius:50%;flex-shrink:0;margin-top:7px;}
+.bullet-item strong{color:var(--text);font-weight:600;}
+
+/* ── TABLE ── */
+.data-table{width:100%;border-collapse:collapse;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);}
+.data-table th{background:var(--bg3);font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+.data-table td{padding:10px 14px;font-size:12px;color:var(--text2);border-bottom:1px solid var(--border3);}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:nth-child(even) td{background:rgba(255,255,255,.015);}
+.data-table td:first-child{font-weight:500;color:var(--text);}
+
+/* ── DEFINITIONS ── */
+.def-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
+.def-item{display:flex;gap:0;border-bottom:1px solid var(--border3);}
+.def-item:last-child{border-bottom:none;}
+.def-term{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--y);padding:12px 16px;width:180px;flex-shrink:0;background:rgba(245,200,0,.03);border-right:1px solid var(--border3);display:flex;align-items:flex-start;padding-top:14px;}
+.def-body{font-size:12px;color:var(--text2);padding:12px 16px;line-height:1.7;flex:1;}
+
+/* ── CONTACT BLOCK ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.contact-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.contact-val{font-size:13px;color:var(--y);font-weight:500;}
+.contact-val.plain{color:var(--text);}
+
+/* ── ACCEPTANCE BLOCK ── */
+.acceptance{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:28px;text-align:center;margin-top:52px;position:relative;overflow:hidden;}
+.acceptance::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--y),transparent);}
+.acceptance-title{font-family:var(--font-display);font-weight:800;font-size:18px;margin-bottom:10px;}
+.acceptance-text{font-size:13px;color:var(--text2);line-height:1.7;max-width:520px;margin:0 auto 20px;}
+.acceptance-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn-accept{padding:11px 28px;border-radius:var(--radius-lg);background:var(--y);color:#000;font-family:var(--font-display);font-weight:700;font-size:13px;border:none;cursor:pointer;transition:all .15s;}
+.btn-accept:hover{background:var(--y2);transform:translateY(-1px);}
+.btn-download{padding:11px 24px;border-radius:var(--radius-lg);background:transparent;color:var(--text2);font-family:var(--font-display);font-weight:600;font-size:13px;border:1px solid var(--border);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:7px;}
+.btn-download:hover{border-color:var(--border2);color:var(--text);}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{background:rgba(245,200,0,.05);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 18px;display:flex;align-items:flex-start;gap:10px;}
+.highlight-box i{color:var(--y);font-size:13px;margin-top:2px;flex-shrink:0;}
+.highlight-text{font-size:12px;color:var(--text2);line-height:1.7;}
+.highlight-text strong{color:var(--text);}
+
+/* ── FOOTER ── */
+.site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 0 20px;}
+.footer-inner{max-width:1400px;margin:0 auto;padding:0 40px;display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.footer-logo{font-family:var(--font-display);font-weight:800;font-size:28px;color:var(--text3);letter-spacing:-1px;margin-bottom:16px;opacity:.3;}
+.footer-cols{display:flex;gap:48px;margin-bottom:20px;}
+.footer-col{display:flex;flex-direction:column;gap:9px;}
+.footer-col-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:3px;}
+.footer-col a{font-size:12px;color:var(--text3);transition:color .15s;}
+.footer-col a:hover{color:var(--text);}
+.footer-copy{font-family:var(--font-mono);font-size:10px;color:var(--text3);opacity:.5;}
+
+/* ── PROGRESS BAR ── */
+.reading-bar{position:fixed;top:52px;left:0;height:2px;background:var(--y);z-index:200;transition:width .1s linear;width:0%;}
+
+/* ── MOBILE ── */
+@media(max-width:900px){.toc-nav{display:none;}.content{padding:32px 20px 60px;}.hero-title{font-size:30px;}.contact-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- READING PROGRESS -->
+<div class="reading-bar" id="reading-bar"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="index.html" class="topbar-navlink">Markets</a>
+    <a href="about.html" class="topbar-navlink">About</a>
+    <a href="faq.html" class="topbar-navlink">FAQ</a>
+    <a href="terms.html" class="topbar-navlink active">Terms</a>
+  </div>
+  <div class="topbar-right">
+    <a href="Skedee_Terms_and_Conditions.pdf" download>
+      <button class="pdf-btn"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
+    </a>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- TABLE OF CONTENTS -->
+  <nav class="toc-nav" id="toc">
+    <div class="toc-label">Contents</div>
+    <div class="toc-item active" onclick="scrollTo('s1')"><span class="toc-num">01</span>Definitions</div>
+    <div class="toc-item" onclick="scrollTo('s2')"><span class="toc-num">02</span>Eligibility & Registration</div>
+    <div class="toc-item" onclick="scrollTo('s3')"><span class="toc-num">03</span>KYC & Verification</div>
+    <div class="toc-item" onclick="scrollTo('s4')"><span class="toc-num">04</span>How Markets Work</div>
+    <div class="toc-item" onclick="scrollTo('s5')"><span class="toc-num">05</span>Deposits & Withdrawals</div>
+    <div class="toc-item" onclick="scrollTo('s6')"><span class="toc-num">06</span>Fees & Charges</div>
+    <div class="toc-item" onclick="scrollTo('s7')"><span class="toc-num">07</span>Responsible Trading</div>
+    <div class="toc-item" onclick="scrollTo('s8')"><span class="toc-num">08</span>Prohibited Conduct</div>
+    <div class="toc-item" onclick="scrollTo('s9')"><span class="toc-num">09</span>Intellectual Property</div>
+    <div class="toc-item" onclick="scrollTo('s10')"><span class="toc-num">10</span>Privacy & Data</div>
+    <div class="toc-item" onclick="scrollTo('s11')"><span class="toc-num">11</span>Disclaimers & Liability</div>
+    <div class="toc-item" onclick="scrollTo('s12')"><span class="toc-num">12</span>Suspension & Termination</div>
+    <div class="toc-item" onclick="scrollTo('s13')"><span class="toc-num">13</span>Disputes & Complaints</div>
+    <div class="toc-item" onclick="scrollTo('s14')"><span class="toc-num">14</span>Amendments</div>
+    <div class="toc-item" onclick="scrollTo('s15')"><span class="toc-num">15</span>Governing Law</div>
+    <div class="toc-item" onclick="scrollTo('s16')"><span class="toc-num">16</span>Contact</div>
+    <div class="toc-divider"></div>
+    <div class="toc-item" onclick="scrollTo('acceptance')"><span class="toc-num" style="color:var(--y);">✓</span>Acceptance</div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-eyebrow">Legal Documentation</div>
+      <div class="hero-title">Terms &<br><span>Conditions</span></div>
+      <div class="hero-meta">
+        <div class="meta-chip"><i class="fa-solid fa-building"></i> Skedee Inc.</div>
+        <div class="meta-chip"><i class="fa-solid fa-calendar"></i> Effective: 1 June 2026</div>
+        <div class="meta-chip"><i class="fa-solid fa-code-branch"></i> Version 1.0</div>
+        <div class="meta-chip"><i class="fa-solid fa-location-dot"></i> Nigeria</div>
+      </div>
+      <div class="hero-summary">
+        <div class="hero-summary-text">
+          <strong>Please read these Terms carefully.</strong> By creating a Skedee account or using the Platform in any way, you confirm that you have read, understood, and agree to be bound by these Terms & Conditions. These Terms govern your access to and use of the Skedee platform — including the website at skedee.ng, the Skedee mobile application, and all related services operated by Skedee Inc.
+        </div>
+        <div class="hero-warning">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <div class="hero-warning-text">THIS PLATFORM INVOLVES REAL MONEY AND FINANCIAL RISK. YOU MAY LOSE SOME OR ALL FUNDS DEPOSITED. PARTICIPATION IS LIMITED TO PERSONS AGED 18 YEARS OR OLDER. IF YOU DO NOT AGREE TO THESE TERMS, DO NOT USE THE PLATFORM.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div class="section" id="s1">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div class="section-title">Definitions</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text">In these Terms, the following definitions apply throughout:</p>
+        <div class="def-list">
+          <div class="def-item"><div class="def-term">"Skedee" / "the Platform"</div><div class="def-body">The prediction market platform operated by Skedee Inc., accessible via skedee.ng and the Skedee mobile application.</div></div>
+          <div class="def-item"><div class="def-term">"Skedee Inc."</div><div class="def-body">The company operating the Platform, incorporated in the Federal Republic of Nigeria.</div></div>
+          <div class="def-item"><div class="def-term">"User" / "You"</div><div class="def-body">Any individual who registers an account or otherwise accesses or uses the Platform.</div></div>
+          <div class="def-item"><div class="def-term">"Account"</div><div class="def-body">The personal account created by a User to access the Platform's services.</div></div>
+          <div class="def-item"><div class="def-term">"Market"</div><div class="def-body">Any prediction market listed on the Platform in which Users may trade YES or NO positions on a specified outcome.</div></div>
+          <div class="def-item"><div class="def-term">"Share"</div><div class="def-body">The unit of participation in a Market. Each share resolves at ₦100 if the outcome is correct, or ₦0 if incorrect.</div></div>
+          <div class="def-item"><div class="def-term">"Wallet"</div><div class="def-body">The virtual account balance held by a User on the Platform, denominated in Nigerian Naira (NGN ₦).</div></div>
+          <div class="def-item"><div class="def-term">"Resolution"</div><div class="def-body">The process by which a Market is officially closed and winning positions are paid out, based on the verified outcome of the relevant real-world event.</div></div>
+          <div class="def-item"><div class="def-term">"KYC"</div><div class="def-body">Know Your Customer — the identity verification process Users must complete to access full platform functionality.</div></div>
+          <div class="def-item"><div class="def-term">"Applicable Law"</div><div class="def-body">All Nigerian laws and regulations applicable to the Platform and its operations, including guidelines issued by relevant regulatory bodies.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="section" id="s2">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div class="section-title">Eligibility & Account Registration</div>
+      </div>
+      <div class="section-body">
+        <div class="subsection">
+          <div class="subsection-title">Eligibility Requirements</div>
+          <p class="body-text" style="margin-bottom:10px;">To register and use the Platform, you must meet all of the following criteria:</p>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Be at least <strong>18 years of age</strong> at the time of registration;</div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Be a resident of or physically located in the Federal Republic of Nigeria, or a jurisdiction where access to prediction markets is not prohibited;</div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Have full legal capacity to enter into a binding contract;</div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Not have previously had an account suspended or terminated by Skedee Inc.;</div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Not be an employee, director, officer, contractor, or immediate family member of an employee of Skedee Inc.;</div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Not be listed on any applicable financial crime, fraud, or sanctions list.</div></div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-title">Account Registration</div>
+          <p class="body-text">You must provide accurate, complete, and current information during registration, including your legal full name, a valid phone number, and a valid email address. You may only maintain <strong>one active account</strong> on the Platform at any time. The creation of multiple accounts is strictly prohibited and may result in the immediate suspension of all associated accounts and forfeiture of balances.</p>
+        </div>
+        <div class="subsection">
+          <div class="subsection-title">Account Security</div>
+          <p class="body-text">You are solely responsible for maintaining the confidentiality of your account credentials, including your password and transaction PIN. You must notify Skedee Inc. immediately at <strong>info@skedee.ng</strong> if you suspect any unauthorised access to your account.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="section" id="s3">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <div class="section-title">Know Your Customer (KYC) & Identity Verification</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text">Skedee Inc. is committed to complying with applicable anti-money laundering (AML) and counter-terrorism financing (CTF) obligations. As a condition of full access to the Platform, including the ability to make deposits and withdrawals, Users must successfully complete the KYC verification process, which includes:</p>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Verification of a valid phone number via OTP;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Verification of a valid email address;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Linkage of a valid <strong>Bank Verification Number (BVN)</strong>;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Submission of a government-issued photo ID (National ID, International Passport, or Driver's Licence);</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Liveness check / selfie verification to confirm identity.</div></div>
+        </div>
+        <p class="body-text">Skedee Inc. reserves the right to request additional documentation at any time. Provision of false or misleading KYC information is a serious violation of these Terms and may result in immediate account termination and referral to relevant authorities.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="section" id="s4">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <div class="section-title">How Prediction Markets Work</div>
+      </div>
+      <div class="section-body">
+        <div class="subsection">
+          <div class="subsection-title">Market Structure</div>
+          <p class="body-text">Skedee operates a binary prediction market platform. Each Market presents a specific question with a binary YES or NO outcome. Each share is priced between <strong>₦1 and ₦99</strong>, representing the market's implied probability that the outcome will occur. A share priced at ₦58 implies a 58% market probability of YES resolution. Upon resolution:</p>
+          <div class="bullet-list" style="margin-top:10px;">
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Shares on the correct side resolve at <strong>₦100 per share</strong>;</div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Shares on the incorrect side resolve at <strong>₦0 per share</strong>.</div></div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-title">Market Resolution</div>
+          <p class="body-text">Markets are resolved by Skedee Inc. based on official, publicly verifiable sources as specified in each Market's resolution criteria. Resolution is typically completed within 30 minutes to 24 hours of the relevant event concluding. Skedee Inc.'s resolution decision shall be final and binding.</p>
+        </div>
+        <div class="subsection">
+          <div class="subsection-title">Market Cancellation & Voiding</div>
+          <p class="body-text" style="margin-bottom:10px;">Skedee Inc. reserves the right to cancel, void, or suspend any Market if the underlying event is cancelled, the outcome cannot be determined, there is evidence of manipulation, or regulatory requirements necessitate it. In the event of a void, all stakes are returned to Users' Wallets in full.</p>
+        </div>
+        <div class="highlight-box">
+          <i class="fa-solid fa-circle-info"></i>
+          <div class="highlight-text">Prediction markets are speculative instruments. Prices reflect collective market sentiment, not guaranteed outcomes. Past market accuracy is no guarantee of future performance.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="section" id="s5">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <div class="section-title">Deposits & Withdrawals</div>
+      </div>
+      <div class="section-body">
+        <div class="subsection">
+          <div class="subsection-title">Deposits</div>
+          <p class="body-text" style="margin-bottom:10px;">All deposits are denominated in Nigerian Naira (NGN ₦). Deposit limits apply as follows:</p>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Minimum single deposit: <strong>₦500</strong></div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Maximum single deposit: <strong>₦500,000</strong></div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Maximum daily deposit: <strong>₦500,000</strong></div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Maximum Wallet balance: <strong>₦5,000,000</strong></div></div>
+          </div>
+          <p class="body-text" style="margin-top:10px;">Skedee Inc. does not accept deposits from third parties. Funds must originate from a bank account or card registered in the User's own name.</p>
+        </div>
+        <div class="subsection">
+          <div class="subsection-title">Withdrawals</div>
+          <p class="body-text" style="margin-bottom:10px;">Withdrawal requests are processed to the User's verified Nigerian bank account. Users must have completed KYC verification to make withdrawals. Processing times are typically 1–3 business days.</p>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Minimum withdrawal: <strong>₦1,000</strong></div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Maximum single withdrawal: <strong>₦5,000,000</strong></div></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><div>Maximum daily withdrawal: <strong>₦500,000</strong></div></div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-title">Inactive Accounts</div>
+          <p class="body-text">An account is considered inactive after 12 consecutive months of no login or trading activity. Skedee Inc. reserves the right to charge a monthly inactivity fee of <strong>₦500</strong> on inactive accounts with a positive balance. Users will be notified by email prior to any such action.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6 -->
+    <div class="section" id="s6">
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <div class="section-title">Fees & Charges</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text" style="margin-bottom:14px;">All applicable fees will be clearly disclosed to Users before they are charged:</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Fee Type</th>
+              <th>Amount</th>
+              <th>When Charged</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Platform Fee</td><td>2% of gross winnings</td><td>At market resolution</td></tr>
+            <tr><td>Withdrawal Fee</td><td>Free (first 3/month), ₦100 thereafter</td><td>Per withdrawal request</td></tr>
+            <tr><td>Inactivity Fee</td><td>₦500/month</td><td>After 12 months inactivity</td></tr>
+            <tr><td>Chargeback / Reversal Fee</td><td>₦2,500</td><td>If a chargeback is initiated</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SECTION 7 -->
+    <div class="section" id="s7">
+      <div class="section-header">
+        <div class="section-num">07</div>
+        <div class="section-title">Responsible Trading & Player Protection</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text" style="margin-bottom:10px;">Skedee Inc. is committed to promoting responsible trading and the protection of vulnerable users. We provide the following tools to help Users stay in control:</p>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Deposit limits</strong> — set daily, weekly, or monthly caps via Account Settings;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Loss limits</strong> — set maximum losses over a defined period;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Self-exclusion</strong> — temporarily or permanently restrict your account;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Session reminders</strong> — set alerts for time spent on the Platform;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Reality checks</strong> — periodic notifications of account activity and net position.</div></div>
+        </div>
+        <p class="body-text">Users aged under 18 are strictly prohibited from using the Platform. If you believe a minor has registered an account, please report this to <strong>legal@skedee.ng</strong> immediately.</p>
+        <div class="highlight-box">
+          <i class="fa-solid fa-heart"></i>
+          <div class="highlight-text">If you are concerned about your trading behaviour or that of someone you know, please contact our responsible trading team at <strong>info@skedee.ng</strong>. Help is available.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 8 -->
+    <div class="section" id="s8">
+      <div class="section-header">
+        <div class="section-num">08</div>
+        <div class="section-title">Prohibited Conduct</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text" style="margin-bottom:10px;">Users are strictly prohibited from the following:</p>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Using the Platform while under the age of 18;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Creating more than one account, whether in their own name or using another person's identity;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Providing false, misleading, or fraudulent information at any point;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Using the Platform in any jurisdiction where it is illegal to do so;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Engaging in market manipulation of any kind, including collusion with other Users;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Using automated tools, bots, or scripts to interact with the Platform;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Accessing another User's account without authorisation;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Engaging in money laundering, terrorist financing, or any other illegal financial activity;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Attempting to exploit technical errors or vulnerabilities for financial gain;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Using non-public information ("inside information") to trade on Markets;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Harassing, threatening, or abusing other Users or Skedee Inc. staff.</div></div>
+        </div>
+        <div class="hero-warning" style="margin-top:4px;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <div class="hero-warning-text">Violation of prohibited conduct provisions may result in immediate account termination, forfeiture of Wallet balance, and/or referral to law enforcement authorities.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 9 -->
+    <div class="section" id="s9">
+      <div class="section-header">
+        <div class="section-num">09</div>
+        <div class="section-title">Intellectual Property</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text">All content on the Platform — including the Skedee name, logo, design, text, graphics, software, market data, and underlying technology — is the exclusive property of Skedee Inc. and is protected by applicable intellectual property laws. Users are granted a limited, non-exclusive, non-transferable, revocable licence to access and use the Platform solely for personal, non-commercial purposes.</p>
+        <p class="body-text">You may not copy, reproduce, distribute, modify, or otherwise exploit any content from the Platform without the prior written consent of Skedee Inc. The Skedee brand name and logo are trademarks of Skedee Inc. and may not be used without express written permission.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 10 -->
+    <div class="section" id="s10">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div class="section-title">Privacy & Data Protection</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text">Skedee Inc. collects, processes, and stores personal data in accordance with the <strong>Nigeria Data Protection Act 2023</strong> and the regulations of the Nigeria Data Protection Commission (NDPC). Your personal data may be used for account management, transaction processing, legal compliance, fraud prevention, and platform improvement.</p>
+        <p class="body-text">We do not sell your personal data to third parties. Data may be shared with trusted service providers acting on our behalf and with regulatory or law enforcement bodies where required by law. For any data-related queries, contact us at <strong>legal@skedee.ng</strong>.</p>
+        <p class="body-text">Our full Privacy Policy is available at <strong>skedee.ng/privacy-policy</strong> and is incorporated into these Terms by reference.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 11 -->
+    <div class="section" id="s11">
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <div class="section-title">Disclaimers & Limitation of Liability</div>
+      </div>
+      <div class="section-body">
+        <div class="subsection">
+          <div class="subsection-title">No Financial Advice</div>
+          <p class="body-text">Nothing on the Platform constitutes financial advice, investment advice, or any other form of professional advice. Users participate entirely at their own risk and should not trade with funds they cannot afford to lose.</p>
+        </div>
+        <div class="subsection">
+          <div class="subsection-title">Platform Availability</div>
+          <p class="body-text">Skedee Inc. does not warrant that the Platform will be available at all times, uninterrupted, or free from errors. We reserve the right to suspend the Platform at any time for maintenance or other reasons. Skedee Inc. shall not be liable for any loss suffered as a result of Platform downtime or technical failures.</p>
+        </div>
+        <div class="subsection">
+          <div class="subsection-title">Limitation of Liability</div>
+          <p class="body-text">To the maximum extent permitted by applicable law, Skedee Inc. shall not be liable for any indirect, incidental, special, consequential, or punitive damages. Skedee Inc.'s total cumulative liability to you shall not exceed the total amount deposited by you in the 12 months preceding the claim.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 12 -->
+    <div class="section" id="s12">
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <div class="section-title">Account Suspension & Termination</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text" style="margin-bottom:10px;">Skedee Inc. reserves the right to suspend, restrict, or terminate any User account for reasons including but not limited to:</p>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Breach of any provision of these Terms;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Failure to complete required KYC verification;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Suspected fraudulent, illegal, or abusive activity;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>A request from a regulatory authority or law enforcement body;</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Extended account inactivity.</div></div>
+        </div>
+        <p class="body-text">Upon termination, any available Wallet balance not subject to investigation will be returned to the User's verified bank account, after deduction of applicable fees. Users may close their account at any time by contacting <strong>info@skedee.ng</strong>.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 13 -->
+    <div class="section" id="s13">
+      <div class="section-header">
+        <div class="section-num">13</div>
+        <div class="section-title">Disputes & Complaints</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text">If you have a complaint about any aspect of the Platform or a specific Market resolution, please contact our support team at <strong>info@skedee.ng</strong>. We aim to respond to all complaints within <strong>5 business days</strong>.</p>
+        <p class="body-text">All disputes regarding Market resolutions must be raised within <strong>24 hours</strong> of the resolution being published. Skedee Inc.'s decision on any Market resolution dispute is final and binding.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 14 -->
+    <div class="section" id="s14">
+      <div class="section-header">
+        <div class="section-num">14</div>
+        <div class="section-title">Amendments to These Terms</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text">Skedee Inc. reserves the right to amend these Terms at any time. Material changes will be communicated to Users via email and/or a prominent notice on the Platform, at least <strong>7 days</strong> before the changes take effect. Continued use of the Platform following the effective date of any amendment constitutes acceptance of the revised Terms.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 15 -->
+    <div class="section" id="s15">
+      <div class="section-header">
+        <div class="section-num">15</div>
+        <div class="section-title">Governing Law & Jurisdiction</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text">These Terms and any dispute or claim arising out of or in connection with them shall be governed by and construed in accordance with the <strong>laws of the Federal Republic of Nigeria</strong>. The parties irrevocably submit to the exclusive jurisdiction of the courts of Nigeria to settle any dispute or claim that arises out of or in connection with these Terms.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 16 -->
+    <div class="section" id="s16">
+      <div class="section-header">
+        <div class="section-num">16</div>
+        <div class="section-title">Contact Information</div>
+      </div>
+      <div class="section-body">
+        <p class="body-text" style="margin-bottom:14px;">For any queries, complaints, or notices under these Terms, please contact Skedee Inc. at:</p>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-label">Company</div>
+            <div class="contact-val plain">Skedee Inc.</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-label">Jurisdiction</div>
+            <div class="contact-val plain">Federal Republic of Nigeria</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-label">General Enquiries</div>
+            <div class="contact-val">info@skedee.ng</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-label">Legal & Compliance</div>
+            <div class="contact-val">legal@skedee.ng</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-label">Website</div>
+            <div class="contact-val">skedee.ng</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-label">Effective Date</div>
+            <div class="contact-val plain">1 June 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCEPTANCE -->
+    <div class="acceptance" id="acceptance">
+      <div class="acceptance-title">Agreement to These Terms</div>
+      <div class="acceptance-text">By creating an account on the Skedee platform, you confirm that you have read, understood, and agree to be bound by these Terms & Conditions in their entirety. These Terms were last updated on 24 May 2026.</div>
+      <div class="acceptance-btns">
+        <a href="signup.html"><button class="btn-accept">I Agree — Create Account</button></a>
+        <a href="Skedee_Terms_and_Conditions.pdf" download>
+          <button class="btn-download"><i class="fa-solid fa-file-pdf"></i> Download PDF Version</button>
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="about.html">About</a>
+          <a href="faq.html">FAQ</a>
+          <a href="terms.html">Terms & Conditions</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Contact</div>
+          <a href="mailto:info@skedee.ng">info@skedee.ng</a>
+          <a href="mailto:legal@skedee.ng">legal@skedee.ng</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved · 18+ · Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Reading progress bar
+const bar = document.getElementById('reading-bar');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.width = Math.min((scrolled / total) * 100, 100) + '%';
+});
+
+// TOC active state
+const sections = document.querySelectorAll('.section, #acceptance');
+const tocItems = document.querySelectorAll('.toc-item');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      tocItems.forEach(t => t.classList.remove('active'));
+      const map = { s1:'01',s2:'02',s3:'03',s4:'04',s5:'05',s6:'06',s7:'07',s8:'08',s9:'09',s10:'10',s11:'11',s12:'12',s13:'13',s14:'14',s15:'15',s16:'16',acceptance:'✓' };
+      const num = map[id];
+      tocItems.forEach(t => {
+        if (t.querySelector('.toc-num')?.textContent === num) t.classList.add('active');
+      });
+    }
+  });
+}, { rootMargin:'-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Smooth scroll
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+</script>
+</body>
+</html>

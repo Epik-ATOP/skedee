@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -342,6 +342,17 @@ body{-webkit-font-smoothing:antialiased;}
 
 <!-- MAIN -->
 <div class="main">
+  <div style="width:52px;height:52px;background:rgba(245,200,0,.15);border:2px solid rgba(245,200,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:24px;">🏁</div>
+  <div style="flex:1;">
+    <div style="font-family:var(--font-display);font-weight:800;font-size:30px;color:var(--y);letter-spacing:3px;line-height:1;">DETERMINED!</div>
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:6px;letter-spacing:.5px;">Market resolved · Final result locked · YES positions paid ₦100 · NO positions paid ₦0</div>
+  </div>
+  <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
+    <div style="color:var(--green);font-weight:700;font-size:11px;margin-bottom:3px;">● Settled</div>
+    <div>24 May 2026</div>
+    <div>~6:00 PM BST</div>
+  </div>
+</div>
 
   <!-- HERO CARD -->
   <div class="hero-card">
@@ -897,7 +908,7 @@ function updateGauge(price) {
   document.getElementById('gauge-price').textContent = '₦' + price.toLocaleString();
 }
 
-function updateLiveData() {
+function updateLiveData() {if(match.state==='FT')return;
   const delta = (Math.random() - 0.48) * 1.5;
   yesPct = Math.max(40, Math.min(80, yesPct + delta));
   yesPct = Math.round(yesPct);
@@ -983,7 +994,7 @@ setInterval(() => {
           <a href="careers.html">Careers</a>
           <a href="../faq.html">FAQ</a>
           <a href="privacy-policy.html">Privacy Policy</a>
-          <a href="../terms-of-service.html">Terms of Service</a>
+          <a href="../terms.html">Terms of Service</a>
         </div>
         <div class="footer-col">
           <div class="footer-col-title">SOCIALS</div>

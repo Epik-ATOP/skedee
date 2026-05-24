@@ -116,7 +116,7 @@ body{-webkit-font-smoothing:antialiased;}
   <a href="index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
   <div class="topbar-nav">
     <a href="index.html" class="topbar-navlink">Markets</a>
-    <a href="search.html" class="topbar-navlink active">Final Matchday <span style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(245,200,0,.15);color:var(--y);border:1px solid rgba(245,200,0,.3);padding:1px 5px;border-radius:3px;">SUN</span></a>
+    <a href="search.html" class="topbar-navlink active">Final Matchday <span style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(100,100,100,.15);color:var(--text3);border:1px solid var(--border);padding:1px 5px;border-radius:3px;">FT</span></a>
     <a href="about.html" class="topbar-navlink">About</a>
   </div>
   <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="topbar-search" placeholder="Search markets..." oninput="handleSearch(this.value)"></div>
@@ -142,15 +142,15 @@ body{-webkit-font-smoothing:antialiased;}
       <span style="color:var(--y);">Final Matchday</span>
     </div>
     <div class="hero-title">
-      Final Matchday of the Season
-      <span class="hero-badge">SUNDAY</span>
+      Final Matchday — Full Time
+      <span class="hero-badge" style="background:rgba(100,100,100,.15);border-color:rgba(100,100,100,.35);color:var(--text3);">FT</span>
     </div>
-    <div class="hero-sub">10 Premier League matches kicking off simultaneously this Sunday at 4PM BST. Title race, relegation battle, and European places — it all comes down to this.</div>
+    <div class="hero-sub">Matchday 38 of the Premier League season is over. All 10 matches played simultaneously have finished. Markets are settling — check the final results below.</div>
     <div class="hero-stats">
       <div class="hstat"><div class="hstat-val">10</div><div class="hstat-label">Matches</div></div>
       <div class="hstat"><div class="hstat-val">₦280M+</div><div class="hstat-label">Total Volume</div></div>
-      <div class="hstat"><div class="hstat-val" id="hero-markets-count">50+</div><div class="hstat-label">Open Markets</div></div>
-      <div class="hstat"><div class="hstat-val">4:00 PM</div><div class="hstat-label">Kickoff BST</div></div>
+      <div class="hstat"><div class="hstat-val">10</div><div class="hstat-label">Settled</div></div>
+      <div class="hstat"><div class="hstat-val" style="color:var(--text3);">FT</div><div class="hstat-label">Status</div></div>
     </div>
   </div>
 
@@ -185,16 +185,16 @@ body{-webkit-font-smoothing:antialiased;}
 <script>
 // ── DATA ──────────────────────────────────────────────────────────
 const SUNDAY_MATCHES = [
-  { id:10000014, home:'Man City', homeAbbr:'MCI', homeColor:'#6CABDD', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg', away:'Aston Villa', awayAbbr:'AVL', awayColor:'#95003C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/9/9a/Aston_Villa_FC_new_crest.svg', homeProb:65, drawProb:18, awayProb:17, vol:'₦38M', link:'markets/10000014.html' },
-  { id:10000015, home:'Brighton', homeAbbr:'BHA', homeColor:'#0057B8', homeLogo:'https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg', away:'Man United', awayAbbr:'MUN', awayColor:'#DA291C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg', homeProb:52, drawProb:24, awayProb:24, vol:'₦22M', link:'markets/10000015.html' },
-  { id:10000016, home:'Fulham', homeAbbr:'FUL', homeColor:'#BBBBBB', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/eb/Fulham_FC_%28shield%29.svg', away:'Newcastle', awayAbbr:'NEW', awayColor:'#888888', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg', homeProb:40, drawProb:28, awayProb:32, vol:'₦14M', link:'markets/10000016.html' },
-  { id:10000017, home:'Spurs', homeAbbr:'TOT', homeColor:'#CCCCCC', homeLogo:'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg', away:'Everton', awayAbbr:'EVE', awayColor:'#003399', awayLogo:'https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg', homeProb:58, drawProb:24, awayProb:18, vol:'₦18M', link:'markets/10000017.html' },
-  { id:10000018, home:'Liverpool', homeAbbr:'LIV', homeColor:'#C8102E', homeLogo:'https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg', away:'Brentford', awayAbbr:'BRE', awayColor:'#E30613', awayLogo:'https://upload.wikimedia.org/wikipedia/en/2/2a/Brentford_FC_crest.svg', homeProb:72, drawProb:16, awayProb:12, vol:'₦44M', link:'markets/10000018.html' },
-  { id:10000019, home:'Burnley', homeAbbr:'BUR', homeColor:'#6C1D45', homeLogo:'https://upload.wikimedia.org/wikipedia/en/6/6d/Burnley_FC_Logo.svg', away:'Wolves', awayAbbr:'WOL', awayColor:'#FDB913', awayLogo:'https://upload.wikimedia.org/wikipedia/en/f/fc/Wolverhampton_Wanderers.svg', homeProb:35, drawProb:30, awayProb:35, vol:'₦8M', link:'markets/10000019.html' },
-  { id:10000020, home:'Nottm Forest', homeAbbr:'NFO', homeColor:'#DD0000', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/e5/Nottingham_Forest_F.C._logo.svg', away:'Bournemouth', awayAbbr:'BOU', awayColor:'#DA291C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/e/e5/AFC_Bournemouth_%282013%29.svg', homeProb:46, drawProb:28, awayProb:26, vol:'₦11M', link:'markets/10000020.html' },
-  { id:10000021, home:'West Ham', homeAbbr:'WHU', homeColor:'#7A263A', homeLogo:'https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg', away:'Leeds', awayAbbr:'LEE', awayColor:'#FFCD00', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/54/Leeds_United_F.C._logo.svg', homeProb:45, drawProb:28, awayProb:27, vol:'₦9M', link:'markets/10000021.html' },
-  { id:10000022, home:'Sunderland', homeAbbr:'SUN', homeColor:'#EB172B', homeLogo:'https://upload.wikimedia.org/wikipedia/en/7/77/Logo_Sunderland.svg', away:'Chelsea', awayAbbr:'CHE', awayColor:'#034694', awayLogo:'https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg', homeProb:26, drawProb:24, awayProb:50, vol:'₦16M', link:'markets/10000022.html' },
-  { id:10000023, home:'Crystal Palace', homeAbbr:'CRY', homeColor:'#1B458F', homeLogo:'https://upload.wikimedia.org/wikipedia/en/a/a2/Crystal_Palace_FC_logo_%282022%29.svg', away:'Arsenal', awayAbbr:'ARS', awayColor:'#EF0107', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg', homeProb:28, drawProb:24, awayProb:48, vol:'₦26M', link:'markets/10000023.html' },
+  { id:10000014, home:'Man City', homeAbbr:'MCI', homeColor:'#6CABDD', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg', away:'Aston Villa', awayAbbr:'AVL', awayColor:'#95003C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/9/9a/Aston_Villa_FC_new_crest.svg', homeProb:0, drawProb:0, awayProb:100, homeScore:1, awayScore:2, vol:'₦38M', link:'markets/10000014.html' },
+  { id:10000015, home:'Brighton', homeAbbr:'BHA', homeColor:'#0057B8', homeLogo:'https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg', away:'Man United', awayAbbr:'MUN', awayColor:'#DA291C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg', homeProb:0, drawProb:0, awayProb:100, homeScore:0, awayScore:3, vol:'₦22M', link:'markets/10000015.html' },
+  { id:10000016, home:'Fulham', homeAbbr:'FUL', homeColor:'#BBBBBB', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/eb/Fulham_FC_%28shield%29.svg', away:'Newcastle', awayAbbr:'NEW', awayColor:'#888888', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg', homeProb:100, drawProb:0, awayProb:0, homeScore:2, awayScore:0, vol:'₦14M', link:'markets/10000016.html' },
+  { id:10000017, home:'Spurs', homeAbbr:'TOT', homeColor:'#CCCCCC', homeLogo:'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg', away:'Everton', awayAbbr:'EVE', awayColor:'#003399', awayLogo:'https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg', homeProb:100, drawProb:0, awayProb:0, homeScore:1, awayScore:0, vol:'₦18M', link:'markets/10000017.html' },
+  { id:10000018, home:'Liverpool', homeAbbr:'LIV', homeColor:'#C8102E', homeLogo:'https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg', away:'Brentford', awayAbbr:'BRE', awayColor:'#E30613', awayLogo:'https://upload.wikimedia.org/wikipedia/en/2/2a/Brentford_FC_crest.svg', homeProb:0, drawProb:100, awayProb:0, homeScore:1, awayScore:1, vol:'₦44M', link:'markets/10000018.html' },
+  { id:10000019, home:'Burnley', homeAbbr:'BUR', homeColor:'#6C1D45', homeLogo:'https://upload.wikimedia.org/wikipedia/en/6/6d/Burnley_FC_Logo.svg', away:'Wolves', awayAbbr:'WOL', awayColor:'#FDB913', awayLogo:'https://upload.wikimedia.org/wikipedia/en/f/fc/Wolverhampton_Wanderers.svg', homeProb:0, drawProb:100, awayProb:0, homeScore:1, awayScore:1, vol:'₦8M', link:'markets/10000019.html' },
+  { id:10000020, home:'Nottm Forest', homeAbbr:'NFO', homeColor:'#DD0000', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/e5/Nottingham_Forest_F.C._logo.svg', away:'Bournemouth', awayAbbr:'BOU', awayColor:'#DA291C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/e/e5/AFC_Bournemouth_%282013%29.svg', homeProb:0, drawProb:100, awayProb:0, homeScore:1, awayScore:1, vol:'₦11M', link:'markets/10000020.html' },
+  { id:10000021, home:'West Ham', homeAbbr:'WHU', homeColor:'#7A263A', homeLogo:'https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg', away:'Leeds', awayAbbr:'LEE', awayColor:'#FFCD00', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/54/Leeds_United_F.C._logo.svg', homeProb:100, drawProb:0, awayProb:0, homeScore:3, awayScore:0, vol:'₦9M', link:'markets/10000021.html' },
+  { id:10000022, home:'Sunderland', homeAbbr:'SUN', homeColor:'#EB172B', homeLogo:'https://upload.wikimedia.org/wikipedia/en/7/77/Logo_Sunderland.svg', away:'Chelsea', awayAbbr:'CHE', awayColor:'#034694', awayLogo:'https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg', homeProb:100, drawProb:0, awayProb:0, homeScore:2, awayScore:1, vol:'₦16M', link:'markets/10000022.html' },
+  { id:10000023, home:'Crystal Palace', homeAbbr:'CRY', homeColor:'#1B458F', homeLogo:'https://upload.wikimedia.org/wikipedia/en/a/a2/Crystal_Palace_FC_logo_%282022%29.svg', away:'Arsenal', awayAbbr:'ARS', awayColor:'#EF0107', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg', homeProb:0, drawProb:0, awayProb:100, homeScore:1, awayScore:2, vol:'₦26M', link:'markets/10000023.html' },
 ];
 
 const OTHER_MARKETS = [
@@ -230,24 +230,27 @@ let currentQuery = '';
 
 // ── RENDERING ─────────────────────────────────────────────────────
 function buildMatchCard(m) {
+  const winnerHome = m.homeScore > m.awayScore;
+  const winnerAway = m.awayScore > m.homeScore;
+  const isDraw = m.homeScore === m.awayScore;
   return `
     <a class="match-card" href="${m.link}">
       <div class="mc-league">
         <span>⚽ PREMIER LEAGUE · MATCHDAY 38</span>
-        <span class="mc-badge upcoming">UPCOMING</span>
+        <span class="mc-badge" style="background:rgba(100,100,100,.12);color:var(--text3);border:1px solid var(--border);">🏁 FT</span>
       </div>
       <div class="teams-row">
         <div class="team-col">
-          <div class="team-logo-sm"><img src="${m.homeLogo}" alt="${m.home}"></div>
-          <div class="team-nm">${m.home}</div>
+          <div class="team-logo-sm" style="${winnerHome?'border-color:var(--y);':''}""><img src="${m.homeLogo}" alt="${m.home}"></div>
+          <div class="team-nm" style="${winnerHome?'color:var(--y);font-weight:700;':''}">${m.home}</div>
         </div>
         <div class="vs-block">
-          <div style="font-weight:700;font-size:13px;color:var(--text3);">VS</div>
-          <div class="kickoff">4:00 PM</div>
+          <div style="font-family:var(--font-num);font-weight:700;font-size:22px;color:var(--text);line-height:1;">${m.homeScore} — ${m.awayScore}</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;">FULL TIME</div>
         </div>
         <div class="team-col">
-          <div class="team-logo-sm"><img src="${m.awayLogo}" alt="${m.away}"></div>
-          <div class="team-nm">${m.away}</div>
+          <div class="team-logo-sm" style="${winnerAway?'border-color:var(--y);':''}""><img src="${m.awayLogo}" alt="${m.away}"></div>
+          <div class="team-nm" style="${winnerAway?'color:var(--y);font-weight:700;':''}">${m.away}</div>
         </div>
       </div>
       <div class="prob-bar-row">
@@ -256,13 +259,13 @@ function buildMatchCard(m) {
         <div class="prob-bar-a" style="width:${m.awayProb}%;background:${m.awayColor};"></div>
       </div>
       <div class="prob-labels">
-        <span style="color:${m.homeColor};font-weight:700;">${m.homeAbbr} ${m.homeProb}%</span>
-        <span>Draw ${m.drawProb}%</span>
-        <span style="color:${m.awayColor};font-weight:700;">${m.awayAbbr} ${m.awayProb}%</span>
+        <span style="color:${winnerHome?m.homeColor:'var(--text3)'};font-weight:${winnerHome?'700':'400'};">${m.homeAbbr} ${m.homeProb}%</span>
+        <span style="${isDraw?'color:var(--y);font-weight:700;':''}">Draw ${m.drawProb}%</span>
+        <span style="color:${winnerAway?m.awayColor:'var(--text3)'};font-weight:${winnerAway?'700':'400'};">${m.awayAbbr} ${m.awayProb}%</span>
       </div>
       <div class="mc-meta">
         <span class="mc-vol">Vol ${m.vol}</span>
-        <span class="mc-time"><i class="fa-solid fa-futbol" style="font-size:9px;margin-right:3px;"></i>Sunday 4PM BST</span>
+        <span class="mc-time" style="color:var(--text3);"><i class="fa-solid fa-flag-checkered" style="font-size:9px;margin-right:3px;"></i>Full Time</span>
       </div>
     </a>`;
 }
