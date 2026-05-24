@@ -424,7 +424,7 @@ body{-webkit-font-smoothing:antialiased;}
 <script src="../sportmonks.js"></script>
 <script>
 const KICKOFF_TIME = new Date('2026-05-24T15:00:00Z');
-const match={state:'HT', minute:45, stoppage:0, homeScore:0, awayScore:1 };
+const match={state:'HT', minute:45, stoppage:0, homeScore:0, awayScore:2 };
 const firedEvents = new Set();
 let matchClockInterval = null, countdownInterval = null;
 function addMatchEvent(min,type,text){const feed=document.getElementById('event-feed');document.getElementById('event-feed-wrap').style.display='block';const icons={'goal':'⚽','whistle':'📣','card-y':'🟨','sub':'🔄'};const clsMap={'goal':'goal','whistle':'whistle'};const item=document.createElement('div');item.className=`event-item ${clsMap[type]||''}`;item.innerHTML=`<div class="event-time">[${min}']</div><div class="event-icon">${icons[type]||'📌'}</div><div class="event-text">${text}</div>`;feed.insertBefore(item,feed.firstChild);}
