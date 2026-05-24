@@ -444,7 +444,7 @@ body{-webkit-font-smoothing:antialiased;}
 <script src="../sportmonks.js"></script>
 <script>
 const KICKOFF_TIME = new Date('2026-05-24T15:00:00Z');
-const match = { state:'LIVE_1H', minute:0, stoppage:0, homeScore:0, awayScore:0 };
+const match = { state:'LIVE_1H', minute:1, stoppage:0, homeScore:0, awayScore:0 };
 const firedEvents = new Set();
 let matchClockInterval = null, countdownInterval = null;
 
@@ -592,6 +592,7 @@ function toggleProfile(){document.getElementById('profile-dd').classList.toggle(
 document.addEventListener('click',e=>{if(!e.target.closest('.btn-icon')&&!e.target.closest('.notif-dropdown'))document.getElementById('notif-dd').classList.remove('open');if(!e.target.closest('.avatar')&&!e.target.closest('.profile-dropdown'))document.getElementById('profile-dd').classList.remove('open');});
 
 updateMatchUI();
+if(match.state==='LIVE_1H'||match.state==='LIVE_2H'){matchClockInterval=setInterval(tickMatchClock,60000);}
 countdownInterval = setInterval(tickCountdown, 1000);
 renderMarkets(); renderOrderBook(); renderActivity(); renderTrades();
 setInterval(updateLiveData, 8000);
