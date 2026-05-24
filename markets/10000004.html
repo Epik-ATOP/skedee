@@ -203,6 +203,17 @@ body{-webkit-font-smoothing:antialiased;}
 .pulse-dot{display:inline-block;width:6px;height:6px;background:var(--purple);border-radius:50%;animation:pdot 1.5s infinite;margin-right:4px;}
 @keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
 
+/* ── DETERMINED BANNER ── */
+.determined-banner{background:linear-gradient(135deg,rgba(245,200,0,.1),rgba(245,200,0,.04));border:2px solid rgba(245,200,0,.5);border-radius:var(--radius-xl);padding:16px 24px;text-align:center;margin-top:14px;}
+.det-icon{color:var(--y);font-size:18px;margin-bottom:4px;}
+.det-label{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:4px;}
+.det-text{font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--y);letter-spacing:3px;}
+.det-score{font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text);margin:8px 0 4px;}
+.det-sub{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:1px;}
+.resolved-row{opacity:.45;pointer-events:none;}
+.winner-row{background:rgba(245,200,0,.06);border:1px solid rgba(245,200,0,.25)!important;}
+.winner-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.4);color:var(--green);font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:1px;margin-left:6px;}
+
 /* ── FOOTER ── */
 .site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 0 24px;}
 .footer-inner{max-width:1400px;margin:0 auto;padding:0 32px;display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap;}
@@ -306,23 +317,32 @@ body{-webkit-font-smoothing:antialiased;}
   <div class="hero-card">
     <div class="hero-bg-emoji">🎬</div>
     <div class="hero-top">
-      <div class="hero-cat-tag"><span class="pulse-dot"></span>🎬 ENTERTAINMENT · BIG BROTHER NAIJA</div>
+      <div class="hero-cat-tag">🎬 ENTERTAINMENT · BIG BROTHER NAIJA</div>
       <div class="hero-vol-tag">Vol ₦28.4M</div>
-      <div class="hot-tag">🔥 TRENDING</div>
+      <div class="hot-tag" style="background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);">✓ RESOLVED</div>
     </div>
     <div class="hero-title">When will BBNaija Season 11<br>auditions begin?</div>
-    <div class="hero-sub">Big Brother Naija Season 11 is on the way — but Multichoice hasn't officially announced audition dates yet. The market is pricing in a May–June window based on past season patterns. Pick your date, buy YES, and win if you're right.</div>
+    <div class="hero-sub">Multichoice officially announced BBNaija Season 11 auditions on <strong style="color:var(--y);">May 16th</strong>. The market has resolved — May 16th YES positions pay out. All other date positions resolve NO.</div>
     <div class="hero-stats">
       <div class="hstat"><div class="hstat-label">Total Volume</div><div class="hstat-val yellow">₦28.4M</div></div>
-      <div class="hstat"><div class="hstat-label">Most Likely Date</div><div class="hstat-val purple">May 19th</div></div>
-      <div class="hstat"><div class="hstat-label">Probability</div><div class="hstat-val yellow">28%</div></div>
+      <div class="hstat"><div class="hstat-label">Resolved Date</div><div class="hstat-val green">May 16th ✓</div></div>
+      <div class="hstat"><div class="hstat-label">Winning Prob</div><div class="hstat-val yellow">100%</div></div>
       <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val">4,821</div></div>
-      <div class="hstat"><div class="hstat-label">Closes</div><div class="hstat-val green">Jun 30</div></div>
+      <div class="hstat"><div class="hstat-label">Resolved</div><div class="hstat-val green">May 16</div></div>
     </div>
-    <div style="font-size:12px;color:var(--text3);display:flex;align-items:center;gap:6px;">
-      <i class="fa-solid fa-circle-info" style="color:var(--purple);"></i>
-      Resolves YES on the date Multichoice officially announces BBNaija S11 auditions via their official channels. Each date is an independent YES/NO market.
+    <div style="font-size:12px;color:var(--green);display:flex;align-items:center;gap:6px;">
+      <i class="fa-solid fa-circle-check" style="color:var(--green);"></i>
+      Market resolved May 16, 2026 · May 16th YES → ₦100 · All other dates → ₦0
     </div>
+  </div>
+
+  <!-- DETERMINED BANNER -->
+  <div class="determined-banner">
+    <div class="det-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+    <div class="det-label">Market Resolved</div>
+    <div class="det-text">DETERMINED!</div>
+    <div class="det-score">🎬 May 16th YES</div>
+    <div class="det-sub">BBNaija S11 Auditions Announced · May 16, 2026</div>
   </div>
 
   <!-- TABS -->
@@ -501,16 +521,16 @@ body{-webkit-font-smoothing:antialiased;}
 <script>
 /* ── MARKET DATA ── */
 const DATE_MARKETS = [
-  { id:'may14', label:'May 14', day:'Wednesday', prob:0.08, trend:-1 },
-  { id:'may15', label:'May 15', day:'Thursday',  prob:0.11, trend:1  },
-  { id:'may16', label:'May 16', day:'Friday',    prob:0.14, trend:1  },
-  { id:'may17', label:'May 17', day:'Saturday',  prob:0.09, trend:-1 },
-  { id:'may18', label:'May 18', day:'Sunday',    prob:0.06, trend:-1 },
-  { id:'may19', label:'May 19', day:'Monday',    prob:0.28, trend:1  },
-  { id:'may20', label:'May 20', day:'Tuesday',   prob:0.10, trend:0  },
-  { id:'may21', label:'May 21', day:'Wednesday', prob:0.05, trend:-1 },
-  { id:'jun01', label:'Jun 1',  day:'Monday',    prob:0.04, trend:0  },
-  { id:'other', label:'Other',  day:'Any other date', prob:0.05, trend:0 },
+  { id:'may14', label:'May 14', day:'Wednesday',   prob:0.00, trend:-1, resolved:true,  winner:false },
+  { id:'may15', label:'May 15', day:'Thursday',    prob:0.00, trend:-1, resolved:true,  winner:false },
+  { id:'may16', label:'May 16', day:'Friday',      prob:1.00, trend:1,  resolved:true,  winner:true  },
+  { id:'may17', label:'May 17', day:'Saturday',    prob:0.00, trend:-1, resolved:true,  winner:false },
+  { id:'may18', label:'May 18', day:'Sunday',      prob:0.00, trend:-1, resolved:true,  winner:false },
+  { id:'may19', label:'May 19', day:'Monday',      prob:0.00, trend:-1, resolved:true,  winner:false },
+  { id:'may20', label:'May 20', day:'Tuesday',     prob:0.00, trend:-1, resolved:true,  winner:false },
+  { id:'may21', label:'May 21', day:'Wednesday',   prob:0.00, trend:-1, resolved:true,  winner:false },
+  { id:'jun01', label:'Jun 1',  day:'Monday',      prob:0.00, trend:-1, resolved:true,  winner:false },
+  { id:'other', label:'Other',  day:'Any other date', prob:0.00, trend:-1, resolved:true, winner:false },
 ];
 
 const ACTIVITY_DATA = [
@@ -539,38 +559,34 @@ let recentTrades = [];
 
 /* ── RENDER DATE ROWS ── */
 function renderDateRows() {
+  // Winner first, then others alphabetically
   const sorted = [...DATE_MARKETS].sort((a,b) => b.prob - a.prob);
   const container = document.getElementById('date-rows');
   container.innerHTML = '';
 
   sorted.forEach((m, i) => {
     const pct = Math.round(m.prob * 100);
-    const yes = pct;
-    const no = 100 - pct;
-    const isLeading = i === 0;
-    const rankClass = i===0?'r1':i===1?'r2':i===2?'r3':'rn';
-    const barColor = isLeading
-      ? 'linear-gradient(90deg,var(--purple),var(--y))'
+    const barColor = m.winner
+      ? 'linear-gradient(90deg,var(--green),var(--y))'
       : 'linear-gradient(90deg,var(--bg5),var(--border2))';
-    const trendHtml = m.trend > 0
-      ? '<span style="font-family:var(--font-mono);font-size:9px;color:var(--green);margin-left:4px;">▲</span>'
-      : m.trend < 0
-      ? '<span style="font-family:var(--font-mono);font-size:9px;color:var(--red);margin-left:4px;">▼</span>'
-      : '';
+
+    const winnerBadge = m.winner
+      ? '<span class="winner-badge">✓ RESOLVED YES</span>'
+      : (m.resolved ? '<span style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-left:6px;">NO</span>' : '');
 
     const row = document.createElement('div');
-    row.className = 'date-row' + (isLeading ? ' leading' : '');
+    row.className = 'date-row' + (m.winner ? ' winner-row' : (m.resolved ? ' resolved-row' : ''));
     row.id = 'row-' + m.id;
     row.innerHTML = `
       <div class="date-cell">
-        <div class="date-rank ${rankClass}">${i+1}</div>
+        <div class="date-rank ${m.winner?'r1':'rn'}">${m.winner ? '🏆' : (i+1)}</div>
         <div class="date-label">${m.label}<small>${m.day}</small></div>
-        ${trendHtml}
+        ${winnerBadge}
       </div>
-      <div class="prob-cell"><div class="prob-val">${pct}%</div></div>
+      <div class="prob-cell"><div class="prob-val" style="${m.winner?'color:var(--green);font-weight:700;':''}">${pct}%</div></div>
       <div class="price-cell">
-        <div class="price-yes">₦${yes}</div>
-        <div class="price-no" style="margin-top:2px;">₦${no}</div>
+        <div class="price-yes" style="${m.winner?'color:var(--green);':'color:var(--text3);'}">₦${pct}</div>
+        <div class="price-no" style="margin-top:2px;color:var(--text3);">₦${100-pct}</div>
       </div>
       <div class="bar-cell">
         <div class="prob-mini-bar">
@@ -578,8 +594,11 @@ function renderDateRows() {
         </div>
       </div>
       <div class="action-cell">
-        <button class="btn-buy-yes" onclick="openOrder('BBNaija S11 — ${m.label}','YES',${yes})">YES ₦${yes}</button>
-        <button class="btn-buy-no" onclick="openOrder('BBNaija S11 — ${m.label}','NO',${no})">NO ₦${no}</button>
+        ${m.resolved
+          ? `<span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);padding:6px 10px;">${m.winner ? '✓ Paid Out' : 'Closed'}</span>`
+          : `<button class="btn-buy-yes" onclick="openOrder('BBNaija S11 — ${m.label}','YES',${pct})">YES ₦${pct}</button>
+             <button class="btn-buy-no" onclick="openOrder('BBNaija S11 — ${m.label}','NO',${100-pct})">NO ₦${100-pct}</button>`
+        }
       </div>`;
     container.appendChild(row);
   });
