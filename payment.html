@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Methods | Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<style>
+body { overflow-x: hidden; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 38vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 130px 24px 60px;
+  position: relative; overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image:
+    linear-gradient(var(--y) 1px, transparent 1px),
+    linear-gradient(90deg, var(--y) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-glow {
+  position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,200,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(245,200,0,0.08); border: 1px solid var(--border2);
+  border-radius: 99px; padding: 6px 16px; margin-bottom: 24px;
+  font-family: var(--font-mono); font-size: 11px; color: var(--y); letter-spacing: 1px;
+}
+.hero-tag-dot { width: 6px; height: 6px; background: var(--y); border-radius: 50%; }
+.hero-title {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(40px, 7vw, 80px);
+  line-height: 1; letter-spacing: -2px; margin-bottom: 20px;
+  color: var(--text);
+}
+.hero-title span { color: var(--y); }
+.hero-sub {
+  font-size: clamp(14px, 2vw, 17px); color: var(--text2);
+  max-width: 500px; line-height: 1.7;
+}
+
+/* ── MAIN CONTENT ── */
+.pm-section {
+  max-width: 1100px; margin: 0 auto; padding: 64px 40px 80px;
+}
+
+.pm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.pm-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-xl, 16px); padding: 28px 24px;
+  transition: border-color .2s;
+}
+.pm-card:hover { border-color: var(--border2); }
+
+.pm-card-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.pm-card-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(245,200,0,0.10); border: 1px solid rgba(245,200,0,0.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--y); flex-shrink: 0;
+}
+.pm-card-title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 16px; color: var(--text); letter-spacing: 0.2px;
+}
+.pm-card-count {
+  font-family: var(--font-mono); font-size: 10px; color: var(--text3);
+  letter-spacing: 1px; margin-top: 2px;
+}
+
+.pm-list {
+  display: flex; flex-direction: column; gap: 0;
+}
+.pm-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--border3, rgba(255,255,255,0.04));
+  font-size: 13px; color: var(--text2); transition: color .15s;
+}
+.pm-item:last-child { border-bottom: none; }
+.pm-item:hover { color: var(--text); }
+.pm-item-code {
+  font-family: var(--font-mono); font-size: 11px; color: var(--y);
+  background: rgba(245,200,0,0.08); border: 1px solid rgba(245,200,0,0.15);
+  border-radius: 5px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;
+}
+.pm-item-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--border2); flex-shrink: 0;
+}
+
+/* ── NOTE BANNER ── */
+.pm-note {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius-xl, 16px); padding: 24px 28px;
+  display: flex; align-items: flex-start; gap: 16px;
+}
+.pm-note-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(245,200,0,0.10); border: 1px solid rgba(245,200,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--y); font-size: 15px; flex-shrink: 0; margin-top: 2px;
+}
+.pm-note-title {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px;
+  color: var(--y); text-transform: uppercase; margin-bottom: 6px;
+}
+.pm-note-text {
+  font-size: 14px; color: var(--text2); line-height: 1.6;
+}
+.pm-note-text a { color: var(--y); text-decoration: underline; }
+.pm-note-text a:hover { opacity: .8; }
+
+/* ── MOBILE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 48px; }
+  .pm-section { padding: 48px 20px 64px; }
+  .pm-grid { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; }
+  .footer-right { align-items: flex-start; }
+}
+@media (max-width: 600px) {
+  .pm-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-dot"></div> <a href="index.html">Skedee</a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Markets</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="#" class="nav-link">Blog</a>
+    <a href="#" class="nav-link">Careers</a>
+    <a href="faq.html" class="nav-link">FAQ</a>
+    <a href="policy.html" class="nav-link">Privacy Policy</a>
+  </div>
+  <div class="nav-right">
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <i class="fa-solid fa-sun" id="theme-icon"></i>
+    </div>
+    <a href="signup.html"><button class="btn-auth">Log in / Sign Up</button></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag">
+    <div class="hero-tag-dot"></div>
+    DEPOSITS &amp; WITHDRAWALS
+  </div>
+  <h1 class="hero-title">Payment <span>Methods</span></h1>
+  <p class="hero-sub">All the ways you can fund your Skedee wallet and withdraw your winnings.</p>
+</div>
+
+<!-- PAYMENT METHODS -->
+<div class="pm-section">
+  <div class="pm-grid">
+
+    <!-- BANK TRANSFER -->
+    <div class="pm-card">
+      <div class="pm-card-header">
+        <div class="pm-card-icon"><i class="fa-solid fa-building-columns"></i></div>
+        <div>
+          <div class="pm-card-title">Bank Transfer</div>
+          <div class="pm-card-count">21 BANKS SUPPORTED</div>
+        </div>
+      </div>
+      <div class="pm-list">
+        <div class="pm-item"><div class="pm-item-dot"></div>Zenith Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>GTBank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Union Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>First Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>UBA</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Fidelity Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Access Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>OPay Microfinance Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>PalmPay Microfinance Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Wema Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Ecobank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Stanbic IBTC Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Heritage Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Providus Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Keystone Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Sterling Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>FCMB</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Kuda Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Moniepoint Microfinance Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>FairMoney Microfinance Bank</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Standard Chartered</div>
+      </div>
+    </div>
+
+    <!-- DEBIT & CREDIT CARD -->
+    <div class="pm-card">
+      <div class="pm-card-header">
+        <div class="pm-card-icon"><i class="fa-solid fa-credit-card"></i></div>
+        <div>
+          <div class="pm-card-title">Debit &amp; Credit Card</div>
+          <div class="pm-card-count">15 CARDS SUPPORTED</div>
+        </div>
+      </div>
+      <div class="pm-list">
+        <div class="pm-item"><div class="pm-item-dot"></div>Verve</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Mastercard</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Visa</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Zenith Bank Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Access Bank Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Opay Debit Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>PalmPay Debit Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Wema ALAT Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Fidelity Bank Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>FCMB Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Kuda Debit Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Moniepoint Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Stanbic IBTC Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>UBA Card</div>
+        <div class="pm-item"><div class="pm-item-dot"></div>Ecobank Debit Card</div>
+      </div>
+    </div>
+
+    <!-- USSD -->
+    <div class="pm-card">
+      <div class="pm-card-header">
+        <div class="pm-card-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+        <div>
+          <div class="pm-card-title">USSD</div>
+          <div class="pm-card-count">13 CODES SUPPORTED</div>
+        </div>
+      </div>
+      <div class="pm-list">
+        <div class="pm-item"><span class="pm-item-code">*737#</span> GTBank</div>
+        <div class="pm-item"><span class="pm-item-code">*901#</span> Access Bank</div>
+        <div class="pm-item"><span class="pm-item-code">*894#</span> First Bank</div>
+        <div class="pm-item"><span class="pm-item-code">*919#</span> UBA</div>
+        <div class="pm-item"><span class="pm-item-code">*966#</span> Zenith Bank</div>
+        <div class="pm-item"><span class="pm-item-code">*770#</span> Fidelity</div>
+        <div class="pm-item"><span class="pm-item-code">*945#</span> Wema ALAT</div>
+        <div class="pm-item"><span class="pm-item-code">*326#</span> Ecobank</div>
+        <div class="pm-item"><span class="pm-item-code">*955#</span> OPay</div>
+        <div class="pm-item"><span class="pm-item-code">*862#</span> PalmPay [1]</div>
+        <div class="pm-item"><span class="pm-item-code">*652#</span> PalmPay [2]</div>
+        <div class="pm-item"><span class="pm-item-code">*5573#</span> Kuda</div>
+        <div class="pm-item"><span class="pm-item-code">*7777#</span> Moniepoint</div>
+      </div>
+    </div>
+
+  </div><!-- /pm-grid -->
+
+  <!-- NOTE -->
+  <div class="pm-note">
+    <div class="pm-note-icon"><i class="fa-solid fa-circle-info"></i></div>
+    <div>
+      <div class="pm-note-title">Please Note</div>
+      <div class="pm-note-text">
+        Minimum deposit is <strong>₦100</strong>. Maximum amount can vary between banks.
+        For any questions, send an email to <a href="mailto:info@skedee.ng">info@skedee.ng</a>.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /pm-section -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+          <a href="policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
