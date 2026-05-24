@@ -51,7 +51,7 @@
 .ticker-goals{color:var(--text);font-size:38px;font-weight:700;min-width:24px;text-align:center;}
 .ticker-sep{color:var(--y);font-size:32px;font-weight:700;padding:0 4px;text-shadow:0 0 12px rgba(245,200,0,.4);}
 .match-clock{font-family:var(--font-mono);font-size:13px;color:var(--y);background:rgba(245,200,0,.1);border:1px solid var(--border2);border-radius:6px;padding:4px 10px;display:flex;align-items:center;gap:5px;}
-.match-status-pill{font-family:var(--font-mono);font-size:10px;font-weight:700;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);color:#3B82F6;border-radius:4px;padding:3px 8px;}
+.match-status-pill{font-family:var(--font-mono);font-size:10px;font-weight:700;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:var(--red);border-radius:4px;padding:3px 8px;}
 .match-meta{margin-top:10px;padding-top:10px;border-top:1px solid var(--border3);display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
 .meta-item{display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;}
 .event-feed-wrap{margin-top:16px;padding-top:14px;border-top:1px solid var(--border3);}
@@ -190,7 +190,7 @@ body{-webkit-font-smoothing:antialiased;}
   <div class="topbar-nav">
     <a href="../index.html" class="topbar-navlink">Markets</a>
     <a href="../search.html" class="topbar-navlink">Final Matchday <span style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(245,200,0,.15);color:var(--y);border:1px solid rgba(245,200,0,.3);padding:1px 5px;border-radius:3px;">SUN</span></a>
-    <a href="10000014.html" class="topbar-navlink active">Man City vs Aston Villa <span id="nav-status-tag" style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3);padding:1px 5px;border-radius:3px;">UPCOMING</span></a>
+    <a href="10000014.html" class="topbar-navlink active">Man City vs Aston Villa <span id="nav-status-tag" style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;">UPCOMING</span></a>
     <a href="../about.html" class="topbar-navlink">About</a>
     <a href="../faq.html" class="topbar-navlink">FAQ</a>
   </div>
@@ -444,7 +444,7 @@ body{-webkit-font-smoothing:antialiased;}
 <script src="../sportmonks.js"></script>
 <script>
 const KICKOFF_TIME = new Date('2026-05-24T15:00:00Z');
-const match = { state:'UPCOMING', minute:0, stoppage:0, homeScore:0, awayScore:0 };
+const match = { state:'LIVE_1H', minute:0, stoppage:0, homeScore:0, awayScore:0 };
 const firedEvents = new Set();
 let matchClockInterval = null, countdownInterval = null;
 
