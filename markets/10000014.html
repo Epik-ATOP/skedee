@@ -444,7 +444,7 @@ body{-webkit-font-smoothing:antialiased;}
 <script src="../sportmonks.js"></script>
 <script>
 const KICKOFF_TIME = new Date('2026-05-24T15:00:00Z');
-const match={state:'LIVE_1H', minute:35, stoppage:0, homeScore:1, awayScore:0 };
+const match={state:'HT', minute:45, stoppage:0, homeScore:1, awayScore:0 };
 const firedEvents = new Set();
 let matchClockInterval = null, countdownInterval = null;
 
@@ -481,6 +481,12 @@ function updateMatchUI() {
     statusEl.textContent = match.state === 'LIVE_1H' ? '1ST HALF' : '2ND HALF';
     statusEl.style.cssText = 'background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#EF4444;font-family:var(--font-mono);font-size:10px;font-weight:700;border-radius:4px;padding:3px 8px;';
     navTag.textContent = 'LIVE'; navTag.style.cssText = 'font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;';
+  } else if (match.state === 'HT') {
+    clockEl.textContent = 'HT'; clockIcon.className = 'fa-solid fa-pause';
+    liveLabel.textContent = 'HT'; liveLabel.style.color = 'var(--y)';
+    liveDot.style.cssText = 'width:7px;height:7px;border-radius:50%;background:var(--y);';
+    statusEl.textContent = 'HALF TIME'; statusEl.style.cssText = 'background:rgba(245,200,0,0.1);border-color:rgba(245,200,0,0.3);color:var(--y);font-family:var(--font-mono);font-size:10px;font-weight:700;border-radius:4px;padding:3px 8px;';
+    navTag.textContent = 'HT'; navTag.style.cssText = 'font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(245,200,0,.15);color:var(--y);border:1px solid rgba(245,200,0,.3);padding:1px 5px;border-radius:3px;';
   } else if (match.state === 'FT') {
     clockEl.textContent = 'FT'; clockIcon.className = 'fa-solid fa-flag-checkered';
     liveLabel.textContent = 'FULL TIME'; liveLabel.style.color = 'var(--text3)';
