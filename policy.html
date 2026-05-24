@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --y:#F5C800; --y2:#FFD93D; --y3:#B89200;
+  --bg:#0A0A08; --bg2:#111110; --bg3:#181815; --bg4:#1E1E1A;
+  --border:rgba(245,200,0,0.12); --border2:rgba(245,200,0,0.22); --border3:rgba(255,255,255,0.06);
+  --text:#F0EDE0; --text2:#9A9880; --text3:#5A5845;
+  --green:#22C55E; --red:#EF4444; --blue:#3B82F6; --teal:#14B8A6;
+  --font-display:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --font-mono:'Space Mono',monospace; --font-num:'Oswald',sans-serif;
+  --radius:8px; --radius-lg:12px; --radius-xl:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:14px;scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:52px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;}
+.logo{font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--y);letter-spacing:-.5px;display:flex;align-items:center;gap:6px;}
+.logo-dot{width:8px;height:8px;background:var(--y);border-radius:50%;animation:pulse-dot 1.5s ease infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.topbar-nav{display:flex;align-items:center;gap:2px;margin-left:8px;}
+.topbar-navlink{padding:5px 11px;border-radius:var(--radius);font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;}
+.topbar-navlink:hover{color:var(--text);background:rgba(245,200,0,.06);}
+.topbar-navlink.active{color:var(--y);background:rgba(245,200,0,.08);}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.pdf-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius);background:var(--teal);color:#000;font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;border:none;transition:all .15s;}
+.pdf-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+
+/* ── LAYOUT ── */
+.page{margin-top:52px;display:flex;min-height:calc(100vh - 52px);}
+.reading-bar{position:fixed;top:52px;left:0;height:2px;background:var(--teal);z-index:200;transition:width .1s linear;width:0%;}
+
+/* ── TOC ── */
+.toc-nav{width:260px;flex-shrink:0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:24px 0;background:var(--bg2);border-right:1px solid var(--border);}
+.toc-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 20px;margin-bottom:10px;}
+.toc-item{display:flex;align-items:center;gap:8px;padding:7px 20px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .15s;border-left:2px solid transparent;}
+.toc-item:hover{color:var(--text);background:rgba(20,184,166,.04);}
+.toc-item.active{color:var(--teal);border-left-color:var(--teal);background:rgba(20,184,166,.06);font-weight:500;}
+.toc-num{font-family:var(--font-mono);font-size:10px;color:var(--text3);width:20px;flex-shrink:0;}
+.toc-item.active .toc-num{color:var(--teal);}
+.toc-divider{height:1px;background:var(--border3);margin:12px 16px;}
+
+/* ── CONTENT ── */
+.content{flex:1;padding:48px 60px 80px;max-width:860px;}
+
+/* ── HERO ── */
+.hero{margin-bottom:52px;}
+.hero-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--teal);}
+.hero-title{font-family:var(--font-display);font-weight:800;font-size:44px;letter-spacing:-1.5px;line-height:1.05;margin-bottom:16px;}
+.hero-title span{color:var(--teal);}
+.hero-meta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:28px;}
+.meta-chip{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.meta-chip i{font-size:10px;}
+.hero-intro{background:var(--bg2);border:1px solid rgba(20,184,166,.25);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:hidden;}
+.hero-intro::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal);}
+.hero-intro-text{font-size:13px;color:var(--text2);line-height:1.8;}
+.hero-intro-text strong{color:var(--text);}
+
+/* ── QUICK SUMMARY CHIPS ── */
+.summary-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.chip{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:5px 12px;font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;}
+.chip i{color:var(--teal);font-size:9px;}
+.chip.green i{color:var(--green);}
+.chip.red i{color:var(--red);}
+
+/* ── SECTIONS ── */
+.section{margin-bottom:52px;scroll-margin-top:72px;}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border3);}
+.section-num{font-family:var(--font-num);font-size:32px;font-weight:700;color:var(--teal);line-height:1;min-width:40px;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-.3px;}
+.section-body{display:flex;flex-direction:column;gap:14px;}
+.subsection-title{font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.subsection-title::before{content:'';width:4px;height:4px;background:var(--teal);border-radius:50%;flex-shrink:0;}
+
+/* ── TEXT ── */
+.body-text{font-size:13px;color:var(--text2);line-height:1.85;}
+.body-text strong{color:var(--text);font-weight:600;}
+.bullet-list{display:flex;flex-direction:column;gap:8px;padding-left:4px;}
+.bullet-item{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-dot{width:5px;height:5px;background:var(--teal);border-radius:50%;flex-shrink:0;margin-top:7px;}
+.bullet-item strong{color:var(--text);}
+
+/* ── TABLE ── */
+.data-table{width:100%;border-collapse:collapse;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);}
+.data-table th{background:var(--bg3);font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+.data-table td{padding:10px 14px;font-size:12px;color:var(--text2);border-bottom:1px solid var(--border3);}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:nth-child(even) td{background:rgba(255,255,255,.015);}
+.data-table td:first-child{font-weight:500;color:var(--text);}
+
+/* ── DEF LIST ── */
+.def-list{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
+.def-item{display:flex;border-bottom:1px solid var(--border3);}
+.def-item:last-child{border-bottom:none;}
+.def-term{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--teal);padding:12px 16px;width:160px;flex-shrink:0;background:rgba(20,184,166,.03);border-right:1px solid var(--border3);display:flex;align-items:flex-start;padding-top:14px;}
+.def-body{font-size:12px;color:var(--text2);padding:12px 16px;line-height:1.7;flex:1;}
+
+/* ── INFO BOX ── */
+.info-box{background:rgba(20,184,166,.05);border:1px solid rgba(20,184,166,.2);border-radius:var(--radius-lg);padding:14px 18px;display:flex;align-items:flex-start;gap:10px;}
+.info-box i{color:var(--teal);font-size:13px;margin-top:2px;flex-shrink:0;}
+.info-text{font-size:12px;color:var(--text2);line-height:1.7;}
+.info-text strong{color:var(--text);}
+
+/* ── RIGHTS GRID ── */
+.rights-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.right-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;transition:all .2s;}
+.right-card:hover{border-color:rgba(20,184,166,.3);}
+.right-icon{font-size:20px;margin-bottom:8px;}
+.right-title{font-family:var(--font-display);font-weight:600;font-size:13px;color:var(--text);margin-bottom:4px;}
+.right-desc{font-size:11px;color:var(--text3);line-height:1.6;}
+
+/* ── COOKIE TABLE ── */
+.cookie-row{display:flex;gap:0;border-bottom:1px solid var(--border3);padding:12px 0;}
+.cookie-row:last-child{border-bottom:none;}
+.cookie-type{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--teal);width:140px;flex-shrink:0;}
+.cookie-desc{font-size:12px;color:var(--text2);line-height:1.6;flex:1;}
+.cookie-required{font-family:var(--font-mono);font-size:9px;padding:2px 7px;border-radius:3px;margin-left:auto;flex-shrink:0;align-self:flex-start;margin-top:1px;}
+.cookie-required.yes{background:rgba(239,68,68,.1);color:var(--red);}
+.cookie-required.optional{background:rgba(34,197,94,.08);color:var(--green);}
+
+/* ── CONTACT GRID ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.contact-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.contact-val{font-size:13px;color:var(--teal);font-weight:500;}
+.contact-val.plain{color:var(--text);}
+
+/* ── BOTTOM CTA ── */
+.bottom-cta{background:var(--bg2);border:1px solid rgba(20,184,166,.25);border-radius:var(--radius-xl);padding:28px;text-align:center;margin-top:52px;position:relative;overflow:hidden;}
+.bottom-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent);}
+.bottom-cta-title{font-family:var(--font-display);font-weight:800;font-size:18px;margin-bottom:10px;}
+.bottom-cta-text{font-size:13px;color:var(--text2);line-height:1.7;max-width:520px;margin:0 auto 20px;}
+.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{padding:11px 28px;border-radius:var(--radius-lg);background:var(--teal);color:#000;font-family:var(--font-display);font-weight:700;font-size:13px;border:none;cursor:pointer;transition:all .15s;}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px);}
+.btn-secondary{padding:11px 24px;border-radius:var(--radius-lg);background:transparent;color:var(--text2);font-family:var(--font-display);font-weight:600;font-size:13px;border:1px solid var(--border);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:7px;}
+.btn-secondary:hover{border-color:var(--border2);color:var(--text);}
+
+/* ── FOOTER ── */
+.site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 0 20px;}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 40px;display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.footer-logo{font-family:var(--font-display);font-weight:800;font-size:28px;color:var(--text3);letter-spacing:-1px;margin-bottom:16px;opacity:.3;}
+.footer-cols{display:flex;gap:48px;margin-bottom:20px;}
+.footer-col{display:flex;flex-direction:column;gap:9px;}
+.footer-col-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:3px;}
+.footer-col a{font-size:12px;color:var(--text3);transition:color .15s;}
+.footer-col a:hover{color:var(--text);}
+.footer-copy{font-family:var(--font-mono);font-size:10px;color:var(--text3);opacity:.5;}
+
+@media(max-width:900px){.toc-nav{display:none;}.content{padding:32px 20px 60px;}.hero-title{font-size:30px;}.rights-grid,.contact-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="reading-bar" id="reading-bar"></div>
+
+<div class="topbar">
+  <a href="index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="index.html" class="topbar-navlink">Markets</a>
+    <a href="about.html" class="topbar-navlink">About</a>
+    <a href="faq.html" class="topbar-navlink">FAQ</a>
+    <a href="terms-and-conditions.html" class="topbar-navlink">Terms</a>
+    <a href="privacy-policy.html" class="topbar-navlink active">Privacy</a>
+  </div>
+  <div class="topbar-right">
+    <a href="Skedee_Privacy_Policy.pdf" download>
+      <button class="pdf-btn"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
+    </a>
+  </div>
+</div>
+
+<div class="page">
+
+  <nav class="toc-nav">
+    <div class="toc-label">Contents</div>
+    <div class="toc-item active" onclick="scrollTo('s1')"><span class="toc-num">01</span>Who We Are</div>
+    <div class="toc-item" onclick="scrollTo('s2')"><span class="toc-num">02</span>Data We Collect</div>
+    <div class="toc-item" onclick="scrollTo('s3')"><span class="toc-num">03</span>How We Use Your Data</div>
+    <div class="toc-item" onclick="scrollTo('s4')"><span class="toc-num">04</span>Who We Share With</div>
+    <div class="toc-item" onclick="scrollTo('s5')"><span class="toc-num">05</span>Data Retention</div>
+    <div class="toc-item" onclick="scrollTo('s6')"><span class="toc-num">06</span>Cookies</div>
+    <div class="toc-item" onclick="scrollTo('s7')"><span class="toc-num">07</span>Data Security</div>
+    <div class="toc-item" onclick="scrollTo('s8')"><span class="toc-num">08</span>Your Rights</div>
+    <div class="toc-item" onclick="scrollTo('s9')"><span class="toc-num">09</span>Children's Privacy</div>
+    <div class="toc-item" onclick="scrollTo('s10')"><span class="toc-num">10</span>International Transfers</div>
+    <div class="toc-item" onclick="scrollTo('s11')"><span class="toc-num">11</span>Policy Changes</div>
+    <div class="toc-item" onclick="scrollTo('s12')"><span class="toc-num">12</span>How to Complain</div>
+    <div class="toc-divider"></div>
+    <div class="toc-item" onclick="scrollTo('contact')"><span class="toc-num" style="color:var(--teal);">✉</span>Contact Us</div>
+  </nav>
+
+  <main class="content">
+
+    <div class="hero">
+      <div class="hero-eyebrow">Legal Documentation</div>
+      <div class="hero-title">Privacy<br><span>Policy</span></div>
+      <div class="hero-meta">
+        <div class="meta-chip"><i class="fa-solid fa-building"></i> Skedee Inc.</div>
+        <div class="meta-chip"><i class="fa-solid fa-calendar"></i> Effective: 1 June 2026</div>
+        <div class="meta-chip"><i class="fa-solid fa-code-branch"></i> Version 1.0</div>
+        <div class="meta-chip"><i class="fa-solid fa-shield-halved"></i> NDPA 2023 Compliant</div>
+      </div>
+      <div class="hero-intro">
+        <div class="hero-intro-text">
+          Skedee Inc. is committed to protecting your privacy and handling your personal data responsibly. This Privacy Policy explains <strong>what data we collect, how we use it, who we share it with, how we protect it, and your rights</strong> in relation to it. It applies to all users of the Skedee platform — including skedee.ng and the Skedee mobile app.
+        </div>
+        <div class="summary-chips">
+          <div class="chip green"><i class="fa-solid fa-check"></i> We never sell your data</div>
+          <div class="chip green"><i class="fa-solid fa-check"></i> NDPA 2023 compliant</div>
+          <div class="chip green"><i class="fa-solid fa-check"></i> You control your data</div>
+          <div class="chip red"><i class="fa-solid fa-xmark"></i> No data to third-party advertisers</div>
+          <div class="chip"><i class="fa-solid fa-shield-halved"></i> Encrypted at rest & in transit</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S1 -->
+    <div class="section" id="s1">
+      <div class="section-header"><div class="section-num">01</div><div class="section-title">Who We Are & How to Contact Us</div></div>
+      <div class="section-body">
+        <p class="body-text">Skedee Inc. is the <strong>data controller</strong> responsible for your personal data. We are incorporated in the Federal Republic of Nigeria and operate the Skedee prediction market platform.</p>
+        <div class="contact-grid">
+          <div class="contact-card"><div class="contact-label">Company</div><div class="contact-val plain">Skedee Inc.</div></div>
+          <div class="contact-card"><div class="contact-label">Incorporated In</div><div class="contact-val plain">Federal Republic of Nigeria</div></div>
+          <div class="contact-card"><div class="contact-label">Data Protection Contact</div><div class="contact-val">legal@skedee.ng</div></div>
+          <div class="contact-card"><div class="contact-label">General Enquiries</div><div class="contact-val">info@skedee.ng</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S2 -->
+    <div class="section" id="s2">
+      <div class="section-header"><div class="section-num">02</div><div class="section-title">What Personal Data We Collect</div></div>
+      <div class="section-body">
+        <div class="subsection-title">Data You Provide to Us</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Identity data:</strong> full legal name, date of birth, nationality</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Contact data:</strong> phone number, email address, residential address</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Verification data:</strong> government-issued ID, selfie/liveness images, Bank Verification Number (BVN)</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Account data:</strong> username, password (hashed), transaction PIN (hashed), preferences</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Financial data:</strong> bank account details (withdrawals only), deposit/withdrawal history, Wallet balance</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Communications:</strong> messages to our support team, feedback, and other correspondence</div></div>
+        </div>
+        <div class="subsection-title" style="margin-top:16px;">Data Collected Automatically</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Usage data:</strong> pages visited, features used, markets viewed and traded, session duration</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Device data:</strong> IP address, device type, operating system, browser, device identifiers</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Transaction data:</strong> full history of all trades, deposits, withdrawals, and positions</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Log data:</strong> server logs including access times, errors, and security events</div></div>
+        </div>
+        <div class="subsection-title" style="margin-top:16px;">Data from Third Parties</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Identity verification and KYC providers (BVN verification, document checks)</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Payment processors who handle deposits and withdrawals</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Fraud prevention and security services</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Regulatory and law enforcement bodies where required by law</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S3 -->
+    <div class="section" id="s3">
+      <div class="section-header"><div class="section-num">03</div><div class="section-title">How We Use Your Personal Data</div></div>
+      <div class="section-body">
+        <p class="body-text" style="margin-bottom:14px;">We use your personal data for the following purposes, on the stated legal bases:</p>
+        <table class="data-table">
+          <thead><tr><th>Purpose</th><th>Legal Basis</th></tr></thead>
+          <tbody>
+            <tr><td>Creating and managing your account</td><td>Performance of contract</td></tr>
+            <tr><td>Processing deposits, withdrawals, and trades</td><td>Performance of contract</td></tr>
+            <tr><td>Identity verification and KYC compliance</td><td>Legal obligation</td></tr>
+            <tr><td>Anti-money laundering and fraud prevention</td><td>Legal obligation / Legitimate interests</td></tr>
+            <tr><td>Communicating about your account</td><td>Performance of contract</td></tr>
+            <tr><td>Sending promotional communications</td><td>Consent (opt-in only)</td></tr>
+            <tr><td>Platform improvement and new features</td><td>Legitimate interests</td></tr>
+            <tr><td>Legal and regulatory compliance</td><td>Legal obligation</td></tr>
+            <tr><td>Enforcing our Terms & Conditions</td><td>Legitimate interests</td></tr>
+            <tr><td>Resolving disputes and complaints</td><td>Legitimate interests / Legal obligation</td></tr>
+            <tr><td>Security monitoring and fraud detection</td><td>Legitimate interests / Legal obligation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- S4 -->
+    <div class="section" id="s4">
+      <div class="section-header"><div class="section-num">04</div><div class="section-title">Who We Share Your Data With</div></div>
+      <div class="section-body">
+        <div class="info-box" style="margin-bottom:14px;">
+          <i class="fa-solid fa-circle-info"></i>
+          <div class="info-text"><strong>We do not sell your personal data.</strong> We never share your data with third-party advertisers or data brokers.</div>
+        </div>
+        <p class="body-text" style="margin-bottom:10px;">We may share your data with the following categories of recipients:</p>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>KYC/identity verification providers</strong> — to verify your identity and comply with AML obligations</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Payment processors and financial institutions</strong> — to process deposits and withdrawals securely</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Fraud prevention and security services</strong> — to detect and prevent fraudulent activity</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Cloud hosting and IT infrastructure providers</strong> — who host and maintain the Platform on our behalf</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Customer support tools</strong> — to manage your enquiries and complaints</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Regulatory and law enforcement authorities</strong> — where required by Nigerian law, court order, or regulatory requirement</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Professional advisors</strong> — lawyers and accountants, under strict confidentiality obligations</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div><strong>Business successors</strong> — in the event of a merger, acquisition, or sale of the business</div></div>
+        </div>
+        <p class="body-text">All third-party providers are contractually required to handle your data in accordance with applicable data protection law.</p>
+      </div>
+    </div>
+
+    <!-- S5 -->
+    <div class="section" id="s5">
+      <div class="section-header"><div class="section-num">05</div><div class="section-title">Data Retention</div></div>
+      <div class="section-body">
+        <p class="body-text" style="margin-bottom:14px;">We retain your data for as long as necessary to fulfil the purposes for which it was collected, subject to legal requirements:</p>
+        <table class="data-table">
+          <thead><tr><th>Data Type</th><th>Retention Period</th></tr></thead>
+          <tbody>
+            <tr><td>Account and identity data</td><td>7 years after account closure (AML requirement)</td></tr>
+            <tr><td>Transaction and trade history</td><td>7 years (regulatory / tax obligation)</td></tr>
+            <tr><td>KYC documents</td><td>7 years after last transaction or account closure</td></tr>
+            <tr><td>Communications with support</td><td>3 years after last contact</td></tr>
+            <tr><td>Usage and log data</td><td>2 years from collection</td></tr>
+            <tr><td>Marketing preferences</td><td>Until consent withdrawn or account closed</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- S6 -->
+    <div class="section" id="s6">
+      <div class="section-header"><div class="section-num">06</div><div class="section-title">Cookies & Tracking Technologies</div></div>
+      <div class="section-body">
+        <p class="body-text" style="margin-bottom:14px;">We use cookies and similar technologies to provide and improve the Platform. Here's what we use and why:</p>
+        <div style="border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;">
+          <div style="background:var(--bg3);padding:10px 16px;display:flex;gap:12px;border-bottom:1px solid var(--border);">
+            <span style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;width:130px;flex-shrink:0;">TYPE</span>
+            <span style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;flex:1;">PURPOSE</span>
+            <span style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;">REQUIRED?</span>
+          </div>
+          <div class="cookie-row" style="padding:12px 16px;">
+            <div class="cookie-type">Strictly Necessary</div>
+            <div class="cookie-desc">Session management, security, authentication. Essential for the Platform to function.</div>
+            <div class="cookie-required yes">Required</div>
+          </div>
+          <div class="cookie-row" style="padding:12px 16px;">
+            <div class="cookie-type">Functional</div>
+            <div class="cookie-desc">Remember your preferences — theme (dark/light), language settings.</div>
+            <div class="cookie-required optional">Optional</div>
+          </div>
+          <div class="cookie-row" style="padding:12px 16px;">
+            <div class="cookie-type">Analytics</div>
+            <div class="cookie-desc">Help us understand how users interact with the Platform. Data is aggregated and anonymised.</div>
+            <div class="cookie-required optional">Optional</div>
+          </div>
+          <div class="cookie-row" style="padding:12px 16px;border-bottom:none;">
+            <div class="cookie-type">Marketing</div>
+            <div class="cookie-desc">Show relevant promotional content. Only set with your explicit consent.</div>
+            <div class="cookie-required optional">Consent</div>
+          </div>
+        </div>
+        <p class="body-text">You can manage cookie preferences through your browser settings. Disabling strictly necessary cookies may affect Platform functionality.</p>
+      </div>
+    </div>
+
+    <!-- S7 -->
+    <div class="section" id="s7">
+      <div class="section-header"><div class="section-num">07</div><div class="section-title">Data Security</div></div>
+      <div class="section-body">
+        <p class="body-text" style="margin-bottom:10px;">We implement appropriate technical and organisational measures to protect your data:</p>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Encryption of data <strong>in transit</strong> (TLS/HTTPS) and <strong>at rest</strong></div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Passwords and PINs are <strong>hashed</strong> — we never store them in plain text</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Multi-factor authentication (2FA) available for all accounts</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Regular security assessments and penetration testing</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Role-based access controls for our staff</div></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><div>Incident response procedures for detecting and responding to data breaches</div></div>
+        </div>
+        <div class="info-box">
+          <i class="fa-solid fa-shield-halved"></i>
+          <div class="info-text">In the event of a data breach likely to result in risk to your rights, we will notify the relevant authorities and affected Users in accordance with applicable law.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S8 -->
+    <div class="section" id="s8">
+      <div class="section-header"><div class="section-num">08</div><div class="section-title">Your Rights</div></div>
+      <div class="section-body">
+        <p class="body-text" style="margin-bottom:16px;">Under the Nigeria Data Protection Act 2023 (NDPA), you have the following rights over your personal data:</p>
+        <div class="rights-grid">
+          <div class="right-card">
+            <div class="right-icon">📋</div>
+            <div class="right-title">Right of Access</div>
+            <div class="right-desc">Request a copy of the personal data we hold about you.</div>
+          </div>
+          <div class="right-card">
+            <div class="right-icon">✏️</div>
+            <div class="right-title">Right to Rectification</div>
+            <div class="right-desc">Ask us to correct inaccurate or incomplete data.</div>
+          </div>
+          <div class="right-card">
+            <div class="right-icon">🗑️</div>
+            <div class="right-title">Right to Erasure</div>
+            <div class="right-desc">Ask us to delete your data, subject to legal retention obligations.</div>
+          </div>
+          <div class="right-card">
+            <div class="right-icon">⏸️</div>
+            <div class="right-title">Right to Restrict</div>
+            <div class="right-desc">Ask us to limit how we use your data in certain circumstances.</div>
+          </div>
+          <div class="right-card">
+            <div class="right-icon">📦</div>
+            <div class="right-title">Right to Portability</div>
+            <div class="right-desc">Request your data in a structured, machine-readable format.</div>
+          </div>
+          <div class="right-card">
+            <div class="right-icon">🚫</div>
+            <div class="right-title">Right to Object</div>
+            <div class="right-desc">Object to processing based on our legitimate interests.</div>
+          </div>
+          <div class="right-card">
+            <div class="right-icon">↩️</div>
+            <div class="right-title">Withdraw Consent</div>
+            <div class="right-desc">Withdraw consent at any time where processing is consent-based.</div>
+          </div>
+          <div class="right-card" style="background:rgba(20,184,166,.04);border-color:rgba(20,184,166,.2);">
+            <div class="right-icon">✉️</div>
+            <div class="right-title">How to Exercise</div>
+            <div class="right-desc">Contact <strong style="color:var(--teal);">legal@skedee.ng</strong> — we'll respond within 30 days.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S9 -->
+    <div class="section" id="s9">
+      <div class="section-header"><div class="section-num">09</div><div class="section-title">Children's Privacy</div></div>
+      <div class="section-body">
+        <p class="body-text">The Platform is strictly for persons aged <strong>18 years and over</strong>. We do not knowingly collect personal data from persons under 18. If we become aware that we have collected data from a minor, we will delete it immediately and close the associated account.</p>
+        <p class="body-text">If you believe a minor has registered on the Platform, please report this to <strong>legal@skedee.ng</strong> immediately.</p>
+      </div>
+    </div>
+
+    <!-- S10 -->
+    <div class="section" id="s10">
+      <div class="section-header"><div class="section-num">10</div><div class="section-title">International Data Transfers</div></div>
+      <div class="section-body">
+        <p class="body-text">Skedee Inc. is based in Nigeria and primarily processes data within Nigeria. Some of our third-party service providers may be based outside Nigeria. Where we transfer your data internationally, we ensure appropriate safeguards are in place in accordance with the NDPA 2023, including contractual protections with our service providers.</p>
+      </div>
+    </div>
+
+    <!-- S11 -->
+    <div class="section" id="s11">
+      <div class="section-header"><div class="section-num">11</div><div class="section-title">Changes to This Privacy Policy</div></div>
+      <div class="section-body">
+        <p class="body-text">We may update this Privacy Policy from time to time. Material changes will be communicated via email and/or a prominent notice on the Platform at least <strong>7 days</strong> before taking effect. The "Last Updated" date at the top of this document always reflects the most recent version. Continued use of the Platform after changes constitutes acceptance of the updated Policy.</p>
+      </div>
+    </div>
+
+    <!-- S12 -->
+    <div class="section" id="s12">
+      <div class="section-header"><div class="section-num">12</div><div class="section-title">How to Complain</div></div>
+      <div class="section-body">
+        <p class="body-text">If you have concerns about how we handle your data, please contact us first at <strong>legal@skedee.ng</strong> and we will do our best to resolve it. If you remain unsatisfied, you have the right to lodge a complaint with the <strong>Nigeria Data Protection Commission (NDPC)</strong> at ndpc.gov.ng.</p>
+      </div>
+    </div>
+
+    <!-- CONTACT BOTTOM -->
+    <div class="section" id="contact">
+      <div class="section-header"><div class="section-num" style="color:var(--teal);">✉</div><div class="section-title">Contact Us</div></div>
+      <div class="section-body">
+        <div class="contact-grid">
+          <div class="contact-card"><div class="contact-label">Data Protection Enquiries</div><div class="contact-val">legal@skedee.ng</div></div>
+          <div class="contact-card"><div class="contact-label">General Enquiries</div><div class="contact-val">info@skedee.ng</div></div>
+          <div class="contact-card"><div class="contact-label">Regulatory Body</div><div class="contact-val plain">Nigeria Data Protection Commission (NDPC)</div></div>
+          <div class="contact-card"><div class="contact-label">NDPC Website</div><div class="contact-val">ndpc.gov.ng</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM CTA -->
+    <div class="bottom-cta">
+      <div class="bottom-cta-title">Your data, your rights.</div>
+      <div class="bottom-cta-text">Questions about how we handle your data? We're always happy to help. Reach out to our data protection team or download the full PDF version of this policy.</div>
+      <div class="cta-btns">
+        <a href="mailto:legal@skedee.ng"><button class="btn-primary">Contact legal@skedee.ng</button></a>
+        <a href="Skedee_Privacy_Policy.pdf" download>
+          <button class="btn-secondary"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="terms-and-conditions.html">Terms & Conditions</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Contact</div>
+          <a href="mailto:info@skedee.ng">info@skedee.ng</a>
+          <a href="mailto:legal@skedee.ng">legal@skedee.ng</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="about.html">About</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved · 18+ · Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const bar = document.getElementById('reading-bar');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.width = Math.min((scrolled / total) * 100, 100) + '%';
+});
+
+const sections = document.querySelectorAll('.section');
+const tocItems = document.querySelectorAll('.toc-item');
+const sectionMap = { s1:'01',s2:'02',s3:'03',s4:'04',s5:'05',s6:'06',s7:'07',s8:'08',s9:'09',s10:'10',s11:'11',s12:'12',contact:'✉' };
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const num = sectionMap[e.target.id];
+      tocItems.forEach(t => {
+        t.classList.toggle('active', t.querySelector('.toc-num')?.textContent === num);
+      });
+    }
+  });
+}, { rootMargin:'-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+</script>
+</body>
+</html>
