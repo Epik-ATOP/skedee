@@ -337,7 +337,7 @@
 
   <!-- CATEGORY PILLS -->
   <div class="cat-pills" id="cat-pills">
-    <div class="cat-pill active" onclick="filterCat('all',this)">🌍 All <span class="pill-count">34</span></div>
+    <div class="cat-pill active" onclick="filterCat('all',this)">🌍 All <span class="pill-count">35</span></div>
     <div class="cat-pill" onclick="filterCat('live',this)">🔴 Live <span class="pill-count">13</span></div>
     <div class="cat-pill" onclick="filterCat('football',this)">⚽ Football <span class="pill-count">15</span></div>
     <div class="cat-pill" onclick="filterCat('sports',this)">🏆 Sports <span class="pill-count">2</span></div>
@@ -346,6 +346,7 @@
     <div class="cat-pill" onclick="filterCat('politics',this)">⚖️ Politics <span class="pill-count">4</span></div>
     <div class="cat-pill" onclick="filterCat('commodities',this)">🛢️ Commodities <span class="pill-count">7</span></div>
     <div class="cat-pill" onclick="filterCat('finance',this)">🪙 Finance <span class="pill-count">2</span></div>
+    <div class="cat-pill" onclick="filterCat('weather',this)">🌊 Weather <span class="pill-count">1</span></div>
   </div>
 
   <!-- MARKETS SECTION TITLE -->
@@ -455,7 +456,7 @@ const FEATURED = [
     sub:"The naira has been under sustained pressure. As the CBN weighs rate decisions and FX reserves shift, traders are betting on whether ₦1,500 per dollar becomes reality before the end of the month.",
     prob:41, vol:'₦74.5M', change:'+9%', changeDir:'up',
     bg:'💱', yesLabel:'BUY YES ₦41', noLabel:'BUY NO ₦59',
-    link:'markets/100000008.html'
+    link:'markets/10000008.html'
   },
   {
     emoji:'⚖️', cat:'POLITICS · NIGERIA', live:false,
@@ -510,8 +511,11 @@ const ALL_MARKETS = [
   { id:20, cat:'commodities', emoji:'🍌', catLabel:'COMMODITIES', title:'Will plantain prices drop below ₦800/bunch by June?', badge:'new', yes:0.29, no:0.71, vol:'₦7.1M', change:'-2%', dir:'down', link:'#', isCommodity:true },
   { id:21, cat:'commodities', emoji:'🌽', catLabel:'COMMODITIES', title:'Will food inflation fall below 30% by end of 2026?', badge:'new', yes:0.33, no:0.67, vol:'₦16.4M', change:'+1%', dir:'up', link:'#', isCommodity:true },
 
+  // WEATHER
+  { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · ENVIRONMENT', title:'Will Lagos Experience Major Flooding Before July 2026?', badge:'hot', yes:0.67, no:0.33, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html', isCommodity:true },
+
   // FINANCE
-  { id:22, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,500 before June?', badge:'hot', yes:0.48, no:0.52, vol:'₦88.3M', change:'-3%', dir:'down', link:'#', isCommodity:true },
+  { id:22, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,500 before June?', badge:'hot', yes:0.48, no:0.52, vol:'₦88.3M', change:'-3%', dir:'down', link:'markets/10000008.html', isCommodity:true },
   { id:23, cat:'finance', emoji:'📈', catLabel:'FINANCE', title:'Will CBN cut interest rates at June MPC meeting?', badge:'new', yes:0.31, no:0.69, vol:'₦29.5M', change:'+4%', dir:'up', link:'#', isCommodity:true },
 
   // SPORTS
