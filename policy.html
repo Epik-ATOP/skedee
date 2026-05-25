@@ -161,7 +161,26 @@ a{color:inherit;text-decoration:none;}
 .footer-col a:hover{color:var(--text);}
 .footer-copy{font-family:var(--font-mono);font-size:10px;color:var(--text3);opacity:.5;}
 
-@media(max-width:900px){.toc-nav{display:none;}.content{padding:32px 20px 60px;}.hero-title{font-size:30px;}.rights-grid,.contact-grid{grid-template-columns:1fr;}}
+@media(max-width:900px){
+  html,body{overflow-x:hidden;}
+  .topbar{padding:0 12px;gap:6px;}
+  .topbar-nav{display:none;}
+  .toc-nav{display:none;}
+  .content{padding:32px 16px 60px;max-width:100%;}
+  .hero-title{font-size:clamp(26px,7vw,38px);}
+  .rights-grid,.contact-grid{grid-template-columns:1fr;}
+  .def-item{flex-direction:column;}
+  .def-term{width:auto;border-right:none;border-bottom:1px solid var(--border3);padding:10px 16px;}
+  .footer-inner{padding:0 16px;flex-direction:column;gap:20px;}
+  .footer-cols{flex-wrap:wrap;gap:24px;}
+  .footer-right{align-items:flex-start;}
+}
+@media(max-width:480px){
+  .hero-title{font-size:24px;}
+  .section-title{font-size:16px;}
+  .cookie-row{flex-wrap:wrap;gap:6px;}
+  .cookie-type{width:auto;}
+}
 </style>
 </head>
 <body>
@@ -174,7 +193,7 @@ a{color:inherit;text-decoration:none;}
     <a href="index.html" class="topbar-navlink">Markets</a>
     <a href="about.html" class="topbar-navlink">About</a>
     <a href="faq.html" class="topbar-navlink">FAQ</a>
-    <a href="terms-and-conditions.html" class="topbar-navlink">Terms</a>
+    <a href="terms.html" class="topbar-navlink">Terms</a>
     <a href="policy.html" class="topbar-navlink active">Privacy</a>
   </div>
   <div class="topbar-right">

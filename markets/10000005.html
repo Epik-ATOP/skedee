@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -232,6 +232,7 @@
 *{-webkit-tap-highlight-color:transparent;}
 body{-webkit-font-smoothing:antialiased;}
 </style>
+<link rel="stylesheet" href="../market-mobile.css">
 </head>
 <body data-theme="dark">
 
@@ -312,17 +313,19 @@ body{-webkit-font-smoothing:antialiased;}
 
 <!-- MAIN -->
 <div class="main">
-  <div style="width:52px;height:52px;background:rgba(245,200,0,.15);border:2px solid rgba(245,200,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:24px;">🏁</div>
-  <div style="flex:1;">
-    <div style="font-family:var(--font-display);font-weight:800;font-size:30px;color:var(--y);letter-spacing:3px;line-height:1;">DETERMINED!</div>
-    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:6px;letter-spacing:.5px;">Market resolved · Final result locked · YES positions paid ₦100 · NO positions paid ₦0</div>
+  <!-- RESOLVED BANNER -->
+  <div style="display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:18px 24px;">
+    <div style="width:52px;height:52px;background:rgba(245,200,0,.15);border:2px solid rgba(245,200,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:24px;">🏁</div>
+    <div style="flex:1;">
+      <div style="font-family:var(--font-display);font-weight:800;font-size:30px;color:var(--y);letter-spacing:3px;line-height:1;">DETERMINED!</div>
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:6px;letter-spacing:.5px;">Market resolved · Final result locked · YES positions paid ₦100 · NO positions paid ₦0</div>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
+      <div style="color:var(--green);font-weight:700;font-size:11px;margin-bottom:3px;">● Settled</div>
+      <div>24 May 2026</div>
+      <div>~6:00 PM BST</div>
+    </div>
   </div>
-  <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-    <div style="color:var(--green);font-weight:700;font-size:11px;margin-bottom:3px;">● Settled</div>
-    <div>24 May 2026</div>
-    <div>~6:00 PM BST</div>
-  </div>
-</div>
 
   <!-- HERO CARD -->
   <div class="hero-card">
@@ -673,6 +676,7 @@ let walletBalance = 4271250;
 let orderSide = 'YES';
 let probChart, volChart;
 let recentTrades = [];
+const marketSettled = true;
 
 const ACTIVITY_DATA = [
   {type:'buy',  text:'<strong>policy_watcher</strong> bought <strong>YES</strong> × 2,000 at ₦73 — "World Bank team just landed in Abuja"',time:'3m'},
@@ -782,7 +786,7 @@ function updateProbUI(pct) {
   document.getElementById('hero-no-price').textContent = '₦' + no;
 }
 
-function updateLiveData() {if(match.state==='FT')return;
+function updateLiveData() {if(marketSettled)return;
   const delta = (Math.random() - 0.48) * 1.2;
   yesPct = Math.max(55, Math.min(92, yesPct + delta));
   yesPct = Math.round(yesPct);
@@ -886,5 +890,14 @@ setInterval(updateLiveData, 3000);
     </div>
   </div>
 </footer>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../index.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
 </body>
 </html>

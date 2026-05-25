@@ -261,6 +261,7 @@
 *{-webkit-tap-highlight-color:transparent;}
 body{-webkit-font-smoothing:antialiased;}
 </style>
+<link rel="stylesheet" href="../market-mobile.css">
 </head>
 <body data-theme="dark">
 
@@ -269,7 +270,6 @@ body{-webkit-font-smoothing:antialiased;}
   <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
   <div class="topbar-nav">
     <a href="../index.html" class="topbar-navlink">Markets</a>
-    <a href="10000004.html" class="topbar-navlink">BBNaija S11</a>
     <a href="10000005.html" class="topbar-navlink">World Bank Loan</a>
     <a href="10000007.html" class="topbar-navlink">Fuel Price</a>
     <a href="10000008.html" class="topbar-navlink active">Naira/Dollar</a>
@@ -1025,5 +1025,15 @@ setInterval(() => {
     </div>
   </div>
 </footer>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../index.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
 </body>
 </html>
+

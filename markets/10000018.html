@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -172,6 +172,7 @@
 @media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
 body{-webkit-font-smoothing:antialiased;}
 </style>
+<link rel="stylesheet" href="../market-mobile.css">
 </head>
 <body data-theme="dark">
 <div class="topbar">
@@ -428,5 +429,15 @@ const SM_HOME_NAME='Liverpool',SM_AWAY_NAME='Brentford';const _smSeen=new Set();
 function smHandleLive(f){const sc=smParseScore(f);match.homeScore=sc.home;match.awayScore=sc.away;const st=smParseState(f);if(st==='live'&&match.state==='UPCOMING'){match.state='LIVE_1H';match.minute=0;clearInterval(countdownInterval);if(!matchClockInterval)matchClockInterval=setInterval(tickMatchClock,60000);}else if(st==='ht'){match.state='HT';}else if(st==='live'&&match.state==='HT'){match.state='LIVE_2H';match.minute=45;}else if(st==='finished'&&match.state!=='FT'){match.state='FT';}if(f&&f.commence_time&&(match.state==='LIVE_1H'||match.state==='LIVE_2H')){const _raw=Math.floor((Date.now()-new Date(f.commence_time).getTime())/60000);const _el=match.state==='LIVE_2H'?Math.max(46,_raw-15):Math.min(45,_raw);if(_el>=1&&_el<=95)match.minute=_el;}updateMatchUI();smParseEvents(f).forEach(e=>{if(_smSeen.has(e.id))return;_smSeen.add(e.id);const isG=['Goal','Own Goal','Penalty'].includes(e.label);addMatchEvent(e.minute,isG?'goal':'whistle','<strong>'+e.playerName+'</strong> — '+e.emoji+' '+e.label);});}
 smInit();
 </script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../index.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
 </body>
 </html>
+

@@ -1,0 +1,908 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will It Rain Today? — Lagos | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../style.css">
+<style>
+:root { --rain:#60A5FA; --sidebar-w:220px; --rsidebar-w:280px; }
+
+/* LAYOUT */
+.layout{display:flex;margin-top:52px;min-height:calc(100vh - 52px);}
+
+/* LEFT SIDEBAR */
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);flex-shrink:0;padding:16px 0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;margin-top:4px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;font-size:13px;}
+.sidebar-item .item-badge{margin-left:auto;background:var(--y);color:#000;font-size:9px;font-weight:700;font-family:var(--font-mono);padding:2px 5px;border-radius:4px;}
+.sidebar-item .item-badge.red{background:var(--red);color:#fff;}
+.trending-event{margin:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;cursor:pointer;transition:all .15s;}
+.trending-event:hover{border-color:var(--border2);}
+.trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.trend-change{font-family:var(--font-mono);font-size:10px;}
+
+/* MAIN */
+.main{flex:1;background:var(--bg);padding:16px;display:flex;flex-direction:column;gap:14px;min-width:0;}
+
+/* STATE BANNER */
+.state-banner{display:flex;align-items:center;gap:14px;border-radius:var(--radius-xl);padding:18px 24px;}
+.state-banner.premarket{background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.2);}
+.state-banner.settled{background:var(--bg2);border:1px solid var(--border);}
+.banner-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:26px;}
+.banner-icon.premarket{background:rgba(96,165,250,.15);border:2px solid rgba(96,165,250,.4);}
+.banner-icon.settled{background:rgba(245,200,0,.15);border:2px solid rgba(245,200,0,.4);}
+.banner-body{flex:1;}
+.banner-title{font-family:var(--font-display);font-weight:800;letter-spacing:2px;line-height:1;}
+.banner-sub{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:6px;letter-spacing:.5px;}
+.banner-meta{font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;}
+
+/* HERO CARD */
+.hero-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:28px;position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--rain),var(--y),var(--rain),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
+.hero-bg-emoji{position:absolute;right:-10px;top:-10px;font-size:200px;opacity:.04;line-height:1;pointer-events:none;user-select:none;}
+
+.hero-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.hero-cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--rain);letter-spacing:1.5px;}
+.hero-vol-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,0,.08);border:1px solid var(--border2);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--y);letter-spacing:1px;}
+.state-tag{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;}
+.state-tag.live{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:var(--green);}
+.state-tag.premarket{background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:var(--rain);}
+.state-tag.settled{background:rgba(245,200,0,.1);border:1px solid var(--border2);color:var(--y);}
+.daily-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(245,200,0,.08);border:1px solid var(--border2);border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--y);letter-spacing:1px;}
+
+.hero-title{font-family:var(--font-display);font-weight:800;font-size:clamp(18px,2.5vw,30px);letter-spacing:-.5px;line-height:1.2;margin-bottom:10px;}
+.hero-sub{font-size:13px;color:var(--text2);line-height:1.75;max-width:680px;margin-bottom:18px;}
+
+/* WEATHER PILL */
+.weather-pill{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:8px 16px;margin-bottom:20px;}
+.wp-icon{font-size:20px;}
+.wp-text{font-size:12px;color:var(--text2);}
+.wp-text strong{color:var(--text);}
+
+/* HOURLY BAR */
+.rain-window-bar{margin-bottom:20px;}
+.rwb-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.rwb-hours{display:flex;gap:3px;align-items:flex-end;height:44px;}
+.rwb-hour{flex:1;border-radius:3px 3px 0 0;transition:height .4s ease,background .3s;cursor:default;position:relative;}
+.rwb-hour-labels{display:flex;justify-content:space-between;margin-top:5px;}
+.rwb-hour-label{font-family:var(--font-mono);font-size:8px;color:var(--text3);}
+
+/* PROB BAR */
+.hero-prob-bar-wrap{margin-bottom:20px;}
+.hero-prob-label-row{display:flex;justify-content:space-between;margin-bottom:8px;}
+.hpl-yes{font-family:var(--font-num);font-size:24px;font-weight:700;color:var(--green);}
+.hpl-no{font-family:var(--font-num);font-size:24px;font-weight:700;color:var(--red);}
+.hpl-yeslabel{font-family:var(--font-mono);font-size:9px;color:var(--green);letter-spacing:1px;}
+.hpl-nolabel{font-family:var(--font-mono);font-size:9px;color:var(--red);letter-spacing:1px;text-align:right;}
+.hero-prob-bar{height:12px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;}
+.hpb-yes{background:linear-gradient(90deg,var(--green),rgba(34,197,94,.6));border-radius:99px 0 0 99px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.hpb-no{background:linear-gradient(90deg,rgba(239,68,68,.5),var(--red));border-radius:0 99px 99px 0;transition:width .6s cubic-bezier(.4,0,.2,1);}
+
+/* TRADE BUTTONS */
+.hero-trade-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.hero-btn-yes{flex:1;min-width:140px;padding:14px 20px;border-radius:var(--radius-lg);border:1px solid rgba(34,197,94,.4);background:rgba(34,197,94,.1);cursor:pointer;transition:all .2s;text-align:center;}
+.hero-btn-yes:hover{background:var(--green);border-color:var(--green);}
+.hero-btn-yes:hover .hb-label,.hero-btn-yes:hover .hb-price{color:#000;}
+.hero-btn-no{flex:1;min-width:140px;padding:14px 20px;border-radius:var(--radius-lg);border:1px solid rgba(239,68,68,.35);background:rgba(239,68,68,.08);cursor:pointer;transition:all .2s;text-align:center;}
+.hero-btn-no:hover{background:var(--red);border-color:var(--red);}
+.hero-btn-no:hover .hb-label,.hero-btn-no:hover .hb-price{color:#fff;}
+.hb-label{font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
+.hero-btn-yes .hb-label{color:var(--green);}
+.hero-btn-no .hb-label{color:var(--red);}
+.hb-price{font-family:var(--font-num);font-size:28px;font-weight:700;line-height:1;}
+.hero-btn-yes .hb-price{color:var(--green);}
+.hero-btn-no .hb-price{color:var(--red);}
+.hb-sub{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:4px;}
+
+/* STATS */
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap;padding:16px 0;border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);margin-bottom:18px;}
+.hstat{display:flex;flex-direction:column;gap:3px;}
+.hstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;}
+.hstat-val{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--text);}
+.hstat-val.yellow{color:var(--y);}
+.hstat-val.blue{color:var(--rain);}
+.hstat-val.green{color:var(--green);}
+.hstat-val.red{color:var(--red);}
+
+/* TABS */
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+
+/* CARD */
+.card-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
+.card-section-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:14px;}
+
+/* RIGHT SIDEBAR */
+.right-sidebar{width:var(--rsidebar-w);background:var(--bg2);border-left:1px solid var(--border);flex-shrink:0;padding:16px 12px;display:flex;flex-direction:column;gap:16px;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.rsidebar-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+
+/* PROB METER */
+.prob-meter{text-align:center;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:12px;}
+.pm-yes{font-family:var(--font-num);font-size:40px;font-weight:700;color:var(--green);line-height:1;}
+.pm-label{font-family:var(--font-mono);font-size:9px;color:var(--green);letter-spacing:1px;margin-bottom:8px;}
+.pm-bar{height:8px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:6px;}
+.pm-bar-yes{background:var(--green);border-radius:99px 0 0 99px;transition:width .6s;}
+.pm-bar-no{background:var(--red);border-radius:0 99px 99px 0;transition:width .6s;}
+.pm-no-row{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;}
+.pm-no-val{color:var(--red);font-weight:700;}
+.pm-no-label{color:var(--text3);}
+
+/* WEATHER WIDGET */
+.weather-widget{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px;}
+.ww-condition{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.ww-icon{font-size:28px;line-height:1;}
+.ww-desc{font-size:13px;font-weight:600;color:var(--text);}
+.ww-loc{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.ww-stat{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;padding:4px 0;border-bottom:1px solid var(--border3);}
+.ww-stat:last-child{border-bottom:none;}
+.ww-stat-label{color:var(--text3);}
+.ww-stat-val{color:var(--text);font-weight:600;}
+.ww-stat-val.blue{color:var(--rain);}
+
+/* TRADE ROWS */
+.trade-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border3);animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side.buy{background:rgba(34,197,94,.15);color:var(--green);}
+.trade-side.sell{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-market{font-size:10px;color:var(--text2);flex:1;}
+.trade-price{font-family:var(--font-mono);font-size:10px;color:var(--text);font-weight:600;}
+.trade-size{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ORDER PANEL */
+.order-panel{position:fixed;bottom:0;right:var(--rsidebar-w);z-index:200;width:340px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:20px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.5);}
+.order-panel.open{transform:translateY(0);}
+.order-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.order-panel-title{font-family:var(--font-display);font-weight:700;font-size:15px;}
+.btn-close{width:28px;height:28px;background:var(--bg4);border:none;border-radius:50%;cursor:pointer;color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.btn-close:hover{background:var(--red);color:#fff;}
+.order-market-name{font-size:11px;color:var(--text3);margin-bottom:14px;font-family:var(--font-mono);}
+.order-side-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.order-side-btn{flex:1;padding:8px;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;transition:all .15s;background:var(--bg3);color:var(--text2);}
+.order-side-btn.yes.active{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:var(--green);}
+.order-side-btn.no.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:var(--red);}
+.order-field{margin-bottom:12px;}
+.order-field label{display:block;font-size:11px;color:var(--text3);font-family:var(--font-mono);letter-spacing:.5px;margin-bottom:5px;text-transform:uppercase;}
+.order-field input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;color:var(--text);font-family:var(--font-mono);font-size:14px;font-weight:700;outline:none;transition:border-color .15s;}
+.order-field input:focus{border-color:var(--y);}
+.order-summary{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:14px;}
+.order-summary-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;}
+.order-summary-row .label{color:var(--text3);font-family:var(--font-mono);}
+.order-summary-row .value{color:var(--text);font-family:var(--font-mono);font-weight:600;}
+.order-summary-row .value.green{color:var(--green);}
+.order-summary-row .value.yellow{color:var(--y);}
+.btn-place{width:100%;padding:13px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.5px;transition:all .15s;background:var(--y);color:#000;}
+.btn-place:hover{background:var(--y2);transform:translateY(-1px);}
+
+/* PROFILE */
+.profile-dropdown{position:fixed;top:56px;right:16px;z-index:300;width:180px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:8px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+.profile-dropdown.open{display:block;animation:dropIn .2s ease;}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.profile-item{padding:8px 12px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px;transition:all .15s;}
+.profile-item:hover{background:var(--bg3);color:var(--text);}
+.profile-item i{width:14px;text-align:center;color:var(--text3);font-size:12px;}
+
+@media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
+*{-webkit-tap-highlight-color:transparent;}
+body{-webkit-font-smoothing:antialiased;}
+</style>
+<link rel="stylesheet" href="../market-mobile.css">
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="../index.html" class="topbar-navlink">Markets</a>
+    <a href="10000005.html" class="topbar-navlink">World Bank Loan</a>
+    <a href="10000025.html" class="topbar-navlink active">Rain Today?</a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+    <a href="../faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search markets, events, teams...">
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<div class="layout">
+
+<!-- LEFT SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist</div>
+  <div class="sidebar-item"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Find Markets</div>
+  <div class="sidebar-item">⚽ Football</div>
+  <div class="sidebar-item">🏉 Other Sports</div>
+  <div class="sidebar-item">🎬 Entertainment</div>
+  <div class="sidebar-item">🎵 Music</div>
+  <div class="sidebar-item">⚖️ Politics</div>
+  <div class="sidebar-item">🛢️ Commodities</div>
+  <div class="sidebar-item">🪙 Finance</div>
+  <div class="sidebar-item active">🌦️ Weather</div>
+  <div class="sidebar-item">🌀 Miscellaneous</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Trending Now</div>
+  <div class="trending-event">
+    <div class="trend-name">🌧️ Will It Rain Today?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦12.4M vol</div>
+      <div class="trend-change" id="sidebar-change" style="color:var(--green);">—</div>
+    </div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">⚖️ World Bank $1.25bn Loan</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦61M vol</div>
+      <div class="trend-change" style="color:var(--green);">▲ 8%</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STATE BANNER — injected by JS -->
+  <div id="state-banner"></div>
+
+  <!-- HERO CARD -->
+  <div class="hero-card" id="hero-card">
+    <div class="hero-bg-emoji" id="hero-bg-emoji">🌧️</div>
+
+    <div class="hero-top">
+      <div class="hero-cat-tag">🌦️ WEATHER · LAGOS · DAILY</div>
+      <div class="hero-vol-tag">Vol ₦12.4M</div>
+      <div class="state-tag live" id="state-tag">🟢 LIVE</div>
+      <div class="daily-tag">📅 RESETS DAILY</div>
+    </div>
+
+    <div class="hero-title">Will it rain in Lagos today?</div>
+    <div class="hero-sub">Market resolves <strong style="color:var(--text);">YES</strong> if any measurable rainfall is recorded in Lagos between <strong style="color:var(--text);">8:00 AM – 8:00 PM WAT</strong>. Resolves <strong style="color:var(--text);">NO</strong> if the window closes dry. A fresh market opens every morning at 8:00 AM.</div>
+
+    <!-- LIVE WEATHER PILL -->
+    <div class="weather-pill">
+      <span class="wp-icon" id="wp-icon">⏳</span>
+      <span class="wp-text" id="wp-text">Loading weather data...</span>
+    </div>
+
+    <!-- HOURLY BARS 8AM–8PM -->
+    <div class="rain-window-bar">
+      <div class="rwb-label">Hourly Precipitation — Today's Window (mm)</div>
+      <div class="rwb-hours" id="rwb-hours"></div>
+      <div class="rwb-hour-labels">
+        <span class="rwb-hour-label">8AM</span>
+        <span class="rwb-hour-label">10AM</span>
+        <span class="rwb-hour-label">12PM</span>
+        <span class="rwb-hour-label">2PM</span>
+        <span class="rwb-hour-label">4PM</span>
+        <span class="rwb-hour-label">6PM</span>
+        <span class="rwb-hour-label">8PM</span>
+      </div>
+    </div>
+
+    <!-- PROB BAR -->
+    <div class="hero-prob-bar-wrap">
+      <div class="hero-prob-label-row">
+        <div>
+          <div class="hpl-yeslabel">YES · WILL RAIN</div>
+          <div class="hpl-yes" id="prob-yes-big">—</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="hpl-nolabel">NO · STAYS DRY</div>
+          <div class="hpl-no" id="prob-no-big">—</div>
+        </div>
+      </div>
+      <div class="hero-prob-bar">
+        <div class="hpb-yes" id="hpb-yes" style="width:50%;"></div>
+        <div class="hpb-no" id="hpb-no" style="width:50%;"></div>
+      </div>
+    </div>
+
+    <!-- TRADE BUTTONS -->
+    <div class="hero-trade-row" id="hero-trade-row">
+      <div class="hero-btn-yes" onclick="openOrder('Rain Today — Lagos','YES',yesPct)">
+        <div class="hb-label">☔ BUY YES — WILL RAIN</div>
+        <div class="hb-price" id="hero-yes-price">₦—</div>
+        <div class="hb-sub">Payout ₦100 if it rains</div>
+      </div>
+      <div class="hero-btn-no" onclick="openOrder('Rain Today — Lagos','NO',100-yesPct)">
+        <div class="hb-label">☀️ BUY NO — STAYS DRY</div>
+        <div class="hb-price" id="hero-no-price">₦—</div>
+        <div class="hb-sub">Payout ₦100 if no rain</div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-label">Volume</div><div class="hstat-val yellow">₦12.4M</div></div>
+      <div class="hstat"><div class="hstat-label">YES Prob</div><div class="hstat-val green" id="prob-stat">—</div></div>
+      <div class="hstat"><div class="hstat-label">Rain So Far</div><div class="hstat-val blue" id="rainfall-so-far">—mm</div></div>
+      <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val">3,841</div></div>
+      <div class="hstat"><div class="hstat-label">Window</div><div class="hstat-val yellow">8AM–8PM</div></div>
+      <div class="hstat"><div class="hstat-label">Resets</div><div class="hstat-val green">Daily</div></div>
+    </div>
+
+    <div style="font-size:12px;color:var(--text3);display:flex;align-items:flex-start;gap:7px;line-height:1.6;">
+      <i class="fa-solid fa-circle-info" style="color:var(--rain);margin-top:2px;flex-shrink:0;"></i>
+      Weather data from Open-Meteo real-time observations for Lagos (6.52°N, 3.38°E). Resolves YES if total precipitation &gt; 0mm at any point 8AM–8PM WAT. New market opens automatically at 8:00 AM each day.
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;">
+        <div style="font-size:26px;margin-bottom:10px;">☔</div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;">How it works</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7;">A <strong style="color:var(--text);">daily weather market</strong> that resets every morning. YES wins if measurable rain falls anywhere in Lagos during the 8AM–8PM window. Uses live Open-Meteo data — no manual resolution needed.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;">
+        <div style="font-size:26px;margin-bottom:10px;">📊</div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;">Live probability</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7;">The YES price updates based on <strong style="color:var(--text);">real-time rain observations</strong> and hourly forecasts. If rain is detected in the window, YES price surges. If it's staying dry with no forecast rain, NO strengthens.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;">
+        <div style="font-size:26px;margin-bottom:10px;">🏁</div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;">Settlement at 8PM</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7;">At <strong style="color:var(--text);">8:00 PM WAT</strong> the market closes and resolves automatically. Winners are paid ₦100 per share. The next market opens the following day at 8AM — no action needed.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;">
+      <div style="font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:12px;">Lagos Rain Patterns</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8;">
+        Lagos has a <strong style="color:var(--text);">tropical savanna climate</strong> with two rainy seasons: the main season runs April–July, with a shorter season October–November. Average annual rainfall is ~<strong style="color:var(--text);">1,600mm</strong>. During peak season, rain can fall on <strong style="color:var(--text);">15–20 days per month</strong>.<br><br>
+        Strong YES signals: cloudy humid morning, temperature 28–32°C, humidity above 85%, afternoon thunderstorm forecast. Strong NO signals: clear sunny morning, low humidity, easterly winds off the Sahel.
+      </div>
+    </div>
+  </div>
+
+  <!-- RULES TAB -->
+  <div id="tab-rules" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Market Rules & Resolution</div>
+      <div style="display:flex;flex-direction:column;gap:16px;font-size:13px;color:var(--text2);line-height:1.8;">
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Criteria</div>Resolves <strong style="color:var(--green);">YES</strong> if total precipitation at Lagos (6.5244°N, 3.3792°E) is greater than 0.0mm at any point between 8:00 AM and 8:00 PM West Africa Time (WAT, UTC+1). Resolves <strong style="color:var(--red);">NO</strong> if the window closes with zero recorded rainfall.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Data Source</div>Open-Meteo real-time weather API using WMO-standard observations for the Lagos metropolitan area. The settlement value is drawn from the <code style="font-family:var(--font-mono);background:var(--bg3);padding:2px 5px;border-radius:3px;">hourly.precipitation</code> field summed across the 8AM–8PM window.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Daily Reset</div>A completely fresh market opens at 8:00 AM WAT every calendar day. Previous day results do not carry over. The page state (LIVE / SETTLED / PRE-MARKET) is determined automatically by the current time.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Disputes</div>Contact support@skedee.ng within 24 hours of resolution with Open-Meteo API evidence. Skedee's decision is final in cases of data source conflict.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- RIGHT SIDEBAR -->
+<div class="right-sidebar">
+  <div>
+    <div class="rsidebar-title">Live Probability</div>
+    <div class="prob-meter">
+      <div class="pm-label">YES · WILL RAIN</div>
+      <div class="pm-yes" id="pm-yes">—</div>
+      <div class="pm-bar" style="margin-top:8px;">
+        <div class="pm-bar-yes" id="pm-bar-yes" style="width:50%;"></div>
+        <div class="pm-bar-no" id="pm-bar-no" style="width:50%;"></div>
+      </div>
+      <div class="pm-no-row">
+        <div class="pm-no-label">NO · STAYS DRY</div>
+        <div class="pm-no-val" id="pm-no">—</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;" id="sidebar-trade-btns">
+      <button style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.1);color:var(--green);font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;" onclick="openOrder('Rain Today','YES',yesPct)" onmouseover="this.style.background='var(--green)';this.style.color='#000'" onmouseout="this.style.background='rgba(34,197,94,.1)';this.style.color='var(--green)'">BUY YES</button>
+      <button style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);color:var(--red);font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;" onclick="openOrder('Rain Today','NO',100-yesPct)" onmouseover="this.style.background='var(--red)';this.style.color='#fff'" onmouseout="this.style.background='rgba(239,68,68,.08)';this.style.color='var(--red)'">BUY NO</button>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Current Weather · Lagos</div>
+    <div class="weather-widget">
+      <div class="ww-condition">
+        <span class="ww-icon" id="ww-icon">⏳</span>
+        <div>
+          <div class="ww-desc" id="ww-desc">Loading...</div>
+          <div class="ww-loc">Lagos, Nigeria</div>
+        </div>
+      </div>
+      <div class="ww-stat"><span class="ww-stat-label">TEMP</span><span class="ww-stat-val" id="ww-temp">—</span></div>
+      <div class="ww-stat"><span class="ww-stat-label">HUMIDITY</span><span class="ww-stat-val" id="ww-hum">—</span></div>
+      <div class="ww-stat"><span class="ww-stat-label">RAIN NOW</span><span class="ww-stat-val blue" id="ww-rain-now">—</span></div>
+      <div class="ww-stat"><span class="ww-stat-label">WINDOW TOTAL</span><span class="ww-stat-val blue" id="ww-total">—</span></div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Recent Trades <span id="live-dot" style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
+  </div>
+</div>
+
+</div><!-- end layout -->
+
+<!-- ORDER PANEL -->
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header">
+    <div class="order-panel-title">Place Order</div>
+    <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="order-market-name" id="op-market-name">Rain Today — Lagos</div>
+  <div class="order-side-tabs">
+    <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
+    <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
+  </div>
+  <div class="order-field">
+    <label>Amount (NGN ₦)</label>
+    <input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()">
+  </div>
+  <div class="order-field">
+    <label>Price per Share (₦)</label>
+    <input type="number" id="op-price" value="50" step="1" min="1" max="99" oninput="updateOrderSummary()">
+  </div>
+  <div class="order-summary">
+    <div class="order-summary-row"><span class="label">Shares</span><span class="value" id="op-shares">100.0</span></div>
+    <div class="order-summary-row"><span class="label">Avg Entry</span><span class="value" id="op-entry">₦50</span></div>
+    <div class="order-summary-row"><span class="label">Max Payout</span><span class="value green" id="op-payout">₦10,000</span></div>
+    <div class="order-summary-row"><span class="label">Potential Profit</span><span class="value yellow" id="op-profit">+₦5,000</span></div>
+    <div class="order-summary-row"><span class="label">Wallet After</span><span class="value" id="op-wallet-after">₦4,266,250</span></div>
+  </div>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+</div>
+
+<script src="../script.js"></script>
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+const LAT  = 6.5244;
+const LON  = 3.3792;
+const TZ   = 'Africa/Lagos';
+const OPEN  = 8;   // 8:00 AM
+const CLOSE = 20;  // 8:00 PM
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let yesPct           = 50;
+let walletBalance    = 4271250;
+let orderSide        = 'YES';
+let recentTrades     = [];
+let weatherData      = null;
+let rainfallWindowMm = 0;
+let rainDetected     = false;
+let lastState        = null;
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+// Get current time in Lagos timezone
+function lagosNow() {
+  return new Date(new Date().toLocaleString('en-US', { timeZone: TZ }));
+}
+
+function getState() {
+  const h = lagosNow().getHours() + lagosNow().getMinutes() / 60;
+  if (h < OPEN)  return 'PREMARKET';
+  if (h >= CLOSE) return 'SETTLED';
+  return 'LIVE';
+}
+
+// WMO weather code → [emoji, label, isRainy]
+function wmoInfo(code) {
+  if (code === 0)               return ['☀️',  'Clear Sky',        false];
+  if (code <= 3)                return ['🌤️',  'Partly Cloudy',    false];
+  if (code <= 48)               return ['🌫️',  'Foggy',            false];
+  if (code <= 55)               return ['🌦️',  'Drizzle',          true];
+  if (code <= 65)               return ['🌧️',  'Rain',             true];
+  if (code <= 82)               return ['🌧️',  'Rain Showers',     true];
+  if (code <= 99)               return ['⛈️',  'Thunderstorm',     true];
+  return                               ['🌡️',  'Unknown',          false];
+}
+
+// ── PROBABILITY ──────────────────────────────────────────────────────────────
+function calcProb(data, state) {
+  const now      = lagosNow();
+  const curHour  = now.getHours();
+  const precip   = data.hourly.precipitation;   // 24-entry array
+
+  // Window: indices OPEN(8) to CLOSE-1(19)
+  const windowPrecip   = precip.slice(OPEN, CLOSE);
+  const observedPrecip = precip.slice(OPEN, Math.min(curHour + 1, CLOSE));
+  const windowTotal    = windowPrecip.reduce((s, v) => s + v, 0);
+  const observedTotal  = observedPrecip.reduce((s, v) => s + v, 0);
+
+  rainfallWindowMm = state === 'SETTLED' ? windowTotal : observedTotal;
+  rainDetected     = rainfallWindowMm > 0;
+
+  if (state === 'SETTLED') {
+    return windowTotal > 0 ? 99 : 1;
+  }
+
+  const curPrecip  = data.current.precipitation;
+  const curCode    = data.current.weathercode;
+  const [,, rainy] = wmoInfo(curCode);
+
+  const remainingPrecip    = precip.slice(Math.max(curHour + 1, OPEN), CLOSE);
+  const forecastRainHours  = remainingPrecip.filter(v => v > 0).length;
+
+  if (state === 'PREMARKET') {
+    const forecastHours = windowPrecip.filter(v => v > 0).length;
+    let p = 10 + Math.round((forecastHours / 12) * 70);
+    if (rainy) p = Math.max(p, 50);
+    return Math.min(95, Math.max(5, p));
+  }
+
+  // LIVE
+  if (rainDetected)         return Math.min(99, 85 + Math.min(10, Math.round(rainfallWindowMm * 2)));
+  if (curPrecip > 0 || rainy) return Math.min(97, Math.round(80 + Math.min(15, curPrecip * 5)));
+  if (forecastRainHours > 0) {
+    const hoursLeft   = remainingPrecip.length;
+    const fcastWeight = forecastRainHours / Math.max(1, hoursLeft);
+    return Math.min(75, Math.round(25 + fcastWeight * 55));
+  }
+  // Dry + no forecast — bleed toward 0 as window closes
+  const hoursElapsed = Math.max(0, curHour - OPEN);
+  return Math.max(2, Math.round(20 - hoursElapsed * 1.5));
+}
+
+// ── RENDER STATE BANNER ───────────────────────────────────────────────────────
+function renderBanner(state) {
+  const now      = lagosNow();
+  const dateStr  = now.toLocaleDateString('en-NG', { day:'numeric', month:'long', year:'numeric' });
+
+  // Always reset interactive elements first
+  const tradeRow  = document.getElementById('hero-trade-row');
+  const tradeBtns = document.getElementById('sidebar-trade-btns');
+  tradeRow.style.pointerEvents  = '';
+  tradeRow.style.opacity        = '';
+  tradeBtns.style.pointerEvents = '';
+  tradeBtns.style.opacity       = '';
+
+  const stateTag = document.getElementById('state-tag');
+  const liveDot  = document.getElementById('live-dot');
+  const bgEmoji  = document.getElementById('hero-bg-emoji');
+
+  if (state === 'PREMARKET') {
+    document.getElementById('state-banner').innerHTML = `
+      <div class="state-banner premarket">
+        <div class="banner-icon premarket">⏰</div>
+        <div class="banner-body">
+          <div class="banner-title" style="font-size:20px;color:var(--rain);">Market Opens at 8:00 AM</div>
+          <div class="banner-sub">Rain window: today 8:00 AM — 8:00 PM WAT · Trading begins at 8 · Come back soon!</div>
+        </div>
+        <div class="banner-meta">
+          <div style="color:var(--rain);font-weight:700;font-size:11px;margin-bottom:3px;">● Pre-Market</div>
+          <div>${dateStr}</div>
+        </div>
+      </div>`;
+    tradeRow.style.pointerEvents  = 'none';
+    tradeRow.style.opacity        = '0.4';
+    tradeBtns.style.pointerEvents = 'none';
+    tradeBtns.style.opacity       = '0.4';
+    stateTag.className = 'state-tag premarket';
+    stateTag.textContent = '🕗 OPENS 8AM';
+    liveDot.textContent  = '⏰ PRE-MARKET';
+    liveDot.style.color  = 'var(--rain)';
+    bgEmoji.textContent  = '⏰';
+
+  } else if (state === 'SETTLED') {
+    const win  = rainDetected;
+    const icon = win ? '🌧️' : '☀️';
+    const resultColor = win ? 'var(--green)' : 'var(--red)';
+    const resultText  = win ? 'YES — IT RAINED!' : 'NO — STAYED DRY';
+    const payText     = win
+      ? `Rain recorded (${rainfallWindowMm.toFixed(1)}mm) · YES paid ₦100 · NO paid ₦0`
+      : 'No rain recorded · NO paid ₦100 · YES paid ₦0';
+
+    document.getElementById('state-banner').innerHTML = `
+      <div class="state-banner settled">
+        <div class="banner-icon settled">${icon}</div>
+        <div class="banner-body">
+          <div class="banner-title" style="font-size:28px;color:var(--y);">DETERMINED!</div>
+          <div style="font-family:var(--font-display);font-weight:700;font-size:16px;color:${resultColor};margin-top:4px;margin-bottom:4px;">${resultText}</div>
+          <div class="banner-sub">${payText} · Come back tomorrow!</div>
+        </div>
+        <div class="banner-meta">
+          <div style="color:var(--green);font-weight:700;font-size:11px;margin-bottom:3px;">● Settled</div>
+          <div>${dateStr}</div>
+          <div>8:00 PM WAT</div>
+        </div>
+      </div>`;
+    tradeRow.style.pointerEvents  = 'none';
+    tradeRow.style.opacity        = '0.3';
+    tradeBtns.style.pointerEvents = 'none';
+    tradeBtns.style.opacity       = '0.3';
+    stateTag.className   = 'state-tag settled';
+    stateTag.textContent = '🏁 SETTLED';
+    liveDot.textContent  = '🏁 SETTLED';
+    liveDot.style.color  = 'var(--y)';
+    bgEmoji.textContent  = win ? '🌧️' : '☀️';
+
+  } else {
+    // LIVE — no banner, hero card IS the live view
+    document.getElementById('state-banner').innerHTML = '';
+    stateTag.className   = 'state-tag live';
+    stateTag.textContent = rainDetected ? '🌧️ RAINING' : '🟢 LIVE';
+    liveDot.textContent  = '● LIVE';
+    liveDot.style.color  = 'var(--green)';
+    bgEmoji.textContent  = rainDetected ? '🌧️' : '🌤️';
+  }
+}
+
+// ── UPDATE PROB UI ────────────────────────────────────────────────────────────
+function updateProbUI(pct) {
+  const no = 100 - pct;
+  document.getElementById('prob-yes-big').textContent = pct + '%';
+  document.getElementById('prob-no-big').textContent  = no  + '%';
+  document.getElementById('hpb-yes').style.width      = pct + '%';
+  document.getElementById('hpb-no').style.width       = no  + '%';
+  document.getElementById('pm-yes').textContent       = pct + '%';
+  document.getElementById('pm-no').textContent        = no  + '%';
+  document.getElementById('pm-bar-yes').style.width   = pct + '%';
+  document.getElementById('pm-bar-no').style.width    = no  + '%';
+  document.getElementById('prob-stat').textContent    = pct + '%';
+  document.getElementById('hero-yes-price').textContent = '₦' + pct;
+  document.getElementById('hero-no-price').textContent  = '₦' + no;
+  const sc = document.getElementById('sidebar-change');
+  sc.textContent = (pct > 50 ? '▲ ' : '▼ ') + pct + '% YES';
+  sc.style.color = pct > 50 ? 'var(--green)' : 'var(--red)';
+}
+
+// ── UPDATE WEATHER UI ─────────────────────────────────────────────────────────
+function updateWeatherUI(data) {
+  const cur        = data.current;
+  const [icon, desc] = wmoInfo(cur.weathercode);
+  const temp       = Math.round(cur.temperature_2m);
+  const hum        = cur.relative_humidity_2m;
+  const rainNow    = cur.precipitation;
+
+  document.getElementById('wp-icon').textContent = icon;
+  document.getElementById('wp-text').innerHTML   =
+    `Currently <strong>${desc}</strong> · ${temp}°C · Humidity ${hum}% · Rain: <strong style="color:var(--rain);">${rainNow.toFixed(1)}mm/h</strong>`;
+
+  document.getElementById('ww-icon').textContent = icon;
+  document.getElementById('ww-desc').textContent = desc;
+  document.getElementById('ww-temp').textContent = `${temp}°C`;
+  document.getElementById('ww-hum').textContent  = `${hum}%`;
+  document.getElementById('ww-rain-now').textContent = `${rainNow.toFixed(1)}mm/h`;
+  document.getElementById('ww-total').textContent    = `${rainfallWindowMm.toFixed(1)}mm`;
+  document.getElementById('rainfall-so-far').textContent = `${rainfallWindowMm.toFixed(1)}mm`;
+}
+
+// ── HOURLY BARS ───────────────────────────────────────────────────────────────
+function renderBars(precip) {
+  const windowP  = precip.slice(OPEN, CLOSE);      // 12 values: 8am–7pm
+  const maxP     = Math.max(...windowP, 0.5);
+  const curHour  = lagosNow().getHours();
+
+  document.getElementById('rwb-hours').innerHTML = windowP.map((p, i) => {
+    const hour    = OPEN + i;
+    const pct     = Math.max(6, (p / maxP) * 100);
+    const isPast  = hour < curHour;
+    const isCur   = hour === curHour;
+    const hasRain = p > 0;
+    let bg;
+    if (hasRain)      bg = isCur ? 'var(--rain)' : (isPast ? 'rgba(96,165,250,.7)' : 'rgba(96,165,250,.35)');
+    else              bg = isCur ? 'rgba(245,200,0,.4)' : (isPast ? 'rgba(255,255,255,.07)' : 'rgba(255,255,255,.04)');
+    const outline = isCur ? `box-shadow:0 0 0 1px var(--rain);` : '';
+    return `<div class="rwb-hour" style="height:${pct}%;background:${bg};${outline}" title="${hour}:00 — ${p.toFixed(1)}mm"></div>`;
+  }).join('');
+}
+
+// ── FETCH WEATHER ─────────────────────────────────────────────────────────────
+async function loadWeather() {
+  try {
+    const curFields     = 'temperature_2m,relative_humidity_2m,precipitation,weathercode,apparent_temperature';
+    const hourlyFields  = 'precipitation,weathercode';
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}`
+              + `&current=${curFields}&hourly=${hourlyFields}`
+              + `&timezone=${encodeURIComponent(TZ)}&forecast_days=1`;
+
+    const res   = await fetch(url);
+    weatherData = await res.json();
+
+    const state = getState();
+    yesPct = calcProb(weatherData, state);
+
+    updateProbUI(yesPct);
+    updateWeatherUI(weatherData);
+    renderBars(weatherData.hourly.precipitation);
+
+    // Only re-render banner when state changes (or first load)
+    if (state !== lastState) {
+      renderBanner(state);
+      lastState = state;
+    } else if (state === 'SETTLED') {
+      // Always refresh settled banner so rainfall total is accurate
+      renderBanner(state);
+    }
+  } catch (e) {
+    console.warn('Weather API unavailable — using fallback', e);
+    const state = getState();
+    yesPct = state === 'PREMARKET' ? 42 : state === 'SETTLED' ? 50 : 55;
+    updateProbUI(yesPct);
+    if (state !== lastState) { renderBanner(state); lastState = state; }
+    document.getElementById('wp-icon').textContent = '📡';
+    document.getElementById('wp-text').innerHTML   = '<strong>Weather data unavailable</strong> — showing estimated probability';
+  }
+}
+
+// ── TRADES ────────────────────────────────────────────────────────────────────
+function makeTrade() {
+  const side  = Math.random() > 0.65 ? 'sell' : 'buy';
+  const price = side === 'buy'
+    ? Math.max(1,  Math.min(99, Math.round(yesPct      + (Math.random() * 4 - 2))))
+    : Math.max(1,  Math.min(99, Math.round(100 - yesPct + (Math.random() * 4 - 2))));
+  const size  = Math.floor(Math.random() * 2000 + 100);
+  const mkt   = Math.random() > 0.4 ? 'Rain Today YES' : 'Rain Today NO';
+  return { side, price, size, mkt };
+}
+
+function renderTrades() {
+  if (!recentTrades.length) for (let i = 0; i < 8; i++) recentTrades.push(makeTrade());
+  document.getElementById('recent-trades').innerHTML = recentTrades.slice(0, 8).map(t => `
+    <div class="trade-row">
+      <span class="trade-side ${t.side}">${t.side.toUpperCase()}</span>
+      <span class="trade-market">${t.mkt}</span>
+      <span class="trade-price">₦${t.price}</span>
+      <span class="trade-size">×${t.size.toLocaleString()}</span>
+    </div>`).join('');
+}
+
+// ── ORDER PANEL ───────────────────────────────────────────────────────────────
+function openOrder(name, side, price) {
+  if (getState() !== 'LIVE') return;
+  document.getElementById('op-market-name').textContent = name;
+  document.getElementById('op-price').value = parseInt(price) || 50;
+  setOrderSide(side);
+  document.getElementById('order-panel').classList.add('open');
+}
+function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
+function setOrderSide(side) {
+  orderSide = side;
+  document.getElementById('op-yes-btn').classList.toggle('active', side === 'YES');
+  document.getElementById('op-no-btn').classList.toggle('active', side === 'NO');
+  document.getElementById('op-side-label').textContent = side;
+  updateOrderSummary();
+}
+function updateOrderSummary() {
+  const amt    = parseFloat(document.getElementById('op-amount').value) || 0;
+  const price  = parseFloat(document.getElementById('op-price').value)  || 1;
+  const shares = amt / price;
+  const profit = shares - amt;
+  document.getElementById('op-shares').textContent    = shares.toFixed(1);
+  document.getElementById('op-entry').textContent     = '₦' + Math.round(price).toLocaleString('en-NG');
+  document.getElementById('op-payout').textContent    = '₦' + Math.round(shares).toLocaleString('en-NG');
+  document.getElementById('op-profit').textContent    = (profit >= 0 ? '+' : '') + '₦' + Math.round(profit).toLocaleString('en-NG');
+  document.getElementById('op-wallet-after').textContent = '₦' + Math.round(walletBalance - amt).toLocaleString('en-NG');
+}
+function placeOrder() {
+  const amt = parseFloat(document.getElementById('op-amount').value) || 0;
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  document.getElementById('wallet-display').textContent = '₦' + walletBalance.toLocaleString('en-NG', { maximumFractionDigits: 0 });
+  closeOrder();
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview', 'rules'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === name ? '' : 'none';
+  });
+}
+
+// ── PROFILE ───────────────────────────────────────────────────────────────────
+function toggleProfile() { document.getElementById('profile-dd').classList.toggle('open'); }
+document.addEventListener('click', e => {
+  if (!e.target.closest('.avatar') && !e.target.closest('.profile-dropdown'))
+    document.getElementById('profile-dd').classList.remove('open');
+});
+
+// ── LIVE TICK (trade animation only when LIVE) ────────────────────────────────
+function liveTick() {
+  if (getState() !== 'LIVE') return;
+  yesPct = Math.max(1, Math.min(99, yesPct + Math.round((Math.random() - 0.49) * 1.5)));
+  updateProbUI(yesPct);
+  recentTrades.unshift(makeTrade());
+  if (recentTrades.length > 12) recentTrades.pop();
+  renderTrades();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderTrades();
+updateOrderSummary();
+loadWeather();
+
+setInterval(loadWeather, 60_000);   // Refresh weather every 60s
+setInterval(liveTick,    5_000);    // Animate trades every 5s (noop when not LIVE)
+// Poll for state transitions (8am open, 8pm close) every 30s
+setInterval(() => {
+  const s = getState();
+  if (s !== lastState) { loadWeather(); }
+}, 30_000);
+</script>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="../about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="../policy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms of Service</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../index.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
+</body>
+</html>
+

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -231,6 +231,7 @@ body{-webkit-font-smoothing:antialiased;}
 [data-theme="dark"] .store-badge img{filter:brightness(.92);}
 .footer-disclaimer{font-family:var(--font-display);font-weight:600;font-size:13px;color:var(--text3);}
 </style>
+<link rel="stylesheet" href="../market-mobile.css">
 </head>
 <body data-theme="dark">
 
@@ -239,7 +240,7 @@ body{-webkit-font-smoothing:antialiased;}
   <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
   <div class="topbar-nav">
     <a href="../index.html" class="topbar-navlink">Markets</a>
-    <a href="10000006.html" class="topbar-navlink">Villa vs Liverpool</a>
+    <a href="10000008.html" class="topbar-navlink">Dollar/Naira?</a>
     <a href="10000004.html" class="topbar-navlink active">BBNaija S11</a>
     <a href="../about.html" class="topbar-navlink">About</a>
     <a href="../faq.html" class="topbar-navlink">FAQ</a>
@@ -791,5 +792,14 @@ renderTrades();
 updateOrderSummary();
 setInterval(updateLiveData, 2500);
 </script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../index.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
 </body>
 </html>
