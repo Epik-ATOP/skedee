@@ -98,6 +98,37 @@ body{-webkit-font-smoothing:antialiased;}
 .empty-state{text-align:center;padding:60px 20px;color:var(--text3);font-family:var(--font-mono);font-size:12px;}
 .empty-icon{font-size:36px;margin-bottom:12px;}
 
+/* Suggest a market */
+.suggest-wrap{border-top:1px solid var(--border);padding:48px 32px 56px;display:flex;justify-content:center;}
+.suggest-card{width:100%;max-width:620px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;position:relative;overflow:hidden;}
+.suggest-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--y),transparent);}
+.suggest-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--y);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.suggest-label::before{content:'';width:16px;height:1px;background:var(--y);}
+.suggest-title{font-family:var(--font-display);font-size:clamp(18px,2.5vw,24px);font-weight:800;color:var(--text);margin-bottom:6px;line-height:1.2;}
+.suggest-sub{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:22px;}
+.suggest-form{display:flex;flex-direction:column;gap:10px;}
+.suggest-textarea{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;color:var(--text);font-family:var(--font-body);font-size:13px;line-height:1.55;resize:vertical;min-height:90px;outline:none;transition:border-color .15s;width:100%;box-sizing:border-box;}
+.suggest-textarea::placeholder{color:var(--text3);}
+.suggest-textarea:focus{border-color:var(--y);}
+.suggest-form-row{display:flex;gap:10px;}
+.suggest-input{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:0 14px;height:40px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;transition:border-color .15s;flex:1;min-width:0;box-sizing:border-box;}
+.suggest-input::placeholder{color:var(--text3);}
+.suggest-input:focus{border-color:var(--y);}
+.suggest-btn{height:40px;padding:0 22px;background:var(--y);color:#000;font-family:var(--font-display);font-size:13px;font-weight:700;border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .15s;display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0;}
+.suggest-btn:hover{opacity:.85;}
+.suggest-btn:disabled{opacity:.45;cursor:not-allowed;}
+.suggest-note{font-family:var(--font-mono);font-size:9px;color:var(--text3);line-height:1.5;}
+.suggest-toast{display:none;align-items:center;gap:10px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:var(--radius);padding:12px 16px;font-size:13px;color:var(--green);margin-top:4px;}
+.suggest-toast.show{display:flex;}
+.suggest-toast i{font-size:15px;}
+
+@media(max-width:760px){
+  .suggest-wrap{padding:32px 16px 48px;}
+  .suggest-card{padding:22px 18px;}
+  .suggest-form-row{flex-direction:column;}
+  .suggest-btn{width:100%;justify-content:center;}
+}
+
 @media(max-width:760px){
   html,body{overflow-x:hidden;}
   .topbar-nav{display:none;}
@@ -179,6 +210,29 @@ body{-webkit-font-smoothing:antialiased;}
   <!-- CONTENT -->
   <div class="content" id="content">
     <!-- injected by JS -->
+  </div>
+
+  <!-- SUGGEST A MARKET -->
+  <div class="suggest-wrap">
+    <div class="suggest-card">
+      <div class="suggest-label">💡 Suggest a Market</div>
+      <div class="suggest-title">Got a question for a new market?</div>
+      <div class="suggest-sub">We can't think of every yes-or-no question out there — if you've spotted something worth predicting, throw it in. We review every suggestion.</div>
+      <div class="suggest-form" id="suggest-form">
+        <textarea class="suggest-textarea" id="suggest-idea" placeholder="e.g. &quot;Will Davido headline Afrobeats Live 2026?&quot; or &quot;Will petrol hit ₦2,000 before December?&quot;" maxlength="280"></textarea>
+        <div class="suggest-form-row">
+          <input class="suggest-input" id="suggest-username" type="text" placeholder="Your Skedee username (optional)" autocomplete="off" maxlength="30">
+          <button class="suggest-btn" onclick="submitSuggestion()">
+            <i class="fa-solid fa-paper-plane"></i> Submit
+          </button>
+        </div>
+        <div class="suggest-note">280 characters max · No personal info required · We read every one</div>
+        <div class="suggest-toast" id="suggest-toast">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>Got it — thanks! We'll review your idea and may add it as a market.</span>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -413,6 +467,42 @@ function toggleTheme(){const isDark=document.body.getAttribute('data-theme')!=='
 function toggleNotif(){document.getElementById('notif-dd').classList.toggle('open');document.getElementById('profile-dd').classList.remove('open');}
 function toggleProfile(){document.getElementById('profile-dd').classList.toggle('open');document.getElementById('notif-dd').classList.remove('open');}
 document.addEventListener('click',e=>{if(!e.target.closest('.btn-icon')&&!e.target.closest('.notif-dropdown'))document.getElementById('notif-dd').classList.remove('open');if(!e.target.closest('.avatar')&&!e.target.closest('.profile-dropdown'))document.getElementById('profile-dd').classList.remove('open');});
+
+// ── SUGGEST A MARKET ─────────────────────────────────────────────
+async function submitSuggestion() {
+  const idea = document.getElementById('suggest-idea').value.trim();
+  if (!idea) { document.getElementById('suggest-idea').focus(); return; }
+
+  const btn = document.querySelector('.suggest-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending…';
+
+  try {
+    const res = await fetch('https://formspree.io/f/xdajwrrz', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        idea: idea,
+        username: document.getElementById('suggest-username').value.trim() || '(anonymous)'
+      })
+    });
+
+    if (res.ok) {
+      document.getElementById('suggest-idea').value = '';
+      document.getElementById('suggest-username').value = '';
+      const toast = document.getElementById('suggest-toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 5000);
+    } else {
+      alert('Something went wrong — please try again.');
+    }
+  } catch (e) {
+    alert('Network error — please check your connection and try again.');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit';
+}
 
 // Init
 render();
