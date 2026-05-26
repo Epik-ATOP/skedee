@@ -13,6 +13,7 @@
   .topbar-nav { display: none !important; }
   .search-bar { display: none !important; }
   .wallet-pill { display: none !important; }
+  .avatar { display: none !important; }
 
   /* ── LAYOUT: collapse three-column → single column ── */
   .layout { display: block !important; }
@@ -93,8 +94,18 @@
   .site-footer .footer-cols { flex-wrap: wrap; gap: 24px; }
   .site-footer .footer-right { align-items: flex-start !important; }
 
-  /* ── SHOW MOBILE NAV ── */
-  .mobile-bottom-nav { display: flex !important; }
+  /* ── SHOW MOBILE NAV (pinned to bottom) ── */
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+  /* ── HIDE TRADE FAB (yellow circle) ── */
+  .mob-nav-trade { display: none !important; }
 }
 
 /* ── SMALL PHONES (≤480px) ── */

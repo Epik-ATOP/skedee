@@ -179,7 +179,7 @@ a{color:inherit;text-decoration:none;}
 <div class="topbar">
   <a href="index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
   <div class="topbar-nav">
-    <a href="index.html" class="topbar-navlink">Markets</a>
+    <a href="search.html" class="topbar-navlink">Markets</a>
     <a href="about.html" class="topbar-navlink">About</a>
     <a href="faq.html" class="topbar-navlink">FAQ</a>
     <a href="terms.html" class="topbar-navlink active">Terms</a>
@@ -660,5 +660,14 @@ function scrollTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 </script>
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <div class="mbn-items">
+    <a href="index.html" class="mbn-item"><i class="fa-solid fa-border-all"></i><span>Markets</span></a>
+    <div class="mbn-item"><i class="fa-solid fa-circle-dot" style="color:var(--red)"></i><span>Live</span></div>
+    <div class="mbn-item"><i class="fa-solid fa-fire"></i><span>Trending</span></div>
+    <a href="account.html" class="mbn-item"><i class="fa-solid fa-user"></i><span>Account</span></a>
+  </div>
+</nav>
 </body>
 </html>

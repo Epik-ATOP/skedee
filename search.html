@@ -120,8 +120,8 @@ body{-webkit-font-smoothing:antialiased;}
 <div class="topbar">
   <a href="index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
   <div class="topbar-nav">
-    <a href="index.html" class="topbar-navlink">Markets</a>
-    <a href="search.html" class="topbar-navlink active">Final Matchday <span style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(100,100,100,.15);color:var(--text3);border:1px solid var(--border);padding:1px 5px;border-radius:3px;">FT</span></a>
+    <a href="search.html" class="topbar-navlink">Markets</a>
+    <a href="search.html" class="topbar-navlink active">Search Markets</a>
     <a href="about.html" class="topbar-navlink">About</a>
   </div>
   <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="topbar-search" placeholder="Search markets..." oninput="handleSearch(this.value)"></div>
@@ -140,22 +140,21 @@ body{-webkit-font-smoothing:antialiased;}
 
   <!-- HERO -->
   <div class="search-hero">
-    <div class="search-hero-bg">🏆</div>
+    <div class="search-hero-bg">🔎</div>
     <div class="hero-breadcrumb">
       <a href="index.html">Home</a>
       <i class="fa-solid fa-chevron-right" style="font-size:8px;"></i>
       <span style="color:var(--y);">Final Matchday</span>
     </div>
     <div class="hero-title">
-      Final Matchday — Full Time
+      Search all Markets
       <span class="hero-badge" style="background:rgba(100,100,100,.15);border-color:rgba(100,100,100,.35);color:var(--text3);">FT</span>
     </div>
-    <div class="hero-sub">Matchday 38 of the Premier League season is over. All 10 matches played simultaneously have finished. Markets are settling — check the final results below.</div>
+    <div class="hero-sub">Search all available markets, new markets are added every week</div>
     <div class="hero-stats">
-      <div class="hstat"><div class="hstat-val">10</div><div class="hstat-label">Matches</div></div>
-      <div class="hstat"><div class="hstat-val">₦280M+</div><div class="hstat-label">Total Volume</div></div>
-      <div class="hstat"><div class="hstat-val">10</div><div class="hstat-label">Settled</div></div>
-      <div class="hstat"><div class="hstat-val" style="color:var(--text3);">FT</div><div class="hstat-label">Status</div></div>
+      <div class="hstat"><div class="hstat-val">50+</div><div class="hstat-label">Markets</div></div>
+      <div class="hstat"><div class="hstat-val">₦350M+</div><div class="hstat-label">Total Volume</div></div>
+      <div class="hstat"><div class="hstat-val">15</div><div class="hstat-label">Settled</div></div>
     </div>
   </div>
 
@@ -163,7 +162,7 @@ body{-webkit-font-smoothing:antialiased;}
   <div class="filters-bar">
     <div class="search-input-wrap">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="main-search" placeholder="Search teams, markets…" oninput="handleSearch(this.value)" autocomplete="off">
+      <input type="text" id="main-search" placeholder="Search markets…" oninput="handleSearch(this.value)" autocomplete="off">
     </div>
     <div class="filter-tags" id="filter-tags">
       <div class="filter-tag active" data-filter="all" onclick="setFilter('all',this)">🌍 All <span class="tag-count">34</span></div>
@@ -184,7 +183,45 @@ body{-webkit-font-smoothing:antialiased;}
 
 </div>
 
-<footer class="site-footer"><div class="footer-inner"><div class="footer-left"><div class="footer-logo">Skedee</div><div class="footer-cols"><div class="footer-col"><div class="footer-col-title">COMPANY</div><a href="about.html">About</a><a href="faq.html">FAQ</a></div></div><div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div></div><div class="footer-right"><div class="footer-disclaimer">18+ | Trade Responsibly</div></div></div></footer>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+          <a href="policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
 
 <script src="script.js"></script>
 <script>
@@ -203,11 +240,6 @@ const SUNDAY_MATCHES = [
 ];
 
 const OTHER_MARKETS = [
-  { id:2, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Newcastle vs West Ham', badge:'upcoming', yes:0.58, vol:'₦5.9M', change:'+5%', dir:'up', link:'markets/10000013.html' },
-  { id:30, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Crystal Palace vs Brentford', badge:'upcoming', yes:0.213, vol:'₦4.6M', change:'+3%', dir:'up', link:'markets/10000010.html' },
-  { id:31, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Sunderland vs Everton', badge:'upcoming', yes:0.237, vol:'₦3.7M', change:'+4%', dir:'up', link:'markets/10000011.html' },
-  { id:32, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Brighton vs Leeds United', badge:'upcoming', yes:0.387, vol:'₦4.2M', change:'+6%', dir:'up', link:'markets/10000012.html' },
-  { id:4, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Spurs vs Leeds United', badge:'live', yes:0.74, vol:'₦184.3M', change:'+6%', dir:'up', link:'markets/10000002.html' },
   { id:5, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Barcelona to win La Liga 2025/26', badge:'hot', yes:0.71, vol:'₦52.8M', change:'+3%', dir:'up', link:'#' },
   { id:6, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Rema drop a new song this month?', badge:'hot', yes:0.61, vol:'₦28.7M', change:'+12%', dir:'up', link:'#' },
   { id:7, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Wizkid drop a new album this year?', badge:'new', yes:0.71, vol:'₦55.9M', change:'+4%', dir:'up', link:'#' },
@@ -226,7 +258,8 @@ const OTHER_MARKETS = [
   { id:20, cat:'commodities', emoji:'🍌', catLabel:'COMMODITIES', title:'Will plantain prices drop below ₦800/bunch by June?', badge:'new', yes:0.29, vol:'₦7.1M', change:'-2%', dir:'down', link:'#' },
   { id:21, cat:'commodities', emoji:'🌽', catLabel:'COMMODITIES', title:'Will food inflation fall below 30% by end of 2026?', badge:'new', yes:0.33, vol:'₦16.4M', change:'+1%', dir:'up', link:'#' },
   { id:22, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,800 before end of 2026?', badge:'hot', yes:0.48, vol:'₦88.3M', change:'-3%', dir:'down', link:'#' },
-  { id:23, cat:'finance', emoji:'📈', catLabel:'FINANCE', title:'Will CBN cut interest rates at June MPC meeting?', badge:'new', yes:0.31, vol:'₦29.5M', change:'+4%', dir:'up', link:'#' },
+  { id:23, cat:'weather', emoji:'🌤️', catLabel:'WEATHER', title:'Will it rain in Lagos today?', badge:'hot', yes:0.48, vol:'₦88.3M', change:'-3%', dir:'down', link:'markets/10000025.html' },
+  { id:24, cat:'finance', emoji:'📈', catLabel:'FINANCE', title:'Will CBN cut interest rates at June MPC meeting?', badge:'new', yes:0.31, vol:'₦29.5M', change:'+4%', dir:'up', link:'#' },
 ];
 
 // ── STATE ─────────────────────────────────────────────────────────
@@ -384,5 +417,14 @@ document.addEventListener('click',e=>{if(!e.target.closest('.btn-icon')&&!e.targ
 // Init
 render();
 </script>
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <div class="mbn-items">
+    <a href="index.html" class="mbn-item active"><i class="fa-solid fa-border-all"></i><span>Markets</span></a>
+    <div class="mbn-item" id="mbn-live"><i class="fa-solid fa-circle-dot" style="color:var(--red)"></i><span>Live</span></div>
+    <div class="mbn-item" id="mbn-trending"><i class="fa-solid fa-fire"></i><span>Trending</span></div>
+    <a href="account.html" class="mbn-item"><i class="fa-solid fa-user"></i><span>Account</span></a>
+  </div>
+</nav>
 </body>
 </html>

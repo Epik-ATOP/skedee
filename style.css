@@ -100,3 +100,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
 .store-badge:hover img{opacity:.85;}
 [data-theme="dark"] .store-badge img{filter:brightness(.92);}
 .footer-disclaimer{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--text3);}
+
+/* ── SHARED MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--bg2);border-top:1px solid var(--border);padding:6px 0 max(6px,env(safe-area-inset-bottom,0px));}
+.mbn-items{display:flex;justify-content:space-around;align-items:center;}
+.mbn-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 10px;color:var(--text3);font-size:9px;font-family:var(--font-mono);letter-spacing:.5px;cursor:pointer;transition:color .15s;text-decoration:none;flex:1;-webkit-tap-highlight-color:transparent;border:none;background:none;}
+.mbn-item i{font-size:18px;display:block;}
+.mbn-item.active{color:var(--y);}
+.mbn-item:hover{color:var(--text);}
+
+/* ── SHARED MOBILE RESPONSIVE ── */
+@media(max-width:760px){
+  .avatar{display:none!important;}
+  .wallet-pill{display:none!important;}
+  .topbar-nav{display:none!important;}
+  .search-bar{display:none!important;}
+  .mobile-bottom-nav{display:block!important;position:fixed;top:auto!important;bottom:0;left:0;right:0;}
+  .site-footer{margin-bottom:62px;}
+  footer{margin-bottom:62px;}
+}

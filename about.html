@@ -275,7 +275,7 @@ section { padding: 100px 40px; max-width:1100px; margin:0 auto; }
     <div class="logo-dot"></div> <a href="index.html">Skedee</a>
   </div>
   <div class="nav-links">
-    <a href="index.html" class="nav-link">Markets</a>
+    <a href="search.html" class="nav-link">Markets</a>
     <a href="about.html" class="nav-link active">About</a>
     <a href="#" class="nav-link">Blog</a>
     <a href="#" class="nav-link">Careers</a>
@@ -595,5 +595,14 @@ const statsObserver = new IntersectionObserver((entries) => {
 const statsBar = document.querySelector('.stats-bar');
 if (statsBar) statsObserver.observe(statsBar);
 </script>
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <div class="mbn-items">
+    <a href="index.html" class="mbn-item"><i class="fa-solid fa-border-all"></i><span>Markets</span></a>
+    <div class="mbn-item"><i class="fa-solid fa-circle-dot" style="color:var(--red)"></i><span>Live</span></div>
+    <div class="mbn-item"><i class="fa-solid fa-fire"></i><span>Trending</span></div>
+    <a href="account.html" class="mbn-item"><i class="fa-solid fa-user"></i><span>Account</span></a>
+  </div>
+</nav>
 </body>
 </html>

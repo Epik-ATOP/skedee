@@ -207,6 +207,9 @@
 [data-theme="dark"] .store-badge img{filter:brightness(.92);}
 .footer-disclaimer{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text3);}
 
+/* ── MOBILE HEADER ── */
+.mobile-header{display:none;align-items:center;padding:4px 0 2px;}
+
 /* ── MOBILE SEARCH STRIP ── */
 .mobile-search-strip{display:none;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:0 12px;height:40px;align-items:center;gap:8px;}
 .mobile-search-strip input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:14px;width:100%;}
@@ -225,10 +228,8 @@
 @media(max-width:1000px){.markets-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:760px){
   .sidebar{display:none;}
-  .topbar-nav{display:none;}
-  .search-bar{display:none;}
-  .wallet-pill{display:none;}
-  .topbar{padding:0 12px;gap:6px;}
+  .topbar{display:none;}
+  .layout{margin-top:0;}
   .markets-grid{grid-template-columns:1fr;}
   .stats-strip{grid-template-columns:repeat(2,1fr);}
   .featured-right{display:none;}
@@ -241,8 +242,9 @@
   .footer-right{align-items:flex-start;}
   .footer-cols{flex-wrap:wrap;gap:24px;}
   .main{padding:14px 12px 90px;gap:20px;}
+  .mobile-header{display:flex;}
   .mobile-search-strip{display:flex;}
-  .mobile-bottom-nav{display:block;}
+  .mobile-bottom-nav{display:block;position:fixed;top:auto;bottom:0;left:0;right:0;}
 }
 
 </style>
@@ -253,7 +255,7 @@
 <div class="topbar">
   <a href="index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
   <div class="topbar-nav">
-    <a href="index.html" class="topbar-navlink active">Markets</a>
+    <a href="search.html" class="topbar-navlink active">Markets</a>
     <a href="markets/10000008.html" class="topbar-navlink">Dollar/Naira? <span style="font-family:var(--font-mono);font-size:8px;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;">LIVE</span></a>
     <a href="search.html" class="topbar-navlink">Final Matchday <span style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(100,100,100,.15);color:var(--text3);border:1px solid var(--border);padding:1px 5px;border-radius:3px;">FT</span></a>
     <a href="about.html" class="topbar-navlink">About</a>
@@ -267,7 +269,7 @@
     <div class="btn-icon" title="Notifications"><i class="fa-solid fa-bell"></i><span class="notif-badge">3</span></div>
     <div class="theme-btn" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
     <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal">₦4,271,250</div></div></div>
-    <a href="signup.html"><div class="avatar">TK</div></a>
+    <a href="profile.html"><div class="avatar">TK</div></a>
   </div>
 </div>
 
@@ -301,6 +303,15 @@
 
 <!-- MAIN CONTENT -->
 <div class="main">
+
+  <!-- MOBILE HEADER (logo + actions, visible only on mobile) -->
+  <div class="mobile-header">
+    <div class="logo" style="font-size:17px;"><div class="logo-dot"></div>Skedee</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
+      <div class="btn-icon" title="Notifications" style="width:32px;height:32px;font-size:13px;"><i class="fa-solid fa-bell"></i><span class="notif-badge">3</span></div>
+      <div class="theme-btn" onclick="toggleTheme()" style="width:32px;height:32px;font-size:13px;"><i class="fa-solid fa-sun" id="theme-icon-mobile"></i></div>
+    </div>
+  </div>
 
   <!-- MOBILE SEARCH STRIP -->
   <div class="mobile-search-strip">
@@ -443,7 +454,7 @@
 // ── DATA ──────────────────────────────────────────────────
 const FEATURED = [
   {
-    emoji:'🏆', cat:'FOOTBALL · PREMIER LEAGUE · FINAL MATCHDAY', live:true,
+    emoji:'🏆', cat:'FOOTBALL · PREMIER LEAGUE', live:false,
     title:'Final Matchday — Full Time',
     sub:"Matchday 38 is over. All 10 Premier League matches have concluded. Check the results and see how markets settled.",
     prob:10, probLabel:'SETTLED', vol:'₦280M+', change:'FT', changeDir:'flat',
@@ -451,11 +462,11 @@ const FEATURED = [
     link:'search.html'
   },
   {
-    emoji:'🪙', cat:'FINANCE · FOREX', live:false,
+    emoji:'🪙', cat:'FINANCE · FOREX', live:true,
     title:'Will the Dollar/Naira rate hit ₦1,500 before June?',
     sub:"The naira has been under sustained pressure. As the CBN weighs rate decisions and FX reserves shift, traders are betting on whether ₦1,500 per dollar becomes reality before the end of the month.",
     prob:41, vol:'₦74.5M', change:'+9%', changeDir:'up',
-    bg:'💱', yesLabel:'BUY YES ₦41', noLabel:'BUY NO ₦59',
+    bg:'🪙', yesLabel:'BUY YES ₦41', noLabel:'BUY NO ₦59',
     link:'markets/10000008.html'
   },
   {
@@ -471,6 +482,12 @@ const FEATURED = [
 const ALL_MARKETS = [
   // FOOTBALL
   { id:5, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Barcelona to win La Liga 2025/26', badge:'hot', yes:0.71, no:0.29, vol:'₦52.8M', change:'+3%', dir:'up', link:'#' },
+
+  // WEATHER
+  { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · ENVIRONMENT', title:'Will Lagos Experience Major Flooding Before July 2026?', badge:'hot', yes:0.67, no:0.33, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html', isCommodity:true },
+
+  // ENTERTAINMENT
+  { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn box office?", badge:'hot', yes:0.52, no:0.48, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
 
   // SUNDAY FINAL MATCHDAY
   { id:10000014, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · PREMIER LEAGUE', title:'Final Matchday: Man City vs Aston Villa', badge:'determined', yes:0.00, no:1.00, vol:'₦38M', change:'FT', dir:'flat', link:'markets/10000014.html', isMatch:true, t1:'<img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="Man City">', t1n:'Man City', t2:'<img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Aston_Villa_FC_new_crest.svg" alt="Aston Villa">', t2n:'Aston Villa', score:'1 — 2' },
@@ -489,8 +506,6 @@ const ALL_MARKETS = [
   { id:7, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Wizkid drop a new album this year?', badge:'new', yes:0.71, no:0.29, vol:'₦55.9M', change:'+4%', dir:'up', link:'#' },
   { id:8, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Burna Boy win a Grammy 2026?', badge:'new', yes:0.44, no:0.56, vol:'₦31.4M', change:'-2%', dir:'down', link:'#' },
 
-  // ENTERTAINMENT
-  { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn box office?", badge:'hot', yes:0.52, no:0.48, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
 
   // POLITICS
   { id:11, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.45bn loan to Nigeria be approved?', badge:'hot', yes:0.74, no:0.26, vol:'₦61.4M', change:'+8%', dir:'up', link:'#' },
@@ -507,8 +522,6 @@ const ALL_MARKETS = [
   { id:20, cat:'commodities', emoji:'🍌', catLabel:'COMMODITIES', title:'Will plantain prices drop below ₦800/bunch by June?', badge:'new', yes:0.29, no:0.71, vol:'₦7.1M', change:'-2%', dir:'down', link:'#', isCommodity:true },
   { id:21, cat:'commodities', emoji:'🌽', catLabel:'COMMODITIES', title:'Will food inflation fall below 30% by end of 2026?', badge:'new', yes:0.33, no:0.67, vol:'₦16.4M', change:'+1%', dir:'up', link:'#', isCommodity:true },
 
-  // WEATHER
-  { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · ENVIRONMENT', title:'Will Lagos Experience Major Flooding Before July 2026?', badge:'hot', yes:0.67, no:0.33, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html', isCommodity:true },
 
   // FINANCE
   { id:22, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,500 before June?', badge:'hot', yes:0.48, no:0.52, vol:'₦88.3M', change:'-3%', dir:'down', link:'markets/10000008.html', isCommodity:true },
