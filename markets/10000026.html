@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who Will Drop an Album in 2026? — Naija | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../style.css">
+<style>
+:root {
+  --music:#A855F7;
+  --music2:#C084FC;
+  --sidebar-w:220px;
+  --rsidebar-w:280px;
+}
+
+/* ── LAYOUT ── */
+.layout{display:flex;margin-top:52px;min-height:calc(100vh - 52px);}
+
+/* ── LEFT SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);flex-shrink:0;padding:16px 0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;margin-top:4px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;font-size:13px;}
+.sidebar-item .item-badge{margin-left:auto;background:var(--y);color:#000;font-size:9px;font-weight:700;font-family:var(--font-mono);padding:2px 5px;border-radius:4px;}
+.sidebar-item .item-badge.red{background:var(--red);color:#fff;}
+.trending-event{margin:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;cursor:pointer;transition:all .15s;}
+.trending-event:hover{border-color:var(--border2);}
+.trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.trend-change{font-family:var(--font-mono);font-size:10px;}
+
+/* ── MAIN ── */
+.main{flex:1;background:var(--bg);padding:16px;display:flex;flex-direction:column;gap:14px;min-width:0;overflow:hidden;}
+
+/* ── HERO CARD ── */
+.hero-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:28px;position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--music),var(--y),var(--music2),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
+.hero-bg-emoji{position:absolute;right:-10px;top:-10px;font-size:200px;opacity:.04;line-height:1;pointer-events:none;user-select:none;}
+
+.hero-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.hero-cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--music);letter-spacing:1.5px;}
+.hero-vol-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,0,.08);border:1px solid var(--border2);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--y);letter-spacing:1px;}
+.hot-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--red);letter-spacing:1px;}
+.closes-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.25);border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--music2);letter-spacing:1px;}
+
+.hero-title{font-family:var(--font-display);font-weight:800;font-size:clamp(20px,2.8vw,34px);letter-spacing:-.5px;line-height:1.15;margin-bottom:10px;}
+.hero-sub{font-size:13px;color:var(--text2);line-height:1.75;max-width:680px;margin-bottom:22px;}
+
+/* ── MARKET STATS BAR ── */
+.market-stats-bar{display:flex;gap:40px;flex-wrap:wrap;padding:16px 0;border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);margin-bottom:16px;}
+.mstat{display:flex;flex-direction:column;gap:3px;}
+.mstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;}
+.mstat-val{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--text);}
+.mstat-val.yellow{color:var(--y);}
+.mstat-val.purple{color:var(--music);}
+.mstat-val.green{color:var(--green);}
+
+/* ── ARTISTS TABLE ── */
+.artists-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;}
+.col-defs{grid-template-columns:32px 1.6fr 88px 2fr 70px 205px;}
+.artists-header{display:grid;gap:12px;padding:10px 18px;background:var(--bg3);border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;align-items:center;}
+.artist-row{display:grid;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border3);align-items:center;transition:background .15s;min-width:0;}
+.artist-row:last-child{border-bottom:none;}
+.artist-row:hover{background:rgba(168,85,247,.025);}
+.artist-row.determined{background:rgba(34,197,94,.025);border-left:3px solid rgba(34,197,94,.5);}
+.artist-row.determined:hover{background:rgba(34,197,94,.045);}
+
+.ar-rank{font-family:var(--font-mono);font-size:11px;color:var(--text3);text-align:center;}
+.ar-name-wrap{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.ar-name{font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ar-genre{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.4px;}
+.ar-prob-wrap{text-align:right;}
+.ar-prob-num{font-family:var(--font-num);font-size:24px;font-weight:700;line-height:1;}
+.ar-prob-num.yes-c{color:var(--green);}
+.ar-prob-num.no-c{color:var(--red);}
+.ar-prob-num.det-c{color:var(--music);font-size:14px;letter-spacing:.5px;}
+.ar-prob-label{font-family:var(--font-mono);font-size:8px;color:var(--text3);letter-spacing:1px;margin-top:2px;}
+
+.ar-bar-col{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.ar-bar-outer{height:8px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;}
+.ar-bar-yes{background:linear-gradient(90deg,var(--green),rgba(34,197,94,.6));border-radius:99px 0 0 99px;transition:width .5s cubic-bezier(.4,0,.2,1);}
+.ar-bar-no{background:linear-gradient(90deg,rgba(239,68,68,.5),var(--red));border-radius:0 99px 99px 0;transition:width .5s cubic-bezier(.4,0,.2,1);}
+.ar-bar-det{background:linear-gradient(90deg,var(--music),var(--music2));border-radius:99px;width:100%;}
+.ar-bar-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:8px;}
+
+.ar-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+
+.ar-btns{display:flex;gap:6px;}
+.ar-btn-yes{flex:1;padding:7px 4px;border-radius:var(--radius);border:1px solid rgba(34,197,94,.35);background:rgba(34,197,94,.08);color:var(--green);font-family:var(--font-display);font-weight:700;font-size:11px;cursor:pointer;transition:all .15s;text-align:center;white-space:nowrap;}
+.ar-btn-yes:hover{background:var(--green);color:#000;border-color:var(--green);}
+.ar-btn-no{flex:1;padding:7px 4px;border-radius:var(--radius);border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.06);color:var(--red);font-family:var(--font-display);font-weight:700;font-size:11px;cursor:pointer;transition:all .15s;text-align:center;white-space:nowrap;}
+.ar-btn-no:hover{background:var(--red);color:#fff;border-color:var(--red);}
+.ar-det-chip{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;text-align:center;padding:4px 0;line-height:1.5;}
+
+/* ── TABS ── */
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+
+/* ── CARD ── */
+.card-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
+.card-section-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:14px;}
+
+/* ── ARTIST BLURB GRID ── */
+.blurb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.blurb-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;}
+.blurb-card.det{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.03);}
+.blurb-name{font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:3px;}
+.blurb-verdict{font-family:var(--font-mono);font-size:9px;margin-bottom:7px;letter-spacing:.5px;}
+.blurb-text{font-size:11px;color:var(--text2);line-height:1.65;}
+
+/* ── RIGHT SIDEBAR ── */
+.right-sidebar{width:var(--rsidebar-w);background:var(--bg2);border-left:1px solid var(--border);flex-shrink:0;padding:16px 12px;display:flex;flex-direction:column;gap:16px;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.rsidebar-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+
+.sb-artist-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border3);}
+.sb-artist-row:last-child{border-bottom:none;}
+.sb-ar-name{font-size:12px;font-weight:500;color:var(--text);flex:1;}
+.sb-ar-prob{font-family:var(--font-mono);font-size:11px;font-weight:700;}
+
+.countdown-chip{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);border-radius:var(--radius);padding:10px 12px;text-align:center;}
+.cd-label{font-family:var(--font-mono);font-size:8px;color:var(--music);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
+.cd-val{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--music);}
+.cd-sub{font-family:var(--font-mono);font-size:8px;color:var(--text3);margin-top:2px;}
+
+.trade-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border3);animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side.buy{background:rgba(34,197,94,.15);color:var(--green);}
+.trade-side.sell{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-market{font-size:10px;color:var(--text2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trade-price{font-family:var(--font-mono);font-size:10px;color:var(--text);font-weight:600;}
+.trade-size{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ── ORDER PANEL ── */
+.order-panel{position:fixed;bottom:0;right:var(--rsidebar-w);z-index:200;width:340px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:20px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.5);}
+.order-panel.open{transform:translateY(0);}
+.order-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.order-panel-title{font-family:var(--font-display);font-weight:700;font-size:15px;}
+.btn-close{width:28px;height:28px;background:var(--bg4);border:none;border-radius:50%;cursor:pointer;color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.btn-close:hover{background:var(--red);color:#fff;}
+.order-market-name{font-size:11px;color:var(--text3);margin-bottom:14px;font-family:var(--font-mono);}
+.order-side-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.order-side-btn{flex:1;padding:8px;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;transition:all .15s;background:var(--bg3);color:var(--text2);}
+.order-side-btn.yes.active{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:var(--green);}
+.order-side-btn.no.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:var(--red);}
+.order-field{margin-bottom:12px;}
+.order-field label{display:block;font-size:11px;color:var(--text3);font-family:var(--font-mono);letter-spacing:.5px;margin-bottom:5px;text-transform:uppercase;}
+.order-field input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;color:var(--text);font-family:var(--font-mono);font-size:14px;font-weight:700;outline:none;transition:border-color .15s;box-sizing:border-box;}
+.order-field input:focus{border-color:var(--y);}
+.order-summary{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:14px;}
+.order-summary-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;}
+.order-summary-row .label{color:var(--text3);font-family:var(--font-mono);}
+.order-summary-row .value{color:var(--text);font-family:var(--font-mono);font-weight:600;}
+.order-summary-row .value.green{color:var(--green);}
+.order-summary-row .value.yellow{color:var(--y);}
+.btn-place{width:100%;padding:13px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.5px;transition:all .15s;background:var(--y);color:#000;}
+.btn-place:hover{background:var(--y2);transform:translateY(-1px);}
+
+/* ── PROFILE ── */
+.profile-dropdown{position:fixed;top:56px;right:16px;z-index:300;width:180px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:8px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+.profile-dropdown.open{display:block;animation:dropIn .2s ease;}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.profile-item{padding:8px 12px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px;transition:all .15s;}
+.profile-item:hover{background:var(--bg3);color:var(--text);}
+.profile-item i{width:14px;text-align:center;color:var(--text3);font-size:12px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1150px) {
+  .artists-header,.artist-row{grid-template-columns:32px 1.6fr 88px 2fr 205px !important;}
+  .ar-vol{display:none;}
+}
+@media(max-width:900px) {
+  .sidebar{display:none;}
+  .right-sidebar{display:none;}
+  .order-panel{right:0;width:100%;}
+  .topbar-nav{display:none;}
+  .blurb-grid{grid-template-columns:1fr;}
+  .artists-header{display:none;}
+  .artist-row{
+    display:grid !important;
+    grid-template-columns:1fr auto !important;
+    grid-template-rows:auto auto auto;
+    gap:8px;
+    padding:12px 14px;
+  }
+  .ar-rank{display:none;}
+  .ar-name-wrap{grid-column:1;grid-row:1;}
+  .ar-prob-wrap{grid-column:2;grid-row:1;text-align:right;}
+  .ar-bar-col{grid-column:1/-1;grid-row:2;}
+  .ar-vol{display:none;}
+  .ar-btns{grid-column:1/-1;grid-row:3;}
+  .ar-det-chip{grid-column:1/-1;grid-row:3;text-align:left;}
+}
+*{-webkit-tap-highlight-color:transparent;}
+body{-webkit-font-smoothing:antialiased;}
+</style>
+<link rel="stylesheet" href="../market-mobile.css">
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="../index.html" class="topbar-navlink">Markets</a>
+    <a href="10000004.html" class="topbar-navlink">BBNaija S11</a>
+    <a href="10000007.html" class="topbar-navlink">Fuel Price</a>
+    <a href="10000008.html" class="topbar-navlink">Naira/Dollar</a>
+    <a href="10000026.html" class="topbar-navlink active">Naija Albums 2026</a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+    <a href="../faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search markets, events, teams...">
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<div class="layout">
+
+<!-- LEFT SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist</div>
+  <div class="sidebar-item"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Find Markets</div>
+  <div class="sidebar-item">⚽ Football</div>
+  <div class="sidebar-item">🏉 Other Sports</div>
+  <div class="sidebar-item">🎬 Entertainment</div>
+  <div class="sidebar-item active">🎵 Music</div>
+  <div class="sidebar-item">⚖️ Politics</div>
+  <div class="sidebar-item">🛢️ Commodities</div>
+  <div class="sidebar-item">🪙 Finance</div>
+  <div class="sidebar-item">🌦️ Weather</div>
+  <div class="sidebar-item">🌀 Miscellaneous</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Trending Now</div>
+  <div class="trending-event">
+    <div class="trend-name">🎵 Who Drops an Album?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦114M vol</div>
+      <div class="trend-change" style="color:var(--green);">▲ 22%</div>
+    </div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">🌊 Lagos Major Flood?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦34M vol</div>
+      <div class="trend-change" style="color:var(--green);">▲ 14%</div>
+    </div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">🪙 Dollar hits ₦1,500?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦88M vol</div>
+      <div class="trend-change" style="color:var(--green);">▲ 6%</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO CARD -->
+  <div class="hero-card">
+    <div class="hero-bg-emoji">🎵</div>
+
+    <div class="hero-top">
+      <div class="hero-cat-tag">🎵 MUSIC · NAIJA · 2026</div>
+      <div class="hero-vol-tag">Vol ₦114.2M</div>
+      <div class="hot-tag">🔥 TRENDING</div>
+      <div class="closes-tag">⏳ CLOSES DEC 31</div>
+    </div>
+
+    <div class="hero-title">Who Will Drop a Studio Album in 2026?</div>
+    <div class="hero-sub">
+      12 of Nigeria's biggest acts — each with their own YES/NO market. Trade on whether your faves will deliver a full studio LP before the year ends.
+      <strong style="color:var(--music);">Asake</strong> is already <strong style="color:var(--green);">DETERMINED ✅</strong> — album delivered. Who's next?
+    </div>
+
+    <div class="market-stats-bar">
+      <div class="mstat">
+        <div class="mstat-label">Total Volume</div>
+        <div class="mstat-val yellow">₦114.2M</div>
+      </div>
+      <div class="mstat">
+        <div class="mstat-label">Markets Open</div>
+        <div class="mstat-val purple">11</div>
+      </div>
+      <div class="mstat">
+        <div class="mstat-label">Determined</div>
+        <div class="mstat-val green">1</div>
+      </div>
+      <div class="mstat">
+        <div class="mstat-label">Total Traders</div>
+        <div class="mstat-val">24,831</div>
+      </div>
+      <div class="mstat">
+        <div class="mstat-label">Closes</div>
+        <div class="mstat-val yellow">Dec 31</div>
+      </div>
+    </div>
+
+    <div style="font-size:12px;color:var(--text3);display:flex;align-items:flex-start;gap:7px;line-height:1.6;">
+      <i class="fa-solid fa-circle-info" style="color:var(--music);margin-top:2px;flex-shrink:0;"></i>
+      Each artist has an independent YES/NO market. Resolves YES if that artist officially releases a full studio album (7+ tracks, not an EP) on any major streaming platform before midnight December 31, 2026 WAT. Singles, EPs, and features do not count.
+    </div>
+  </div>
+
+  <!-- ARTISTS TABLE -->
+  <div class="artists-section">
+    <div class="artists-header col-defs" style="grid-template-columns:32px 1.6fr 88px 2fr 70px 205px;">
+      <div>#</div>
+      <div>ARTIST</div>
+      <div style="text-align:right;">YES PROB</div>
+      <div>MARKET CONFIDENCE</div>
+      <div>VOLUME</div>
+      <div>TRADE</div>
+    </div>
+    <div id="artists-list"></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+    <div class="card-section" style="margin-bottom:14px;">
+      <div class="card-section-title">🇳🇬 Naija Music in 2026</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8;">
+        Afrobeats is at <strong style="color:var(--text);">peak global dominance</strong> — but a studio album is a different commitment to a single or EP. Nigeria's biggest acts are navigating packed touring schedules, international label deals, and creative timelines while fans grow more impatient by the month. With Asake already across the finish line, the question is who follows — and who keeps you waiting until 2027.
+      </div>
+    </div>
+
+    <div class="card-section">
+      <div class="card-section-title">Artist Breakdown</div>
+      <div class="blurb-grid">
+
+        <div class="blurb-card det">
+          <div class="blurb-name" style="color:var(--green);">Asake</div>
+          <div class="blurb-verdict" style="color:var(--green);">✅ DETERMINED — Album Released 2026</div>
+          <div class="blurb-text">Asake made it look easy. He delivered his studio project, M$NEY, in 2026, cementing himself as one of Nigeria's most consistent acts. YES holders were paid out at ₦100 per share. The Asake market is now closed.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--green);">Ayra Starr</div>
+          <div class="blurb-verdict" style="color:var(--green);">71% YES · Hot Favourite</div>
+          <div class="blurb-text">Ayra Starr has been vocal about a 2026 LP. Her debut hit big globally, the sophomore album is overdue, and her momentum with UMG is at peak. Studio sessions confirmed via socials. Strong YES signal.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--green);">Davido</div>
+          <div class="blurb-verdict" style="color:var(--green);">68% YES · Likely YES</div>
+          <div class="blurb-text">OBO rarely goes a year without a project. 2026 is already buzzing with new singles from his camp. Davido is known for last-minute rollouts — the single cluster signal is worth watching. Smart YES money.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--green);">Burna Boy</div>
+          <div class="blurb-verdict" style="color:var(--green);">63% YES · Likely YES</div>
+          <div class="blurb-text">African Giant drops every 1–2 years, no exceptions. His last LP was well-received globally, and insiders report sessions ongoing in both Lagos and London. Burna being "quiet" on socials almost always means something is cooking.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--green);">Omah Lay</div>
+          <div class="blurb-verdict" style="color:var(--green);">62% YES · Slight Yes</div>
+          <div class="blurb-text">Omah Lay has been dropping loosies and features but the industry buzz suggests he's sitting on an album. The Naija underground knows something. Watch for the rollout — it'll come fast when it does.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--y);">BNXN</div>
+          <div class="blurb-verdict" style="color:var(--y);">57% YES · Slight Yes</div>
+          <div class="blurb-text">BNXN has matured into one of Afropop's most melodic voices and has been consistent with projects. Confirmed studio activity in early 2026 and a track record of delivering. A project is more likely than not.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--y);">Rema</div>
+          <div class="blurb-verdict" style="color:var(--y);">56% YES · Slight Yes</div>
+          <div class="blurb-text">Rema's global breakout with "Calm Down" put him on a different level. But international stardom comes with longer rollouts. His label Jonzing/Mavin has hinted at 2026 plans — no confirmed timeline yet though.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--y);">Fireboy DML</div>
+          <div class="blurb-verdict" style="color:var(--y);">52% YES · Coinflip</div>
+          <div class="blurb-text">Fireboy has gone slightly quieter after his last run. Nothing officially confirmed for 2026, though he's been spotted on features. His YES price reflects genuine uncertainty — the market is waiting for a clear signal.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--y);">Kizz Daniel</div>
+          <div class="blurb-verdict" style="color:var(--y);">51% YES · Coinflip</div>
+          <div class="blurb-text">Kizz Daniel is Africa's touring machine — which sometimes means albums take a back seat. His prolific singles output keeps him in the conversation, but committing to a full LP in 2026 is unconfirmed. Pure coin flip.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--red);">Tems</div>
+          <div class="blurb-verdict" style="color:var(--red);">48% YES · Slight No</div>
+          <div class="blurb-text">Tems is famously deliberate. Her debut album took years and was a career statement, not a quick drop. She's embedded in international collabs and her own label. A 2026 LP is possible but she shows no urgency.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--red);">Wizkid</div>
+          <div class="blurb-verdict" style="color:var(--red);">43% YES · Likely No</div>
+          <div class="blurb-text">Big Wiz moves on his own timeline — Starboy (2017), Made in Lagos (2020), MLLE (2022). If the pattern holds, 2026 is a gap year. But Wizkid surprises. He has the most volume on this market for a reason.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--red);">Olamide</div>
+          <div class="blurb-verdict" style="color:var(--red);">39% YES · Likely No</div>
+          <div class="blurb-text">YBNL Nation's boss has shifted focus to developing his label roster — Asake, Poco Lee, the whole camp. Olamide still drops, but full-length personal projects have become rarer. NO looks like the smart side here.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- RULES TAB -->
+  <div id="tab-rules" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Market Rules & Resolution</div>
+      <div style="display:flex;flex-direction:column;gap:16px;font-size:13px;color:var(--text2);line-height:1.8;">
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What counts as an "album"?</div>
+          A full-length studio album with a minimum of <strong style="color:var(--text);">7 original tracks</strong>, officially released by the artist or their label on at least one major streaming platform (Spotify, Apple Music, Audiomack, Boomplay). The release must be announced officially by the artist or label — leaked projects do not count.
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What does NOT count?</div>
+          Extended Plays (EPs) regardless of track count, mixtapes, compilations, collaborative albums where the artist is not the primary/sole act, deluxe re-releases of albums from previous years, singles, or features. "Live" albums and "Best Of" collections also do not count.
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution deadline</div>
+          Each market closes and resolves at <strong style="color:var(--text);">midnight WAT on December 31, 2026</strong>. An album must be fully available on streaming platforms — not just announced — by this deadline. A title or tracklist announcement with no actual release does not resolve YES.
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution sources</div>
+          Official artist and label social media accounts, verified announcements on Spotify for Artists or Apple Music for Artists, and confirmed reports from major Nigerian music outlets (TurnTable Charts, Native Magazine, Audiomack Nigeria). Skedee verifies releases independently on all major platforms before resolving.
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Already DETERMINED — Asake ✅</div>
+          Asake's market resolved <strong style="color:var(--green);">YES</strong> in 2026 following the official release of his studio album on all major platforms. All YES holders received ₦100 per share. The Asake market is now closed to new trades.
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Disputes</div>
+          Contact support@skedee.ng within 24 hours of any market resolution with supporting evidence. Skedee's decision is final in cases of ambiguity.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- RIGHT SIDEBAR -->
+<div class="right-sidebar">
+
+  <div>
+    <div class="rsidebar-title">Closes In</div>
+    <div class="countdown-chip">
+      <div class="cd-label">Market Closes In</div>
+      <div class="cd-val" id="countdown-val">218d 00h</div>
+      <div class="cd-sub">December 31, 2026 · 23:59 WAT</div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">YES Leaderboard</div>
+    <div id="sb-artist-list"></div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Market Summary</div>
+    <div style="display:flex;flex-direction:column;gap:0;">
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TOTAL VOLUME</span>
+        <span style="color:var(--y);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦114.2M</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">ACTIVE MARKETS</span>
+        <span style="color:var(--music);font-family:var(--font-mono);font-size:11px;">11 / 12</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">DETERMINED</span>
+        <span style="color:var(--green);font-family:var(--font-mono);font-size:11px;">Asake ✅</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TRADERS</span>
+        <span style="color:var(--text);font-family:var(--font-mono);font-size:11px;">24,831</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">CLOSES</span>
+        <span style="color:var(--music);font-family:var(--font-mono);font-size:11px;">Dec 31 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
+  </div>
+
+</div>
+
+</div><!-- end layout -->
+
+<!-- ORDER PANEL -->
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header">
+    <div class="order-panel-title">Place Order</div>
+    <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="order-market-name" id="op-market-name">Davido — Album in 2026?</div>
+  <div class="order-side-tabs">
+    <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
+    <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
+  </div>
+  <div class="order-field">
+    <label>Amount (NGN ₦)</label>
+    <input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()">
+  </div>
+  <div class="order-field">
+    <label>Price per Share (₦)</label>
+    <input type="number" id="op-price" value="68" step="1" min="1" max="99" oninput="updateOrderSummary()">
+  </div>
+  <div class="order-summary">
+    <div class="order-summary-row"><span class="label">Shares</span><span class="value" id="op-shares">73.5</span></div>
+    <div class="order-summary-row"><span class="label">Avg Entry</span><span class="value" id="op-entry">₦68</span></div>
+    <div class="order-summary-row"><span class="label">Max Payout</span><span class="value green" id="op-payout">₦7,353</span></div>
+    <div class="order-summary-row"><span class="label">Potential Profit</span><span class="value yellow" id="op-profit">+₦2,353</span></div>
+    <div class="order-summary-row"><span class="label">Wallet After</span><span class="value" id="op-wallet-after">₦4,266,250</span></div>
+  </div>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+</div>
+
+<script src="../script.js"></script>
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const ARTISTS = [
+  { id:'asake',     name:'Asake',       emoji:'', genre:'AMAPIANO · AFRO-FUTURISM',  yes:100, vol:'₦9.2M',  determined:true  },
+  { id:'ayra',      name:'Ayra Starr',  emoji:'', genre:'AFROPOP · R&B',             yes:71,  vol:'₦11.2M', determined:false },
+  { id:'davido',    name:'Davido',      emoji:'', genre:'AFROPOP · HIP-HOP',         yes:68,  vol:'₦15.6M', determined:false },
+  { id:'burna',     name:'Burna Boy',   emoji:'', genre:'AFRO-FUSION',               yes:63,  vol:'₦14.3M', determined:false },
+  { id:'omah',      name:'Omah Lay',    emoji:'', genre:'AFROPOP · R&B',             yes:62,  vol:'₦7.1M',  determined:false },
+  { id:'bnxn',      name:'BNXN',        emoji:'', genre:'AFROPOP',                   yes:57,  vol:'₦5.8M',  determined:false },
+  { id:'rema',      name:'Rema',        emoji:'', genre:'AFROPOP · AMAPIANO',        yes:56,  vol:'₦9.9M',  determined:false },
+  { id:'fireboy',   name:'Fireboy DML', emoji:'', genre:'AFROPOP',                   yes:52,  vol:'₦4.7M',  determined:false },
+  { id:'kizz',      name:'Kizz Daniel', emoji:'', genre:'AFROPOP · HIGHLIFE',        yes:51,  vol:'₦4.4M',  determined:false },
+  { id:'tems',      name:'Tems',        emoji:'', genre:'R&B · AFRO-SOUL',           yes:48,  vol:'₦8.1M',  determined:false },
+  { id:'wizkid',    name:'Wizkid',      emoji:'', genre:'AFROBEATS · R&B',           yes:43,  vol:'₦17.5M', determined:false },
+  { id:'olamide',   name:'Olamide',     emoji:'', genre:'AFRO-HIP-HOP · HIGHLIFE',  yes:39,  vol:'₦6.3M',  determined:false },
+];
+
+// Live YES% (drifts during ticks)
+let liveYes = ARTISTS.map(a => a.yes);
+let walletBalance = 4271250;
+let orderSide = 'YES';
+let recentTrades = [];
+
+// ── RENDER ARTIST TABLE ───────────────────────────────────────────────────────
+function renderArtists() {
+  const COL = 'grid-template-columns:32px 1.6fr 88px 2fr 70px 205px;';
+  document.getElementById('artists-list').innerHTML = ARTISTS.map((a, i) => {
+    const yes = Math.round(liveYes[i]);
+    const no  = 100 - yes;
+
+    if (a.determined) {
+      return `
+      <div class="artist-row determined" id="ar-${a.id}" style="${COL}">
+        <div class="ar-rank" style="color:var(--green);font-size:13px;">✅</div>
+        <div class="ar-name-wrap">
+          <div class="ar-name">${a.emoji} ${a.name}</div>
+          <div class="ar-genre">${a.genre}</div>
+        </div>
+        <div class="ar-prob-wrap">
+          <div class="ar-prob-num det-c">DONE</div>
+          <div class="ar-prob-label">DETERMINED</div>
+        </div>
+        <div class="ar-bar-col">
+          <div class="ar-bar-outer"><div class="ar-bar-det"></div></div>
+          <div class="ar-bar-labels">
+            <span style="color:var(--green);">✅ Album Released · 2026</span>
+          </div>
+        </div>
+        <div class="ar-vol">${a.vol}</div>
+        <div class="ar-btns" style="flex-direction:column;gap:3px;">
+          <div class="ar-det-chip" style="text-align:center;">MARKET CLOSED</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);text-align:center;">YES paid ₦100/share</div>
+        </div>
+      </div>`;
+    }
+
+    const probColor = yes >= 60 ? 'yes-c' : yes >= 45 ? 'yes-c' : 'no-c';
+    const label = yes >= 50 ? 'LEANS YES' : 'LEANS NO';
+    const yesBarColor = yes >= 50 ? 'var(--green)' : 'rgba(34,197,94,.5)';
+    const noBarColor  = yes < 50  ? 'var(--red)'   : 'rgba(239,68,68,.45)';
+
+    return `
+    <div class="artist-row" id="ar-${a.id}" style="${COL}">
+      <div class="ar-rank">${i + 1}</div>
+      <div class="ar-name-wrap">
+        <div class="ar-name">${a.emoji} ${a.name}</div>
+        <div class="ar-genre">${a.genre}</div>
+      </div>
+      <div class="ar-prob-wrap">
+        <div class="ar-prob-num ${probColor}" id="prob-${a.id}">${yes}%</div>
+        <div class="ar-prob-label" id="prob-label-${a.id}">${label}</div>
+      </div>
+      <div class="ar-bar-col">
+        <div class="ar-bar-outer">
+          <div class="ar-bar-yes" id="bar-yes-${a.id}" style="width:${yes}%;"></div>
+          <div class="ar-bar-no"  id="bar-no-${a.id}"  style="width:${no}%;"></div>
+        </div>
+        <div class="ar-bar-labels">
+          <span style="color:var(--green);">YES ${yes}%</span>
+          <span style="color:var(--red);">NO ${no}%</span>
+        </div>
+      </div>
+      <div class="ar-vol">${a.vol}</div>
+      <div class="ar-btns">
+        <button class="ar-btn-yes" id="btn-yes-${a.id}" onclick="openOrder('${a.name}','YES',${yes})">YES ₦${yes}</button>
+        <button class="ar-btn-no"  id="btn-no-${a.id}"  onclick="openOrder('${a.name}','NO',${no})">NO ₦${no}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── RENDER SIDEBAR LEADERBOARD ────────────────────────────────────────────────
+function renderSidebarList() {
+  const el = document.getElementById('sb-artist-list');
+  if (!el) return;
+  const sorted = ARTISTS.map((a, i) => ({ ...a, live: Math.round(liveYes[i]) }))
+    .sort((x, y) => y.live - x.live);
+  el.innerHTML = sorted.map(a => {
+    const color = a.determined ? 'var(--green)' : a.live >= 60 ? 'var(--green)' : a.live >= 45 ? 'var(--y)' : 'var(--red)';
+    const val   = a.determined ? '✅ DONE' : a.live + '%';
+    return `
+    <div class="sb-artist-row">
+      <div class="sb-ar-name">${a.emoji} ${a.name}</div>
+      <div class="sb-ar-prob" style="color:${color};">${val}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── TRADES ────────────────────────────────────────────────────────────────────
+const TRADE_ARTISTS = ARTISTS.filter(a => !a.determined);
+function generateTrade() {
+  const a    = TRADE_ARTISTS[Math.floor(Math.random() * TRADE_ARTISTS.length)];
+  const idx  = ARTISTS.findIndex(x => x.id === a.id);
+  const yes  = Math.round(liveYes[idx]);
+  const side = Math.random() > 0.44 ? 'buy' : 'sell';
+  const mktSide = Math.random() > 0.5 ? 'YES' : 'NO';
+  const price   = mktSide === 'YES' ? yes : 100 - yes;
+  const size    = Math.floor(Math.random() * 4500 + 200);
+  return { side, name: a.name, mktSide, price, size };
+}
+function renderTrades() {
+  if (!recentTrades.length) for (let i = 0; i < 8; i++) recentTrades.push(generateTrade());
+  document.getElementById('recent-trades').innerHTML = recentTrades.slice(0, 8).map(t => `
+    <div class="trade-row">
+      <span class="trade-side ${t.side}">${t.side.toUpperCase()}</span>
+      <span class="trade-market">${t.name} ${t.mktSide}</span>
+      <span class="trade-price">₦${t.price}</span>
+      <span class="trade-size">×${t.size.toLocaleString()}</span>
+    </div>`).join('');
+}
+
+// ── LIVE TICK ─────────────────────────────────────────────────────────────────
+function liveTick() {
+  ARTISTS.forEach((a, i) => {
+    if (a.determined) return;
+    liveYes[i] = Math.max(5, Math.min(95, liveYes[i] + (Math.random() - 0.495) * 1.4));
+  });
+
+  ARTISTS.forEach((a, i) => {
+    if (a.determined) return;
+    const yes = Math.round(liveYes[i]);
+    const no  = 100 - yes;
+    const probEl   = document.getElementById('prob-' + a.id);
+    const labelEl  = document.getElementById('prob-label-' + a.id);
+    const barYesEl = document.getElementById('bar-yes-' + a.id);
+    const barNoEl  = document.getElementById('bar-no-'  + a.id);
+    const btnYes   = document.getElementById('btn-yes-' + a.id);
+    const btnNo    = document.getElementById('btn-no-'  + a.id);
+    if (probEl) { probEl.textContent = yes + '%'; probEl.className = 'ar-prob-num ' + (yes >= 50 ? 'yes-c' : 'no-c'); }
+    if (labelEl)  labelEl.textContent = yes >= 50 ? 'LEANS YES' : 'LEANS NO';
+    if (barYesEl) barYesEl.style.width = yes + '%';
+    if (barNoEl)  barNoEl.style.width  = no  + '%';
+    if (btnYes) { btnYes.textContent = 'YES ₦' + yes; btnYes.setAttribute('onclick', `openOrder('${a.name}','YES',${yes})`); }
+    if (btnNo)  { btnNo.textContent  = 'NO ₦'  + no;  btnNo.setAttribute('onclick',  `openOrder('${a.name}','NO',${no})`);  }
+  });
+
+  recentTrades.unshift(generateTrade());
+  if (recentTrades.length > 12) recentTrades.pop();
+  renderTrades();
+  renderSidebarList();
+}
+
+// ── COUNTDOWN ─────────────────────────────────────────────────────────────────
+function updateCountdown() {
+  const close = new Date('2026-12-31T23:59:00+01:00');
+  const diff  = close - new Date();
+  if (diff <= 0) { document.getElementById('countdown-val').textContent = 'CLOSED'; return; }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  document.getElementById('countdown-val').textContent = `${d}d ${String(h).padStart(2,'0')}h`;
+}
+
+// ── ORDER PANEL ───────────────────────────────────────────────────────────────
+function openOrder(name, side, price) {
+  document.getElementById('op-market-name').textContent = name + ' — Album in 2026?';
+  document.getElementById('op-price').value = parseInt(price) || 50;
+  setOrderSide(side);
+  document.getElementById('order-panel').classList.add('open');
+}
+function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
+function setOrderSide(side) {
+  orderSide = side;
+  document.getElementById('op-yes-btn').classList.toggle('active', side === 'YES');
+  document.getElementById('op-no-btn').classList.toggle('active', side === 'NO');
+  document.getElementById('op-side-label').textContent = side;
+  updateOrderSummary();
+}
+function updateOrderSummary() {
+  const amt    = parseFloat(document.getElementById('op-amount').value) || 0;
+  const price  = parseFloat(document.getElementById('op-price').value)  || 1;
+  const shares = amt / price;
+  const payout = shares * 100;
+  const profit = payout - amt;
+  document.getElementById('op-shares').textContent    = shares.toFixed(1);
+  document.getElementById('op-entry').textContent     = '₦' + Math.round(price).toLocaleString('en-NG');
+  document.getElementById('op-payout').textContent    = '₦' + Math.round(payout).toLocaleString('en-NG');
+  document.getElementById('op-profit').textContent    = (profit >= 0 ? '+' : '') + '₦' + Math.round(profit).toLocaleString('en-NG');
+  document.getElementById('op-wallet-after').textContent = '₦' + Math.round(walletBalance - amt).toLocaleString('en-NG');
+}
+function placeOrder() {
+  const amt = parseFloat(document.getElementById('op-amount').value) || 0;
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  document.getElementById('wallet-display').textContent = '₦' + walletBalance.toLocaleString('en-NG', { maximumFractionDigits: 0 });
+  closeOrder();
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview','rules'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === name ? '' : 'none';
+  });
+}
+
+// ── PROFILE ───────────────────────────────────────────────────────────────────
+function toggleProfile() { document.getElementById('profile-dd').classList.toggle('open'); }
+document.addEventListener('click', e => {
+  if (!e.target.closest('.avatar') && !e.target.closest('.profile-dropdown'))
+    document.getElementById('profile-dd').classList.remove('open');
+});
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderArtists();
+renderSidebarList();
+renderTrades();
+updateCountdown();
+updateOrderSummary();
+
+setInterval(liveTick, 4000);
+setInterval(updateCountdown, 60000);
+</script>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="../about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="../policy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms of Service</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../search.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
+</body>
+</html>
