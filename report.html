@@ -506,16 +506,6 @@ function submitReport() {
   }, 1200);
 }
 
-function toggleTheme() {
-  const isDark = document.body.getAttribute('data-theme') !== 'light';
-  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-}
-function toggleProfile() { document.getElementById('profile-dd').classList.toggle('open'); }
-document.addEventListener('click', e => {
-  if (!e.target.closest('.avatar') && !e.target.closest('.profile-dropdown'))
-    document.getElementById('profile-dd').classList.remove('open');
-});
 </script>
 </body>
 </html>

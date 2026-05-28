@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#F5C800">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
 :root {
   --y: #F5C800; --y2: #FFD93D; --y3: #B89200;
@@ -354,12 +355,6 @@ input.valid { border-color:rgba(34,197,94,0.4); }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <script>
-function toggleTheme() {
-  const isDark = document.body.getAttribute('data-theme') !== 'light';
-  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-}
-
 let method = 'phone';
 let termsChecked = false;
 
@@ -467,5 +462,6 @@ function submitForm() {
   }, 1800);
 }
 </script>
+<script src="script.js"></script>
 </body>
 </html>

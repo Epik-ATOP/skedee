@@ -29,7 +29,6 @@
 .trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
 .trend-change{font-family:var(--font-mono);font-size:10px;color:var(--green);}
-.main{flex:1;overflow-y:auto;background:var(--bg);padding:16px;display:flex;flex-direction:column;gap:14px;}
 .match-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:visible;}
 .match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--y),transparent);animation:scan 3s ease-in-out infinite;}
 @keyframes scan{0%,100%{opacity:.3}50%{opacity:1}}
@@ -180,7 +179,6 @@
 .comment-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;}
 .comments-user-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:16px;}
 @media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
-body{-webkit-font-smoothing:antialiased;}
 </style>
 <link rel="stylesheet" href="../market-mobile.css">
 </head>
@@ -618,9 +616,6 @@ function switchTab(name,btn){document.querySelectorAll('.tab').forEach(t=>t.clas
 function drawProbChart(){if(probChart)probChart.destroy();const isDark=document.body.getAttribute('data-theme')!=='light',tc=isDark?'#9A9880':'#5C5A48';probChart=new Chart(document.getElementById('probChart').getContext('2d'),{type:'line',data:{labels:['7D ago','5D ago','4D ago','3D ago','2D ago','Yesterday','Today'],datasets:[{label:'Man City Win %',data:[61,62,62,63,64,64,65],borderColor:'#6CABDD',backgroundColor:'rgba(108,171,221,0.08)',borderWidth:2,fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:'#6CABDD'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},min:0,max:100}}}});}
 function updateLiveData(){if(match.state==='FT')return;MARKETS.forEach(m=>{const delta=(Math.random()-.48)*.01;m.yes=Math.max(0.02,Math.min(0.98,m.yes+delta));m.no=1-m.yes;m.history.push(m.yes);if(m.history.length>12)m.history.shift();const pct=Math.round(m.yes*100);const selectors=[`#mc-${m.id} .price-chip.yes .price-chip-val`,`#mc-${m.id} .price-chip.no .price-chip-val`,`#mc-${m.id} .market-prob`,`#mc-${m.id} .market-prob-fill`,`#mc-${m.id} .btn-yes`,`#mc-${m.id} .btn-no`];selectors.forEach((sel,i)=>{const el=document.querySelector(sel);if(!el)return;if(i===0)el.textContent='₦'+pct;else if(i===1)el.textContent='₦'+(100-pct);else if(i===2)el.textContent=pct+'%';else if(i===3)el.style.width=pct+'%';else if(i===4)el.textContent=`BUY YES ₦${pct}`;else el.textContent=`BUY NO ₦${100-pct}`;});drawMiniChart(m);});renderOrderBook();recentTrades.unshift(generateTrade());if(recentTrades.length>12)recentTrades.pop();renderTrades();document.getElementById('home-prob-stat').textContent=Math.round(MARKETS[0].yes*100)+'%';}
 function toggleTheme(){const isDark=document.body.getAttribute('data-theme')!=='light';document.body.setAttribute('data-theme',isDark?'light':'dark');document.getElementById('theme-icon').className=isDark?'fa-solid fa-moon':'fa-solid fa-sun';Object.values(miniCharts).forEach(c=>c.destroy());miniCharts={};MARKETS.forEach(m=>setTimeout(()=>drawMiniChart(m),50));}
-function toggleNotif(){document.getElementById('notif-dd').classList.toggle('open');document.getElementById('profile-dd').classList.remove('open');}
-function toggleProfile(){document.getElementById('profile-dd').classList.toggle('open');document.getElementById('notif-dd').classList.remove('open');}
-document.addEventListener('click',e=>{if(!e.target.closest('.btn-icon')&&!e.target.closest('.notif-dropdown'))document.getElementById('notif-dd').classList.remove('open');if(!e.target.closest('.avatar')&&!e.target.closest('.profile-dropdown'))document.getElementById('profile-dd').classList.remove('open');});
 
 updateMatchUI();
 if(match.state==='LIVE_1H'||match.state==='LIVE_2H'){matchClockInterval=setInterval(tickMatchClock,60000);}

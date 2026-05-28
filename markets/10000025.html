@@ -80,16 +80,7 @@
 .rwb-hour-labels{display:flex;justify-content:space-between;margin-top:5px;}
 .rwb-hour-label{font-family:var(--font-mono);font-size:8px;color:var(--text3);}
 
-/* PROB BAR */
-.hero-prob-bar-wrap{margin-bottom:20px;}
-.hero-prob-label-row{display:flex;justify-content:space-between;margin-bottom:8px;}
-.hpl-yes{font-family:var(--font-num);font-size:24px;font-weight:700;color:var(--green);}
-.hpl-no{font-family:var(--font-num);font-size:24px;font-weight:700;color:var(--red);}
-.hpl-yeslabel{font-family:var(--font-mono);font-size:9px;color:var(--green);letter-spacing:1px;}
-.hpl-nolabel{font-family:var(--font-mono);font-size:9px;color:var(--red);letter-spacing:1px;text-align:right;}
-.hero-prob-bar{height:12px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;}
-.hpb-yes{background:linear-gradient(90deg,var(--green),rgba(34,197,94,.6));border-radius:99px 0 0 99px;transition:width .6s cubic-bezier(.4,0,.2,1);}
-.hpb-no{background:linear-gradient(90deg,rgba(239,68,68,.5),var(--red));border-radius:0 99px 99px 0;transition:width .6s cubic-bezier(.4,0,.2,1);}
+
 
 /* TRADE BUTTONS */
 .hero-trade-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
@@ -156,7 +147,7 @@
 
 /* TRADE ROWS */
 .trade-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border3);animation:fadeIn .3s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+to{opacity:1;transform:translateY(0)}}
 .trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
 .trade-side.buy{background:rgba(34,197,94,.15);color:var(--green);}
 .trade-side.sell{background:rgba(239,68,68,.1);color:var(--red);}
@@ -192,7 +183,7 @@
 /* PROFILE */
 .profile-dropdown{position:fixed;top:56px;right:16px;z-index:300;width:180px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:8px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.4);}
 .profile-dropdown.open{display:block;animation:dropIn .2s ease;}
-@keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+to{opacity:1;transform:translateY(0)}}
 .profile-item{padding:8px 12px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px;transition:all .15s;}
 .profile-item:hover{background:var(--bg3);color:var(--text);}
 .profile-item i{width:14px;text-align:center;color:var(--text3);font-size:12px;}
@@ -231,8 +222,6 @@
 .tor-buy-btn:hover{background:var(--rain);color:#000;}
 
 @media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
-*{-webkit-tap-highlight-color:transparent;}
-body{-webkit-font-smoothing:antialiased;}
 </style>
 <link rel="stylesheet" href="../market-mobile.css">
 </head>
@@ -914,11 +903,6 @@ function switchTab(name, btn) {
 }
 
 // ── PROFILE ───────────────────────────────────────────────────────────────────
-function toggleProfile() { document.getElementById('profile-dd').classList.toggle('open'); }
-document.addEventListener('click', e => {
-  if (!e.target.closest('.avatar') && !e.target.closest('.profile-dropdown'))
-    document.getElementById('profile-dd').classList.remove('open');
-});
 
 // ── LIVE TICK ─────────────────────────────────────────────────────────────────
 function liveTick() {

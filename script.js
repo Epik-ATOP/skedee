@@ -8,6 +8,23 @@ function toggleTheme() {
   if (elM) elM.className = icon;
 }
 
+function toggleNotif() {
+  document.getElementById('notif-dd')?.classList.toggle('open');
+  document.getElementById('profile-dd')?.classList.remove('open');
+}
+
+function toggleProfile() {
+  document.getElementById('profile-dd')?.classList.toggle('open');
+  document.getElementById('notif-dd')?.classList.remove('open');
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.btn-icon') && !e.target.closest('.notif-dropdown'))
+    document.getElementById('notif-dd')?.classList.remove('open');
+  if (!e.target.closest('.avatar') && !e.target.closest('.profile-dropdown'))
+    document.getElementById('profile-dd')?.classList.remove('open');
+});
+
 (function() {
   const obs = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('visible');
