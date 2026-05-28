@@ -663,7 +663,7 @@ body{-webkit-font-smoothing:antialiased;}
   </div>
   <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;padding:0 16px;margin-bottom:8px;">
     <span style="font-family:var(--font-mono);font-size:22px;color:var(--text3);margin-right:8px;flex-shrink:0;">₦</span>
-    <input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()"
+    <input type="number" id="op-amount" value="5000" min="100" max="9999999" oninput="updateOrderSummary()"
       style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
   </div>
   <input type="hidden" id="op-price" value="74">
@@ -827,7 +827,7 @@ function setOrderSide(side) {
   updateOrderSummary();
 }
 function updateOrderSummary() {
-  const amt    = parseFloat(document.getElementById('op-amount').value) || 0;
+  const amt    = Math.min(parseFloat(document.getElementById('op-amount').value) || 0, 9999999);
   const price  = parseFloat(document.getElementById('op-price').value)  || 1;
   const shares = Math.floor(amt / price);
   const payout = shares * 100;
