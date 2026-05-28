@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will NEPA Bring Light Tonight? — Lagos | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../style.css">
+<style>
+:root { --nepa:#F97316; --nepa2:#FB923C; --sidebar-w:220px; --rsidebar-w:280px; }
+
+.layout{display:flex;margin-top:52px;min-height:calc(100vh - 52px);}
+
+/* LEFT SIDEBAR */
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);flex-shrink:0;padding:16px 0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;margin-top:4px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;font-size:13px;}
+.sidebar-item .item-badge{margin-left:auto;background:var(--y);color:#000;font-size:9px;font-weight:700;font-family:var(--font-mono);padding:2px 5px;border-radius:4px;}
+.sidebar-item .item-badge.red{background:var(--red);color:#fff;}
+.trending-event{margin:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;cursor:pointer;transition:all .15s;}
+.trending-event:hover{border-color:var(--border2);}
+.trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.trend-change{font-family:var(--font-mono);font-size:10px;}
+
+/* MAIN */
+.main{flex:1;background:var(--bg);padding:16px;display:flex;flex-direction:column;gap:14px;min-width:0;}
+
+/* STATE BANNER */
+.state-banner{display:flex;align-items:center;gap:14px;border-radius:var(--radius-xl);padding:18px 24px;}
+.state-banner.premarket{background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.2);}
+.state-banner.settled{background:var(--bg2);border:1px solid var(--border);}
+.banner-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:26px;}
+.banner-icon.premarket{background:rgba(249,115,22,.15);border:2px solid rgba(249,115,22,.4);}
+.banner-icon.settled{background:rgba(245,200,0,.15);border:2px solid rgba(245,200,0,.4);}
+.banner-body{flex:1;}
+.banner-title{font-family:var(--font-display);font-weight:800;letter-spacing:2px;line-height:1;}
+.banner-sub{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:6px;letter-spacing:.5px;}
+.banner-meta{font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;}
+
+/* HERO CARD */
+.hero-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:28px;position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--nepa),var(--y),var(--nepa),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
+.hero-bg-emoji{position:absolute;right:-10px;top:-10px;font-size:200px;opacity:.04;line-height:1;pointer-events:none;user-select:none;}
+
+.hero-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.hero-cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--nepa);letter-spacing:1.5px;}
+.hero-vol-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,0,.08);border:1px solid var(--border2);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--y);letter-spacing:1px;}
+.state-tag{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;}
+.state-tag.live{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:var(--green);}
+.state-tag.premarket{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);color:var(--nepa);}
+.state-tag.settled{background:rgba(245,200,0,.1);border:1px solid var(--border2);color:var(--y);}
+.daily-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(245,200,0,.08);border:1px solid var(--border2);border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--y);letter-spacing:1px;}
+
+.hero-title{font-family:var(--font-display);font-weight:800;font-size:clamp(18px,2.5vw,30px);letter-spacing:-.5px;line-height:1.2;margin-bottom:10px;}
+.hero-sub{font-size:13px;color:var(--text2);line-height:1.75;max-width:680px;margin-bottom:18px;}
+
+/* COUNTDOWN PILL */
+.countdown-pill{display:inline-flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:10px 20px;margin-bottom:24px;}
+.cp-icon{font-size:18px;}
+.cp-label{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.cp-time{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--nepa);line-height:1;}
+
+/* AREA GRID */
+.area-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-bottom:20px;}
+.area-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-xl);padding:18px;transition:border-color .2s;}
+.area-card:hover{border-color:var(--border2);}
+.area-card.settled-light{border-color:rgba(34,197,94,.5);background:rgba(34,197,94,.04);}
+.area-card.settled-dark{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.04);}
+.ac-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.ac-name{font-family:var(--font-display);font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px;}
+.ac-emoji{font-size:20px;}
+.ac-result-badge{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:3px 8px;border-radius:99px;letter-spacing:1px;}
+.ac-result-badge.light{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.4);color:var(--green);}
+.ac-result-badge.dark{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);color:var(--red);}
+
+/* PROB BAR */
+.ac-prob-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.ac-prob-yes{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--green);line-height:1;}
+.ac-prob-no{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--red);line-height:1;}
+.ac-bar{height:6px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:14px;}
+.ac-bar-yes{background:var(--green);border-radius:99px 0 0 99px;transition:width .5s;}
+.ac-bar-no{background:var(--red);border-radius:0 99px 99px 0;transition:width .5s;}
+
+/* BET BUTTONS */
+.ac-btns{display:flex;gap:8px;}
+.ac-btn-yes{flex:1;padding:10px 8px;border-radius:var(--radius-lg);border:1px solid rgba(34,197,94,.4);background:rgba(34,197,94,.08);cursor:pointer;transition:all .2s;text-align:center;}
+.ac-btn-yes:hover{background:var(--green);border-color:var(--green);}
+.ac-btn-yes:hover .acb-label,.ac-btn-yes:hover .acb-mult{color:#000;}
+.ac-btn-no{flex:1;padding:10px 8px;border-radius:var(--radius-lg);border:1px solid rgba(239,68,68,.35);background:rgba(239,68,68,.06);cursor:pointer;transition:all .2s;text-align:center;}
+.ac-btn-no:hover{background:var(--red);border-color:var(--red);}
+.ac-btn-no:hover .acb-label,.ac-btn-no:hover .acb-mult{color:#fff;}
+.acb-label{font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+.ac-btn-yes .acb-label{color:var(--green);}
+.ac-btn-no .acb-label{color:var(--red);}
+.acb-mult{font-family:var(--font-num);font-size:20px;font-weight:700;line-height:1;}
+.ac-btn-yes .acb-mult{color:var(--green);}
+.ac-btn-no .acb-mult{color:var(--red);}
+.acb-sub{font-family:var(--font-mono);font-size:8px;color:var(--text3);margin-top:2px;}
+.ac-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:10px;letter-spacing:.5px;}
+
+/* STATS */
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap;padding:16px 0;border-top:1px solid var(--border3);margin-bottom:0;}
+.hstat{display:flex;flex-direction:column;gap:3px;}
+.hstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;}
+.hstat-val{font-family:var(--font-num);font-size:22px;font-weight:700;color:var(--text);}
+.hstat-val.yellow{color:var(--y);}
+.hstat-val.orange{color:var(--nepa);}
+.hstat-val.green{color:var(--green);}
+.hstat-val.red{color:var(--red);}
+
+/* TABS */
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+
+/* CARD */
+.card-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
+.card-section-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:14px;}
+
+/* RIGHT SIDEBAR */
+.right-sidebar{width:var(--rsidebar-w);background:var(--bg2);border-left:1px solid var(--border);flex-shrink:0;padding:16px 12px;display:flex;flex-direction:column;gap:16px;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.rsidebar-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+
+/* AREA ODDS SIDEBAR */
+.aod-row{display:flex;align-items:center;gap:6px;padding:7px 0;border-bottom:1px solid var(--border3);}
+.aod-row:last-child{border-bottom:none;}
+.aod-emoji{font-size:14px;flex-shrink:0;}
+.aod-name{font-size:11px;color:var(--text);flex:1;font-weight:500;}
+.aod-bar{width:60px;height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;}
+.aod-bar-fill{height:100%;background:var(--green);border-radius:99px;transition:width .5s;}
+.aod-prob{font-family:var(--font-num);font-size:13px;font-weight:700;color:var(--green);width:32px;text-align:right;flex-shrink:0;}
+
+/* TRADE ROWS */
+.trade-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border3);}
+.trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side.yes{background:rgba(34,197,94,.15);color:var(--green);}
+.trade-side.no{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-area{font-size:10px;color:var(--text2);flex:1;}
+.trade-mult{font-family:var(--font-mono);font-size:10px;color:var(--text);font-weight:600;}
+.trade-size{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ORDER PANEL */
+.order-panel{position:fixed;bottom:0;right:var(--rsidebar-w);z-index:200;width:340px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:20px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.5);}
+.order-panel.open{transform:translateY(0);}
+.order-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.order-panel-title{font-family:var(--font-display);font-weight:700;font-size:15px;}
+.btn-close{width:28px;height:28px;background:var(--bg4);border:none;border-radius:50%;cursor:pointer;color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.btn-close:hover{background:var(--red);color:#fff;}
+.order-area-name{font-size:11px;color:var(--text3);margin-bottom:14px;font-family:var(--font-mono);}
+.btn-place{width:100%;padding:13px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.5px;transition:all .15s;background:var(--y);color:#000;}
+.btn-place:hover{background:var(--y2);transform:translateY(-1px);}
+
+/* PROFILE */
+.profile-dropdown{position:fixed;top:56px;right:16px;z-index:300;width:180px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:8px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+.profile-dropdown.open{display:block;}
+.profile-item{padding:8px 12px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px;transition:all .15s;}
+.profile-item:hover{background:var(--bg3);color:var(--text);}
+.profile-item i{width:14px;text-align:center;color:var(--text3);font-size:12px;}
+
+@media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
+</style>
+<link rel="stylesheet" href="../market-mobile.css">
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="../index.html" class="topbar-navlink">Markets</a>
+    <a href="10000005.html" class="topbar-navlink">World Bank Loan</a>
+    <a href="10000025.html" class="topbar-navlink">When Will It Rain?</a>
+    <a href="10000027.html" class="topbar-navlink active">⚡ NEPA Tonight</a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search markets, events, teams...">
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<div class="layout">
+
+<!-- LEFT SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist</div>
+  <div class="sidebar-item"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Find Markets</div>
+  <div class="sidebar-item">⚽ Football</div>
+  <div class="sidebar-item">🏉 Other Sports</div>
+  <div class="sidebar-item">🎬 Entertainment</div>
+  <div class="sidebar-item">🎵 Music</div>
+  <div class="sidebar-item">⚖️ Politics</div>
+  <div class="sidebar-item">🛢️ Commodities</div>
+  <div class="sidebar-item">🪙 Finance</div>
+  <div class="sidebar-item">🌦️ Weather</div>
+  <div class="sidebar-item active">⚡ NEPA</div>
+  <div class="sidebar-item">🌀 Miscellaneous</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Trending Now</div>
+  <div class="trending-event">
+    <div class="trend-name">⚡ NEPA Tonight — Lagos</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦8.7M vol</div>
+      <div class="trend-change" style="color:var(--nepa);">▲ Lekki 65%</div>
+    </div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">🌧️ Will It Rain Today?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦12.4M vol</div>
+      <div class="trend-change" style="color:var(--green);">▲ 3PM 28%</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STATE BANNER -->
+  <div id="state-banner"></div>
+
+  <!-- HERO CARD -->
+  <div class="hero-card">
+    <div class="hero-bg-emoji">⚡</div>
+
+    <div class="hero-top">
+      <div class="hero-cat-tag">⚡ NEPA · LAGOS · DAILY</div>
+      <div class="hero-vol-tag">Vol ₦8.7M</div>
+      <div class="state-tag live" id="state-tag">🟢 LIVE</div>
+      <div class="daily-tag">📅 RESETS DAILY</div>
+    </div>
+
+    <div class="hero-title">Will NEPA bring light to your area tonight? (Lagos)</div>
+    <div class="hero-sub">Lagos areas. Predict <strong style="color:var(--green);">YES</strong> or <strong style="color:var(--red);">NO</strong> if whether each area will have electricity by <strong style="color:var(--text);">midnight WAT</strong>. Odds set manually — the lower the area's reputation, the higher the payout. Market resolves at 11:59 PM daily.</div>
+
+    <!-- COUNTDOWN -->
+    <div class="countdown-pill">
+      <span class="cp-icon">⏳</span>
+      <div>
+        <div class="cp-label">Resolves in</div>
+        <div class="cp-time" id="countdown-display">—:—:—</div>
+      </div>
+    </div>
+
+    <!-- AREA CARDS -->
+    <div class="area-grid" id="area-grid">
+      <!-- rendered by JS -->
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-label">Volume</div><div class="hstat-val yellow">₦8.7M</div></div>
+      <div class="hstat"><div class="hstat-label">Best Odds</div><div class="hstat-val orange" id="best-odds-stat">—</div></div>
+      <div class="hstat"><div class="hstat-label">Areas</div><div class="hstat-val">10</div></div>
+      <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val">2,614</div></div>
+      <div class="hstat"><div class="hstat-label">Resolves</div><div class="hstat-val green">Midnight</div></div>
+      <div class="hstat"><div class="hstat-label">Resets</div><div class="hstat-val yellow">Daily</div></div>
+    </div>
+
+    <div style="margin-top:16px;font-size:12px;color:var(--text3);display:flex;align-items:flex-start;gap:7px;line-height:1.6;">
+      <i class="fa-solid fa-circle-info" style="color:var(--nepa);margin-top:2px;flex-shrink:0;"></i>
+      Odds set manually by Skedee each day based on historical DisCo supply patterns. Resolution confirmed by area reporters at 11:59 PM WAT. New market opens daily at 6:00 AM.
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;">
+        <div style="font-size:26px;margin-bottom:10px;">⚡</div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;">How it works</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7;">A <strong style="color:var(--text);">daily yes/no market</strong> across 5 Lagos areas. pick on whether NEPA will bring light to each area by midnight. Each area is independent — win or lose per area based on the outcome.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;">
+        <div style="font-size:26px;margin-bottom:10px;">📊</div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;">Manual odds</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7;">Odds are <strong style="color:var(--text);">set daily</strong> based on each area's supply history. Reliable areas like Lekki have lower YES payouts. Notorious spots like Ikorodu offer <strong style="color:var(--text);">higher multipliers</strong> if you're right.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;">
+        <div style="font-size:26px;margin-bottom:10px;">🌙</div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;">Midnight resolution</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7;">At <strong style="color:var(--text);">11:59 PM WAT</strong> each market resolves. Was there light in that area? YES pays ₦100 per share. NO pays ₦100 per share. Only one side wins per area.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;">
+      <div style="font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:12px;">Lagos Electricity — Area Reputations</div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--text2);line-height:1.8;">
+        <div><strong style="color:var(--text);">Lekki / VI</strong> — Generally the most consistent supply in Lagos. Proximity to independent power producers and preferential treatment means light is more likely than not on any given night.</div>
+        <div><strong style="color:var(--text);">Ikeja</strong> — The commercial capital of Lagos. Supply is moderate to good, though load shedding is common. Ikeja GRA and industrial estates often get priority.</div>
+        <div><strong style="color:var(--text);">Surulere</strong> — Classic middle-Lagos residential. Supply is roughly coin-flip — some days good, some days nothing for 18 hours. One of the most contested picking areas.</div>
+        <div><strong style="color:var(--text);">Yaba</strong> — Lagos's tech and university hub. Supply is moderate and fairly consistent, though student-heavy density means demand spikes. Generally a safe YES pick.</div>
+        <div><strong style="color:var(--text);">Apapa</strong> — The port district. Industrial demand competes with residential supply, making it unpredictable. DisCo priority can swing either way depending on port operations.</div>
+        <div><strong style="color:var(--text);">Lagos Island</strong> — The CBD. Banks, government offices, and commercial estates often get priority treatment. Supply is reasonably reliable, though the old grid infrastructure causes occasional failures.</div>
+        <div><strong style="color:var(--text);">VI (Victoria Island)</strong> — Lagos's financial and diplomatic hub. Supply here rivals Lekki — embassies, banks, and upscale estates mean it's often a priority circuit. Strong YES territory.</div>
+        <div><strong style="color:var(--text);">Agege</strong> — One of the most densely populated areas in Lagos. High demand, old transformers, and low DisCo investment make outages the norm. Strong NO territory.</div>
+        <div><strong style="color:var(--text);">Ikorodu</strong> — Notorious for extended outages. Supply here is genuinely unpredictable but tends to be poor. High-risk, high-reward territory for YES.</div>
+        <div><strong style="color:var(--text);">Badagry</strong> — The furthest from the grid's core. Badagry consistently reports some of the worst electricity access in the state. Brave pick if you go YES here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RULES TAB -->
+  <div id="tab-rules" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Market Rules & Resolution</div>
+      <div style="display:flex;flex-direction:column;gap:16px;font-size:13px;color:var(--text2);line-height:1.8;">
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Criteria</div>Each area resolves <strong style="color:var(--green);">YES</strong> if electricity is confirmed on at 11:59 PM WAT in that area — meaning lights are active in at least one household in the area at the close of market. Resolves <strong style="color:var(--red);">NO</strong> if there is a confirmed blackout at the time of resolution, or if no reporter confirms power.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Source</div>Resolution is based on user reports submitted between 11:30 PM and 11:59 PM WAT. Reports require a photo or video of the reporter's electricity situation. Majority-vote determines the outcome. In the event of a tie, Skedee's editorial team makes the final call.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Odds & Payouts</div>Odds are manually set each morning by Skedee based on prior supply patterns and DisCo schedules. YES price × shares = stake. If correct, each share pays ₦100. Effective multiplier = ₦100 ÷ YES price (or NO price). Odds do not update intraday.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Daily Reset</div>A new market opens at 6:00 AM WAT each day. Each area's odds are freshly set each morning. Previous day results do not affect today's odds.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Disputes</div>Contact support@skedee.ng within 12 hours of resolution with photo/video evidence. Skedee's decision is final.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- RIGHT SIDEBAR -->
+<div class="right-sidebar">
+  <div>
+    <div class="rsidebar-title">Area YES Odds</div>
+    <div id="area-odds-list"></div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Recent Trades <span id="live-dot" style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Tonight's Deadline</div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:6px;">🌙</div>
+      <div style="font-family:var(--font-num);font-size:28px;font-weight:700;color:var(--nepa);line-height:1;" id="countdown-sidebar">—</div>
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:5px;letter-spacing:.5px;">UNTIL MIDNIGHT</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end layout -->
+
+<!-- ORDER PANEL -->
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header">
+    <div class="order-panel-title">Place Order</div>
+    <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="order-area-name" id="op-area-name">— · —</div>
+
+  <!-- AREA + SIDE DISPLAY -->
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">AREA</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text);line-height:1;" id="op-area-label">—</div>
+    </div>
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">YOU PICK</div>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:22px;line-height:1;" id="op-side-display">—</div>
+    </div>
+  </div>
+
+  <!-- AMOUNT INPUT -->
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;padding:0 16px;margin-bottom:8px;">
+    <span style="font-family:var(--font-mono);font-size:22px;color:var(--text3);margin-right:8px;flex-shrink:0;">₦</span>
+    <input type="number" id="op-amount" value="5000" min="100" max="9999999" oninput="updateOrderSummary()"
+      style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
+  </div>
+  <input type="hidden" id="op-price" value="65">
+  <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:20px;padding:0 2px;" id="op-shares-line">— shares of ₦— each</div>
+
+  <!-- PAYOUT -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:0 2px;">
+    <div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:1px;line-height:1.6;">PAYOUT</div>
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;">IF CORRECT</div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:4px;">
+      <span style="font-family:var(--font-mono);font-size:26px;color:var(--text3);">₦</span>
+      <span style="font-family:var(--font-num);font-size:34px;font-weight:700;color:var(--y);line-height:1;" id="op-payout">—</span>
+    </div>
+  </div>
+
+  <button class="btn-place" onclick="placeOrder()" id="op-place-btn">Place Bet — YES</button>
+</div>
+
+<script src="../script.js"></script>
+<script>
+// ── CONFIG ───────────────────────────────────────────────────────────────────
+const TZ    = 'Africa/Lagos';
+const OPEN  = 6;   // 6:00 AM
+const CLOSE = 24;  // midnight
+
+const AREAS = [
+  { id: 'lekki',       name: 'Lekki',        emoji: '', yesProb: 65, vol: '₦2.1M' },
+  { id: 'lagosisland', name: 'Lagos Island',  emoji: '', yesProb: 62, vol: '₦2.0M' },
+  { id: 'ikeja',       name: 'Ikeja',         emoji: '', yesProb: 58, vol: '₦1.9M' },
+  { id: 'yaba',        name: 'Yaba',          emoji: '', yesProb: 52, vol: '₦1.7M' },
+  { id: 'apapa',       name: 'Apapa',         emoji: '', yesProb: 48, vol: '₦1.6M' },
+  { id: 'surulere',    name: 'Surulere',      emoji: '', yesProb: 45, vol: '₦1.8M' },
+  { id: 'vi',          name: 'Victoria Island', emoji: '', yesProb: 62, vol: '₦1.9M' },
+  { id: 'agege',       name: 'Agege',         emoji: '', yesProb: 30, vol: '₦1.3M' },
+  { id: 'ikorodu',     name: 'Ikorodu',       emoji: '', yesProb: 28, vol: '₦1.5M' },
+  { id: 'badagry',     name: 'Badagry',       emoji: '', yesProb: 22, vol: '₦1.4M' },
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let walletBalance = 4271250;
+let recentTrades  = [];
+let settledOutcomes = null; // bool[] per area
+let orderArea     = null;
+let orderSide     = null;
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function lagosNow() {
+  return new Date(new Date().toLocaleString('en-US', { timeZone: TZ }));
+}
+
+function getState() {
+  const t = lagosNow();
+  const h = t.getHours() + t.getMinutes() / 60;
+  if (h < OPEN)   return 'PREMARKET';
+  if (h >= CLOSE) return 'SETTLED';
+  return 'LIVE';
+}
+
+function mult(price) {
+  return (100 / price).toFixed(2) + 'x';
+}
+
+// Pseudo-random outcome seeded by today's date so it stays consistent all day
+function getSettledOutcomes() {
+  if (settledOutcomes) return settledOutcomes;
+  const seed = lagosNow().toDateString();
+  const hash = n => [...seed].reduce((s, c, i) => s + c.charCodeAt(0) * (i + 1 + n), 0);
+  settledOutcomes = AREAS.map((a, i) => (hash(i * 31) % 100) < a.yesProb);
+  return settledOutcomes;
+}
+
+// ── COUNTDOWN ────────────────────────────────────────────────────────────────
+function updateCountdown() {
+  const now      = lagosNow();
+  const midnight = new Date(now);
+  midnight.setHours(24, 0, 0, 0);
+  const diff = midnight - now;
+  if (diff <= 0) {
+    ['countdown-display', 'countdown-sidebar'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '00:00:00';
+    });
+    return;
+  }
+  const h  = Math.floor(diff / 3600000);
+  const m  = Math.floor((diff % 3600000) / 60000);
+  const s  = Math.floor((diff % 60000) / 1000);
+  const str = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  ['countdown-display', 'countdown-sidebar'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = str;
+  });
+}
+
+// ── RENDER AREA CARDS ─────────────────────────────────────────────────────────
+function renderAreaGrid() {
+  const state   = getState();
+  const grid    = document.getElementById('area-grid');
+  if (!grid) return;
+
+  const outcomes = state === 'SETTLED' ? getSettledOutcomes() : null;
+
+  grid.innerHTML = AREAS.map((a, i) => {
+    const noProb    = 100 - a.yesProb;
+    const yMult     = mult(a.yesProb);
+    const nMult     = mult(noProb);
+    const isLive    = state === 'LIVE';
+    const settled   = outcomes !== null;
+    const gotLight  = settled ? outcomes[i] : null;
+
+    let cardClass = 'area-card';
+    if (settled) cardClass += gotLight ? ' settled-light' : ' settled-dark';
+
+    const resultBadge = settled
+      ? `<span class="ac-result-badge ${gotLight ? 'light' : 'dark'}">${gotLight ? '💡 LIGHT' : '🌑 NO LIGHT'}</span>`
+      : '';
+
+    const btnDisabled = !isLive ? 'style="pointer-events:none;opacity:.4;"' : '';
+
+    return `<div class="${cardClass}">
+      <div class="ac-header">
+        <div class="ac-name"><span class="ac-emoji">${a.emoji}</span>${a.name}</div>
+        ${resultBadge}
+      </div>
+      <div class="ac-prob-row">
+        <span class="ac-prob-yes">${a.yesProb}%</span>
+        <span style="font-family:var(--font-mono);font-size:9px;color:var(--text3);">YES · NO</span>
+        <span class="ac-prob-no">${noProb}%</span>
+      </div>
+      <div class="ac-bar">
+        <div class="ac-bar-yes" style="width:${a.yesProb}%"></div>
+        <div class="ac-bar-no" style="width:${noProb}%"></div>
+      </div>
+      <div class="ac-btns" ${btnDisabled}>
+        <div class="ac-btn-yes" onclick="openOrder('${a.id}','yes')">
+          <div class="acb-label">Pick YES</div>
+          <div class="acb-mult">${yMult}</div>
+          <div class="acb-sub">₦${a.yesProb} / share</div>
+        </div>
+        <div class="ac-btn-no" onclick="openOrder('${a.id}','no')">
+          <div class="acb-label">Pick NO</div>
+          <div class="acb-mult">${nMult}</div>
+          <div class="acb-sub">₦${noProb} / share</div>
+        </div>
+      </div>
+      <div class="ac-vol">Vol ${a.vol}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── RENDER AREA ODDS SIDEBAR ──────────────────────────────────────────────────
+function renderAreaOdds() {
+  const el = document.getElementById('area-odds-list');
+  if (!el) return;
+  const sorted = [...AREAS].sort((a, b) => b.yesProb - a.yesProb);
+  el.innerHTML = sorted.map(a => `
+    <div class="aod-row">
+      <span class="aod-emoji">${a.emoji}</span>
+      <span class="aod-name">${a.name}</span>
+      <div class="aod-bar"><div class="aod-bar-fill" style="width:${a.yesProb}%"></div></div>
+      <span class="aod-prob">${a.yesProb}%</span>
+    </div>`).join('');
+}
+
+// ── RENDER STATE BANNER ───────────────────────────────────────────────────────
+function renderBanner() {
+  const state    = getState();
+  const now      = lagosNow();
+  const dateStr  = now.toLocaleDateString('en-NG', { day:'numeric', month:'long', year:'numeric' });
+  const banner   = document.getElementById('state-banner');
+  const stateTag = document.getElementById('state-tag');
+  const liveDot  = document.getElementById('live-dot');
+
+  if (state === 'PREMARKET') {
+    banner.innerHTML = `
+      <div class="state-banner premarket">
+        <div class="banner-icon premarket">⏰</div>
+        <div class="banner-body">
+          <div class="banner-title" style="font-size:20px;color:var(--nepa);">Market Opens at 6:00 AM</div>
+          <div class="banner-sub">Trading opens at 6 AM WAT · Odds set fresh each morning · Come back soon!</div>
+        </div>
+        <div class="banner-meta">
+          <div style="color:var(--nepa);font-weight:700;font-size:11px;margin-bottom:3px;">● Pre-Market</div>
+          <div>${dateStr}</div>
+        </div>
+      </div>`;
+    stateTag.className   = 'state-tag premarket';
+    stateTag.textContent = '⏰ OPENS 6AM';
+    liveDot.textContent  = '⏰ PRE-MARKET';
+    liveDot.style.color  = 'var(--nepa)';
+
+  } else if (state === 'SETTLED') {
+    const outcomes  = getSettledOutcomes();
+    const lightAreas = AREAS.filter((_, i) => outcomes[i]).map(a => a.name);
+    const darkAreas  = AREAS.filter((_, i) => !outcomes[i]).map(a => a.name);
+    const resultText = lightAreas.length
+      ? `Light confirmed: ${lightAreas.join(', ')}`
+      : 'No light confirmed in any area';
+
+    banner.innerHTML = `
+      <div class="state-banner settled">
+        <div class="banner-icon settled">🌙</div>
+        <div class="banner-body">
+          <div class="banner-title" style="font-size:28px;color:var(--y);">RESOLVED!</div>
+          <div style="font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--green);margin-top:4px;margin-bottom:4px;">${resultText}</div>
+          <div class="banner-sub">${darkAreas.length ? `No light: ${darkAreas.join(', ')} · ` : ''}Come back tomorrow!</div>
+        </div>
+        <div class="banner-meta">
+          <div style="color:var(--green);font-weight:700;font-size:11px;margin-bottom:3px;">● Settled</div>
+          <div>${dateStr}</div>
+          <div>11:59 PM WAT</div>
+        </div>
+      </div>`;
+    stateTag.className   = 'state-tag settled';
+    stateTag.textContent = '🌙 SETTLED';
+    liveDot.textContent  = '🌙 SETTLED';
+    liveDot.style.color  = 'var(--y)';
+
+  } else {
+    banner.innerHTML     = '';
+    stateTag.className   = 'state-tag live';
+    stateTag.textContent = '🟢 LIVE';
+    liveDot.textContent  = '● LIVE';
+    liveDot.style.color  = 'var(--green)';
+  }
+}
+
+// ── UPDATE BEST ODDS STAT ─────────────────────────────────────────────────────
+function updateStats() {
+  const best = AREAS.reduce((b, a) => (100 - a.yesProb) > (100 - b.yesProb) ? a : b);
+  const el = document.getElementById('best-odds-stat');
+  if (el) el.textContent = `${best.name} NO ${mult(100 - best.yesProb)}`;
+}
+
+// ── RECENT TRADES ────────────────────────────────────────────────────────────
+function makeTrade() {
+  const area = AREAS[Math.floor(Math.random() * AREAS.length)];
+  const side = Math.random() > 0.55 ? 'yes' : 'no';
+  const size = Math.floor(Math.random() * 5000 + 500);
+  const m    = side === 'yes' ? mult(area.yesProb) : mult(100 - area.yesProb);
+  return { area: area.name, side, size, mult: m };
+}
+
+function renderTrades() {
+  if (!recentTrades.length) for (let i = 0; i < 8; i++) recentTrades.push(makeTrade());
+  const el = document.getElementById('recent-trades');
+  if (!el) return;
+  el.innerHTML = recentTrades.slice(0, 8).map(t => `
+    <div class="trade-row">
+      <span class="trade-side ${t.side}">${t.side.toUpperCase()}</span>
+      <span class="trade-area">${t.area}</span>
+      <span class="trade-mult">${t.mult}</span>
+      <span class="trade-size">₦${t.size.toLocaleString()}</span>
+    </div>`).join('');
+}
+
+// ── ORDER PANEL ───────────────────────────────────────────────────────────────
+function openOrder(areaId, side) {
+  if (getState() !== 'LIVE') return;
+  const area  = AREAS.find(a => a.id === areaId);
+  if (!area) return;
+  orderArea = area;
+  orderSide = side;
+  const price = side === 'yes' ? area.yesProb : (100 - area.yesProb);
+  document.getElementById('op-area-name').textContent    = `${area.emoji} ${area.name} · ${side.toUpperCase()}`;
+  document.getElementById('op-area-label').textContent   = `${area.emoji} ${area.name}`;
+  const sideEl = document.getElementById('op-side-display');
+  sideEl.textContent  = side === 'yes' ? 'YES' : 'NO';
+  sideEl.style.color  = side === 'yes' ? 'var(--green)' : 'var(--red)';
+  document.getElementById('op-price').value = price;
+  document.getElementById('op-place-btn').textContent = `Place Trade — ${side.toUpperCase()} ${area.name}`;
+  updateOrderSummary();
+  document.getElementById('order-panel').classList.add('open');
+}
+
+function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
+
+function updateOrderSummary() {
+  const amt    = Math.min(parseFloat(document.getElementById('op-amount').value) || 0, 9999999);
+  const price  = parseFloat(document.getElementById('op-price').value) || 1;
+  const shares = Math.floor(amt / price);
+  const payout = shares * 100;
+  document.getElementById('op-shares-line').textContent =
+    shares.toLocaleString('en-NG') + ' shares of ₦' + Math.round(price) + ' each';
+  document.getElementById('op-payout').textContent = payout.toLocaleString('en-NG');
+}
+
+function placeOrder() {
+  const amt = parseFloat(document.getElementById('op-amount').value) || 0;
+  if (amt <= 0) return;
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  document.getElementById('wallet-display').textContent =
+    '₦' + walletBalance.toLocaleString('en-NG', { maximumFractionDigits: 0 });
+  closeOrder();
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview', 'rules'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === name ? '' : 'none';
+  });
+}
+
+// ── LIVE TICK ─────────────────────────────────────────────────────────────────
+function liveTick() {
+  if (getState() !== 'LIVE') return;
+  recentTrades.unshift(makeTrade());
+  if (recentTrades.length > 12) recentTrades.pop();
+  renderTrades();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderBanner();
+renderAreaGrid();
+renderAreaOdds();
+renderTrades();
+updateStats();
+updateOrderSummary();
+updateCountdown();
+
+setInterval(updateCountdown, 1000);
+setInterval(liveTick, 6000);
+</script>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="../about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="../policy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms of Service</a>
+          <a href="../report.html" style="color:var(--red);">Report an Issue</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../search.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
+</body>
+</html>
