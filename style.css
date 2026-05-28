@@ -1,4 +1,4 @@
-/* ── VARIABLES ── */
+﻿/* ── VARIABLES ── */
 :root {
   --y:#F5C800; --y2:#FFD93D; --y3:#B89200;
   --bg:#0A0A08; --bg2:#111110; --bg3:#181815; --bg4:#1E1E1A; --bg5:#252520;
@@ -6,7 +6,7 @@
   --text:#F0EDE0; --text2:#9A9880; --text3:#5A5845;
   --green:#22C55E; --red:#EF4444; --blue:#3B82F6; --purple:#A855F7;
   --font-display:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
-  --font-mono:'Space Mono',monospace; --font-num:'Oswald',sans-serif;
+  --font-mono:'Space Mono',monospace; --font-num:'Barlow Condensed',sans-serif;
   --radius:8px; --radius-lg:12px; --radius-xl:16px;
   --r:8px; --rl:12px; --rxl:16px;
 }
