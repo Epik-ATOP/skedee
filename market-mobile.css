@@ -82,10 +82,11 @@
   /* ── TIMELINE ── */
   .timeline-card { padding: 14px 12px; }
 
-  /* ── ORDER PANEL: full width on mobile ── */
+  /* ── ORDER PANEL: full width on mobile, sits above bottom nav ── */
   .order-panel {
     right: 0 !important;
     width: 100% !important;
+    bottom: 56px !important;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   }
 

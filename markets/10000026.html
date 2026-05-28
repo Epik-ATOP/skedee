@@ -541,20 +541,32 @@ body{-webkit-font-smoothing:antialiased;}
     <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
     <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
   </div>
-  <div class="order-field">
-    <label>Amount (NGN ₦)</label>
-    <input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()">
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">OUTCOME</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-outcome-label">YES</div>
+    </div>
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">PRICE</div>
+      <div style="font-family:var(--font-num);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-price-label">₦—</div>
+    </div>
   </div>
-  <div class="order-field">
-    <label>Price per Share (₦)</label>
-    <input type="number" id="op-price" value="68" step="1" min="1" max="99" oninput="updateOrderSummary()">
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;padding:0 16px;margin-bottom:8px;">
+    <span style="font-family:var(--font-mono);font-size:22px;color:var(--text3);margin-right:8px;flex-shrink:0;">₦</span>
+    <input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()"
+      style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
   </div>
-  <div class="order-summary">
-    <div class="order-summary-row"><span class="label">Shares</span><span class="value" id="op-shares">73.5</span></div>
-    <div class="order-summary-row"><span class="label">Avg Entry</span><span class="value" id="op-entry">₦68</span></div>
-    <div class="order-summary-row"><span class="label">Max Payout</span><span class="value green" id="op-payout">₦7,353</span></div>
-    <div class="order-summary-row"><span class="label">Potential Profit</span><span class="value yellow" id="op-profit">+₦2,353</span></div>
-    <div class="order-summary-row"><span class="label">Wallet After</span><span class="value" id="op-wallet-after">₦4,266,250</span></div>
+  <input type="hidden" id="op-price" value="68">
+  <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:20px;padding:0 2px;" id="op-shares-line">— shares of ₦— each</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:0 2px;">
+    <div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:1px;line-height:1.6;">PAYOUT</div>
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;">IF CORRECT</div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:4px;">
+      <span style="font-family:var(--font-mono);font-size:26px;color:var(--text3);">₦</span>
+      <span style="font-family:var(--font-num);font-size:34px;font-weight:700;color:var(--y);line-height:1;" id="op-payout">—</span>
+    </div>
   </div>
   <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
 </div>
@@ -745,19 +757,20 @@ function setOrderSide(side) {
   document.getElementById('op-yes-btn').classList.toggle('active', side === 'YES');
   document.getElementById('op-no-btn').classList.toggle('active', side === 'NO');
   document.getElementById('op-side-label').textContent = side;
+  const outcomeEl = document.getElementById('op-outcome-label');
+  const priceLabelEl = document.getElementById('op-price-label');
+  if (outcomeEl) { outcomeEl.textContent = side; outcomeEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
+  if (priceLabelEl) { const p = parseFloat(document.getElementById('op-price').value) || 0; priceLabelEl.textContent = '₦' + p; priceLabelEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
   updateOrderSummary();
 }
 function updateOrderSummary() {
   const amt    = parseFloat(document.getElementById('op-amount').value) || 0;
   const price  = parseFloat(document.getElementById('op-price').value)  || 1;
-  const shares = amt / price;
+  const shares = Math.floor(amt / price);
   const payout = shares * 100;
-  const profit = payout - amt;
-  document.getElementById('op-shares').textContent    = shares.toFixed(1);
-  document.getElementById('op-entry').textContent     = '₦' + Math.round(price).toLocaleString('en-NG');
-  document.getElementById('op-payout').textContent    = '₦' + Math.round(payout).toLocaleString('en-NG');
-  document.getElementById('op-profit').textContent    = (profit >= 0 ? '+' : '') + '₦' + Math.round(profit).toLocaleString('en-NG');
-  document.getElementById('op-wallet-after').textContent = '₦' + Math.round(walletBalance - amt).toLocaleString('en-NG');
+  document.getElementById('op-shares-line').textContent =
+    shares.toLocaleString('en-NG') + ' shares of ₦' + Math.round(price) + ' each';
+  document.getElementById('op-payout').textContent = payout.toLocaleString('en-NG');
 }
 function placeOrder() {
   const amt = parseFloat(document.getElementById('op-amount').value) || 0;
@@ -809,6 +822,7 @@ setInterval(updateCountdown, 60000);
           <a href="../faq.html">FAQ</a>
           <a href="../policy.html">Privacy Policy</a>
           <a href="../terms.html">Terms of Service</a>
+          <a href="../report.html" style="color:var(--red);">Report an Issue</a>
         </div>
         <div class="footer-col">
           <div class="footer-col-title">SOCIALS</div>

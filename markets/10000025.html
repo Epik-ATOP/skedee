@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Will It Rain Today? — Lagos | Skedee</title>
+<title>When Will It First Rain Today? — Lagos | Skedee</title>
 <link rel="icon" type="image/png" href="../assets/skedee-1.png">
 <link rel="manifest" href="../manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -197,6 +197,39 @@
 .profile-item:hover{background:var(--bg3);color:var(--text);}
 .profile-item i{width:14px;text-align:center;color:var(--text3);font-size:12px;}
 
+/* OUTCOME GRID */
+.outcome-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+.outcome-tile{flex:1;min-width:calc(25% - 5px);padding:10px 6px;border-radius:var(--radius-lg);border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:all .2s;text-align:center;}
+.outcome-tile:hover{border-color:var(--rain);background:rgba(96,165,250,.08);transform:translateY(-1px);}
+.outcome-tile.top{border-color:rgba(245,200,0,.5);background:rgba(245,200,0,.07);}
+.outcome-tile.top:hover{border-color:var(--y);background:rgba(245,200,0,.12);}
+.outcome-tile.no-rain{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.05);}
+.outcome-tile.no-rain:hover{border-color:var(--red);background:rgba(239,68,68,.1);}
+.outcome-tile.settled-win{border-color:var(--green);background:rgba(34,197,94,.1);cursor:default;}
+.ot-time{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;}
+.ot-prob{font-family:var(--font-num);font-size:20px;font-weight:700;color:var(--text);line-height:1;margin-bottom:2px;}
+.outcome-tile.top .ot-prob{color:var(--y);}
+.outcome-tile.no-rain .ot-prob{color:var(--red);}
+.outcome-tile.settled-win .ot-prob{color:var(--green);}
+.ot-price{font-family:var(--font-mono);font-size:8px;color:var(--text3);}
+.ot-bar{height:3px;background:var(--bg4);border-radius:99px;margin-top:6px;overflow:hidden;}
+.ot-bar-fill{height:100%;background:var(--rain);border-radius:99px;transition:width .5s;}
+.outcome-tile.top .ot-bar-fill{background:var(--y);}
+.outcome-tile.no-rain .ot-bar-fill{background:var(--red);}
+.outcome-tile.settled-win .ot-bar-fill{background:var(--green);}
+.ot-win-badge{font-family:var(--font-mono);font-size:8px;color:var(--green);margin-top:4px;letter-spacing:.5px;}
+
+/* TOP OUTCOMES SIDEBAR */
+.top-outcome-row{display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid var(--border3);}
+.top-outcome-row:last-child{border-bottom:none;}
+.tor-rank{font-family:var(--font-mono);font-size:9px;color:var(--text3);width:12px;flex-shrink:0;}
+.tor-label{color:var(--text);font-size:11px;flex-shrink:0;width:48px;}
+.tor-bar{flex:1;height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;}
+.tor-bar-fill{height:100%;border-radius:99px;transition:width .5s;}
+.tor-prob{font-family:var(--font-num);font-size:13px;font-weight:700;width:30px;text-align:right;flex-shrink:0;}
+.tor-buy-btn{background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:var(--rain);font-family:var(--font-display);font-weight:700;font-size:10px;padding:3px 7px;border-radius:var(--radius);cursor:pointer;transition:all .15s;flex-shrink:0;}
+.tor-buy-btn:hover{background:var(--rain);color:#000;}
+
 @media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
 *{-webkit-tap-highlight-color:transparent;}
 body{-webkit-font-smoothing:antialiased;}
@@ -211,7 +244,7 @@ body{-webkit-font-smoothing:antialiased;}
   <div class="topbar-nav">
     <a href="../index.html" class="topbar-navlink">Markets</a>
     <a href="10000005.html" class="topbar-navlink">World Bank Loan</a>
-    <a href="10000025.html" class="topbar-navlink active">Rain Today?</a>
+    <a href="10000025.html" class="topbar-navlink active">When Will It Rain?</a>
     <a href="../about.html" class="topbar-navlink">About</a>
     <a href="../faq.html" class="topbar-navlink">FAQ</a>
   </div>
@@ -289,8 +322,8 @@ body{-webkit-font-smoothing:antialiased;}
       <div class="daily-tag">📅 RESETS DAILY</div>
     </div>
 
-    <div class="hero-title">Will it rain in Lagos today?</div>
-    <div class="hero-sub">Market resolves <strong style="color:var(--text);">YES</strong> if any measurable rainfall is recorded in Lagos between <strong style="color:var(--text);">8:00 AM – 8:00 PM WAT</strong>. Resolves <strong style="color:var(--text);">NO</strong> if the window closes dry. A fresh market opens every morning at 8:00 AM.</div>
+    <div class="hero-title">When will it first rain in Lagos today?</div>
+    <div class="hero-sub">Pick the hour when the <strong style="color:var(--text);">first measurable rainfall</strong> will be recorded in Lagos. Window covers <strong style="color:var(--text);">8:00 AM – 7:00 PM WAT</strong>. The winning outcome is the earliest hour with precipitation &gt; 0mm — or <strong style="color:var(--text);">No Rain</strong> if the window closes dry. Resets daily at 8 AM.</div>
 
     <!-- LIVE WEATHER PILL -->
     <div class="weather-pill">
@@ -313,41 +346,14 @@ body{-webkit-font-smoothing:antialiased;}
       </div>
     </div>
 
-    <!-- PROB BAR -->
-    <div class="hero-prob-bar-wrap">
-      <div class="hero-prob-label-row">
-        <div>
-          <div class="hpl-yeslabel">YES · WILL RAIN</div>
-          <div class="hpl-yes" id="prob-yes-big">—</div>
-        </div>
-        <div style="text-align:right;">
-          <div class="hpl-nolabel">NO · STAYS DRY</div>
-          <div class="hpl-no" id="prob-no-big">—</div>
-        </div>
-      </div>
-      <div class="hero-prob-bar">
-        <div class="hpb-yes" id="hpb-yes" style="width:50%;"></div>
-        <div class="hpb-no" id="hpb-no" style="width:50%;"></div>
-      </div>
-    </div>
-
-    <!-- TRADE BUTTONS -->
-    <div class="hero-trade-row" id="hero-trade-row">
-      <div class="hero-btn-yes" onclick="openOrder('Rain Today — Lagos','YES',yesPct)">
-        <div class="hb-label">☔ BUY YES — WILL RAIN</div>
-        <div class="hb-price" id="hero-yes-price">₦—</div>
-        <div class="hb-sub">Payout ₦100 if it rains</div>
-      </div>
-      <div class="hero-btn-no" onclick="openOrder('Rain Today — Lagos','NO',100-yesPct)">
-        <div class="hb-label">☀️ BUY NO — STAYS DRY</div>
-        <div class="hb-price" id="hero-no-price">₦—</div>
-        <div class="hb-sub">Payout ₦100 if no rain</div>
-      </div>
+    <!-- OUTCOME GRID -->
+    <div class="outcome-grid" id="outcome-grid">
+      <!-- rendered by JS -->
     </div>
 
     <div class="hero-stats">
       <div class="hstat"><div class="hstat-label">Volume</div><div class="hstat-val yellow">₦12.4M</div></div>
-      <div class="hstat"><div class="hstat-label">YES Prob</div><div class="hstat-val green" id="prob-stat">—</div></div>
+      <div class="hstat"><div class="hstat-label">Top Pick</div><div class="hstat-val yellow" id="top-pick-stat">—</div></div>
       <div class="hstat"><div class="hstat-label">Rain So Far</div><div class="hstat-val blue" id="rainfall-so-far">—mm</div></div>
       <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val">3,841</div></div>
       <div class="hstat"><div class="hstat-label">Window</div><div class="hstat-val yellow">8AM–8PM</div></div>
@@ -356,7 +362,7 @@ body{-webkit-font-smoothing:antialiased;}
 
     <div style="font-size:12px;color:var(--text3);display:flex;align-items:flex-start;gap:7px;line-height:1.6;">
       <i class="fa-solid fa-circle-info" style="color:var(--rain);margin-top:2px;flex-shrink:0;"></i>
-      Weather data from Open-Meteo real-time observations for Lagos (6.52°N, 3.38°E). Resolves YES if total precipitation &gt; 0mm at any point 8AM–8PM WAT. New market opens automatically at 8:00 AM each day.
+      Weather data from Open-Meteo real-time observations for Lagos (6.52°N, 3.38°E). Resolves to the first hourly slot where precipitation &gt; 0mm, 8AM–7PM WAT, or "No Rain" if the window closes dry. New market opens daily at 8:00 AM.
     </div>
   </div>
 
@@ -372,12 +378,12 @@ body{-webkit-font-smoothing:antialiased;}
       <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;">
         <div style="font-size:26px;margin-bottom:10px;">☔</div>
         <div style="font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;">How it works</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.7;">A <strong style="color:var(--text);">daily weather market</strong> that resets every morning. YES wins if measurable rain falls anywhere in Lagos during the 8AM–8PM window. Uses live Open-Meteo data — no manual resolution needed.</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7;">A <strong style="color:var(--text);">daily multi-outcome market</strong> that resets every morning. Pick the hour when the first rain will fall — or bet on "No Rain". The earliest slot with &gt;0mm wins. Uses live Open-Meteo data — no manual resolution needed.</div>
       </div>
       <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;">
         <div style="font-size:26px;margin-bottom:10px;">📊</div>
         <div style="font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;">Live probability</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.7;">The YES price updates based on <strong style="color:var(--text);">real-time rain observations</strong> and hourly forecasts. If rain is detected in the window, YES price surges. If it's staying dry with no forecast rain, NO strengthens.</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7;">Each outcome's price updates based on <strong style="color:var(--text);">real-time observations</strong> and hourly forecasts. Hours with heavy forecast rain surge in probability. If it stays dry with no rain in view, "No Rain" strengthens.</div>
       </div>
       <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;">
         <div style="font-size:26px;margin-bottom:10px;">🏁</div>
@@ -400,8 +406,8 @@ body{-webkit-font-smoothing:antialiased;}
     <div class="card-section">
       <div class="card-section-title">Market Rules & Resolution</div>
       <div style="display:flex;flex-direction:column;gap:16px;font-size:13px;color:var(--text2);line-height:1.8;">
-        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Criteria</div>Resolves <strong style="color:var(--green);">YES</strong> if total precipitation at Lagos (6.5244°N, 3.3792°E) is greater than 0.0mm at any point between 8:00 AM and 8:00 PM West Africa Time (WAT, UTC+1). Resolves <strong style="color:var(--red);">NO</strong> if the window closes with zero recorded rainfall.</div>
-        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Data Source</div>Open-Meteo real-time weather API using WMO-standard observations for the Lagos metropolitan area. The settlement value is drawn from the <code style="font-family:var(--font-mono);background:var(--bg3);padding:2px 5px;border-radius:3px;">hourly.precipitation</code> field summed across the 8AM–8PM window.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Criteria</div>Resolves to the <strong style="color:var(--green);">earliest hourly slot</strong> where precipitation at Lagos (6.5244°N, 3.3792°E) exceeds 0.0mm between 8:00 AM and 7:00 PM West Africa Time (WAT, UTC+1). Resolves <strong style="color:var(--rain);">"No Rain"</strong> if the entire window records zero precipitation. The winning outcome pays ₦100 per share; all other outcomes pay ₦0.</div>
+        <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Data Source</div>Open-Meteo real-time weather API using WMO-standard observations for the Lagos metropolitan area. The winning hour is determined by the first non-zero value in the <code style="font-family:var(--font-mono);background:var(--bg3);padding:2px 5px;border-radius:3px;">hourly.precipitation</code> field for slots 8AM–7PM WAT.</div>
         <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Daily Reset</div>A completely fresh market opens at 8:00 AM WAT every calendar day. Previous day results do not carry over. The page state (LIVE / SETTLED / PRE-MARKET) is determined automatically by the current time.</div>
         <div><div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Disputes</div>Contact support@skedee.ng within 24 hours of resolution with Open-Meteo API evidence. Skedee's decision is final in cases of data source conflict.</div>
       </div>
@@ -413,23 +419,9 @@ body{-webkit-font-smoothing:antialiased;}
 <!-- RIGHT SIDEBAR -->
 <div class="right-sidebar">
   <div>
-    <div class="rsidebar-title">Live Probability</div>
-    <div class="prob-meter">
-      <div class="pm-label">YES · WILL RAIN</div>
-      <div class="pm-yes" id="pm-yes">—</div>
-      <div class="pm-bar" style="margin-top:8px;">
-        <div class="pm-bar-yes" id="pm-bar-yes" style="width:50%;"></div>
-        <div class="pm-bar-no" id="pm-bar-no" style="width:50%;"></div>
-      </div>
-      <div class="pm-no-row">
-        <div class="pm-no-label">NO · STAYS DRY</div>
-        <div class="pm-no-val" id="pm-no">—</div>
-      </div>
-    </div>
-    <div style="display:flex;gap:6px;" id="sidebar-trade-btns">
-      <button style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.1);color:var(--green);font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;" onclick="openOrder('Rain Today','YES',yesPct)" onmouseover="this.style.background='var(--green)';this.style.color='#000'" onmouseout="this.style.background='rgba(34,197,94,.1)';this.style.color='var(--green)'">BUY YES</button>
-      <button style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);color:var(--red);font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;" onclick="openOrder('Rain Today','NO',100-yesPct)" onmouseover="this.style.background='var(--red)';this.style.color='#fff'" onmouseout="this.style.background='rgba(239,68,68,.08)';this.style.color='var(--red)'">BUY NO</button>
-    </div>
+    <div class="rsidebar-title">Top Outcomes</div>
+    <div id="top-outcomes"></div>
+    <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:8px;text-align:center;" id="sidebar-top-note">—</div>
   </div>
 
   <div style="border-top:1px solid var(--border3);padding-top:14px;">
@@ -463,42 +455,73 @@ body{-webkit-font-smoothing:antialiased;}
     <div class="order-panel-title">Place Order</div>
     <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
   </div>
-  <div class="order-market-name" id="op-market-name">Rain Today — Lagos</div>
-  <div class="order-side-tabs">
-    <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
-    <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
+  <div class="order-market-name" id="op-market-name">When First Rain — Lagos</div>
+
+  <!-- OUTCOME + PROB -->
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">OUTCOME</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--rain);line-height:1;" id="op-outcome-label">—</div>
+    </div>
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">PROB.</div>
+      <div style="font-family:var(--font-num);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-prob-label">—</div>
+    </div>
   </div>
-  <div class="order-field">
-    <label>Amount (NGN ₦)</label>
-    <input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()">
+
+  <!-- AMOUNT INPUT -->
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;padding:0 16px;margin-bottom:8px;">
+    <span style="font-family:var(--font-mono);font-size:22px;color:var(--text3);margin-right:8px;flex-shrink:0;">₦</span>
+    <input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()"
+      style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
   </div>
-  <div class="order-field">
-    <label>Price per Share (₦)</label>
-    <input type="number" id="op-price" value="50" step="1" min="1" max="99" oninput="updateOrderSummary()">
+  <input type="hidden" id="op-price" value="50">
+  <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:20px;padding:0 2px;" id="op-shares-line">— shares of ₦— each</div>
+
+  <!-- PAYOUT -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:0 2px;">
+    <div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:1px;line-height:1.6;">PAYOUT</div>
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;">IF CORRECT</div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:4px;">
+      <span style="font-family:var(--font-mono);font-size:26px;color:var(--text3);">₦</span>
+      <span style="font-family:var(--font-num);font-size:34px;font-weight:700;color:var(--y);line-height:1;" id="op-payout">—</span>
+    </div>
   </div>
-  <div class="order-summary">
-    <div class="order-summary-row"><span class="label">Shares</span><span class="value" id="op-shares">100.0</span></div>
-    <div class="order-summary-row"><span class="label">Avg Entry</span><span class="value" id="op-entry">₦50</span></div>
-    <div class="order-summary-row"><span class="label">Max Payout</span><span class="value green" id="op-payout">₦10,000</span></div>
-    <div class="order-summary-row"><span class="label">Potential Profit</span><span class="value yellow" id="op-profit">+₦5,000</span></div>
-    <div class="order-summary-row"><span class="label">Wallet After</span><span class="value" id="op-wallet-after">₦4,266,250</span></div>
-  </div>
-  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">—</span></button>
 </div>
 
 <script src="../script.js"></script>
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────────
-const LAT  = 6.5244;
-const LON  = 3.3792;
-const TZ   = 'Africa/Lagos';
+const LAT   = 6.5244;
+const LON   = 3.3792;
+const TZ    = 'Africa/Lagos';
 const OPEN  = 8;   // 8:00 AM
-const CLOSE = 20;  // 8:00 PM
+const CLOSE = 20;  // 8:00 PM (window end, last tradeable slot is 7PM = hour 19)
+
+const OUTCOMES = [
+  { id:'08', label:'8 AM',    hour:8  },
+  { id:'09', label:'9 AM',    hour:9  },
+  { id:'10', label:'10 AM',   hour:10 },
+  { id:'11', label:'11 AM',   hour:11 },
+  { id:'12', label:'12 PM',   hour:12 },
+  { id:'13', label:'1 PM',    hour:13 },
+  { id:'14', label:'2 PM',    hour:14 },
+  { id:'15', label:'3 PM',    hour:15 },
+  { id:'16', label:'4 PM',    hour:16 },
+  { id:'17', label:'5 PM',    hour:17 },
+  { id:'18', label:'6 PM',    hour:18 },
+  { id:'19', label:'7 PM',    hour:19 },
+  { id:'no', label:'No Rain', hour:-1 },
+];
 
 // ── STATE ────────────────────────────────────────────────────────────────────
-let yesPct           = 50;
+let dist             = new Array(13).fill(0);
 let walletBalance    = 4271250;
-let orderSide        = 'YES';
+let orderOutcome     = '—';
 let recentTrades     = [];
 let weatherData      = null;
 let rainfallWindowMm = 0;
@@ -506,88 +529,172 @@ let rainDetected     = false;
 let lastState        = null;
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
-// Get current time in Lagos timezone
 function lagosNow() {
   return new Date(new Date().toLocaleString('en-US', { timeZone: TZ }));
 }
 
 function getState() {
   const h = lagosNow().getHours() + lagosNow().getMinutes() / 60;
-  if (h < OPEN)  return 'PREMARKET';
+  if (h < OPEN)   return 'PREMARKET';
   if (h >= CLOSE) return 'SETTLED';
   return 'LIVE';
 }
 
-// WMO weather code → [emoji, label, isRainy]
 function wmoInfo(code) {
-  if (code === 0)               return ['☀️',  'Clear Sky',        false];
-  if (code <= 3)                return ['🌤️',  'Partly Cloudy',    false];
-  if (code <= 48)               return ['🌫️',  'Foggy',            false];
-  if (code <= 55)               return ['🌦️',  'Drizzle',          true];
-  if (code <= 65)               return ['🌧️',  'Rain',             true];
-  if (code <= 82)               return ['🌧️',  'Rain Showers',     true];
-  if (code <= 99)               return ['⛈️',  'Thunderstorm',     true];
-  return                               ['🌡️',  'Unknown',          false];
+  if (code === 0)  return ['☀️', 'Clear Sky',      false];
+  if (code <= 3)   return ['🌤️', 'Partly Cloudy',  false];
+  if (code <= 48)  return ['🌫️', 'Foggy',          false];
+  if (code <= 55)  return ['🌦️', 'Drizzle',        true];
+  if (code <= 65)  return ['🌧️', 'Rain',           true];
+  if (code <= 82)  return ['🌧️', 'Rain Showers',   true];
+  if (code <= 99)  return ['⛈️', 'Thunderstorm',   true];
+  return                  ['🌡️', 'Unknown',        false];
 }
 
-// ── PROBABILITY ──────────────────────────────────────────────────────────────
-function calcProb(data, state) {
-  const now      = lagosNow();
-  const curHour  = now.getHours();
-  const precip   = data.hourly.precipitation;   // 24-entry array
+// ── PROBABILITY DISTRIBUTION ──────────────────────────────────────────────────
+function hourRainChance(mm) {
+  if (mm > 4)   return 0.92;
+  if (mm > 2)   return 0.82;
+  if (mm > 1)   return 0.70;
+  if (mm > 0.3) return 0.55;
+  if (mm > 0)   return 0.38;
+  return 0.04;
+}
 
-  // Window: indices OPEN(8) to CLOSE-1(19)
+function calcDistribution(data, state) {
+  const precip  = data.hourly.precipitation;
+  const curHour = lagosNow().getHours();
+
   const windowPrecip   = precip.slice(OPEN, CLOSE);
   const observedPrecip = precip.slice(OPEN, Math.min(curHour + 1, CLOSE));
-  const windowTotal    = windowPrecip.reduce((s, v) => s + v, 0);
-  const observedTotal  = observedPrecip.reduce((s, v) => s + v, 0);
-
-  rainfallWindowMm = state === 'SETTLED' ? windowTotal : observedTotal;
+  rainfallWindowMm = (state === 'SETTLED' ? windowPrecip : observedPrecip).reduce((s, v) => s + v, 0);
   rainDetected     = rainfallWindowMm > 0;
 
+  const d = new Array(13).fill(0);
+
   if (state === 'SETTLED') {
-    return windowTotal > 0 ? 99 : 1;
+    for (let i = 0; i < 12; i++) {
+      if (precip[OPEN + i] > 0) { d[i] = 100; return d; }
+    }
+    d[12] = 100;
+    return d;
   }
 
-  const curPrecip  = data.current.precipitation;
-  const curCode    = data.current.weathercode;
-  const [,, rainy] = wmoInfo(curCode);
-
-  const remainingPrecip    = precip.slice(Math.max(curHour + 1, OPEN), CLOSE);
-  const forecastRainHours  = remainingPrecip.filter(v => v > 0).length;
-
-  if (state === 'PREMARKET') {
-    const forecastHours = windowPrecip.filter(v => v > 0).length;
-    let p = 10 + Math.round((forecastHours / 12) * 70);
-    if (rainy) p = Math.max(p, 50);
-    return Math.min(95, Math.max(5, p));
+  if (state === 'LIVE') {
+    for (let i = 0; i < 12; i++) {
+      const h = OPEN + i;
+      if (h < curHour && precip[h] > 0) { d[i] = 100; return d; }
+    }
   }
 
-  // LIVE
-  if (rainDetected)         return Math.min(99, 85 + Math.min(10, Math.round(rainfallWindowMm * 2)));
-  if (curPrecip > 0 || rainy) return Math.min(97, Math.round(80 + Math.min(15, curPrecip * 5)));
-  if (forecastRainHours > 0) {
-    const hoursLeft   = remainingPrecip.length;
-    const fcastWeight = forecastRainHours / Math.max(1, hoursLeft);
-    return Math.min(75, Math.round(25 + fcastWeight * 55));
+  // Sequential survival model
+  let survival = 1.0;
+  const raw    = [];
+  const startSlot = state === 'LIVE' ? Math.max(0, curHour - OPEN) : 0;
+
+  for (let i = 0; i < startSlot; i++) raw.push(0);
+
+  for (let i = startSlot; i < 12; i++) {
+    const rc = hourRainChance(precip[OPEN + i]);
+    raw.push(survival * rc);
+    survival *= (1 - rc);
   }
-  // Dry + no forecast — bleed toward 0 as window closes
-  const hoursElapsed = Math.max(0, curHour - OPEN);
-  return Math.max(2, Math.round(20 - hoursElapsed * 1.5));
+
+  const total = raw.reduce((s, v) => s + v, 0) + survival;
+  let sum = 0;
+  for (let i = 0; i < 12; i++) {
+    d[i] = Math.round((raw[i] / total) * 100);
+    sum += d[i];
+  }
+  d[12] = 100 - sum;
+  return d;
+}
+
+// ── RENDER OUTCOME GRID ───────────────────────────────────────────────────────
+function renderOutcomeGrid(d) {
+  const state   = getState();
+  const maxProb = Math.max(...d);
+  const grid    = document.getElementById('outcome-grid');
+  if (!grid) return;
+
+  grid.innerHTML = OUTCOMES.map((o, i) => {
+    const p        = d[i];
+    const isWinner = state === 'SETTLED' && p === 100;
+    const isTop    = !isWinner && p === maxProb && p > 0;
+    const isNoRain = o.id === 'no';
+    const barPct   = maxProb > 0 ? Math.round((p / maxProb) * 100) : 0;
+    let cls = 'outcome-tile';
+    if (isWinner)      cls += ' settled-win';
+    else if (isTop)    cls += ' top';
+    else if (isNoRain) cls += ' no-rain';
+    const blocked = state !== 'LIVE' ? ' style="pointer-events:none;opacity:.45;"' : '';
+    return `<div class="${cls}"${blocked} onclick="openOrder('When First Rain — Lagos','${o.label}',${p})">
+      <div class="ot-time">${o.label}</div>
+      <div class="ot-prob">${p}%</div>
+      <div class="ot-price">₦${p} / share</div>
+      <div class="ot-bar"><div class="ot-bar-fill" style="width:${barPct}%"></div></div>
+      ${isWinner ? '<div class="ot-win-badge">🏆 WINNER</div>' : ''}
+    </div>`;
+  }).join('');
+}
+
+// ── RENDER TOP OUTCOMES (sidebar) ────────────────────────────────────────────
+function renderTopOutcomes(d) {
+  const state  = getState();
+  const maxP   = Math.max(...d);
+  const sorted = OUTCOMES.map((o, i) => ({ ...o, prob: d[i] }))
+    .sort((a, b) => b.prob - a.prob)
+    .slice(0, 5);
+
+  const el = document.getElementById('top-outcomes');
+  if (!el) return;
+
+  el.innerHTML = sorted.map((o, rank) => {
+    const isNoRain = o.id === 'no';
+    const color    = o.prob === maxP ? 'var(--y)' : isNoRain ? 'var(--red)' : 'var(--rain)';
+    const buyBtn   = state === 'LIVE'
+      ? `<button class="tor-buy-btn" onclick="openOrder('When First Rain — Lagos','${o.label}',${o.prob})">BUY</button>`
+      : '';
+    return `<div class="top-outcome-row">
+      <span class="tor-rank">${rank + 1}</span>
+      <span class="tor-label">${o.label}</span>
+      <div class="tor-bar"><div class="tor-bar-fill" style="width:${o.prob}%;background:${color};"></div></div>
+      <span class="tor-prob" style="color:${color};">${o.prob}%</span>
+      ${buyBtn}
+    </div>`;
+  }).join('');
+
+  const note = document.getElementById('sidebar-top-note');
+  if (note && sorted[0]) note.textContent = `Top: ${sorted[0].label} @ ${sorted[0].prob}%`;
+}
+
+// ── UPDATE STATS ──────────────────────────────────────────────────────────────
+function updateStats(d) {
+  const topIdx = d.indexOf(Math.max(...d));
+  const topEl  = document.getElementById('top-pick-stat');
+  if (topEl) topEl.textContent = OUTCOMES[topIdx].label;
+  const rfEl = document.getElementById('rainfall-so-far');
+  if (rfEl) rfEl.textContent = `${rainfallWindowMm.toFixed(1)}mm`;
+
+  // Update left sidebar trending change chip
+  const sc = document.getElementById('sidebar-change');
+  if (sc) {
+    const top = OUTCOMES[topIdx];
+    sc.textContent = `▲ ${Math.max(...d)}% ${top.label}`;
+    sc.style.color = 'var(--green)';
+  }
 }
 
 // ── RENDER STATE BANNER ───────────────────────────────────────────────────────
 function renderBanner(state) {
-  const now      = lagosNow();
-  const dateStr  = now.toLocaleDateString('en-NG', { day:'numeric', month:'long', year:'numeric' });
+  const now     = lagosNow();
+  const dateStr = now.toLocaleDateString('en-NG', { day:'numeric', month:'long', year:'numeric' });
 
-  // Always reset interactive elements first
-  const tradeRow  = document.getElementById('hero-trade-row');
-  const tradeBtns = document.getElementById('sidebar-trade-btns');
-  tradeRow.style.pointerEvents  = '';
-  tradeRow.style.opacity        = '';
-  tradeBtns.style.pointerEvents = '';
-  tradeBtns.style.opacity       = '';
+  const grid = document.getElementById('outcome-grid');
+  if (grid) {
+    grid.style.pointerEvents = state === 'LIVE' ? '' : 'none';
+    grid.style.opacity       = state === 'LIVE' ? '' : '0.45';
+  }
 
   const stateTag = document.getElementById('state-tag');
   const liveDot  = document.getElementById('live-dot');
@@ -606,24 +713,24 @@ function renderBanner(state) {
           <div>${dateStr}</div>
         </div>
       </div>`;
-    tradeRow.style.pointerEvents  = 'none';
-    tradeRow.style.opacity        = '0.4';
-    tradeBtns.style.pointerEvents = 'none';
-    tradeBtns.style.opacity       = '0.4';
-    stateTag.className = 'state-tag premarket';
+    stateTag.className   = 'state-tag premarket';
     stateTag.textContent = '🕗 OPENS 8AM';
     liveDot.textContent  = '⏰ PRE-MARKET';
     liveDot.style.color  = 'var(--rain)';
     bgEmoji.textContent  = '⏰';
 
   } else if (state === 'SETTLED') {
-    const win  = rainDetected;
-    const icon = win ? '🌧️' : '☀️';
-    const resultColor = win ? 'var(--green)' : 'var(--red)';
-    const resultText  = win ? 'YES — IT RAINED!' : 'NO — STAYED DRY';
-    const payText     = win
-      ? `Rain recorded (${rainfallWindowMm.toFixed(1)}mm) · YES paid ₦100 · NO paid ₦0`
-      : 'No rain recorded · NO paid ₦100 · YES paid ₦0';
+    const winIdx  = dist.indexOf(100);
+    const winner  = OUTCOMES[winIdx] ?? OUTCOMES[12];
+    const noRain  = winner.id === 'no';
+    const icon    = noRain ? '☀️' : '🌧️';
+    const resultColor = noRain ? 'var(--red)' : 'var(--green)';
+    const resultText  = noRain
+      ? 'NO RAIN — Window Closed Dry'
+      : `FIRST RAIN AT ${winner.label.toUpperCase()}`;
+    const payText = noRain
+      ? 'No rain in window · "No Rain" paid ₦100 · All hourly outcomes paid ₦0'
+      : `Rain detected · "${winner.label}" paid ₦100 · All other outcomes paid ₦0`;
 
     document.getElementById('state-banner').innerHTML = `
       <div class="state-banner settled">
@@ -639,18 +746,13 @@ function renderBanner(state) {
           <div>8:00 PM WAT</div>
         </div>
       </div>`;
-    tradeRow.style.pointerEvents  = 'none';
-    tradeRow.style.opacity        = '0.3';
-    tradeBtns.style.pointerEvents = 'none';
-    tradeBtns.style.opacity       = '0.3';
     stateTag.className   = 'state-tag settled';
     stateTag.textContent = '🏁 SETTLED';
     liveDot.textContent  = '🏁 SETTLED';
     liveDot.style.color  = 'var(--y)';
-    bgEmoji.textContent  = win ? '🌧️' : '☀️';
+    bgEmoji.textContent  = noRain ? '☀️' : '🌧️';
 
   } else {
-    // LIVE — no banner, hero card IS the live view
     document.getElementById('state-banner').innerHTML = '';
     stateTag.className   = 'state-tag live';
     stateTag.textContent = rainDetected ? '🌧️ RAINING' : '🟢 LIVE';
@@ -660,51 +762,31 @@ function renderBanner(state) {
   }
 }
 
-// ── UPDATE PROB UI ────────────────────────────────────────────────────────────
-function updateProbUI(pct) {
-  const no = 100 - pct;
-  document.getElementById('prob-yes-big').textContent = pct + '%';
-  document.getElementById('prob-no-big').textContent  = no  + '%';
-  document.getElementById('hpb-yes').style.width      = pct + '%';
-  document.getElementById('hpb-no').style.width       = no  + '%';
-  document.getElementById('pm-yes').textContent       = pct + '%';
-  document.getElementById('pm-no').textContent        = no  + '%';
-  document.getElementById('pm-bar-yes').style.width   = pct + '%';
-  document.getElementById('pm-bar-no').style.width    = no  + '%';
-  document.getElementById('prob-stat').textContent    = pct + '%';
-  document.getElementById('hero-yes-price').textContent = '₦' + pct;
-  document.getElementById('hero-no-price').textContent  = '₦' + no;
-  const sc = document.getElementById('sidebar-change');
-  sc.textContent = (pct > 50 ? '▲ ' : '▼ ') + pct + '% YES';
-  sc.style.color = pct > 50 ? 'var(--green)' : 'var(--red)';
-}
-
 // ── UPDATE WEATHER UI ─────────────────────────────────────────────────────────
 function updateWeatherUI(data) {
-  const cur        = data.current;
+  const cur          = data.current;
   const [icon, desc] = wmoInfo(cur.weathercode);
-  const temp       = Math.round(cur.temperature_2m);
-  const hum        = cur.relative_humidity_2m;
-  const rainNow    = cur.precipitation;
+  const temp         = Math.round(cur.temperature_2m);
+  const hum          = cur.relative_humidity_2m;
+  const rainNow      = cur.precipitation;
 
   document.getElementById('wp-icon').textContent = icon;
   document.getElementById('wp-text').innerHTML   =
     `Currently <strong>${desc}</strong> · ${temp}°C · Humidity ${hum}% · Rain: <strong style="color:var(--rain);">${rainNow.toFixed(1)}mm/h</strong>`;
 
-  document.getElementById('ww-icon').textContent = icon;
-  document.getElementById('ww-desc').textContent = desc;
-  document.getElementById('ww-temp').textContent = `${temp}°C`;
-  document.getElementById('ww-hum').textContent  = `${hum}%`;
+  document.getElementById('ww-icon').textContent     = icon;
+  document.getElementById('ww-desc').textContent     = desc;
+  document.getElementById('ww-temp').textContent     = `${temp}°C`;
+  document.getElementById('ww-hum').textContent      = `${hum}%`;
   document.getElementById('ww-rain-now').textContent = `${rainNow.toFixed(1)}mm/h`;
   document.getElementById('ww-total').textContent    = `${rainfallWindowMm.toFixed(1)}mm`;
-  document.getElementById('rainfall-so-far').textContent = `${rainfallWindowMm.toFixed(1)}mm`;
 }
 
 // ── HOURLY BARS ───────────────────────────────────────────────────────────────
 function renderBars(precip) {
-  const windowP  = precip.slice(OPEN, CLOSE);      // 12 values: 8am–7pm
-  const maxP     = Math.max(...windowP, 0.5);
-  const curHour  = lagosNow().getHours();
+  const windowP = precip.slice(OPEN, CLOSE);
+  const maxP    = Math.max(...windowP, 0.5);
+  const curHour = lagosNow().getHours();
 
   document.getElementById('rwb-hours').innerHTML = windowP.map((p, i) => {
     const hour    = OPEN + i;
@@ -713,8 +795,8 @@ function renderBars(precip) {
     const isCur   = hour === curHour;
     const hasRain = p > 0;
     let bg;
-    if (hasRain)      bg = isCur ? 'var(--rain)' : (isPast ? 'rgba(96,165,250,.7)' : 'rgba(96,165,250,.35)');
-    else              bg = isCur ? 'rgba(245,200,0,.4)' : (isPast ? 'rgba(255,255,255,.07)' : 'rgba(255,255,255,.04)');
+    if (hasRain)  bg = isCur ? 'var(--rain)' : (isPast ? 'rgba(96,165,250,.7)' : 'rgba(96,165,250,.35)');
+    else          bg = isCur ? 'rgba(245,200,0,.4)' : (isPast ? 'rgba(255,255,255,.07)' : 'rgba(255,255,255,.04)');
     const outline = isCur ? `box-shadow:0 0 0 1px var(--rain);` : '';
     return `<div class="rwb-hour" style="height:${pct}%;background:${bg};${outline}" title="${hour}:00 — ${p.toFixed(1)}mm"></div>`;
   }).join('');
@@ -723,8 +805,8 @@ function renderBars(precip) {
 // ── FETCH WEATHER ─────────────────────────────────────────────────────────────
 async function loadWeather() {
   try {
-    const curFields     = 'temperature_2m,relative_humidity_2m,precipitation,weathercode,apparent_temperature';
-    const hourlyFields  = 'precipitation,weathercode';
+    const curFields    = 'temperature_2m,relative_humidity_2m,precipitation,weathercode,apparent_temperature';
+    const hourlyFields = 'precipitation,weathercode';
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}`
               + `&current=${curFields}&hourly=${hourlyFields}`
               + `&timezone=${encodeURIComponent(TZ)}&forecast_days=1`;
@@ -733,25 +815,32 @@ async function loadWeather() {
     weatherData = await res.json();
 
     const state = getState();
-    yesPct = calcProb(weatherData, state);
+    dist = calcDistribution(weatherData, state);
 
-    updateProbUI(yesPct);
+    renderOutcomeGrid(dist);
+    renderTopOutcomes(dist);
     updateWeatherUI(weatherData);
+    updateStats(dist);
     renderBars(weatherData.hourly.precipitation);
 
-    // Only re-render banner when state changes (or first load)
     if (state !== lastState) {
       renderBanner(state);
       lastState = state;
     } else if (state === 'SETTLED') {
-      // Always refresh settled banner so rainfall total is accurate
       renderBanner(state);
     }
   } catch (e) {
     console.warn('Weather API unavailable — using fallback', e);
     const state = getState();
-    yesPct = state === 'PREMARKET' ? 42 : state === 'SETTLED' ? 50 : 55;
-    updateProbUI(yesPct);
+    const weights = [3,4,6,9,12,13,13,11,9,7,5,4,4];
+    const total   = weights.reduce((s, v) => s + v, 0);
+    let sum = 0;
+    dist = new Array(13).fill(0);
+    for (let i = 0; i < 12; i++) { dist[i] = Math.round(weights[i] / total * 100); sum += dist[i]; }
+    dist[12] = 100 - sum;
+    renderOutcomeGrid(dist);
+    renderTopOutcomes(dist);
+    updateStats(dist);
     if (state !== lastState) { renderBanner(state); lastState = state; }
     document.getElementById('wp-icon').textContent = '📡';
     document.getElementById('wp-text').innerHTML   = '<strong>Weather data unavailable</strong> — showing estimated probability';
@@ -760,13 +849,14 @@ async function loadWeather() {
 
 // ── TRADES ────────────────────────────────────────────────────────────────────
 function makeTrade() {
-  const side  = Math.random() > 0.65 ? 'sell' : 'buy';
-  const price = side === 'buy'
-    ? Math.max(1,  Math.min(99, Math.round(yesPct      + (Math.random() * 4 - 2))))
-    : Math.max(1,  Math.min(99, Math.round(100 - yesPct + (Math.random() * 4 - 2))));
-  const size  = Math.floor(Math.random() * 2000 + 100);
-  const mkt   = Math.random() > 0.4 ? 'Rain Today YES' : 'Rain Today NO';
-  return { side, price, size, mkt };
+  const side     = Math.random() > 0.65 ? 'sell' : 'buy';
+  const topIdx   = dist.indexOf(Math.max(...dist));
+  const pickIdx  = Math.random() > 0.4 ? topIdx : Math.floor(Math.random() * 13);
+  const outcome  = OUTCOMES[pickIdx];
+  const p        = dist[pickIdx];
+  const price    = Math.max(1, Math.min(99, Math.round(p + (Math.random() * 4 - 2))));
+  const size     = Math.floor(Math.random() * 2000 + 100);
+  return { side, price, size, mkt: outcome.label };
 }
 
 function renderTrades() {
@@ -781,37 +871,35 @@ function renderTrades() {
 }
 
 // ── ORDER PANEL ───────────────────────────────────────────────────────────────
-function openOrder(name, side, price) {
+function openOrder(name, outcome, price) {
   if (getState() !== 'LIVE') return;
-  document.getElementById('op-market-name').textContent = name;
-  document.getElementById('op-price').value = parseInt(price) || 50;
-  setOrderSide(side);
+  orderOutcome = outcome;
+  const p = Math.max(1, Math.min(99, parseInt(price) || 5));
+  document.getElementById('op-market-name').textContent   = name;
+  document.getElementById('op-outcome-label').textContent = outcome;
+  document.getElementById('op-prob-label').textContent    = p + '%';
+  document.getElementById('op-price').value               = p;
+  document.getElementById('op-side-label').textContent    = outcome;
+  updateOrderSummary();
   document.getElementById('order-panel').classList.add('open');
 }
 function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
-function setOrderSide(side) {
-  orderSide = side;
-  document.getElementById('op-yes-btn').classList.toggle('active', side === 'YES');
-  document.getElementById('op-no-btn').classList.toggle('active', side === 'NO');
-  document.getElementById('op-side-label').textContent = side;
-  updateOrderSummary();
-}
 function updateOrderSummary() {
   const amt    = parseFloat(document.getElementById('op-amount').value) || 0;
   const price  = parseFloat(document.getElementById('op-price').value)  || 1;
-  const shares = amt / price;
-  const profit = shares - amt;
-  document.getElementById('op-shares').textContent    = shares.toFixed(1);
-  document.getElementById('op-entry').textContent     = '₦' + Math.round(price).toLocaleString('en-NG');
-  document.getElementById('op-payout').textContent    = '₦' + Math.round(shares).toLocaleString('en-NG');
-  document.getElementById('op-profit').textContent    = (profit >= 0 ? '+' : '') + '₦' + Math.round(profit).toLocaleString('en-NG');
-  document.getElementById('op-wallet-after').textContent = '₦' + Math.round(walletBalance - amt).toLocaleString('en-NG');
+  const shares = Math.floor(amt / price);
+  const payout = shares * 100;
+  document.getElementById('op-shares-line').textContent =
+    shares.toLocaleString('en-NG') + ' shares of ₦' + Math.round(price) + ' each';
+  document.getElementById('op-payout').textContent = payout.toLocaleString('en-NG');
 }
 function placeOrder() {
   const amt = parseFloat(document.getElementById('op-amount').value) || 0;
+  if (amt <= 0) return;
   if (amt > walletBalance) { alert('Insufficient balance'); return; }
   walletBalance -= amt;
-  document.getElementById('wallet-display').textContent = '₦' + walletBalance.toLocaleString('en-NG', { maximumFractionDigits: 0 });
+  document.getElementById('wallet-display').textContent =
+    '₦' + walletBalance.toLocaleString('en-NG', { maximumFractionDigits:0 });
   closeOrder();
 }
 
@@ -819,7 +907,7 @@ function placeOrder() {
 function switchTab(name, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  ['overview', 'rules'].forEach(t => {
+  ['overview','rules'].forEach(t => {
     const el = document.getElementById('tab-' + t);
     if (el) el.style.display = t === name ? '' : 'none';
   });
@@ -832,11 +920,20 @@ document.addEventListener('click', e => {
     document.getElementById('profile-dd').classList.remove('open');
 });
 
-// ── LIVE TICK (trade animation only when LIVE) ────────────────────────────────
+// ── LIVE TICK ─────────────────────────────────────────────────────────────────
 function liveTick() {
   if (getState() !== 'LIVE') return;
-  yesPct = Math.max(1, Math.min(99, yesPct + Math.round((Math.random() - 0.49) * 1.5)));
-  updateProbUI(yesPct);
+  for (let i = 0; i < 13; i++) {
+    if (dist[i] > 0) dist[i] = Math.max(0, dist[i] + Math.round((Math.random() - 0.5) * 1));
+  }
+  const sum = dist.reduce((s, v) => s + v, 0);
+  if (sum !== 100) {
+    const idx = dist.indexOf(Math.max(...dist));
+    dist[idx] = Math.max(0, dist[idx] + (100 - sum));
+  }
+  renderOutcomeGrid(dist);
+  renderTopOutcomes(dist);
+  updateStats(dist);
   recentTrades.unshift(makeTrade());
   if (recentTrades.length > 12) recentTrades.pop();
   renderTrades();
@@ -847,13 +944,9 @@ renderTrades();
 updateOrderSummary();
 loadWeather();
 
-setInterval(loadWeather, 60_000);   // Refresh weather every 60s
-setInterval(liveTick,    5_000);    // Animate trades every 5s (noop when not LIVE)
-// Poll for state transitions (8am open, 8pm close) every 30s
-setInterval(() => {
-  const s = getState();
-  if (s !== lastState) { loadWeather(); }
-}, 30_000);
+setInterval(loadWeather, 60_000);
+setInterval(liveTick,    5_000);
+setInterval(() => { if (getState() !== lastState) loadWeather(); }, 30_000);
 </script>
 
 <!-- FOOTER -->
@@ -870,6 +963,7 @@ setInterval(() => {
           <a href="../faq.html">FAQ</a>
           <a href="../policy.html">Privacy Policy</a>
           <a href="../terms.html">Terms of Service</a>
+          <a href="../report.html" style="color:var(--red);">Report an Issue</a>
         </div>
         <div class="footer-col">
           <div class="footer-col-title">SOCIALS</div>

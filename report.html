@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report an Issue — Skedee</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<style>
+
+/* ── HERO ── */
+.hero {
+  padding: 120px 24px 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: linear-gradient(var(--y) 1px, transparent 1px), linear-gradient(90deg, var(--y) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-glow {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 400px;
+  background: radial-gradient(circle, rgba(245,200,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 99px; padding: 5px 16px; margin-bottom: 20px;
+  font-family: var(--font-mono); font-size: 10px; color: var(--red); letter-spacing: 1.5px;
+}
+.hero-title {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(36px, 6vw, 64px);
+  letter-spacing: -2px; line-height: 1; margin-bottom: 14px;
+}
+.hero-title span { color: var(--y); }
+.hero-sub {
+  font-size: 15px; color: var(--text2);
+  max-width: 460px; margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ── FORM WRAP ── */
+.report-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 0 24px 100px;
+}
+
+/* ── CATEGORY CHIPS ── */
+.field-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 10px;
+}
+.cat-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 28px;
+}
+.cat-chip {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; border-radius: var(--radius-lg);
+  border: 1px solid var(--border); background: var(--bg2);
+  cursor: pointer; transition: all 0.15s; user-select: none;
+}
+.cat-chip:hover { border-color: var(--border2); background: var(--bg3); }
+.cat-chip.selected { border-color: var(--y); background: rgba(245,200,0,0.07); }
+.cat-chip-icon {
+  width: 32px; height: 32px; border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+  background: var(--bg4); border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+.cat-chip.selected .cat-chip-icon { background: rgba(245,200,0,0.15); border-color: rgba(245,200,0,0.3); }
+.cat-chip-info { flex: 1; min-width: 0; }
+.cat-chip-title {
+  font-family: var(--font-display); font-weight: 700; font-size: 13px;
+  color: var(--text2); transition: color 0.15s;
+}
+.cat-chip.selected .cat-chip-title { color: var(--y); }
+.cat-chip-desc {
+  font-size: 11px; color: var(--text3); margin-top: 1px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── FIELDS ── */
+.field { margin-bottom: 20px; }
+.field-label-row {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+}
+.field-optional {
+  font-family: var(--font-mono); font-size: 9px; color: var(--text3);
+  background: var(--bg4); padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px;
+}
+.field input, .field textarea, .field select {
+  width: 100%; background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 12px 16px;
+  color: var(--text); font-family: var(--font-body); font-size: 14px;
+  outline: none; transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  border-color: var(--y); box-shadow: 0 0 0 3px rgba(245,200,0,0.07);
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--text3); }
+.field textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+.field-hint { font-size: 11px; color: var(--text3); margin-top: 6px; line-height: 1.5; }
+
+/* ── DIVIDER ── */
+.form-divider {
+  height: 1px; background: var(--border); margin: 28px 0;
+}
+
+/* ── SEVERITY ── */
+.severity-row { display: flex; gap: 8px; }
+.sev-btn {
+  flex: 1; padding: 9px 8px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--bg2);
+  cursor: pointer; text-align: center; transition: all 0.15s;
+  font-family: var(--font-display); font-weight: 700; font-size: 12px;
+  color: var(--text3);
+}
+.sev-btn:hover { border-color: var(--border2); color: var(--text); }
+.sev-btn.selected.low  { border-color: var(--green); background: rgba(34,197,94,.1);  color: var(--green); }
+.sev-btn.selected.med  { border-color: var(--y);     background: rgba(245,200,0,.08); color: var(--y); }
+.sev-btn.selected.high { border-color: var(--red);   background: rgba(239,68,68,.1);  color: var(--red); }
+
+/* ── ANON TOGGLE ── */
+.anon-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 14px 16px; margin-bottom: 20px; cursor: pointer;
+  transition: border-color 0.15s;
+}
+.anon-row:hover { border-color: var(--border2); }
+.anon-row.on { border-color: rgba(245,200,0,0.35); background: rgba(245,200,0,0.04); }
+.anon-left { display: flex; align-items: center; gap: 12px; }
+.anon-icon {
+  width: 34px; height: 34px; border-radius: var(--radius);
+  background: var(--bg4); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--text3); transition: all 0.15s;
+}
+.anon-row.on .anon-icon { background: rgba(245,200,0,0.15); color: var(--y); border-color: rgba(245,200,0,0.3); }
+.anon-title { font-family: var(--font-display); font-weight: 700; font-size: 13px; }
+.anon-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.toggle {
+  width: 38px; height: 22px; border-radius: 99px;
+  background: var(--bg4); border: 1px solid var(--border);
+  position: relative; transition: all 0.2s; flex-shrink: 0;
+}
+.toggle::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--text3); transition: all 0.2s;
+}
+.anon-row.on .toggle { background: var(--y); border-color: var(--y); }
+.anon-row.on .toggle::after { left: 19px; background: #000; }
+
+/* ── SUBMIT BUTTON ── */
+.btn-submit {
+  width: 100%; padding: 15px;
+  border-radius: var(--radius-lg); border: none; cursor: pointer;
+  font-family: var(--font-display); font-weight: 800; font-size: 15px;
+  letter-spacing: 0.5px; transition: all 0.15s;
+  background: var(--y); color: #000;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-submit:hover { background: var(--y2); transform: translateY(-1px); }
+.btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.btn-submit-sub {
+  text-align: center; font-family: var(--font-mono); font-size: 10px;
+  color: var(--text3); margin-top: 10px;
+}
+
+/* ── SUCCESS STATE ── */
+.success-card {
+  display: none; text-align: center;
+  background: var(--bg2); border: 1px solid rgba(34,197,94,0.25);
+  border-radius: var(--radius-xl); padding: 48px 32px;
+}
+.success-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(34,197,94,0.1); border: 2px solid rgba(34,197,94,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; margin: 0 auto 20px;
+}
+.success-title {
+  font-family: var(--font-display); font-weight: 800; font-size: 24px;
+  color: var(--green); margin-bottom: 10px;
+}
+.success-ref {
+  font-family: var(--font-mono); font-size: 11px; color: var(--text3);
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 8px 16px; display: inline-block; margin: 12px 0;
+}
+.success-sub { font-size: 13px; color: var(--text2); line-height: 1.7; max-width: 380px; margin: 0 auto 24px; }
+.btn-back {
+  padding: 10px 24px; border-radius: var(--radius-lg);
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--text); font-family: var(--font-display); font-weight: 700; font-size: 13px;
+  cursor: pointer; transition: all 0.15s;
+}
+.btn-back:hover { background: var(--bg3); }
+
+/* ── NOTICE BOX ── */
+.notice-box {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--radius-lg); padding: 14px 16px; margin-bottom: 28px;
+  font-size: 12px; color: var(--text2); line-height: 1.6;
+}
+.notice-box i { color: var(--red); font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+
+@media (max-width: 600px) {
+  .hero { padding: 100px 16px 48px; }
+  .cat-grid { grid-template-columns: 1fr; }
+  .severity-row { flex-direction: column; }
+  .report-wrap { padding: 0 16px 80px; }
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="index.html" class="topbar-navlink">Markets</a>
+    <a href="about.html" class="topbar-navlink">About</a>
+    <a href="faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search markets, events, teams...">
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag"><i class="fa-solid fa-shield-halved"></i> INTEGRITY &amp; COMPLIANCE</div>
+  <div class="hero-title">Report an <span>Issue</span></div>
+  <div class="hero-sub">Help us keep Skedee fair. Reports are reviewed by our integrity team within 24 hours.</div>
+</div>
+
+<!-- FORM -->
+<div class="report-wrap">
+
+  <!-- FORM CARD -->
+  <div id="report-form">
+
+    <div class="notice-box">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <div>Reports are confidential and reviewed by Skedee's integrity team. False or malicious reports may result in account suspension. For urgent issues contact <strong>support@skedee.ng</strong>.</div>
+    </div>
+
+    <!-- CATEGORY -->
+    <div class="field-label">What are you reporting?</div>
+    <div class="cat-grid" id="cat-grid">
+      <div class="cat-chip selected" data-cat="insider" onclick="selectCat(this)">
+        <div class="cat-chip-icon">🕵️</div>
+        <div class="cat-chip-info">
+          <div class="cat-chip-title">Insider Trading</div>
+          <div class="cat-chip-desc">Non-public info used to trade</div>
+        </div>
+      </div>
+      <div class="cat-chip" data-cat="manipulation" onclick="selectCat(this)">
+        <div class="cat-chip-icon">📊</div>
+        <div class="cat-chip-info">
+          <div class="cat-chip-title">Market Manipulation</div>
+          <div class="cat-chip-desc">Coordinated or artificial price moves</div>
+        </div>
+      </div>
+      <div class="cat-chip" data-cat="bots" onclick="selectCat(this)">
+        <div class="cat-chip-icon">🤖</div>
+        <div class="cat-chip-info">
+          <div class="cat-chip-title">Bot / Spam Activity</div>
+          <div class="cat-chip-desc">Automated or fake accounts</div>
+        </div>
+      </div>
+      <div class="cat-chip" data-cat="resolution" onclick="selectCat(this)">
+        <div class="cat-chip-icon">⚖️</div>
+        <div class="cat-chip-info">
+          <div class="cat-chip-title">Wrong Resolution</div>
+          <div class="cat-chip-desc">Market resolved incorrectly</div>
+        </div>
+      </div>
+      <div class="cat-chip" data-cat="misinfo" onclick="selectCat(this)">
+        <div class="cat-chip-icon">📢</div>
+        <div class="cat-chip-info">
+          <div class="cat-chip-title">False Information</div>
+          <div class="cat-chip-desc">Misleading comments or claims</div>
+        </div>
+      </div>
+      <div class="cat-chip" data-cat="technical" onclick="selectCat(this)">
+        <div class="cat-chip-icon">🔧</div>
+        <div class="cat-chip-info">
+          <div class="cat-chip-title">Technical Issue</div>
+          <div class="cat-chip-desc">Bug, glitch, or broken feature</div>
+        </div>
+      </div>
+      <div class="cat-chip" data-cat="other" onclick="selectCat(this)" style="grid-column:span 2;">
+        <div class="cat-chip-icon">📋</div>
+        <div class="cat-chip-info">
+          <div class="cat-chip-title">Other</div>
+          <div class="cat-chip-desc">Something not listed above</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARKET -->
+    <div class="field">
+      <div class="field-label-row">
+        <div class="field-label">Market</div>
+        <span class="field-optional">OPTIONAL</span>
+      </div>
+      <input type="text" id="field-market" placeholder="Paste the market URL or enter a market name…">
+      <div class="field-hint">e.g. skedee.ng/markets/10000005.html or "World Bank $1.25bn Loan"</div>
+    </div>
+
+    <!-- ACCOUNT -->
+    <div class="field">
+      <div class="field-label-row">
+        <div class="field-label">Reported Account / Username</div>
+        <span class="field-optional">OPTIONAL</span>
+      </div>
+      <input type="text" id="field-account" placeholder="@username or account ID if known">
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- DESCRIPTION -->
+    <div class="field">
+      <div class="field-label">Describe the issue</div>
+      <textarea id="field-desc" placeholder="What happened? Include as much detail as possible — dates, amounts, specific trades, unusual patterns, or anything else that seems relevant…"></textarea>
+    </div>
+
+    <!-- EVIDENCE -->
+    <div class="field">
+      <div class="field-label-row">
+        <div class="field-label">Evidence / Links</div>
+        <span class="field-optional">OPTIONAL</span>
+      </div>
+      <textarea id="field-evidence" style="min-height:72px;" placeholder="Paste any URLs, screenshots descriptions, or supporting references…"></textarea>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- SEVERITY -->
+    <div class="field">
+      <div class="field-label" style="margin-bottom:10px;">How urgent is this?</div>
+      <div class="severity-row">
+        <button class="sev-btn low selected" onclick="selectSev(this,'low')">Low</button>
+        <button class="sev-btn med" onclick="selectSev(this,'med')">Medium</button>
+        <button class="sev-btn high" onclick="selectSev(this,'high')">High — Urgent</button>
+      </div>
+    </div>
+
+    <!-- ANONYMOUS TOGGLE -->
+    <div class="anon-row" id="anon-row" onclick="toggleAnon()">
+      <div class="anon-left">
+        <div class="anon-icon"><i class="fa-solid fa-user-secret"></i></div>
+        <div>
+          <div class="anon-title">Submit anonymously</div>
+          <div class="anon-sub">We won't attach your account to this report</div>
+        </div>
+      </div>
+      <div class="toggle" id="anon-toggle"></div>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="field" id="email-field">
+      <div class="field-label-row">
+        <div class="field-label">Your email</div>
+        <span class="field-optional">FOR UPDATES</span>
+      </div>
+      <input type="email" id="field-email" placeholder="you@example.com">
+      <div class="field-hint">We'll only contact you if we need clarification or to share the outcome.</div>
+    </div>
+
+    <!-- SUBMIT -->
+    <button class="btn-submit" id="btn-submit" onclick="submitReport()">
+      <i class="fa-solid fa-shield-halved"></i> Submit Report
+    </button>
+    <div class="btn-submit-sub">Your report is encrypted and confidential.</div>
+  </div>
+
+  <!-- SUCCESS STATE -->
+  <div class="success-card" id="success-card">
+    <div class="success-icon">✓</div>
+    <div class="success-title">Report Received</div>
+    <div class="success-ref" id="success-ref">REF #SK-000000</div>
+    <div class="success-sub">Our integrity team will review your report within <strong>24 hours</strong>. If you left an email, we'll follow up with the outcome.</div>
+    <button class="btn-back" onclick="location.href='index.html'">Back to Markets</button>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+          <a href="policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="report.html" style="color:var(--red);">Report an Issue</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+let selectedCat  = 'insider';
+let selectedSev  = 'low';
+let anonEnabled  = false;
+
+function selectCat(el) {
+  document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedCat = el.dataset.cat;
+}
+
+function selectSev(el, sev) {
+  document.querySelectorAll('.sev-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSev = sev;
+}
+
+function toggleAnon() {
+  anonEnabled = !anonEnabled;
+  document.getElementById('anon-row').classList.toggle('on', anonEnabled);
+  document.getElementById('email-field').style.display = anonEnabled ? 'none' : '';
+}
+
+function submitReport() {
+  const desc = document.getElementById('field-desc').value.trim();
+  if (!desc) {
+    document.getElementById('field-desc').focus();
+    document.getElementById('field-desc').style.borderColor = 'var(--red)';
+    setTimeout(() => document.getElementById('field-desc').style.borderColor = '', 2000);
+    return;
+  }
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting…';
+
+  setTimeout(() => {
+    const ref = 'SK-' + Date.now().toString(36).toUpperCase().slice(-6);
+    document.getElementById('success-ref').textContent = 'REF #' + ref;
+    document.getElementById('report-form').style.display  = 'none';
+    document.getElementById('success-card').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 1200);
+}
+
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+}
+function toggleProfile() { document.getElementById('profile-dd').classList.toggle('open'); }
+document.addEventListener('click', e => {
+  if (!e.target.closest('.avatar') && !e.target.closest('.profile-dropdown'))
+    document.getElementById('profile-dd').classList.remove('open');
+});
+</script>
+</body>
+</html>
