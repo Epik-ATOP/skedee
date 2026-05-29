@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Who Will Drop an Album this year? — Naija | Skedee</title>
+<title>Who will Drop a New Song in May? | Skedee</title>
 <link rel="icon" type="image/png" href="../assets/skedee-1.png">
 <link rel="manifest" href="../manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,12 +19,6 @@
   --sidebar-w:220px;
   --rsidebar-w:280px;
 }
-
-
-
-
-
-
 
 /* ── HERO CARD ── */
 .hero-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:28px;position:relative;overflow:hidden;}
@@ -87,7 +81,10 @@
 .ar-btn-no:hover{background:var(--red);color:#fff;border-color:var(--red);}
 .ar-det-chip{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;text-align:center;padding:4px 0;line-height:1.5;}
 
-
+/* ── RULE PILL ── */
+.rule-pill{display:inline-flex;align-items:center;gap:6px;border-radius:6px;padding:5px 12px;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.5px;}
+.rule-pill.yes{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--green);}
+.rule-pill.no{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:var(--red);}
 
 /* ── CARD ── */
 .card-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px;}
@@ -100,10 +97,6 @@
 .blurb-name{font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:3px;}
 .blurb-verdict{font-family:var(--font-mono);font-size:9px;margin-bottom:7px;letter-spacing:.5px;}
 .blurb-text{font-size:11px;color:var(--text2);line-height:1.65;}
-
-
-
-
 
 /* ── PROFILE ── */
 .profile-dropdown{position:fixed;top:56px;right:16px;z-index:300;width:180px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:8px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.4);}
@@ -153,7 +146,8 @@ to{opacity:1;transform:translateY(0)}
     <a href="10000004.html" class="topbar-navlink">BBNaija S11</a>
     <a href="10000007.html" class="topbar-navlink">Fuel Price</a>
     <a href="10000008.html" class="topbar-navlink">Naira/Dollar</a>
-    <a href="10000026.html" class="topbar-navlink active">Naija Albums 2026</a>
+    <a href="10000026.html" class="topbar-navlink">Naija Albums 2026</a>
+    <a href="10000030.html" class="topbar-navlink active">Naija Songs — May</a>
     <a href="../about.html" class="topbar-navlink">About</a>
     <a href="../faq.html" class="topbar-navlink">FAQ</a>
   </div>
@@ -197,19 +191,19 @@ to{opacity:1;transform:translateY(0)}
   <div class="sidebar-item">🌦️ Weather</div>
   <div class="sidebar-item">🌀 Miscellaneous</div>
   <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
-  <div class="sidebar-label">Trending Now</div>
-  <div class="trending-event">
-    <div class="trend-name">🎵 Who Drops an Album?</div>
+  <div class="sidebar-label">Music Markets</div>
+  <div class="trending-event" onclick="window.location='10000026.html'">
+    <div class="trend-name">🎵 Who Drops an Album 2026?</div>
     <div style="display:flex;justify-content:space-between;margin-top:3px;">
       <div class="trend-vol">₦114M vol</div>
       <div class="trend-change" style="color:var(--green);">▲ 22%</div>
     </div>
   </div>
-  <div class="trending-event">
-    <div class="trend-name">🌊 Lagos Major Flood?</div>
+  <div class="trending-event" onclick="window.location='10000030.html'">
+    <div class="trend-name">🎵 Who Drops a Song — May?</div>
     <div style="display:flex;justify-content:space-between;margin-top:3px;">
-      <div class="trend-vol">₦34M vol</div>
-      <div class="trend-change" style="color:var(--green);">▲ 14%</div>
+      <div class="trend-vol">₦18.4M vol</div>
+      <div class="trend-change" style="color:var(--green);">▲ 11%</div>
     </div>
   </div>
   <div class="trending-event">
@@ -229,45 +223,51 @@ to{opacity:1;transform:translateY(0)}
     <div class="hero-bg-emoji">🎵</div>
 
     <div class="hero-top">
-      <div class="hero-cat-tag">🎵 MUSIC · NAIJA · 2026</div>
-      <div class="hero-vol-tag">Vol ₦114.2M</div>
+      <div class="hero-cat-tag">🎵 MUSIC · NAIJA · MAY 2026</div>
+      <div class="hero-vol-tag">Vol ₦18.4M</div>
       <div class="hot-tag">🔥 TRENDING</div>
-      <div class="closes-tag">⏳ CLOSES DEC 31</div>
+      <div class="closes-tag">⏳ CLOSES MAY 31</div>
     </div>
 
-    <div class="hero-title">Who Will Drop a Studio Album this year?</div>
+    <div class="hero-title">Who Will Release a New Song in May 2026?</div>
     <div class="hero-sub">
-      12 of Nigeria's biggest acts — each with their own YES/NO market. Trade on whether your faves will deliver a full studio LP before the year ends.
-      <strong style="color:var(--music);">Asake</strong> is already <strong style="color:var(--green);">DETERMINED ✅</strong> — album delivered. Who's next?
+      14 of Nigeria's biggest acts — each with their own YES/NO market. Trade on whether your fave drops a solo single or lead track before the month ends.
+      <strong style="color:var(--music);">Davido</strong> and <strong style="color:var(--music);">ODUMODUBLVCK</strong> are already <strong style="color:var(--green);">DETERMINED ✅</strong> — songs released. Who else delivers before May 31?
     </div>
 
     <div class="market-stats-bar">
       <div class="mstat">
         <div class="mstat-label">Total Volume</div>
-        <div class="mstat-val yellow">₦114.2M</div>
+        <div class="mstat-val yellow">₦18.4M</div>
       </div>
       <div class="mstat">
         <div class="mstat-label">Markets Open</div>
-        <div class="mstat-val purple">13</div>
+        <div class="mstat-val purple">12</div>
       </div>
       <div class="mstat">
         <div class="mstat-label">Determined</div>
-        <div class="mstat-val green">1</div>
+        <div class="mstat-val green">2</div>
       </div>
       <div class="mstat">
         <div class="mstat-label">Total Traders</div>
-        <div class="mstat-val">24,831</div>
+        <div class="mstat-val">6,204</div>
       </div>
       <div class="mstat">
         <div class="mstat-label">Closes</div>
-        <div class="mstat-val yellow">Dec 31</div>
+        <div class="mstat-val yellow">May 31</div>
       </div>
     </div>
 
     <div style="font-size:12px;color:var(--text3);display:flex;align-items:flex-start;gap:7px;line-height:1.6;">
       <i class="fa-solid fa-circle-info" style="color:var(--music);margin-top:2px;flex-shrink:0;"></i>
-      Each artist has an independent YES/NO market. Resolves YES if that artist officially releases a full studio album (7+ tracks, not an EP) on any major streaming platform before midnight December 31, 2026 WAT. Singles, EPs, and features do not count.
+      Guest features do <strong style="color:var(--red);">not</strong> count — <em style="color:var(--text2);">e.g. "Davido ft. Asake" = YES for Davido, NO for Asake.</em>
     </div>
+  </div>
+
+  <!-- RULE QUICK-REF -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <div class="rule-pill yes">✅ YES — "Artist Name" · "Artist Name ft. X"</div>
+    <div class="rule-pill no">❌ NO — "X ft. Artist Name" (guest only)</div>
   </div>
 
   <!-- ARTISTS TABLE -->
@@ -292,9 +292,9 @@ to{opacity:1;transform:translateY(0)}
   <!-- OVERVIEW TAB -->
   <div id="tab-overview">
     <div class="card-section" style="margin-bottom:14px;">
-      <div class="card-section-title">🇳🇬 Naija Music in 2026</div>
+      <div class="card-section-title">🇳🇬 Naija Singles — May 2026</div>
       <div style="font-size:13px;color:var(--text2);line-height:1.8;">
-        Afrobeats is at <strong style="color:var(--text);">peak global dominance</strong> — but a studio album is a different commitment to a single or EP. Nigeria's biggest acts are navigating packed touring schedules, international label deals, and creative timelines while fans grow more impatient by the month. With Asake already across the finish line, the question is who follows — and who keeps you waiting until 2027.
+        May is one of the busiest release months in Afrobeats — European summer is approaching and labels are priming their artists for festival season. With 2 days left in the month, 2 markets are already determined. The question is who squeezes out a drop before the clock hits midnight on May 31.
       </div>
     </div>
 
@@ -303,87 +303,87 @@ to{opacity:1;transform:translateY(0)}
       <div class="blurb-grid">
 
         <div class="blurb-card det">
-          <div class="blurb-name" style="color:var(--green);">Asake</div>
-          <div class="blurb-verdict" style="color:var(--green);">✅ DETERMINED — Album Released 2026</div>
-          <div class="blurb-text">Asake made it look easy. He delivered his studio project, M$NEY, in 2026, cementing himself as one of Nigeria's most consistent acts. YES holders were paid out at ₦100 per share. The Asake market is now closed.</div>
-        </div>
-
-        <div class="blurb-card">
-          <div class="blurb-name" style="color:var(--green);">Ayra Starr</div>
-          <div class="blurb-verdict" style="color:var(--green);">71% YES · Hot Favourite</div>
-          <div class="blurb-text">Ayra Starr has been vocal about a 2026 LP. Her debut hit big globally, the sophomore album is overdue, and her momentum with UMG is at peak. Studio sessions confirmed via socials. Strong YES signal.</div>
-        </div>
-
-        <div class="blurb-card">
           <div class="blurb-name" style="color:var(--green);">Davido</div>
-          <div class="blurb-verdict" style="color:var(--green);">68% YES · Likely YES</div>
-          <div class="blurb-text">OBO rarely goes a year without a project. 2026 is already buzzing with new singles from his camp. Davido is known for last-minute rollouts — the single cluster signal is worth watching. Smart YES money.</div>
+          <div class="blurb-verdict" style="color:var(--green);">✅ DETERMINED — Song Released May 2026</div>
+          <div class="blurb-text">OBO delivered as expected. His new single dropped on streaming platforms this month, keeping his remarkable consistency intact. YES holders paid out at ₦100/share.</div>
+        </div>
+
+        <div class="blurb-card det">
+          <div class="blurb-name" style="color:var(--green);">ODUMODUBLVCK</div>
+          <div class="blurb-verdict" style="color:var(--green);">✅ DETERMINED — Song Released May 2026</div>
+          <div class="blurb-text">ODUMODU is in a relentless creative phase — he dropped a new track this month and it's already getting heavy rotation. The trap afrobeats fusion is connecting hard. YES holders are cashed out.</div>
         </div>
 
         <div class="blurb-card">
           <div class="blurb-name" style="color:var(--green);">Burna Boy</div>
-          <div class="blurb-verdict" style="color:var(--green);">63% YES · Likely YES</div>
-          <div class="blurb-text">African Giant drops every 1–2 years, no exceptions. His last LP was well-received globally, and insiders report sessions ongoing in both Lagos and London. Burna being "quiet" on socials almost always means something is cooking.</div>
+          <div class="blurb-verdict" style="color:var(--green);">79% YES · Hot Favourite</div>
+          <div class="blurb-text">African Giant drops frequently and May is prime season. His team has been teasing new music. Strong YES signal — 2 days left is plenty for Burna to push something out.</div>
         </div>
 
         <div class="blurb-card">
-          <div class="blurb-name" style="color:var(--green);">Omah Lay</div>
-          <div class="blurb-verdict" style="color:var(--green);">62% YES · Slight Yes</div>
-          <div class="blurb-text">Omah Lay has been dropping loosies and features but the industry buzz suggests he's sitting on an album. The Naija underground knows something. Watch for the rollout — it'll come fast when it does.</div>
+          <div class="blurb-name" style="color:var(--green);">Kizz Daniel</div>
+          <div class="blurb-verdict" style="color:var(--green);">75% YES · Likely Yes</div>
+          <div class="blurb-text">Kizz is a singles machine. He drops constantly and rarely lets a month go by without something. With summer festivals approaching he has every incentive to release before month end.</div>
         </div>
 
         <div class="blurb-card">
-          <div class="blurb-name" style="color:var(--green);">ODUMODUBLVCK</div>
-          <div class="blurb-verdict" style="color:var(--green);">60% YES · Slight Yes</div>
-          <div class="blurb-text">EJIOGBE put him on the map and he hasn't slowed down since. His pen game is sharp, the fanbase is hungry, and he's been in the studio consistently. A full project in 2026 feels more likely than not — the YES side has a quiet edge here.</div>
+          <div class="blurb-name" style="color:var(--green);">Ayra Starr</div>
+          <div class="blurb-verdict" style="color:var(--green);">72% YES · Likely Yes</div>
+          <div class="blurb-text">Ayra has been building toward a new project all year and singles are her preferred warm-up. Her UMG promo schedule often has surprises in May/June. The YES side looks right.</div>
         </div>
 
         <div class="blurb-card">
-          <div class="blurb-name" style="color:var(--y);">BNXN</div>
-          <div class="blurb-verdict" style="color:var(--y);">57% YES · Slight Yes</div>
-          <div class="blurb-text">BNXN has matured into one of Afropop's most melodic voices and has been consistent with projects. Confirmed studio activity in early 2026 and a track record of delivering. A project is more likely than not.</div>
+          <div class="blurb-name" style="color:var(--green);">BNXN</div>
+          <div class="blurb-verdict" style="color:var(--green);">68% YES · Likely Yes</div>
+          <div class="blurb-text">BNXN has been quiet but not absent. His socials show studio content and he typically drops without much warning. 68% YES is fair for someone with his release frequency.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--y);">Omah Lay</div>
+          <div class="blurb-verdict" style="color:var(--y);">62% YES · Slight Yes</div>
+          <div class="blurb-text">Omah Lay is building quietly. He's been selective with releases but there are credible signs of activity. 2 days is tight but Omah has surprised the market with fast turnarounds before.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--y);">Asake</div>
+          <div class="blurb-verdict" style="color:var(--y);">60% YES · Slight Yes</div>
+          <div class="blurb-text">Post-album Asake tends to take a brief breather before the next single campaign. He could surprise but 60% reflects the genuine uncertainty with just 2 days remaining.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--y);">Flavour</div>
+          <div class="blurb-verdict" style="color:var(--y);">58% YES · Slight Yes</div>
+          <div class="blurb-text">Flavour has been active on the circuit in May. He's not a frequent dropper but he's been spotted at studios in Lagos. A slight YES edge — the Highlife audience is hungry for new material.</div>
         </div>
 
         <div class="blurb-card">
           <div class="blurb-name" style="color:var(--y);">Rema</div>
-          <div class="blurb-verdict" style="color:var(--y);">56% YES · Slight Yes</div>
-          <div class="blurb-text">Rema's global breakout with "Calm Down" put him on a different level. But international stardom comes with longer rollouts. His label Jonzing/Mavin has hinted at 2026 plans — no confirmed timeline yet though.</div>
-        </div>
-
-        <div class="blurb-card">
-          <div class="blurb-name" style="color:var(--y);">Fireboy DML</div>
-          <div class="blurb-verdict" style="color:var(--y);">52% YES · Coinflip</div>
-          <div class="blurb-text">Fireboy has gone slightly quieter after his last run. Nothing officially confirmed for 2026, though he's been spotted on features. His YES price reflects genuine uncertainty — the market is waiting for a clear signal.</div>
-        </div>
-
-        <div class="blurb-card">
-          <div class="blurb-name" style="color:var(--y);">Kizz Daniel</div>
-          <div class="blurb-verdict" style="color:var(--y);">51% YES · Coinflip</div>
-          <div class="blurb-text">Kizz Daniel is Africa's touring machine — which sometimes means albums take a back seat. His prolific singles output keeps him in the conversation, but committing to a full LP in 2026 is unconfirmed. Pure coin flip.</div>
-        </div>
-
-        <div class="blurb-card">
-          <div class="blurb-name" style="color:var(--red);">Tems</div>
-          <div class="blurb-verdict" style="color:var(--red);">48% YES · Slight No</div>
-          <div class="blurb-text">Tems is famously deliberate. Her debut album took years and was a career statement, not a quick drop. She's embedded in international collabs and her own label. A 2026 LP is possible but she shows no urgency.</div>
-        </div>
-
-        <div class="blurb-card">
-          <div class="blurb-name" style="color:var(--red);">Flavour</div>
-          <div class="blurb-verdict" style="color:var(--red);">46% YES · Slight No</div>
-          <div class="blurb-text">The Highlife king from Enugu has been prolific over 15+ years but rarely rushes projects. He's been touring heavily and splitting focus between music and his brand. A 2026 album is possible — not probable. The NO side edges it.</div>
+          <div class="blurb-verdict" style="color:var(--y);">54% YES · Coinflip</div>
+          <div class="blurb-text">Rema is deliberate with releases and doesn't rush for month-end. His label rollouts are usually well-planned. At 54% YES the market is essentially calling this a coin flip.</div>
         </div>
 
         <div class="blurb-card">
           <div class="blurb-name" style="color:var(--red);">Wizkid</div>
-          <div class="blurb-verdict" style="color:var(--red);">43% YES · Likely No</div>
-          <div class="blurb-text">Big Wiz moves on his own timeline — Starboy (2017), Made in Lagos (2020), MLLE (2022). If the pattern holds, 2026 is a gap year. But Wizkid surprises. He has the most volume on this market for a reason.</div>
+          <div class="blurb-verdict" style="color:var(--red);">41% YES · Slight No</div>
+          <div class="blurb-text">Big Wiz moves on his own time and no one else's. He's been relatively quiet in May with no strong signals. With 2 days left, the market leans NO — but Wizkid dropping without warning is always possible.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--red);">Tems</div>
+          <div class="blurb-verdict" style="color:var(--red);">38% YES · Likely No</div>
+          <div class="blurb-text">Tems is famously deliberate and doesn't drop on short timelines. No credible signals of a May release. The market is pricing in the strong likelihood she sits this month out.</div>
+        </div>
+
+        <div class="blurb-card">
+          <div class="blurb-name" style="color:var(--red);">Fireboy DML</div>
+          <div class="blurb-verdict" style="color:var(--red);">35% YES · Likely No</div>
+          <div class="blurb-text">Fireboy has been low-key in 2026. No confirmed studio activity for May and no label signals. The NO side is clearly right here — 2 days is not enough time for a Fireboy surprise.</div>
         </div>
 
         <div class="blurb-card">
           <div class="blurb-name" style="color:var(--red);">Olamide</div>
-          <div class="blurb-verdict" style="color:var(--red);">39% YES · Likely No</div>
-          <div class="blurb-text">YBNL Nation's boss has shifted focus to developing his label roster — Asake, Poco Lee, the whole camp. Olamide still drops, but full-length personal projects have become rarer. NO looks like the smart side here.</div>
+          <div class="blurb-verdict" style="color:var(--red);">29% YES · Likely No</div>
+          <div class="blurb-text">YBNL's boss has been label-focused. Personal releases from Olamide are rare in 2026 and there's zero signal of a May drop. Strong NO territory — the smart money is sitting on this one.</div>
         </div>
 
       </div>
@@ -396,28 +396,32 @@ to{opacity:1;transform:translateY(0)}
       <div class="card-section-title">Market Rules & Resolution</div>
       <div style="display:flex;flex-direction:column;gap:16px;font-size:13px;color:var(--text2);line-height:1.8;">
         <div>
-          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What counts as an "album"?</div>
-          A full-length studio album with a minimum of <strong style="color:var(--text);">7 original tracks</strong>, officially released by the artist or their label on at least one major streaming platform (Spotify, Apple Music, Audiomack, Boomplay). The release must be announced officially by the artist or label — leaked projects do not count.
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:8px;">What counts as a YES?</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="rule-pill yes" style="width:fit-content;">✅ "Artist Name" — solo release</div>
+            <div class="rule-pill yes" style="width:fit-content;">✅ "Artist Name ft. Someone" — artist is the lead</div>
+            <div class="rule-pill no" style="width:fit-content;">❌ "Someone ft. Artist Name" — artist is the guest only</div>
+          </div>
         </div>
         <div>
-          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What does NOT count?</div>
-          Extended Plays (EPs) regardless of track count, mixtapes, compilations, collaborative albums where the artist is not the primary/sole act, deluxe re-releases of albums from previous years, singles, or features. "Live" albums and "Best Of" collections also do not count.
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What type of release counts?</div>
+          Any original track officially released on at least one major streaming platform (Spotify, Apple Music, Audiomack, Boomplay) before midnight May 31, 2026 WAT. Singles, EPs, and albums all count — as long as the artist is the lead act. Unofficial leaks, freestyles posted on social media only, and radio-exclusive plays do <strong style="color:var(--text);">not</strong> count.
         </div>
         <div>
           <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution deadline</div>
-          Each market closes and resolves at <strong style="color:var(--text);">midnight WAT on December 31, 2026</strong>. An album must be fully available on streaming platforms — not just announced — by this deadline. A title or tracklist announcement with no actual release does not resolve YES.
+          Midnight WAT on <strong style="color:var(--text);">May 31, 2026</strong>. A release must be live and playable on streaming platforms — not just announced — by this time.
         </div>
         <div>
-          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution sources</div>
-          Official artist and label social media accounts, verified announcements on Spotify for Artists or Apple Music for Artists, and confirmed reports from major Nigerian music outlets (TurnTable Charts, Native Magazine, Audiomack Nigeria). Skedee verifies releases independently on all major platforms before resolving.
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Already DETERMINED</div>
+          <strong style="color:var(--green);">Davido ✅</strong> and <strong style="color:var(--green);">ODUMODUBLVCK ✅</strong> have both released solo tracks in May 2026. YES holders for both markets have been paid out at ₦100/share.
         </div>
         <div>
-          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Already DETERMINED — Asake ✅</div>
-          Asake's market resolved <strong style="color:var(--green);">YES</strong> in 2026 following the official release of his studio album on all major platforms. All YES holders received ₦100 per share. The Asake market is now closed to new trades.
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resets monthly</div>
+          This market resets on the 1st of each month. June 2026 edition will open June 1 at 00:01 WAT with fresh probabilities.
         </div>
         <div>
           <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Disputes</div>
-          Contact support@skedee.ng within 24 hours of any market resolution with supporting evidence. Skedee's decision is final in cases of ambiguity.
+          Contact support@skedee.ng within 24 hours of any market resolution with supporting evidence. Skedee's decision is final.
         </div>
       </div>
     </div>
@@ -431,9 +435,9 @@ to{opacity:1;transform:translateY(0)}
   <div>
     <div class="rsidebar-title">Closes In</div>
     <div class="countdown-chip">
-      <div class="cd-label">Market Closes In</div>
-      <div class="cd-val" id="countdown-val">218d 00h</div>
-      <div class="cd-sub">December 31, 2026 · 23:59 WAT</div>
+      <div class="cd-label">Market Closes</div>
+      <div class="cd-val" id="countdown-val">2d 00h</div>
+      <div class="cd-sub">May 31, 2026 · 23:59 WAT</div>
     </div>
   </div>
 
@@ -447,23 +451,23 @@ to{opacity:1;transform:translateY(0)}
     <div style="display:flex;flex-direction:column;gap:0;">
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TOTAL VOLUME</span>
-        <span style="color:var(--y);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦114.2M</span>
+        <span style="color:var(--y);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦18.4M</span>
       </div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">ACTIVE MARKETS</span>
-        <span style="color:var(--music);font-family:var(--font-mono);font-size:11px;">11 / 12</span>
+        <span style="color:var(--music);font-family:var(--font-mono);font-size:11px;">12 / 14</span>
       </div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">DETERMINED</span>
-        <span style="color:var(--green);font-family:var(--font-mono);font-size:11px;">Asake ✅</span>
+        <span style="color:var(--green);font-family:var(--font-mono);font-size:11px;">2 ✅</span>
       </div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TRADERS</span>
-        <span style="color:var(--text);font-family:var(--font-mono);font-size:11px;">24,831</span>
+        <span style="color:var(--text);font-family:var(--font-mono);font-size:11px;">6,204</span>
       </div>
       <div style="display:flex;justify-content:space-between;padding:7px 0;">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">CLOSES</span>
-        <span style="color:var(--music);font-family:var(--font-mono);font-size:11px;">Dec 31 2026</span>
+        <span style="color:var(--music);font-family:var(--font-mono);font-size:11px;">May 31 2026</span>
       </div>
     </div>
   </div>
@@ -483,7 +487,7 @@ to{opacity:1;transform:translateY(0)}
     <div class="order-panel-title">Place Order</div>
     <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
   </div>
-  <div class="order-market-name" id="op-market-name">Davido — Album in 2026?</div>
+  <div class="order-market-name" id="op-market-name">Burna Boy — Song in May?</div>
   <div class="order-side-tabs">
     <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
     <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
@@ -503,7 +507,7 @@ to{opacity:1;transform:translateY(0)}
     <input type="number" id="op-amount" value="5000" min="100" max="9999999" oninput="updateOrderSummary()"
       style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
   </div>
-  <input type="hidden" id="op-price" value="68">
+  <input type="hidden" id="op-price" value="79">
   <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:20px;padding:0 2px;" id="op-shares-line">— shares of ₦— each</div>
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:0 2px;">
     <div>
@@ -520,31 +524,28 @@ to{opacity:1;transform:translateY(0)}
 
 <script src="../script.js"></script>
 <script>
-// ── DATA ─────────────────────────────────────────────────────────────────────
 const ARTISTS = [
-  { id:'asake',     name:'Asake',       emoji:'', genre:'AMAPIANO · AFRO-FUTURISM',  yes:100, vol:'₦9.2M',  determined:true  },
-  { id:'ayra',      name:'Ayra Starr',  emoji:'', genre:'AFROPOP · R&B',             yes:71,  vol:'₦11.2M', determined:false },
-  { id:'davido',    name:'Davido',      emoji:'', genre:'AFROPOP · HIP-HOP',         yes:68,  vol:'₦15.6M', determined:false },
-  { id:'burna',     name:'Burna Boy',   emoji:'', genre:'AFRO-FUSION',               yes:63,  vol:'₦14.3M', determined:false },
-  { id:'omah',      name:'Omah Lay',    emoji:'', genre:'AFROPOP · R&B',             yes:62,  vol:'₦7.1M',  determined:false },
-  { id:'odumodu',   name:'ODUMODUBLVCK',emoji:'', genre:'AFRO-HIP-HOP · TRAP',       yes:60,  vol:'₦6.4M',  determined:false },
-  { id:'bnxn',      name:'BNXN',        emoji:'', genre:'AFROPOP',                   yes:57,  vol:'₦5.8M',  determined:false },
-  { id:'rema',      name:'Rema',        emoji:'', genre:'AFROPOP · AMAPIANO',        yes:56,  vol:'₦9.9M',  determined:false },
-  { id:'fireboy',   name:'Fireboy DML', emoji:'', genre:'AFROPOP',                   yes:52,  vol:'₦4.7M',  determined:false },
-  { id:'kizz',      name:'Kizz Daniel', emoji:'', genre:'AFROPOP · HIGHLIFE',        yes:51,  vol:'₦4.4M',  determined:false },
-  { id:'tems',      name:'Tems',        emoji:'', genre:'R&B · AFRO-SOUL',           yes:48,  vol:'₦8.1M',  determined:false },
-  { id:'flavour',   name:'Flavour',     emoji:'', genre:'HIGHLIFE · AFROPOP',        yes:46,  vol:'₦3.8M',  determined:false },
-  { id:'wizkid',    name:'Wizkid',      emoji:'', genre:'AFROBEATS · R&B',           yes:43,  vol:'₦17.5M', determined:false },
-  { id:'olamide',   name:'Olamide',     emoji:'', genre:'AFRO-HIP-HOP · HIGHLIFE',  yes:39,  vol:'₦6.3M',  determined:false },
+  { id:'davido',   name:'Davido',       emoji:'', genre:'AFROPOP · HIP-HOP',        yes:100, vol:'₦3.1M',  determined:true  },
+  { id:'odumodu',  name:'ODUMODUBLVCK', emoji:'', genre:'AFRO-HIP-HOP · TRAP',      yes:100, vol:'₦2.4M',  determined:true  },
+  { id:'burna',    name:'Burna Boy',    emoji:'', genre:'AFRO-FUSION',              yes:79,  vol:'₦2.8M',  determined:false },
+  { id:'kizz',     name:'Kizz Daniel', emoji:'', genre:'AFROPOP · HIGHLIFE',       yes:75,  vol:'₦1.6M',  determined:false },
+  { id:'ayra',     name:'Ayra Starr',  emoji:'', genre:'AFROPOP · R&B',            yes:72,  vol:'₦1.9M',  determined:false },
+  { id:'bnxn',     name:'BNXN',        emoji:'', genre:'AFROPOP',                  yes:68,  vol:'₦1.2M',  determined:false },
+  { id:'omah',     name:'Omah Lay',    emoji:'', genre:'AFROPOP · R&B',            yes:62,  vol:'₦1.1M',  determined:false },
+  { id:'asake',    name:'Asake',       emoji:'', genre:'AMAPIANO · AFRO-FUTURISM', yes:60,  vol:'₦1.4M',  determined:false },
+  { id:'flavour',  name:'Flavour',     emoji:'', genre:'HIGHLIFE · AFROPOP',       yes:58,  vol:'₦0.7M',  determined:false },
+  { id:'rema',     name:'Rema',        emoji:'', genre:'AFROPOP · AMAPIANO',       yes:54,  vol:'₦1.3M',  determined:false },
+  { id:'wizkid',   name:'Wizkid',      emoji:'', genre:'AFROBEATS · R&B',          yes:41,  vol:'₦0.9M',  determined:false },
+  { id:'tems',     name:'Tems',        emoji:'', genre:'R&B · AFRO-SOUL',          yes:38,  vol:'₦0.8M',  determined:false },
+  { id:'fireboy',  name:'Fireboy DML', emoji:'', genre:'AFROPOP',                  yes:35,  vol:'₦0.5M',  determined:false },
+  { id:'olamide',  name:'Olamide',     emoji:'', genre:'AFRO-HIP-HOP · HIGHLIFE',  yes:29,  vol:'₦0.6M',  determined:false },
 ];
 
-// Live YES% (drifts during ticks)
 let liveYes = ARTISTS.map(a => a.yes);
 let walletBalance = 4271250;
 let orderSide = 'YES';
 let recentTrades = [];
 
-// ── RENDER ARTIST TABLE ───────────────────────────────────────────────────────
 function renderArtists() {
   const COL = 'grid-template-columns:32px 1.6fr 88px 2fr 70px 205px;';
   document.getElementById('artists-list').innerHTML = ARTISTS.map((a, i) => {
@@ -566,7 +567,7 @@ function renderArtists() {
         <div class="ar-bar-col">
           <div class="ar-bar-outer"><div class="ar-bar-det"></div></div>
           <div class="ar-bar-labels">
-            <span style="color:var(--green);">✅ Album Released · 2026</span>
+            <span style="color:var(--green);">✅ Song Released · May 2026</span>
           </div>
         </div>
         <div class="ar-vol">${a.vol}</div>
@@ -579,8 +580,6 @@ function renderArtists() {
 
     const probColor = yes >= 60 ? 'yes-c' : yes >= 45 ? 'yes-c' : 'no-c';
     const label = yes >= 50 ? 'LEANS YES' : 'LEANS NO';
-    const yesBarColor = yes >= 50 ? 'var(--green)' : 'rgba(34,197,94,.5)';
-    const noBarColor  = yes < 50  ? 'var(--red)'   : 'rgba(239,68,68,.45)';
 
     return `
     <div class="artist-row" id="ar-${a.id}" style="${COL}">
@@ -612,7 +611,6 @@ function renderArtists() {
   }).join('');
 }
 
-// ── RENDER SIDEBAR LEADERBOARD ────────────────────────────────────────────────
 function renderSidebarList() {
   const el = document.getElementById('sb-artist-list');
   if (!el) return;
@@ -629,7 +627,6 @@ function renderSidebarList() {
   }).join('');
 }
 
-// ── TRADES ────────────────────────────────────────────────────────────────────
 const TRADE_ARTISTS = ARTISTS.filter(a => !a.determined);
 function generateTrade() {
   const a    = TRADE_ARTISTS[Math.floor(Math.random() * TRADE_ARTISTS.length)];
@@ -638,7 +635,7 @@ function generateTrade() {
   const side = Math.random() > 0.44 ? 'buy' : 'sell';
   const mktSide = Math.random() > 0.5 ? 'YES' : 'NO';
   const price   = mktSide === 'YES' ? yes : 100 - yes;
-  const size    = Math.floor(Math.random() * 4500 + 200);
+  const size    = Math.floor(Math.random() * 2000 + 100);
   return { side, name: a.name, mktSide, price, size };
 }
 function renderTrades() {
@@ -652,13 +649,11 @@ function renderTrades() {
     </div>`).join('');
 }
 
-// ── LIVE TICK ─────────────────────────────────────────────────────────────────
 function liveTick() {
   ARTISTS.forEach((a, i) => {
     if (a.determined) return;
-    liveYes[i] = Math.max(5, Math.min(95, liveYes[i] + (Math.random() - 0.495) * 1.4));
+    liveYes[i] = Math.max(5, Math.min(95, liveYes[i] + (Math.random() - 0.495) * 1.6));
   });
-
   ARTISTS.forEach((a, i) => {
     if (a.determined) return;
     const yes = Math.round(liveYes[i]);
@@ -669,23 +664,21 @@ function liveTick() {
     const barNoEl  = document.getElementById('bar-no-'  + a.id);
     const btnYes   = document.getElementById('btn-yes-' + a.id);
     const btnNo    = document.getElementById('btn-no-'  + a.id);
-    if (probEl) { probEl.textContent = yes + '%'; probEl.className = 'ar-prob-num ' + (yes >= 50 ? 'yes-c' : 'no-c'); }
-    if (labelEl)  labelEl.textContent = yes >= 50 ? 'LEANS YES' : 'LEANS NO';
-    if (barYesEl) barYesEl.style.width = yes + '%';
-    if (barNoEl)  barNoEl.style.width  = no  + '%';
+    if (probEl)  { probEl.textContent = yes + '%'; probEl.className = 'ar-prob-num ' + (yes >= 50 ? 'yes-c' : 'no-c'); }
+    if (labelEl)   labelEl.textContent = yes >= 50 ? 'LEANS YES' : 'LEANS NO';
+    if (barYesEl)  barYesEl.style.width = yes + '%';
+    if (barNoEl)   barNoEl.style.width  = no  + '%';
     if (btnYes) { btnYes.textContent = 'YES ₦' + yes; btnYes.setAttribute('onclick', `openOrder('${a.name}','YES',${yes})`); }
     if (btnNo)  { btnNo.textContent  = 'NO ₦'  + no;  btnNo.setAttribute('onclick',  `openOrder('${a.name}','NO',${no})`);  }
   });
-
   recentTrades.unshift(generateTrade());
   if (recentTrades.length > 12) recentTrades.pop();
   renderTrades();
   renderSidebarList();
 }
 
-// ── COUNTDOWN ─────────────────────────────────────────────────────────────────
 function updateCountdown() {
-  const close = new Date('2026-12-31T23:59:00+01:00');
+  const close = new Date('2026-05-31T23:59:00+01:00');
   const diff  = close - new Date();
   if (diff <= 0) { document.getElementById('countdown-val').textContent = 'CLOSED'; return; }
   const d = Math.floor(diff / 86400000);
@@ -693,9 +686,8 @@ function updateCountdown() {
   document.getElementById('countdown-val').textContent = `${d}d ${String(h).padStart(2,'0')}h`;
 }
 
-// ── ORDER PANEL ───────────────────────────────────────────────────────────────
 function openOrder(name, side, price) {
-  document.getElementById('op-market-name').textContent = name + ' — Album in 2026?';
+  document.getElementById('op-market-name').textContent = name + ' — Song in May?';
   document.getElementById('op-price').value = parseInt(price) || 50;
   setOrderSide(side);
   document.getElementById('order-panel').classList.add('open');
@@ -714,7 +706,7 @@ function setOrderSide(side) {
 }
 function updateOrderSummary() {
   const amt    = Math.min(parseFloat(document.getElementById('op-amount').value) || 0, 9999999);
-  const price  = parseFloat(document.getElementById('op-price').value)  || 1;
+  const price  = parseFloat(document.getElementById('op-price').value) || 1;
   const shares = Math.floor(amt / price);
   const payout = shares * 100;
   document.getElementById('op-shares-line').textContent =
@@ -729,7 +721,6 @@ function placeOrder() {
   closeOrder();
 }
 
-// ── TABS ──────────────────────────────────────────────────────────────────────
 function switchTab(name, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
@@ -739,15 +730,11 @@ function switchTab(name, btn) {
   });
 }
 
-// ── PROFILE ───────────────────────────────────────────────────────────────────
-
-// ── INIT ──────────────────────────────────────────────────────────────────────
 renderArtists();
 renderSidebarList();
 renderTrades();
 updateCountdown();
 updateOrderSummary();
-
 setInterval(liveTick, 4000);
 setInterval(updateCountdown, 60000);
 </script>
@@ -761,8 +748,6 @@ setInterval(updateCountdown, 60000);
         <div class="footer-col">
           <div class="footer-col-title">COMPANY</div>
           <a href="../about.html">About</a>
-          <a href="blog.html">Blog</a>
-          <a href="careers.html">Careers</a>
           <a href="../faq.html">FAQ</a>
           <a href="../policy.html">Privacy Policy</a>
           <a href="../terms.html">Terms of Service</a>
@@ -772,27 +757,20 @@ setInterval(updateCountdown, 60000);
           <div class="footer-col-title">SOCIALS</div>
           <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
           <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
-          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
           <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
-          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
           <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
         </div>
       </div>
       <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
     </div>
     <div class="footer-right">
-      <a href="#" class="store-badge">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
-      </a>
-      <a href="#" class="store-badge">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
-      </a>
+      <a href="#" class="store-badge"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play"></a>
+      <a href="#" class="store-badge"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store"></a>
       <div class="footer-disclaimer">18+ | Trade Responsibly</div>
     </div>
   </div>
 </footer>
 
-<!-- MOBILE BOTTOM NAV -->
 <nav class="mobile-bottom-nav">
   <a class="mob-nav-item" href="../search.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
   <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>

@@ -16,13 +16,19 @@
   .avatar { display: none !important; }
 
   /* ── LAYOUT: collapse three-column → single column ── */
-  .layout { display: block !important; }
+  .layout {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
   .sidebar { display: none !important; }
   .right-sidebar { display: none !important; }
   .main {
     padding: 10px 10px 76px !important; /* bottom room for nav bar */
     gap: 10px !important;
     overflow-x: hidden;
+    overflow-y: visible !important;
+    height: auto !important;
   }
 
   /* ── HERO CARD ── */

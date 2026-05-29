@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Final Matchday — All Markets | Skedee</title>
+<title>Search Markets — Skedee</title>
 <link rel="icon" type="image/png" href="assets/skedee-1.png"><link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#F5C800">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -295,11 +295,17 @@ const SUNDAY_MATCHES = [
 ];
 
 const OTHER_MARKETS = [
-  { id:5, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Barcelona to win La Liga 2025/26', badge:'hot', yes:0.71, vol:'₦52.8M', change:'+3%', dir:'up', link:'#' },
-  { id:6, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Rema drop a new song this month?', badge:'hot', yes:0.61, vol:'₦28.7M', change:'+12%', dir:'up', link:'#' },
-  { id:7, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Wizkid drop a new album this year?', badge:'new', yes:0.71, vol:'₦55.9M', change:'+4%', dir:'up', link:'#' },
-  { id:8, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Burna Boy win a Grammy 2026?', badge:'new', yes:0.44, vol:'₦31.4M', change:'-2%', dir:'down', link:'#' },
-  { id:9, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:'When will BBNaija auditions begin?', badge:'new', yes:0.67, vol:'₦19.2M', change:'+7%', dir:'up', link:'#' },
+  // ── REAL MARKETS ─────────────────────────────────────────────────
+  { id:10000029, cat:'football', emoji:'🏆', catLabel:'FOOTBALL · UCL FINAL', title:'PSG vs Arsenal — UCL Final 2025/26', badge:'upcoming', yes:0.52, vol:'₦89M', change:'+18%', dir:'up', link:'markets/10000029.html' },
+  { id:10000028, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · LA LIGA', title:'Barcelona to Win La Liga 2025/26', badge:'hot', yes:0.71, vol:'₦52.8M', change:'+3%', dir:'up', link:'markets/10000028.html' },
+  { id:10000030, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Releases a New Song in May? — Naija', badge:'hot', yes:0.62, vol:'₦18.4M', change:'+11%', dir:'up', link:'markets/10000030.html' },
+  { id:10000026, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Will Drop a Studio Album in 2026?', badge:'hot', yes:0.71, vol:'₦114.2M', change:'+22%', dir:'up', link:'markets/10000026.html' },
+  { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · LAGOS', title:'Will Lagos Experience Major Flooding Before July?', badge:'hot', yes:0.67, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html' },
+  { id:10000007, cat:'commodities', emoji:'⛽', catLabel:'COMMODITIES · FUEL', title:'Will Petrol Exceed ₦1,200/litre Before June?', badge:'hot', yes:0.58, vol:'₦47.2M', change:'+6%', dir:'up', link:'markets/10000007.html' },
+  { id:10000008, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Naira/Dollar Hit ₦1,500 Before June?', badge:'hot', yes:0.52, vol:'₦88.3M', change:'+9%', dir:'up', link:'markets/10000008.html' },
+  { id:10000027, cat:'miscellaneous', emoji:'⚡', catLabel:'ENERGY · LAGOS', title:'Will NEPA Bring Light Tonight? — Lagos', badge:'live', yes:0.47, vol:'₦8.7M', change:'+2%', dir:'up', link:'markets/10000027.html' },
+  { id:10000025, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will It Rain in Lagos Today?', badge:'live', yes:0.58, vol:'₦12.4M', change:'+4%', dir:'up', link:'markets/10000025.html' },
+  // ── INSPIRATION MARKETS (no page yet) ────────────────────────────
   { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn?", badge:'hot', yes:0.52, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
   { id:11, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.45bn loan to Nigeria be approved?', badge:'hot', yes:0.74, vol:'₦61.4M', change:'+8%', dir:'up', link:'#' },
   { id:12, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Labour Party wins 2027 Nigerian Presidential Election', badge:'new', yes:0.29, vol:'₦124.7M', change:'-1%', dir:'down', link:'#' },
@@ -313,7 +319,7 @@ const OTHER_MARKETS = [
   { id:20, cat:'commodities', emoji:'🍌', catLabel:'COMMODITIES', title:'Will plantain prices drop below ₦800/bunch by June?', badge:'new', yes:0.29, vol:'₦7.1M', change:'-2%', dir:'down', link:'#' },
   { id:21, cat:'commodities', emoji:'🌽', catLabel:'COMMODITIES', title:'Will food inflation fall below 30% by end of 2026?', badge:'new', yes:0.33, vol:'₦16.4M', change:'+1%', dir:'up', link:'#' },
   { id:22, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,800 before end of 2026?', badge:'hot', yes:0.48, vol:'₦88.3M', change:'-3%', dir:'down', link:'#' },
-  { id:23, cat:'weather', emoji:'🌤️', catLabel:'WEATHER', title:'Will it rain in Lagos today?', badge:'hot', yes:0.48, vol:'₦88.3M', change:'-3%', dir:'down', link:'markets/10000025.html' },
+  { id:23, cat:'weather', emoji:'🌤️', catLabel:'WEATHER', title:'Will it rain in Abuja today?', badge:'hot', yes:0.44, vol:'₦6.1M', change:'+3%', dir:'up', link:'#' },
   { id:24, cat:'finance', emoji:'📈', catLabel:'FINANCE', title:'Will CBN cut interest rates at June MPC meeting?', badge:'new', yes:0.31, vol:'₦29.5M', change:'+4%', dir:'up', link:'#' },
 ];
 
@@ -417,19 +423,6 @@ function render() {
   if (total === 0) {
     content.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div>No markets match "<strong>${q}</strong>"<br><span style="font-size:10px;margin-top:8px;display:block;">Try a team name, category, or keyword</span></div>`;
     return;
-  }
-
-  // Sunday Matchday section
-  if (sundayMatches.length > 0) {
-    html += `<div>
-      <div class="section-head">
-        <div class="section-title">🏆 Sunday Final Matchday</div>
-        <div class="section-count">${sundayMatches.length} matches · Sunday 4PM BST</div>
-      </div>
-      <div class="matchday-grid">
-        ${sundayMatches.map(buildMatchCard).join('')}
-      </div>
-    </div>`;
   }
 
   // Other markets section

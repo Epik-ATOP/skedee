@@ -286,5 +286,43 @@
     "status": "LIVE",
     "closesAt": "Tonight",
     "isMatch": false
+  },
+  {
+    "id": "10000028",
+    "emoji": "⚽",
+    "category": "FOOTBALL",
+    "title": "Barcelona to Win La Liga 2025/26",
+    "yesPct": 71,
+    "volume": "₦52.8M",
+    "status": "HOT",
+    "closesAt": "May 31",
+    "isMatch": false
+  },
+  {
+    "id": "10000030",
+    "emoji": "🎵",
+    "category": "MUSIC",
+    "title": "Who Releases a New Song in May? — Naija",
+    "yesPct": 62,
+    "volume": "₦18.4M",
+    "status": "HOT",
+    "closesAt": "May 31",
+    "isMatch": false
+  },
+  {
+    "id": "10000029",
+    "emoji": "🏆",
+    "category": "FOOTBALL",
+    "title": "PSG vs Arsenal — UCL Final",
+    "yesPct": 52,
+    "volume": "₦89M",
+    "status": "UPCOMING",
+    "closesAt": "May 30",
+    "isMatch": true,
+    "team1": "PSG",
+    "team2": "Arsenal",
+    "team1Emoji": "🔵",
+    "team2Emoji": "🔴",
+    "score": "VS"
   }
 ]

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barcelona to Win La Liga 2025/26 | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skedee">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --sport:#3B82F6;
+  --sport2:#60A5FA;
+  --sidebar-w:220px;
+  --rsidebar-w:280px;
+}
+
+/* ── HERO CARD ── */
+.hero-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:28px;position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--sport),var(--y),var(--sport2),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
+.hero-bg-emoji{position:absolute;right:-10px;top:-10px;font-size:200px;opacity:.04;line-height:1;pointer-events:none;user-select:none;}
+
+.hero-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.hero-cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--sport);letter-spacing:1.5px;}
+.hero-vol-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,0,.08);border:1px solid var(--border2);border-radius:99px;padding:4px 12px;font-family:var(--font-mono);font-size:9px;color:var(--y);letter-spacing:1px;}
+.hot-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--red);letter-spacing:1px;}
+.final-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(245,200,0,.1);border:1px solid rgba(245,200,0,.35);border-radius:99px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--y);letter-spacing:1px;}
+
+/* ── STANDINGS TABLE ── */
+.standings-table{width:100%;border-collapse:collapse;}
+.standings-table th{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;padding:6px 10px;border-bottom:1px solid var(--border);text-align:left;}
+.standings-table th.r{text-align:right;}
+.standings-table td{padding:9px 10px;border-bottom:1px solid var(--border3);font-size:13px;color:var(--text2);}
+.standings-table td.r{text-align:right;font-family:var(--font-mono);font-size:11px;}
+.standings-table tr:last-child td{border-bottom:none;}
+.standings-table tr.barca td{color:var(--text);font-weight:600;}
+.st-pos{font-family:var(--font-mono);font-size:11px;color:var(--text3);width:24px;}
+.st-club{display:flex;align-items:center;gap:8px;}
+.st-badge{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.st-pts{font-family:var(--font-num);font-size:15px;font-weight:700;color:var(--text);}
+.st-form{display:flex;gap:3px;}
+.form-dot{width:16px;height:16px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;font-family:var(--font-mono);}
+.form-dot.w{background:rgba(34,197,94,.2);color:var(--green);}
+.form-dot.d{background:rgba(245,200,0,.15);color:var(--y);}
+.form-dot.l{background:rgba(239,68,68,.15);color:var(--red);}
+.final-day-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;color:var(--y);margin-top:6px;}
+
+/* ── PROFILE DROPDOWN ── */
+.profile-dropdown{position:fixed;top:56px;right:16px;z-index:300;width:180px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:8px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+.profile-dropdown.open{display:block;animation:dropIn .2s ease;}
+.profile-item{padding:8px 12px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px;transition:all .15s;}
+.profile-item:hover{background:var(--bg3);color:var(--text);}
+.profile-item i{width:14px;text-align:center;color:var(--text3);font-size:12px;}
+
+/* ── MOBILE ── */
+@media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}.context-grid,.args-grid,.related-grid{grid-template-columns:1fr;}}
+</style>
+<link rel="stylesheet" href="../market-mobile.css">
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="../index.html" class="topbar-navlink">Markets</a>
+    <a href="10000004.html" class="topbar-navlink">BBNaija S11</a>
+    <a href="10000007.html" class="topbar-navlink">Fuel Price</a>
+    <a href="10000008.html" class="topbar-navlink">Naira/Dollar</a>
+    <a href="10000026.html" class="topbar-navlink">Naija Albums 2026</a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+    <a href="../faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search markets, events, teams...">
+  </div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<div class="layout">
+
+<!-- LEFT SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist</div>
+  <div class="sidebar-item active"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Find Markets</div>
+  <div class="sidebar-item active">⚽ Football</div>
+  <div class="sidebar-item">🏉 Other Sports</div>
+  <div class="sidebar-item">🎬 Entertainment</div>
+  <div class="sidebar-item">🎵 Music</div>
+  <div class="sidebar-item">⚖️ Politics</div>
+  <div class="sidebar-item">🛢️ Commodities</div>
+  <div class="sidebar-item">🪙 Finance</div>
+  <div class="sidebar-item">🌦️ Weather</div>
+  <div class="sidebar-item">🌀 Miscellaneous</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Trending Now</div>
+  <div class="trending-event">
+    <div class="trend-name">⚽ Barcelona La Liga Title?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦52.8M vol</div>
+      <div class="trend-change" style="color:var(--green);">▲ 3%</div>
+    </div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">🎵 Who Drops an Album?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦114M vol</div>
+      <div class="trend-change" style="color:var(--green);">▲ 22%</div>
+    </div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">🪙 Dollar hits ₦1,500?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;">
+      <div class="trend-vol">₦88M vol</div>
+      <div class="trend-change" style="color:var(--green);">▲ 6%</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO CARD -->
+  <div class="hero-card">
+    <div class="hero-bg-emoji">⚽</div>
+
+    <div class="hero-top">
+      <div class="hero-cat-tag">⚽ FOOTBALL · LA LIGA · 2025/26</div>
+      <div class="hero-vol-tag">Vol ₦52.8M</div>
+      <div class="hot-tag">🔥 TRENDING</div>
+      <div class="final-tag">⏱ FINAL DAY</div>
+    </div>
+
+    <div class="hero-title">Will Barcelona Win La Liga 2025/26?</div>
+    <div class="hero-sub">
+      One point separates Barcelona and Real Madrid going into the <strong style="color:var(--text);">final matchday of La Liga</strong>. Barça host Celta Vigo at the Estadi Olímpic; Real Madrid travel to Villarreal. A Barcelona win seals the title. A draw could be enough — if Madrid slip. The most dramatic title race in years comes down to <strong style="color:var(--y);">90 minutes on May 31</strong>.
+    </div>
+
+    <!-- PROB BAR -->
+    <div class="hero-prob-bar-wrap">
+      <div class="hero-prob-label-row">
+        <div>
+          <div class="hpl-yeslabel">YES · BARÇA WIN LA LIGA</div>
+          <div class="hpl-yes" id="prob-yes-big">71%</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="hpl-nolabel">NO · REAL MADRID OR ANOTHER</div>
+          <div class="hpl-no" id="prob-no-big">29%</div>
+        </div>
+      </div>
+      <div class="hero-prob-bar">
+        <div class="hpb-yes" id="hpb-yes" style="width:71%;"></div>
+        <div class="hpb-no" id="hpb-no" style="width:29%;"></div>
+      </div>
+    </div>
+
+    <!-- BUY BUTTONS -->
+    <div class="hero-trade-row">
+      <div class="hero-btn-yes" onclick="openOrder('Barcelona Win La Liga','YES',71)">
+        <div class="hb-label">BUY YES · BARÇA WIN</div>
+        <div class="hb-price" id="hero-yes-price">₦71</div>
+        <div class="hb-sub">Payout ₦100 if Barça lift the title</div>
+      </div>
+      <div class="hero-btn-no" onclick="openOrder('Barcelona Win La Liga','NO',29)">
+        <div class="hb-label">BUY NO · MADRID WINS</div>
+        <div class="hb-price" id="hero-no-price">₦29</div>
+        <div class="hb-sub">Payout ₦100 if Real Madrid win it</div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-label">Total Volume</div><div class="hstat-val yellow">₦52.8M</div></div>
+      <div class="hstat"><div class="hstat-label">YES Probability</div><div class="hstat-val green" id="prob-stat">71%</div></div>
+      <div class="hstat"><div class="hstat-label">Barça Lead</div><div class="hstat-val" style="color:var(--sport);">+1 PT</div></div>
+      <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val">9,418</div></div>
+      <div class="hstat"><div class="hstat-label">Final Day</div><div class="hstat-val yellow">May 31</div></div>
+      <div class="hstat"><div class="hstat-label">Market Closes</div><div class="hstat-val green">May 31</div></div>
+    </div>
+
+    <div class="hero-resolution-note">
+      <i class="fa-solid fa-circle-info" style="color:var(--sport);margin-top:2px;flex-shrink:0;"></i>
+      Resolves YES if FC Barcelona are confirmed as La Liga 2025/26 champions following the completion of Jornada 38 on May 31, 2026. Source: Official La Liga standings. Resolves NO if any other club wins the title.
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('standings',this)">Standings</button>
+    <button class="tab" onclick="switchTab('arguments',this)">YES vs NO</button>
+    <button class="tab" onclick="switchTab('chart',this)">Chart</button>
+    <button class="tab" onclick="switchTab('activity',this)">Activity</button>
+    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+    <div class="context-grid">
+      <div class="context-card">
+        <div class="ctx-icon">📍</div>
+        <div class="ctx-title">The Final Day Setup</div>
+        <div class="ctx-text">Barcelona sit <strong>1 point clear</strong> of Real Madrid going into Jornada 38 — May 31. Barça host Celta Vigo at the Estadi Olímpic. Win, and the title is theirs regardless. Draw and they need Madrid to drop points. Lose, and it's gone.</div>
+      </div>
+      <div class="context-card">
+        <div class="ctx-icon">🔵</div>
+        <div class="ctx-title">Barcelona's Path</div>
+        <div class="ctx-text">Barça have won <strong>5 of their last 6</strong> La Liga games and are in excellent form. Hansi Flick's side has the best home record in Spain this season — 15W 2D 2L at the Estadi Olímpic. Celta Vigo are mid-table with nothing to play for.</div>
+      </div>
+      <div class="context-card">
+        <div class="ctx-icon">⚪</div>
+        <div class="ctx-title">Real Madrid's Chance</div>
+        <div class="ctx-text">Madrid travel to Villarreal, who are 7th and playing for Europa League qualification — a motivated opponent. Carlo Ancelotti's side have wobbled recently, drawing 2 of their last 4. But Madrid's big-game mentality makes them dangerous in a must-win scenario.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="width:20px;height:1px;background:var(--y);display:inline-block;"></span>Related Markets</div>
+      <div class="related-grid">
+        <div class="related-card" onclick="window.location='../index.html'">
+          <div class="rel-cat">⚽ FOOTBALL</div>
+          <div class="rel-title">Will Barcelona win the Champions League 2025/26?</div>
+          <div class="rel-prob">58%</div>
+          <div class="rel-vol">Vol ₦38.1M</div>
+        </div>
+        <div class="related-card" onclick="window.location='../index.html'">
+          <div class="rel-cat">⚽ FOOTBALL</div>
+          <div class="rel-title">Will Lamine Yamal win the Ballon d'Or 2026?</div>
+          <div class="rel-prob">64%</div>
+          <div class="rel-vol">Vol ₦29.4M</div>
+        </div>
+        <div class="related-card" onclick="window.location='../index.html'">
+          <div class="rel-cat">⚽ FOOTBALL</div>
+          <div class="rel-title">Will Kylian Mbappé finish as La Liga top scorer?</div>
+          <div class="rel-prob">41%</div>
+          <div class="rel-vol">Vol ₦22.7M</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STANDINGS TAB -->
+  <div id="tab-standings" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">⚽ La Liga 2025/26 — Jornada 37 / 38 <span style="font-family:var(--font-mono);font-size:10px;color:var(--y);font-weight:400;">1 game remaining</span></div>
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Club</th>
+            <th class="r">P</th>
+            <th class="r">W</th>
+            <th class="r">D</th>
+            <th class="r">L</th>
+            <th class="r">GD</th>
+            <th class="r">PTS</th>
+            <th>Form</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="barca">
+            <td class="st-pos" style="color:var(--sport);font-weight:700;">1</td>
+            <td><div class="st-club"><div class="st-badge" style="background:#A50044;"></div>Barcelona</div>
+              <div class="final-day-pill">vs Celta Vigo (H) · May 31</div>
+            </td>
+            <td class="r">37</td>
+            <td class="r" style="color:var(--green);">25</td>
+            <td class="r">5</td>
+            <td class="r" style="color:var(--red);">7</td>
+            <td class="r" style="color:var(--green);">+51</td>
+            <td class="r"><span class="st-pts" style="color:var(--sport);">80</span></td>
+            <td><div class="st-form"><div class="form-dot w">W</div><div class="form-dot w">W</div><div class="form-dot d">D</div><div class="form-dot w">W</div><div class="form-dot w">W</div></div></td>
+          </tr>
+          <tr>
+            <td class="st-pos">2</td>
+            <td><div class="st-club"><div class="st-badge" style="background:#FEBE10;"></div>Real Madrid</div>
+              <div class="final-day-pill">vs Villarreal (A) · May 31</div>
+            </td>
+            <td class="r">37</td>
+            <td class="r" style="color:var(--green);">24</td>
+            <td class="r">7</td>
+            <td class="r" style="color:var(--red);">6</td>
+            <td class="r" style="color:var(--green);">+47</td>
+            <td class="r"><span class="st-pts">79</span></td>
+            <td><div class="st-form"><div class="form-dot w">W</div><div class="form-dot d">D</div><div class="form-dot w">W</div><div class="form-dot d">D</div><div class="form-dot w">W</div></div></td>
+          </tr>
+          <tr>
+            <td class="st-pos">3</td>
+            <td><div class="st-club"><div class="st-badge" style="background:#CC0000;"></div>Atlético Madrid</div></td>
+            <td class="r">37</td>
+            <td class="r" style="color:var(--green);">20</td>
+            <td class="r">8</td>
+            <td class="r" style="color:var(--red);">9</td>
+            <td class="r" style="color:var(--green);">+24</td>
+            <td class="r"><span class="st-pts">68</span></td>
+            <td><div class="st-form"><div class="form-dot l">L</div><div class="form-dot w">W</div><div class="form-dot d">D</div><div class="form-dot w">W</div><div class="form-dot d">D</div></div></td>
+          </tr>
+          <tr>
+            <td class="st-pos">4</td>
+            <td><div class="st-club"><div class="st-badge" style="background:#EE2523;"></div>Athletic Bilbao</div></td>
+            <td class="r">37</td>
+            <td class="r" style="color:var(--green);">18</td>
+            <td class="r">9</td>
+            <td class="r" style="color:var(--red);">10</td>
+            <td class="r">+12</td>
+            <td class="r"><span class="st-pts">63</span></td>
+            <td><div class="st-form"><div class="form-dot w">W</div><div class="form-dot w">W</div><div class="form-dot l">L</div><div class="form-dot d">D</div><div class="form-dot w">W</div></div></td>
+          </tr>
+          <tr>
+            <td class="st-pos">5</td>
+            <td><div class="st-club"><div class="st-badge" style="background:#005C8E;"></div>Villarreal</div>
+              <div class="final-day-pill">vs Real Madrid (H) · May 31</div>
+            </td>
+            <td class="r">37</td>
+            <td class="r" style="color:var(--green);">17</td>
+            <td class="r">8</td>
+            <td class="r" style="color:var(--red);">12</td>
+            <td class="r">+9</td>
+            <td class="r"><span class="st-pts">59</span></td>
+            <td><div class="st-form"><div class="form-dot d">D</div><div class="form-dot w">W</div><div class="form-dot w">W</div><div class="form-dot l">L</div><div class="form-dot d">D</div></div></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px;font-size:12px;color:var(--text3);line-height:1.7;">
+        <i class="fa-solid fa-circle-info" style="color:var(--sport);margin-right:5px;"></i>
+        Barcelona win the title if: (1) they win vs Celta; OR (2) they draw AND Real Madrid draw or lose vs Villarreal. Real Madrid win the title only if Barça draw/lose AND Madrid win.
+      </div>
+    </div>
+  </div>
+
+  <!-- YES vs NO TAB -->
+  <div id="tab-arguments" style="display:none;">
+    <div class="args-grid">
+      <div class="arg-card yes">
+        <div class="arg-title" style="color:var(--green);">✅ Case for YES (Barcelona)</div>
+        <div class="arg-list">
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>They control their destiny</strong> — A win vs Celta seals it. Barcelona don't need any help from Real Madrid. Celta are mid-table with zero pressure; Barça are at home, motivated, and on form.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Flick's Barça are in form</strong> — 5 wins in their last 6 league games, 18 goals scored in that run. The attacking trident of Yamal, Lewandowski and Raphinha has been clinical.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Madrid face a motivated Villarreal</strong> — The Yellow Submarine need 3 points to secure 5th and Europa League football. They will not roll over for Madrid. Ancelotti's side has drawn 2 of their last 4 away games.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Historical home record</strong> — Barcelona have won 15 of 18 home league games this season. The Estadi Olímpic has been a fortress. A draw or loss at home would be a genuine shock.</div></div>
+          <div class="arg-item"><div class="arg-dot-yes"></div><div><strong>Market consensus</strong> — At ₦71 YES, the market firmly backs Barça. Large YES positions have been opened consistently in the ₦68–₦73 range over the past week.</div></div>
+        </div>
+      </div>
+      <div class="arg-card no">
+        <div class="arg-title" style="color:var(--red);">❌ Case for NO (Real Madrid)</div>
+        <div class="arg-list">
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Real Madrid always show up</strong> — Ancelotti's side have won 7 consecutive La Liga titles between 2012 and 2024 (non-consecutive). When it matters most, Madrid historically deliver. Their squad depth is elite.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Barça have nerves to manage</strong> — The pressure of a title decider at home, after leading all season, is immense. Barça bottled it on the final day in 2022/23. It has happened before.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>Mbappé is in form</strong> — The French striker has scored in 4 consecutive La Liga appearances. If he fires vs Villarreal and Barça slip up, Madrid win it on goal difference — which is close.</div></div>
+          <div class="arg-item"><div class="arg-dot-no"></div><div><strong>The 29% price is value</strong> — A coin flip of 50/50 for whether Barça drop points vs Celta, crossed with ~60% for Madrid winning at Villarreal, puts realistic NO probability closer to 30–35%.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART TAB -->
+  <div id="tab-chart" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">YES Probability — Season Arc</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">How the market's confidence in a Barcelona title has shifted since August 2025</div>
+      <div style="height:260px;position:relative;"><canvas id="probChart"></canvas></div>
+    </div>
+    <div class="card-section" style="margin-top:12px;">
+      <div class="card-section-title">Weekly Volume (₦M)</div>
+      <div style="height:180px;position:relative;"><canvas id="volChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY TAB -->
+  <div id="tab-activity" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Market Activity</div>
+      <div id="activity-list"></div>
+    </div>
+  </div>
+
+  <!-- COMMENTS TAB -->
+  <div id="tab-comments" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Community <span style="background:var(--sport);color:#fff;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;">81</span></div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
+
+  <!-- RULES TAB -->
+  <div id="tab-rules" style="display:none;">
+    <div class="card-section">
+      <div class="card-section-title">Market Rules & Resolution</div>
+      <div style="display:flex;flex-direction:column;gap:16px;font-size:13px;color:var(--text2);line-height:1.8;">
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Criteria</div>
+          Resolves YES if FC Barcelona are confirmed as La Liga 2025/26 champions upon the conclusion of Jornada 38 on May 31, 2026. Resolves NO if any other club finishes top of the La Liga table.
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Resolution Source</div>
+          Official La Liga standings via <strong style="color:var(--text);">laliga.com</strong> and confirmed by the La Liga official X account (@LaLiga). Resolution will occur within 2 hours of all Jornada 38 fixtures completing.
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What if there is a points tie?</div>
+          La Liga uses goal difference as the first tiebreaker, then goals scored, then head-to-head record. The official La Liga table at full-time determines the champion — Skedee will use the final official standings, not interim calculations.
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">What if matches are postponed?</div>
+          If Jornada 38 fixtures are postponed beyond May 31 due to extraordinary circumstances, the market close date extends to the rescheduled date, up to June 14, 2026. Beyond that, Skedee will void the market and return all stakes.
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:600;color:var(--text);margin-bottom:4px;">Disputes</div>
+          Contact support@skedee.ng within 24 hours of market resolution. Skedee's decision is final.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- RIGHT SIDEBAR -->
+<div class="right-sidebar">
+
+  <div>
+    <div class="rsidebar-title">Closes In</div>
+    <div class="countdown-chip">
+      <div class="cd-label">Market Closes</div>
+      <div class="cd-val" id="countdown-val">2d 00h</div>
+      <div class="cd-sub">May 31, 2026 · 23:59 CET</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="rsidebar-title">Live Probability</div>
+    <div class="prob-meter">
+      <div class="pm-label" style="color:var(--green);">YES · BARÇA WIN</div>
+      <div class="pm-yes" id="pm-yes">71%</div>
+      <div class="pm-bar" style="margin-top:8px;">
+        <div class="pm-bar-yes" id="pm-bar-yes" style="width:71%;"></div>
+        <div class="pm-bar-no" id="pm-bar-no" style="width:29%;"></div>
+      </div>
+      <div class="pm-no-row">
+        <div class="pm-no-label">NO · MADRID WINS</div>
+        <div class="pm-no-val" id="pm-no">29%</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;">
+      <button style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.1);color:var(--green);font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;" onclick="openOrder('Barcelona La Liga','YES',71)" onmouseover="this.style.background='var(--green)';this.style.color='#000'" onmouseout="this.style.background='rgba(34,197,94,.1)';this.style.color='var(--green)'">BUY YES</button>
+      <button style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);color:var(--red);font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;" onclick="openOrder('Barcelona La Liga','NO',29)" onmouseover="this.style.background='var(--red)';this.style.color='#fff'" onmouseout="this.style.background='rgba(239,68,68,.08)';this.style.color='var(--red)'">BUY NO</button>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Key Stats</div>
+    <div style="display:flex;flex-direction:column;gap:0;">
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">VOLUME</span>
+        <span style="color:var(--y);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦52.8M</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TRADERS</span>
+        <span style="color:var(--text);font-family:var(--font-mono);font-size:11px;">9,418</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">YES PRICE</span>
+        <span style="color:var(--green);font-family:var(--font-mono);font-weight:700;font-size:11px;" id="sb-yes-price">₦71</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">NO PRICE</span>
+        <span style="color:var(--red);font-family:var(--font-mono);font-weight:700;font-size:11px;" id="sb-no-price">₦29</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border3);">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">BARÇA LEAD</span>
+        <span style="color:var(--sport);font-family:var(--font-mono);font-size:11px;">+1 point</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;">
+        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">FINAL DAY</span>
+        <span style="color:var(--y);font-family:var(--font-mono);font-size:11px;">May 31 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border3);padding-top:14px;">
+    <div class="rsidebar-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
+  </div>
+
+</div>
+
+</div><!-- end layout -->
+
+<!-- ORDER PANEL -->
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header">
+    <div class="order-panel-title">Place Order</div>
+    <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="order-market-name" id="op-market-name">Barcelona Win La Liga</div>
+  <div class="order-side-tabs">
+    <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
+    <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">OUTCOME</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-outcome-label">YES</div>
+    </div>
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">PRICE</div>
+      <div style="font-family:var(--font-num);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-price-label">₦—</div>
+    </div>
+  </div>
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;padding:0 16px;margin-bottom:8px;">
+    <span style="font-family:var(--font-mono);font-size:22px;color:var(--text3);margin-right:8px;flex-shrink:0;">₦</span>
+    <input type="number" id="op-amount" value="5000" min="100" max="9999999" oninput="updateOrderSummary()"
+      style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
+  </div>
+  <input type="hidden" id="op-price" value="71">
+  <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:20px;padding:0 2px;" id="op-shares-line">— shares of ₦— each</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:0 2px;">
+    <div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:1px;line-height:1.6;">PAYOUT</div>
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;">IF CORRECT</div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:4px;">
+      <span style="font-family:var(--font-mono);font-size:26px;color:var(--text3);">₦</span>
+      <span style="font-family:var(--font-num);font-size:34px;font-weight:700;color:var(--y);line-height:1;" id="op-payout">—</span>
+    </div>
+  </div>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+</div>
+
+<script src="../script.js"></script>
+<script>
+let yesPct = 71;
+let walletBalance = 4271250;
+let orderSide = 'YES';
+let probChart, volChart;
+let recentTrades = [];
+
+const ACTIVITY_DATA = [
+  {type:'buy',  text:'<strong>blaugrana_bull</strong> opened <strong>YES</strong> × 4,000 at ₦71 — "Celta have nothing to play for. Easy 3 pts."',time:'4m'},
+  {type:'buy',  text:'<strong>la_liga_watcher</strong> bought <strong>YES</strong> × 1,500 at ₦70',time:'9m'},
+  {type:'sell', text:'<strong>real_madrid_til_i_die</strong> bought <strong>NO</strong> × 2,500 at ₦30 — "Mbappé goes off vs Villarreal, Barça bottle it at home. Watch."',time:'15m'},
+  {type:'buy',  text:'<strong>barcelona_loyal</strong> opened <strong>YES</strong> × 6,000 at ₦69 — stacking before final day',time:'22m'},
+  {type:'buy',  text:'<strong>punt_king_ng</strong> bought <strong>YES</strong> × 800 at ₦71',time:'28m'},
+  {type:'sell', text:'<strong>hedge_master</strong> sold partial <strong>YES</strong> × 1,200 — locking in profit ahead of final day',time:'37m'},
+  {type:'buy',  text:'<strong>el_clasico_fan</strong> opened <strong>NO</strong> × 1,000 at ₦29 — "Ancelotti always delivers"',time:'45m'},
+];
+
+const COMMENTS_DATA = [
+  {init:'B', user:'blaugrana_bull',   col:'#3B82F6', badge:'TOP TRADER', badgeCol:'rgba(59,130,246,.15)', badgeText:'var(--sport)', text:"I have ₦3.5M riding on YES. Celta Vigo have ZERO reason to stop Barcelona. They're 12th, playing out the season. Barça's squad is fully fit, they're at home, they want this. ₦71 is free money.", time:'6 min ago', likes:134},
+  {init:'R', user:'real_madrid_til_i_die', col:'#FEBE10', badge:null, text:"People saying Barça are 'safe' clearly don't remember 2022/23. Barça were 4 points clear with 5 to go and still blew it. Madrid ALWAYS find a way. Mbappé has scored in 4 straight. I'm buying every dip on NO.", time:'18 min ago', likes:89},
+  {init:'L', user:'la_liga_watcher',  col:'#22C55E', badge:'ANALYST', badgeCol:'rgba(34,197,94,.12)', badgeText:'var(--green)', text:"Modelling this purely on probability: P(Barça win vs Celta) ≈ 0.78. P(Madrid win vs Villarreal) ≈ 0.61. P(NO, ie Madrid win title) = 0.22 × 0.61 = ~13%. The market at 29% NO is WRONG. YES should be 85%+.", time:'29 min ago', likes:201},
+  {init:'E', user:'el_clasico_fan',   col:'#EF4444', badge:null, text:"Hard disagree with la_liga_watcher. Villarreal are MOTIVATED — they need this win for Europa. Ancelotti has Bellingham, Mbappé, Vinicius firing. Madrid win Villarreal 2-0, Barça draw at home. It ends in heartbreak. NO at ₦29 is the play.", time:'41 min ago', likes:67},
+  {init:'P', user:'punt_king_ng',     col:'#A855F7', badge:'WHALE', badgeCol:'rgba(168,85,247,.15)', badgeText:'var(--purple)', text:"Naija traders — this is the market of the year. Final day, 1 point gap, everything on the line. If you're not in this, what are you doing? I'm ₦5M YES and adding at every dip. Mes Que Un Club 🔵🔴", time:'58 min ago', likes:178},
+];
+
+function generateTrade() {
+  const side = Math.random() > 0.65 ? 'sell' : 'buy';
+  const mktSide = Math.random() > 0.38 ? 'YES' : 'NO';
+  const price = mktSide === 'YES'
+    ? Math.floor(yesPct + (Math.random() * 4 - 2))
+    : Math.floor(100 - yesPct + (Math.random() * 4 - 2));
+  const size = Math.floor(Math.random() * 4000 + 200);
+  const label = mktSide === 'YES' ? 'Barça YES' : 'Barça NO';
+  return { side, price, size, market: label };
+}
+
+function renderTrades() {
+  if (!recentTrades.length) for (let i = 0; i < 8; i++) recentTrades.push(generateTrade());
+  document.getElementById('recent-trades').innerHTML = recentTrades.slice(0, 8).map(t => `
+    <div class="trade-row">
+      <span class="trade-side ${t.side}">${t.side.toUpperCase()}</span>
+      <span class="trade-market">${t.market}</span>
+      <span class="trade-price">₦${t.price}</span>
+      <span class="trade-size">×${t.size.toLocaleString()}</span>
+    </div>`).join('');
+}
+
+function renderActivity() {
+  document.getElementById('activity-list').innerHTML = ACTIVITY_DATA.map(a => `
+    <div class="activity-item">
+      <div class="act-dot ${a.type}"></div>
+      <div class="act-text">${a.text}</div>
+      <div class="act-time">${a.time}</div>
+    </div>`).join('');
+}
+
+function renderComments() {
+  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c => `
+    <div class="comment-item">
+      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+      <div class="comment-body">
+        <div class="comment-user">${c.user}${c.badge ? `<span class="comment-badge" style="background:${c.badgeCol};color:${c.badgeText};">${c.badge}</span>` : ''}</div>
+        <div class="comment-text">${c.text}</div>
+        <div class="comment-meta"><span>${c.time}</span><span style="color:var(--sport);">👍 ${c.likes}</span><span style="cursor:pointer;color:var(--text3);">Reply</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function drawCharts() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  const gridColor = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
+
+  if (probChart) probChart.destroy();
+  probChart = new Chart(document.getElementById('probChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: ['Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May'],
+      datasets: [
+        { label: 'YES %', data: [52, 58, 61, 55, 63, 67, 64, 70, 68, 71], borderColor: '#22C55E', backgroundColor: 'rgba(34,197,94,0.07)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#22C55E' },
+        { label: 'NO %',  data: [48, 42, 39, 45, 37, 33, 36, 30, 32, 29], borderColor: '#EF4444', backgroundColor: 'rgba(239,68,68,0.04)', borderWidth: 1.5, fill: true, tension: 0.4, pointRadius: 3, pointBackgroundColor: '#EF4444' },
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true, labels: { color: tc, font: { size: 10 }, usePointStyle: true } } }, scales: { x: { ticks: { color: tc, font: { size: 10 } }, grid: { color: gridColor } }, y: { ticks: { color: tc, font: { size: 10 }, callback: v => v + '%' }, grid: { color: gridColor }, min: 0, max: 100 } } }
+  });
+
+  if (volChart) volChart.destroy();
+  volChart = new Chart(document.getElementById('volChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May'],
+      datasets: [{ label: 'Vol (₦M)', data: [2.1, 3.4, 4.2, 5.1, 4.8, 5.9, 6.2, 7.4, 9.8, 13.9], backgroundColor: 'rgba(59,130,246,0.55)', borderWidth: 0, borderRadius: 4 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: tc, font: { size: 10 } }, grid: { display: false } }, y: { ticks: { color: tc, font: { size: 10 }, callback: v => '₦' + v + 'M' }, grid: { color: gridColor } } } }
+  });
+}
+
+function updateProbUI(pct) {
+  const no = 100 - pct;
+  document.getElementById('prob-yes-big').textContent = pct + '%';
+  document.getElementById('prob-no-big').textContent = no + '%';
+  document.getElementById('hpb-yes').style.width = pct + '%';
+  document.getElementById('hpb-no').style.width = no + '%';
+  document.getElementById('pm-yes').textContent = pct + '%';
+  document.getElementById('pm-no').textContent = no + '%';
+  document.getElementById('pm-bar-yes').style.width = pct + '%';
+  document.getElementById('pm-bar-no').style.width = no + '%';
+  document.getElementById('prob-stat').textContent = pct + '%';
+  document.getElementById('sb-yes-price').textContent = '₦' + pct;
+  document.getElementById('sb-no-price').textContent = '₦' + no;
+  document.getElementById('hero-yes-price').textContent = '₦' + pct;
+  document.getElementById('hero-no-price').textContent = '₦' + no;
+}
+
+function updateCountdown() {
+  const close = new Date('2026-05-31T23:59:00+02:00');
+  const diff = close - new Date();
+  if (diff <= 0) { document.getElementById('countdown-val').textContent = 'CLOSED'; return; }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  document.getElementById('countdown-val').textContent = `${d}d ${String(h).padStart(2, '0')}h`;
+}
+
+function updateLiveData() {
+  const delta = (Math.random() - 0.48) * 1.6;
+  yesPct = Math.max(55, Math.min(88, yesPct + delta));
+  yesPct = Math.round(yesPct);
+  updateProbUI(yesPct);
+  recentTrades.unshift(generateTrade());
+  if (recentTrades.length > 12) recentTrades.pop();
+  renderTrades();
+}
+
+function openOrder(name, side, price) {
+  document.getElementById('op-market-name').textContent = name;
+  document.getElementById('op-price').value = parseInt(price);
+  setOrderSide(side);
+  document.getElementById('order-panel').classList.add('open');
+}
+function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
+function setOrderSide(side) {
+  orderSide = side;
+  document.getElementById('op-yes-btn').classList.toggle('active', side === 'YES');
+  document.getElementById('op-no-btn').classList.toggle('active', side === 'NO');
+  document.getElementById('op-side-label').textContent = side;
+  const outcomeEl = document.getElementById('op-outcome-label');
+  const priceLabelEl = document.getElementById('op-price-label');
+  if (outcomeEl) { outcomeEl.textContent = side; outcomeEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
+  if (priceLabelEl) { const p = parseFloat(document.getElementById('op-price').value) || 0; priceLabelEl.textContent = '₦' + p; priceLabelEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
+  updateOrderSummary();
+}
+function updateOrderSummary() {
+  const amt   = Math.min(parseFloat(document.getElementById('op-amount').value) || 0, 9999999);
+  const price = parseFloat(document.getElementById('op-price').value) || 1;
+  const shares = Math.floor(amt / price);
+  const payout = shares * 100;
+  document.getElementById('op-shares-line').textContent =
+    shares.toLocaleString('en-NG') + ' shares of ₦' + Math.round(price) + ' each';
+  document.getElementById('op-payout').textContent = payout.toLocaleString('en-NG');
+}
+function placeOrder() {
+  const amt = parseFloat(document.getElementById('op-amount').value) || 0;
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  document.getElementById('wallet-display').textContent = '₦' + walletBalance.toLocaleString('en-NG', { maximumFractionDigits: 0 });
+  closeOrder();
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview','standings','arguments','chart','activity','comments','rules'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === name ? '' : 'none';
+  });
+  if (name === 'chart') setTimeout(drawCharts, 50);
+  if (name === 'comments') renderComments();
+  if (name === 'activity') renderActivity();
+}
+
+renderTrades();
+updateCountdown();
+updateOrderSummary();
+setInterval(updateLiveData, 3000);
+setInterval(updateCountdown, 60000);
+</script>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="../about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="../policy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms of Service</a>
+          <a href="../report.html" style="color:var(--red);">Report an Issue</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../search.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
+</body>
+</html>

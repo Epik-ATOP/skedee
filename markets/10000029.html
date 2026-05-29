@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSG vs Arsenal — UCL Final | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png"><link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{--sidebar-w:220px;--rsidebar-w:280px;--ucl:#001489;--ucl2:#0037C1;}
+.layout{display:flex;margin-top:52px;height:calc(100vh - 52px);overflow:hidden;}
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 0;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;font-size:13px;}
+.sidebar-item .item-badge{margin-left:auto;background:var(--y);color:#000;font-size:9px;font-weight:700;font-family:var(--font-mono);padding:2px 5px;border-radius:4px;}
+.sidebar-item .item-badge.red{background:var(--red);color:#fff;}
+.trending-event{margin:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;cursor:pointer;}
+.trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.trend-change{font-family:var(--font-mono);font-size:10px;color:var(--green);}
+
+/* ── MATCH CARD ── */
+.match-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:visible;}
+.match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ucl),var(--y),var(--ucl2),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
+.match-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.league-badge{display:flex;align-items:center;gap:6px;background:rgba(0,20,137,.12);border:1px solid rgba(0,20,137,.35);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--ucl2);letter-spacing:1px;}
+.live-indicator{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;}
+.live-dot{width:7px;height:7px;border-radius:50%;}
+@keyframes live-pulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.6)}70%{box-shadow:0 0 0 8px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+.match-center{display:flex;align-items:center;justify-content:center;gap:20px;}
+.team-block{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
+.team-logo{width:64px;height:64px;border-radius:50%;border:2px solid var(--border2);padding:8px;background:var(--bg3);display:flex;align-items:center;justify-content:center;}
+.team-logo img{width:100%;height:100%;object-fit:contain;}
+.team-name{font-family:var(--font-display);font-weight:700;font-size:16px;text-align:center;}
+.team-record{font-family:var(--font-mono);font-size:10px;}
+.score-block{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.ticker-score{display:flex;align-items:center;gap:6px;font-family:var(--font-num);font-weight:600;font-size:36px;color:var(--text);letter-spacing:1px;line-height:1;}
+.ticker-abbr{color:var(--text2);font-size:22px;font-weight:500;letter-spacing:2px;}
+.ticker-dash{color:var(--text3);font-size:20px;}
+.ticker-goals{color:var(--text);font-size:38px;font-weight:700;min-width:24px;text-align:center;}
+.ticker-sep{color:var(--y);font-size:32px;font-weight:700;padding:0 4px;}
+.match-clock{font-family:var(--font-mono);font-size:13px;color:var(--y);background:rgba(245,200,0,.1);border:1px solid var(--border2);border-radius:6px;padding:4px 10px;display:flex;align-items:center;gap:5px;}
+.match-status-pill{font-family:var(--font-mono);font-size:10px;font-weight:700;border-radius:4px;padding:3px 8px;}
+.match-meta{margin-top:10px;padding-top:10px;border-top:1px solid var(--border3);display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.meta-item{display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;}
+.event-feed-wrap{margin-top:16px;padding-top:14px;border-top:1px solid var(--border3);}
+.event-feed{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto;}
+.event-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:var(--radius);background:var(--bg3);border:1px solid var(--border3);}
+.event-item.goal{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.05);}
+.event-time{font-family:var(--font-mono);font-size:10px;color:var(--y);font-weight:700;white-space:nowrap;}
+.event-icon{font-size:15px;flex-shrink:0;}
+.event-text{color:var(--text2);font-size:12px;line-height:1.5;flex:1;}
+.event-text strong{color:var(--text);font-weight:600;}
+
+/* ── STATS / SENTIMENT ── */
+.stats-row{display:flex;gap:10px;}
+.stat-box{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;}
+.stat-box-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.stat-box-val{font-family:var(--font-num);font-weight:700;font-size:28px;color:var(--text);}
+.stat-box-val.yellow{color:var(--y);}
+.stat-box-sub{font-family:var(--font-mono);font-size:10px;margin-top:3px;}
+.sentiment-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.sentiment-bar{height:10px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:8px;}
+.sentiment-home{background:linear-gradient(90deg,#001A57,rgba(0,26,87,.6));}
+.sentiment-draw{background:rgba(100,100,100,.4);}
+.sentiment-away{background:linear-gradient(90deg,rgba(239,1,7,.6),#EF0107);}
+.sentiment-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+
+/* ── TABS ── */
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+
+/* ── HOT MARKETS PILLS ── */
+.trending-strip{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px;}
+.trending-pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.trend-pill{flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:6px 12px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.trend-pill:hover{border-color:var(--y);background:rgba(245,200,0,.06);}
+.trend-pill-name{font-size:12px;font-weight:500;color:var(--text);}
+.trend-pill-prob{font-family:var(--font-mono);font-size:10px;color:var(--y);margin-top:2px;}
+
+/* ── MARKET GRID CARDS ── */
+.markets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.market-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden;}
+.market-card:hover{border-color:var(--border2);background:var(--bg3);}
+.market-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--y);opacity:0;transition:opacity .2s;}
+.market-card:hover::after{opacity:1;}
+.market-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.market-title{font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--text);line-height:1.3;}
+.market-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.market-prob-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.market-prob{font-family:var(--font-num);font-weight:700;font-size:28px;color:var(--y);}
+.market-prob-bar{flex:1;height:5px;background:var(--bg4);border-radius:99px;overflow:hidden;}
+.market-prob-fill{height:100%;background:var(--y);border-radius:99px;transition:width .6s;}
+.market-price-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;}
+.price-chip{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;text-align:center;}
+.price-chip.yes{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04);}
+.price-chip.no{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04);}
+.price-chip-label{font-size:9px;font-family:var(--font-mono);color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.price-chip-val{font-family:var(--font-mono);font-weight:700;font-size:16px;margin-top:1px;}
+.price-chip.yes .price-chip-val{color:var(--green);}
+.price-chip.no .price-chip-val{color:var(--red);}
+.market-mini-chart{height:40px;margin-bottom:12px;}
+.market-btns{display:flex;gap:6px;}
+.btn-yes{flex:1;padding:8px;border-radius:var(--radius);border:1px solid rgba(34,197,94,.3);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;transition:all .15s;background:rgba(34,197,94,.15);color:var(--green);}
+.btn-yes:hover{background:var(--green);color:#000;}
+.btn-no{flex:1;padding:8px;border-radius:var(--radius);border:1px solid rgba(239,68,68,.3);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;transition:all .15s;background:rgba(239,68,68,.1);color:var(--red);}
+.btn-no:hover{background:var(--red);color:#fff;}
+.market-stats-row{display:flex;align-items:center;gap:12px;padding-top:10px;border-top:1px solid var(--border3);margin-top:4px;}
+.mstat{flex:1;text-align:center;}
+.mstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.mstat-val{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--text2);margin-top:2px;}
+
+/* ── RIGHT SIDEBAR ── */
+.right-sidebar{width:var(--rsidebar-w);background:var(--bg2);border-left:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 12px;display:flex;flex-direction:column;gap:16px;}
+.rsidebar-section-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.ob-row{display:flex;align-items:center;gap:8px;padding:3px 0;position:relative;overflow:hidden;}
+.ob-bar{position:absolute;top:0;bottom:0;border-radius:2px;opacity:.12;}
+.ob-bar.ask{background:var(--red);right:0;}
+.ob-bar.bid{background:var(--green);left:0;}
+.ob-price{font-family:var(--font-mono);font-size:11px;font-weight:700;width:40px;}
+.ob-price.ask{color:var(--red);}
+.ob-price.bid{color:var(--green);}
+.ob-size{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto;}
+.ob-total{font-family:var(--font-mono);font-size:10px;color:var(--text3);width:40px;text-align:right;}
+.ob-spread{text-align:center;padding:6px 0;font-family:var(--font-mono);font-size:10px;color:var(--y);border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);margin:4px 0;}
+.activity-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border3);}
+.activity-item:last-child{border-bottom:none;}
+.act-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.act-dot.buy{background:var(--green);}
+.act-dot.sell{background:var(--red);}
+.act-text{flex:1;font-size:11px;color:var(--text2);line-height:1.4;}
+.act-text strong{color:var(--text);font-weight:500;}
+.act-time{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.trade-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border3);}
+.trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side.buy{background:rgba(34,197,94,.15);color:var(--green);}
+.trade-side.sell{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-market{font-size:11px;color:var(--text2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trade-price{font-family:var(--font-mono);font-size:11px;color:var(--text);font-weight:600;}
+.trade-size{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ── ORDER PANEL ── */
+.order-panel{position:fixed;bottom:0;right:var(--rsidebar-w);z-index:200;width:340px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:20px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.5);}
+.order-panel.open{transform:translateY(0);}
+.order-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.order-panel-title{font-family:var(--font-display);font-weight:700;font-size:15px;}
+.btn-close{width:28px;height:28px;background:var(--bg4);border:none;border-radius:50%;cursor:pointer;color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;}
+.btn-close:hover{background:var(--red);color:#fff;}
+.order-market-name{font-size:12px;color:var(--text3);margin-bottom:16px;font-family:var(--font-mono);}
+.order-side-tabs{display:flex;gap:6px;margin-bottom:16px;}
+.order-side-btn{flex:1;padding:8px;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;transition:all .15s;background:var(--bg3);color:var(--text2);}
+.order-side-btn.yes.active{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:var(--green);}
+.order-side-btn.no.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:var(--red);}
+.btn-place{width:100%;padding:14px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:800;font-size:15px;transition:all .15s;background:var(--y);color:#000;}
+.btn-place:hover{background:var(--y2);transform:translateY(-1px);}
+.comment-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border3);}
+.comment-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--font-display);}
+.comment-body{flex:1;}
+.comment-user{font-size:11px;font-weight:600;color:var(--text);}
+.comment-text{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.5;}
+.comment-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;}
+.positions-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.positions-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.positions-title .badge{background:var(--y);color:#000;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;}
+
+@media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
+</style>
+<link rel="stylesheet" href="../market-mobile.css">
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="../index.html" class="topbar-navlink">Markets</a>
+    <a href="../search.html" class="topbar-navlink">Final Matchday</a>
+    <a href="10000029.html" class="topbar-navlink active">PSG vs Arsenal <span id="nav-status-tag" style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(0,20,137,.15);color:var(--ucl2);border:1px solid rgba(0,20,137,.3);padding:1px 5px;border-radius:3px;">TOMORROW</span></a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+  </div>
+  <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search markets..."></div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<div class="layout">
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist</div>
+  <div class="sidebar-item active"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Find Markets</div>
+  <div class="sidebar-item active">⚽ Football</div>
+  <div class="sidebar-item">🏉 Other Sports</div>
+  <div class="sidebar-item">🎬 Entertainment</div>
+  <div class="sidebar-item">🎵 Music</div>
+  <div class="sidebar-item">⚖️ Politics</div>
+  <div class="sidebar-item">🛢️ Commodities</div>
+  <div class="sidebar-item">🪙 Finance</div>
+  <div class="sidebar-item">🌀 Miscellaneous</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">UCL Final</div>
+  <div class="trending-event" onclick="window.location='10000029.html'">
+    <div class="trend-name">🏆 PSG vs Arsenal</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦89M vol</div><div class="trend-change">Tomorrow</div></div>
+  </div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Also Trending</div>
+  <div class="trending-event" onclick="window.location='10000028.html'">
+    <div class="trend-name">⚽ Barcelona La Liga?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦52.8M vol</div><div class="trend-change" style="color:var(--green);">▲ 3%</div></div>
+  </div>
+  <div class="trending-event">
+    <div class="trend-name">🎵 Who Drops an Album?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦114M vol</div><div class="trend-change" style="color:var(--green);">▲ 22%</div></div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- MATCH CARD -->
+  <div class="match-card">
+    <div class="match-card-top">
+      <div class="league-badge">🏆 UEFA CHAMPIONS LEAGUE · FINAL · 2025/26</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="live-indicator">
+          <div class="live-dot" id="live-dot" style="background:var(--ucl2);"></div>
+          <span id="live-label" style="color:var(--ucl2);">TOMORROW</span>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Allianz Arena, Munich</div>
+      </div>
+    </div>
+
+    <div class="match-center">
+      <div class="team-block">
+        <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg" alt="PSG"></div>
+        <div class="team-name">PSG</div>
+        <div class="team-record" style="color:var(--green);">UCL Run: W W W W W</div>
+      </div>
+      <div class="score-block">
+        <div class="ticker-score">
+          <span class="ticker-abbr">PSG</span>
+          <span class="ticker-dash">—</span>
+          <span class="ticker-goals" id="score-home">vs</span>
+          <span class="ticker-dash">—</span>
+          <span class="ticker-abbr">ARS</span>
+        </div>
+        <div class="match-clock">
+          <i id="clock-icon" class="fa-solid fa-calendar-clock" style="font-size:11px;"></i>
+          <span id="clock-display" style="font-size:11px;">17:00 CET</span>
+        </div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(0,55,193,.1);border:1px solid rgba(0,55,193,.3);color:var(--ucl2);">TOMORROW</div>
+      </div>
+      <div class="team-block">
+        <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg" alt="Arsenal"></div>
+        <div class="team-name">Arsenal</div>
+        <div class="team-record" style="color:var(--green);">UCL Run: W W D W W</div>
+      </div>
+    </div>
+
+    <div class="event-feed-wrap" id="event-feed-wrap" style="display:none;">
+      <div class="event-feed" id="event-feed"></div>
+    </div>
+
+    <div class="match-meta">
+      <div class="meta-item"><i class="fa-solid fa-location-dot"></i>Allianz Arena, Munich</div>
+      <div class="meta-item"><i class="fa-solid fa-calendar"></i>May 30, 2026 · 17:00 CET</div>
+      <div class="meta-item"><i class="fa-solid fa-users"></i>75,024 Capacity</div>
+      <div class="meta-item"><i class="fa-solid fa-trophy" style="color:var(--y);"></i><span style="color:var(--y);font-family:var(--font-mono);font-size:11px;">UCL FINAL</span></div>
+      <div class="meta-item" style="margin-left:auto;"><span style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Volume: </span><span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦89,000,000</span></div>
+    </div>
+  </div>
+
+  <!-- STAT BOXES -->
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦89M</div><div class="stat-box-sub" style="color:var(--green);">▲ +18% today</div></div>
+    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">8</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
+    <div class="stat-box"><div class="stat-box-label">PSG Win Prob</div><div class="stat-box-val yellow" id="home-prob-stat">52%</div><div class="stat-box-sub" style="color:var(--ucl2);">Slight Favourites</div></div>
+    <div class="stat-box"><div class="stat-box-label">Traders</div><div class="stat-box-val">14,882</div><div class="stat-box-sub" style="color:var(--text3);">Across all markets</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('trades',this)">Trades</button>
+    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
+    <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+    <div class="sentiment-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Win Probability (Full Time)</div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">Based on ₦89M volume</div>
+      </div>
+      <div class="sentiment-bar">
+        <div class="sentiment-home" id="bar-psg" style="width:41%;"></div>
+        <div class="sentiment-draw" id="bar-draw" style="width:28%;"></div>
+        <div class="sentiment-away" id="bar-ars" style="width:31%;"></div>
+      </div>
+      <div class="sentiment-labels">
+        <span style="color:#6BAED6;font-weight:700;" id="label-psg">PSG 41%</span>
+        <span id="label-draw">Draw 28%</span>
+        <span style="color:#EF0107;font-weight:700;" id="label-ars">Arsenal 31%</span>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
+        <i class="fa-solid fa-circle-info" style="color:var(--ucl2);margin-right:4px;"></i>
+        Including extra time & penalties — PSG lift trophy: <strong style="color:var(--ucl2);">52%</strong> · Arsenal lift trophy: <strong style="color:#EF0107;">48%</strong>
+      </div>
+    </div>
+
+    <div class="trending-strip" style="margin-top:12px;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🔥 Hot Markets</div>
+      <div class="trending-pills">
+        <div class="trend-pill" onclick="openOrder('PSG Lift the Trophy','YES',52)"><div class="trend-pill-name">PSG Win UCL</div><div class="trend-pill-prob">₦52 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Arsenal Lift the Trophy','YES',48)"><div class="trend-pill-name">Arsenal Win UCL</div><div class="trend-pill-prob">₦48 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Over 2.5 Goals','YES',55)"><div class="trend-pill-name">Over 2.5 Goals</div><div class="trend-pill-prob">₦55 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Both Teams To Score','YES',61)"><div class="trend-pill-name">BTTS</div><div class="trend-pill-prob">₦61 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Goes to Extra Time','YES',38)"><div class="trend-pill-name">Goes to AET</div><div class="trend-pill-prob">₦38 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Goes to Penalties','YES',22)"><div class="trend-pill-name">Goes to Pens</div><div class="trend-pill-prob">₦22 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Red Card in Match','YES',44)"><div class="trend-pill-name">🟥 Red Card</div><div class="trend-pill-prob">₦44 YES</div></div>
+      </div>
+    </div>
+
+    <div class="markets-grid" id="markets-grid" style="margin-top:12px;"></div>
+
+    <div class="positions-card">
+      <div class="positions-title">Open Positions <span class="badge">0</span></div>
+      <div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No open positions — pick a market above to get started</div>
+    </div>
+  </div>
+
+  <div id="tab-trades" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Trade History</div>
+      <div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No trades yet</div>
+    </div>
+  </div>
+
+  <div id="tab-comments" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Community <span class="badge" style="background:var(--ucl2);">93</span></div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
+
+  <div id="tab-analytics" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Probability Chart — PSG Lift Trophy</div>
+      <div style="position:relative;height:220px;"><canvas id="probChart"></canvas></div>
+    </div>
+  </div>
+
+  <div id="tab-rules" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Market Rules</div>
+      <div style="color:var(--text2);font-size:13px;line-height:1.8;">
+        <strong style="color:var(--text);">Match Winner (Full Time)</strong><br>
+        Resolves YES if the specified team wins at the end of 90 minutes. Extra time and penalties do NOT count for this market.<br><br>
+        <strong style="color:var(--text);">Trophy Market (PSG / Arsenal Lift the Trophy)</strong><br>
+        Resolves YES if the specified team is confirmed UEFA Champions League 2025/26 winners, including via extra time or penalty shootout.<br><br>
+        <strong style="color:var(--text);">Over / Under & BTTS</strong><br>
+        Goals scored during extra time DO count. Own goals count. Penalty shootout goals do NOT count.<br><br>
+        <strong style="color:var(--text);">Data Source</strong><br>
+        Official UEFA result feed. Resolution within 30 minutes of the final whistle (or post-penalties).<br><br>
+        <strong style="color:var(--text);">Disputes</strong><br>
+        Contact support@skedee.ng within 24 hours. Skedee's decision is final.
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- RIGHT SIDEBAR -->
+<div class="right-sidebar">
+  <div>
+    <div class="rsidebar-section-title">Order Book — PSG Lift Trophy <span style="color:var(--ucl2);font-size:10px;">PRE</span></div>
+    <div id="order-book-asks"></div>
+    <div class="ob-spread">Spread: ₦2 · Mid: ₦52</div>
+    <div id="order-book-bids"></div>
+  </div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;">
+    <div class="rsidebar-section-title">Activity Feed</div>
+    <div id="activity-feed"></div>
+  </div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;">
+    <div class="rsidebar-section-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
+  </div>
+</div>
+
+</div><!-- end layout -->
+
+<!-- ORDER PANEL -->
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header">
+    <div class="order-panel-title">Place Order</div>
+    <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="order-market-name" id="op-market-name">PSG Lift the Trophy</div>
+  <div class="order-side-tabs">
+    <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
+    <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">OUTCOME</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-outcome-label">YES</div>
+    </div>
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">PRICE</div>
+      <div style="font-family:var(--font-num);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-price-label">₦—</div>
+    </div>
+  </div>
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;padding:0 16px;margin-bottom:8px;">
+    <span style="font-family:var(--font-mono);font-size:22px;color:var(--text3);margin-right:8px;flex-shrink:0;">₦</span>
+    <input type="number" id="op-amount" value="5000" min="100" max="9999999" oninput="updateOrderSummary()"
+      style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
+  </div>
+  <input type="hidden" id="op-price" value="52">
+  <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:20px;padding:0 2px;" id="op-shares-line">— shares of ₦— each</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:0 2px;">
+    <div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:1px;line-height:1.6;">PAYOUT</div>
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;">IF CORRECT</div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:4px;">
+      <span style="font-family:var(--font-mono);font-size:26px;color:var(--text3);">₦</span>
+      <span style="font-family:var(--font-num);font-size:34px;font-weight:700;color:var(--y);line-height:1;" id="op-payout">—</span>
+    </div>
+  </div>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+</div>
+
+<script src="../script.js"></script>
+<script>
+const KICKOFF_TIME = new Date('2026-05-30T15:00:00Z'); // 17:00 CET
+const match = { state: 'UPCOMING', minute: 0, stoppage: 0, homeScore: 0, awayScore: 0 };
+let countdownInterval = null;
+let orderSide = 'YES', walletBalance = 4271250;
+let miniCharts = {}, probChart;
+const TRADE_NAMES = ['PSG Trophy', 'Arsenal Trophy', 'PSG Win FT', 'Arsenal Win FT', 'Draw FT', 'Over 2.5', 'BTTS', 'Goes AET'];
+
+const MARKETS = [
+  { id:'psg_trophy',  title:'PSG Lift the Trophy',    yes:0.52, vol:'₦28.4M', liq:'₦4.1M', spread:'₦2', history:[0.50,0.51,0.52,0.51,0.53,0.52,0.52,0.51,0.52,0.52] },
+  { id:'ars_trophy',  title:'Arsenal Lift the Trophy', yes:0.48, vol:'₦26.1M', liq:'₦3.8M', spread:'₦2', history:[0.50,0.49,0.48,0.49,0.47,0.48,0.48,0.49,0.48,0.48] },
+  { id:'psg_win',     title:'PSG Win (Full Time)',     yes:0.41, vol:'₦12.2M', liq:'₦2.2M', spread:'₦2', history:[0.40,0.41,0.40,0.42,0.41,0.41,0.40,0.42,0.41,0.41] },
+  { id:'draw',        title:'Draw at Full Time',       yes:0.28, vol:'₦8.8M',  liq:'₦1.4M', spread:'₦3', history:[0.27,0.28,0.29,0.28,0.27,0.28,0.28,0.29,0.28,0.28] },
+  { id:'ars_win',     title:'Arsenal Win (Full Time)', yes:0.31, vol:'₦9.7M',  liq:'₦1.7M', spread:'₦2', history:[0.32,0.31,0.30,0.31,0.32,0.31,0.31,0.30,0.31,0.31] },
+  { id:'over25',      title:'Over 2.5 Goals',          yes:0.55, vol:'₦2.4M',  liq:'₦0.5M', spread:'₦3', history:[0.54,0.55,0.54,0.56,0.55,0.55,0.54,0.56,0.55,0.55] },
+  { id:'btts',        title:'Both Teams To Score',     yes:0.61, vol:'₦1.4M',  liq:'₦0.3M', spread:'₦3', history:[0.60,0.61,0.60,0.62,0.61,0.61,0.60,0.62,0.61,0.61] },
+  { id:'redcard',     title:'🟥 Red Card in Match',    yes:0.44, vol:'₦0.9M',  liq:'₦0.2M', spread:'₦4', history:[0.42,0.43,0.44,0.43,0.45,0.44,0.44,0.43,0.45,0.44] },
+];
+
+const ORDER_BOOK_DATA = {
+  asks: [{p:'₦54',s:320,t:580},{p:'₦53',s:480,t:860},{p:'₦52',s:2400,t:4200},{p:'₦51',s:560,t:980}],
+  bids: [{p:'₦50',s:740,t:1300},{p:'₦49',s:420,t:740},{p:'₦48',s:580,t:1020},{p:'₦47',s:280,t:480}]
+};
+
+const ACTIVITY = [
+  {type:'buy', text:'<strong>ucl_whale</strong> opened PSG Trophy YES ×8,000 at ₦52 — "PSG path is clearer"', time:'3m'},
+  {type:'buy', text:'<strong>arsenal_faithful</strong> bought Arsenal Trophy YES ×5,000 at ₦48', time:'11m'},
+  {type:'buy', text:'<strong>naija_punter_1</strong> backed Arsenal Win FT YES ×2,000 at ₦31', time:'19m'},
+  {type:'sell',text:'<strong>hedge_lord</strong> sold PSG Trophy YES ×1,000 — locking profits before final', time:'27m'},
+  {type:'buy', text:'<strong>ucl_final_trader</strong> opened BTTS YES ×3,000 at ₦61', time:'38m'},
+  {type:'buy', text:'<strong>over_always</strong> bought Over 2.5 Goals YES ×1,500 at ₦55', time:'52m'},
+];
+
+const COMMENTS_DATA = [
+  {init:'U', user:'ucl_whale', col:'#001489', text:"PSG are the best team in Europe this season. They beat Real Madrid, Bayern, all of them. Arsenal are good but PSG's squad depth is elite. ₦52 YES on PSG lifting the trophy is undervalued.", time:'5 min ago', likes:142},
+  {init:'A', user:'arsenal_faithful', col:'#EF0107', text:"Arsenal's route to the final — knocked out Bayern in the semis. Saka, Odegaard, Martinelli all in form. Arteta outcoached Ancelotti twice this season. He'll do the same to Luis Enrique tomorrow.", time:'17 min ago', likes:119},
+  {init:'N', user:'naija_punter_1', col:'#A855F7', text:"Naija traders, this is THE match of the year. UCL Final between two giants. I'm splitting — half on Arsenal Trophy, half on Over 2.5. Either way something is going in the net at Allianz.", time:'29 min ago', likes:88},
+  {init:'H', user:'hedge_lord', col:'#22C55E', text:"Both teams averaging over 2.5 goals per game in this UCL campaign. The BTTS at ₦61 and Over 2.5 at ₦55 are the smartest markets on the board right now.", time:'44 min ago', likes:201},
+  {init:'F', user:'final_day_trader', col:'#F5C800', text:"Whoever wins this, the market moves FAST. Be ready with your orders. Last UCL final the YES price went from ₦50 to ₦95 in the first 30 minutes when the early goal went in. Have your limit orders ready.", time:'1h ago', likes:167},
+];
+
+function renderMarkets() {
+  const grid = document.getElementById('markets-grid');
+  grid.innerHTML = '';
+  MARKETS.forEach(m => {
+    const pct = Math.round(m.yes * 100);
+    const card = document.createElement('div');
+    card.className = 'market-card';
+    card.id = 'mc-' + m.id;
+    card.innerHTML = `
+      <div class="market-header">
+        <div><div class="market-title">${m.title}</div><div class="market-vol">Vol ${m.vol} · Liq ${m.liq}</div></div>
+        <span style="font-family:var(--font-mono);font-size:9px;color:var(--green)">▲ +${Math.floor(Math.random()*4+1)}%</span>
+      </div>
+      <div class="market-prob-row">
+        <div class="market-prob">${pct}%</div>
+        <div class="market-prob-bar"><div class="market-prob-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="market-price-row">
+        <div class="price-chip yes"><div class="price-chip-label">YES</div><div class="price-chip-val">₦${pct}</div></div>
+        <div class="price-chip no"><div class="price-chip-label">NO</div><div class="price-chip-val">₦${100-pct}</div></div>
+      </div>
+      <div class="market-mini-chart"><canvas id="mini-${m.id}"></canvas></div>
+      <div class="market-btns">
+        <button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button>
+        <button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button>
+      </div>
+      <div class="market-stats-row">
+        <div class="mstat"><div class="mstat-label">SPREAD</div><div class="mstat-val">${m.spread}</div></div>
+        <div class="mstat"><div class="mstat-label">VOLUME</div><div class="mstat-val">${m.vol}</div></div>
+        <div class="mstat"><div class="mstat-label">LIQUIDITY</div><div class="mstat-val">${m.liq}</div></div>
+      </div>`;
+    grid.appendChild(card);
+    setTimeout(() => drawMiniChart(m), 50);
+  });
+}
+
+function drawMiniChart(m) {
+  const canvas = document.getElementById('mini-' + m.id);
+  if (!canvas || !window.Chart) return;
+  if (miniCharts[m.id]) miniCharts[m.id].destroy();
+  miniCharts[m.id] = new Chart(canvas.getContext('2d'), {
+    type:'line',
+    data:{ labels:m.history.map((_,i)=>i), datasets:[{data:m.history.map(v=>Math.round(v*100)), borderColor:'#22C55E', backgroundColor:'#22C55E15', borderWidth:1.5, fill:true, tension:0.4, pointRadius:0}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{enabled:false}}, scales:{x:{display:false},y:{display:false,min:0,max:100}}, animation:{duration:0} }
+  });
+}
+
+function renderOrderBook() {
+  const maxSize = Math.max(...ORDER_BOOK_DATA.asks.map(r=>r.t), ...ORDER_BOOK_DATA.bids.map(r=>r.t));
+  document.getElementById('order-book-asks').innerHTML = ORDER_BOOK_DATA.asks.slice().reverse().map(r =>
+    `<div class="ob-row"><div class="ob-bar ask" style="width:${Math.round(r.t/maxSize*100)}%"></div><span class="ob-price ask">${r.p}</span><span class="ob-size">${r.s.toLocaleString()}</span><span class="ob-total">${r.t.toLocaleString()}</span></div>`
+  ).join('');
+  document.getElementById('order-book-bids').innerHTML = ORDER_BOOK_DATA.bids.map(r =>
+    `<div class="ob-row"><div class="ob-bar bid" style="width:${Math.round(r.t/maxSize*100)}%"></div><span class="ob-price bid">${r.p}</span><span class="ob-size">${r.s.toLocaleString()}</span><span class="ob-total">${r.t.toLocaleString()}</span></div>`
+  ).join('');
+}
+
+function renderActivity() {
+  document.getElementById('activity-feed').innerHTML = ACTIVITY.map(a =>
+    `<div class="activity-item"><div class="act-dot ${a.type}"></div><div class="act-text">${a.text}</div><div class="act-time">${a.time}</div></div>`
+  ).join('');
+}
+
+let recentTrades = [];
+function generateTrade() {
+  const m = MARKETS[Math.floor(Math.random() * MARKETS.length)];
+  const side = Math.random() > 0.4 ? 'buy' : 'sell';
+  const pct = Math.round(m.yes * 100);
+  return { side, market: m.title.replace(' (Full Time)','').replace(' Lift the Trophy',''), price: pct, size: Math.floor(Math.random()*2000+100) };
+}
+function renderTrades() {
+  if (!recentTrades.length) for (let i = 0; i < 8; i++) recentTrades.push(generateTrade());
+  document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t =>
+    `<div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${t.price}</span><span class="trade-size">×${t.size.toLocaleString()}</span></div>`
+  ).join('');
+}
+
+function renderComments() {
+  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c =>
+    `<div class="comment-item">
+      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+      <div class="comment-body">
+        <div class="comment-user">${c.user}</div>
+        <div class="comment-text">${c.text}</div>
+        <div class="comment-meta">${c.time} · <span style="color:var(--ucl2);">👍 ${c.likes}</span></div>
+      </div>
+    </div>`
+  ).join('');
+}
+
+function drawProbChart() {
+  if (probChart) probChart.destroy();
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  probChart = new Chart(document.getElementById('probChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: ['QF Draw','QF R1','QF R2','SF Draw','SF R1','SF R2','Post SF','This Wk','Today'],
+      datasets: [
+        { label: 'PSG %', data: [50,52,51,53,54,53,52,52,52], borderColor:'#6BAED6', backgroundColor:'rgba(107,174,214,0.08)', borderWidth:2, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#6BAED6' },
+        { label: 'Arsenal %', data: [50,48,49,47,46,47,48,48,48], borderColor:'#EF0107', backgroundColor:'rgba(239,1,7,0.06)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#EF0107' },
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true,labels:{color:tc,font:{size:10},usePointStyle:true}}}, scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},min:0,max:100}} }
+  });
+}
+
+function tickCountdown() {
+  const diff = KICKOFF_TIME - Date.now();
+  if (diff <= 0) { clearInterval(countdownInterval); return; }
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const el = document.getElementById('clock-display');
+  if (h > 0) el.textContent = `${h}H ${m}M`;
+  else if (m > 0) el.textContent = `${m}M ${String(s).padStart(2,'0')}S`;
+  else { el.textContent = `${s}S`; el.style.color = 'var(--red)'; }
+}
+
+function updateLiveData() {
+  MARKETS.forEach(m => {
+    const delta = (Math.random() - 0.5) * 0.006;
+    m.yes = Math.max(0.02, Math.min(0.98, m.yes + delta));
+    m.no = 1 - m.yes;
+    m.history.push(m.yes);
+    if (m.history.length > 12) m.history.shift();
+    const pct = Math.round(m.yes * 100);
+    [`#mc-${m.id} .price-chip.yes .price-chip-val`, `#mc-${m.id} .price-chip.no .price-chip-val`, `#mc-${m.id} .market-prob`, `#mc-${m.id} .market-prob-fill`, `#mc-${m.id} .btn-yes`, `#mc-${m.id} .btn-no`].forEach((sel, i) => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      if (i === 0) el.textContent = '₦' + pct;
+      else if (i === 1) el.textContent = '₦' + (100 - pct);
+      else if (i === 2) el.textContent = pct + '%';
+      else if (i === 3) el.style.width = pct + '%';
+      else if (i === 4) el.textContent = `BUY YES ₦${pct}`;
+      else el.textContent = `BUY NO ₦${100 - pct}`;
+    });
+    drawMiniChart(m);
+  });
+  renderOrderBook();
+  recentTrades.unshift(generateTrade());
+  if (recentTrades.length > 12) recentTrades.pop();
+  renderTrades();
+  const psgPct = Math.round(MARKETS[0].yes * 100);
+  document.getElementById('home-prob-stat').textContent = psgPct + '%';
+}
+
+function openOrder(name, side, price) {
+  document.getElementById('op-market-name').textContent = name;
+  document.getElementById('op-price').value = parseInt(price);
+  setOrderSide(side);
+  document.getElementById('order-panel').classList.add('open');
+}
+function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
+function setOrderSide(side) {
+  orderSide = side;
+  document.getElementById('op-yes-btn').classList.toggle('active', side === 'YES');
+  document.getElementById('op-no-btn').classList.toggle('active', side === 'NO');
+  document.getElementById('op-side-label').textContent = side;
+  const outcomeEl = document.getElementById('op-outcome-label');
+  const priceLabelEl = document.getElementById('op-price-label');
+  if (outcomeEl) { outcomeEl.textContent = side; outcomeEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
+  if (priceLabelEl) { const p = parseFloat(document.getElementById('op-price').value) || 0; priceLabelEl.textContent = '₦' + p; priceLabelEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
+  updateOrderSummary();
+}
+function updateOrderSummary() {
+  const amt = Math.min(parseFloat(document.getElementById('op-amount').value) || 0, 9999999);
+  const price = parseFloat(document.getElementById('op-price').value) || 1;
+  const shares = Math.floor(amt / price);
+  const payout = shares * 100;
+  document.getElementById('op-shares-line').textContent = shares.toLocaleString('en-NG') + ' shares of ₦' + Math.round(price) + ' each';
+  document.getElementById('op-payout').textContent = payout.toLocaleString('en-NG');
+}
+function placeOrder() {
+  const amt = parseFloat(document.getElementById('op-amount').value) || 0;
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  document.getElementById('wallet-display').textContent = '₦' + walletBalance.toLocaleString('en-NG', { maximumFractionDigits: 0 });
+  closeOrder();
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview','trades','comments','analytics','rules'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === name ? '' : 'none';
+  });
+  if (name === 'comments') renderComments();
+  if (name === 'analytics') setTimeout(drawProbChart, 50);
+}
+
+renderMarkets();
+renderOrderBook();
+renderActivity();
+renderTrades();
+updateOrderSummary();
+countdownInterval = setInterval(tickCountdown, 1000);
+setInterval(updateLiveData, 8000);
+</script>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="../about.html">About</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="../policy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms of Service</a>
+          <a href="../report.html" style="color:var(--red);">Report an Issue</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play"></a>
+      <a href="#" class="store-badge"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store"></a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../index.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
+</body>
+</html>
