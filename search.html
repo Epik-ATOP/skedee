@@ -179,7 +179,6 @@ body{-webkit-font-smoothing:antialiased;}
     </div>
     <div class="hero-title">
       Search all Markets
-      <span class="hero-badge" style="background:rgba(100,100,100,.15);border-color:rgba(100,100,100,.35);color:var(--text3);">FT</span>
     </div>
     <div class="hero-sub">Search all available markets, new markets are added every week</div>
     <div class="hero-stats">
@@ -426,7 +425,7 @@ function render() {
 
   // Other markets section
   if (otherMarkets.length > 0) {
-    const catName = f === 'football' ? 'Other Football' : f === 'all' ? 'All Other Markets' : 'Markets';
+    const catName = f === 'football' ? 'Other Football' : f === 'all' ? 'All Markets' : 'Markets';
     html += `<div>
       <div class="section-head">
         <div class="section-title">${catName}</div>
