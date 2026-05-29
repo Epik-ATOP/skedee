@@ -1,7 +1,7 @@
 {
   "name": "Skedee",
   "short_name": "Skedee",
-  "description": "Nigeria's live prediction market",
+  "description": "Nigeria's #1 prediction market",
   "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
