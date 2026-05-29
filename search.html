@@ -217,12 +217,12 @@ body{-webkit-font-smoothing:antialiased;}
     <div class="suggest-card">
       <div class="suggest-label">💡 Suggest a Market</div>
       <div class="suggest-title">Got a question for a new market?</div>
-      <div class="suggest-sub">We can't think of every yes-or-no question out there — if you've spotted something worth predicting, throw it in. We review every suggestion.</div>
+      <div class="suggest-sub">if you've spotted something worth predicting, send it as a suggestion for a new market. We review every suggestion.</div>
       <div class="suggest-form" id="suggest-form">
         <textarea class="suggest-textarea" id="suggest-idea" placeholder="e.g. &quot;Will Davido headline Afrobeats Live 2026?&quot; or &quot;Will petrol hit ₦2,000 before December?&quot;" maxlength="280"></textarea>
         <div class="suggest-form-row">
           <input class="suggest-input" id="suggest-username" type="text" placeholder="Your Skedee username (optional)" autocomplete="off" maxlength="30">
-          <button class="suggest-btn" onclick="submitSuggestion()">
+          <button class="suggest-btn" onclick="submitSuggestion()" id="suggest-submit">
             <i class="fa-solid fa-paper-plane"></i> Submit
           </button>
         </div>
