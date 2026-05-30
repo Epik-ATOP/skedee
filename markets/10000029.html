@@ -212,14 +212,14 @@
   <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
   <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
   <div class="sidebar-label">Find Markets</div>
-  <div class="sidebar-item active">⚽ Football</div>
-  <div class="sidebar-item">🏉 Other Sports</div>
-  <div class="sidebar-item">🎬 Entertainment</div>
-  <div class="sidebar-item">🎵 Music</div>
-  <div class="sidebar-item">⚖️ Politics</div>
-  <div class="sidebar-item">🛢️ Commodities</div>
-  <div class="sidebar-item">🪙 Finance</div>
-  <div class="sidebar-item">🌀 Miscellaneous</div>
+  <div class="sidebar-item active"><i class="fa-solid fa-futbol"></i>Football</div>
+  <div class="sidebar-item"><i class="fa-solid fa-medal"></i>Other Sports</div>
+  <div class="sidebar-item"><i class="fa-solid fa-film"></i>Entertainment</div>
+  <div class="sidebar-item"><i class="fa-solid fa-music"></i>Music</div>
+  <div class="sidebar-item"><i class="fa-solid fa-landmark"></i>Politics</div>
+  <div class="sidebar-item"><i class="fa-solid fa-oil-can"></i>Commodities</div>
+  <div class="sidebar-item"><i class="fa-solid fa-coins"></i>Finance</div>
+  <div class="sidebar-item"><i class="fa-solid fa-shapes"></i>Miscellaneous</div>
   <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
   <div class="sidebar-label">UCL Final</div>
   <div class="trending-event" onclick="window.location='10000029.html'">
@@ -240,6 +240,21 @@
 
 <div class="main">
 
+  <!-- DETERMINED BANNER -->
+  <div id="determined-banner" style="background:linear-gradient(135deg,rgba(245,200,0,.13),rgba(245,200,0,.04));border:2px solid rgba(245,200,0,.65);border-radius:20px;padding:30px 36px;display:flex;align-items:center;gap:24px;position:relative;">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:200px;opacity:.03;pointer-events:none;line-height:1;user-select:none;overflow:hidden;border-radius:20px;">🏆</div>
+    <div style="width:72px;height:72px;background:rgba(245,200,0,.18);border:2px solid rgba(245,200,0,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:32px;">🏆</div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-family:var(--font-display);font-weight:800;font-size:32px;color:var(--y);letter-spacing:4px;line-height:1.05;">DETERMINED!</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:10px;letter-spacing:.5px;">Market resolved · Final result locked · YES positions paid ₦100 · NO positions paid ₦0</div>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
+      <div style="color:var(--green);font-weight:700;font-size:12px;margin-bottom:4px;">● Settled</div>
+      <div>30 May 2026</div>
+      <div>~8:00 PM CET</div>
+    </div>
+  </div>
+
   <!-- MATCH CARD -->
   <div class="match-card">
     <div class="match-card-top">
@@ -249,7 +264,7 @@
           <div class="live-dot" id="live-dot" style="background:var(--ucl2);"></div>
           <span id="live-label" style="color:var(--ucl2);">TODAY</span>
         </div>
-        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Allianz Arena, Munich</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Puskas Arena, Budapest</div>
       </div>
     </div>
 
@@ -285,8 +300,8 @@
     </div>
 
     <div class="match-meta">
-      <div class="meta-item"><i class="fa-solid fa-location-dot"></i>Allianz Arena, Munich</div>
-      <div class="meta-item"><i class="fa-solid fa-calendar"></i>May 30, 2026 · 17:00 CET</div>
+      <div class="meta-item"><i class="fa-solid fa-location-dot"></i>Puskas Arena, Budapest</div>
+      <div class="meta-item"><i class="fa-solid fa-calendar"></i>May 30, 2026 · FT · 1-1 AET</div>
       <div class="meta-item"><i class="fa-solid fa-users"></i>75,024 Capacity</div>
       <div class="meta-item"><i class="fa-solid fa-trophy" style="color:var(--y);"></i><span style="color:var(--y);font-family:var(--font-mono);font-size:11px;">UCL FINAL</span></div>
       <div class="meta-item" style="margin-left:auto;"><span style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Volume: </span><span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦89,000,000</span></div>
@@ -297,7 +312,7 @@
   <div class="stats-row">
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦89M</div><div class="stat-box-sub" style="color:var(--green);">▲ +18% today</div></div>
     <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">8</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
-    <div class="stat-box"><div class="stat-box-label">PSG Win Prob</div><div class="stat-box-val yellow" id="home-prob-stat">52%</div><div class="stat-box-sub" style="color:var(--ucl2);">Slight Favourites</div></div>
+    <div class="stat-box"><div class="stat-box-label">UCL Winner</div><div class="stat-box-val yellow" id="home-prob-stat">PSG 🏆</div><div class="stat-box-sub" style="color:var(--ucl2);">4-3 on Penalties</div></div>
     <div class="stat-box"><div class="stat-box-label">Traders</div><div class="stat-box-val">14,882</div><div class="stat-box-sub" style="color:var(--text3);">Across all markets</div></div>
   </div>
 
@@ -314,22 +329,22 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Win Probability (Full Time)</div>
-        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">Based on ₦89M volume</div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:var(--bg4);border:1px solid var(--border);color:var(--text3);padding:2px 6px;border-radius:4px;margin-left:6px;">RESOLVED</span></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦89M total volume</div>
       </div>
       <div class="sentiment-bar">
-        <div class="sentiment-home" id="bar-psg" style="width:41%;"></div>
-        <div class="sentiment-draw" id="bar-draw" style="width:28%;"></div>
-        <div class="sentiment-away" id="bar-ars" style="width:31%;"></div>
+        <div class="sentiment-home" id="bar-psg" style="width:0%;"></div>
+        <div class="sentiment-draw" id="bar-draw" style="width:100%;"></div>
+        <div class="sentiment-away" id="bar-ars" style="width:0%;"></div>
       </div>
       <div class="sentiment-labels">
-        <span style="color:#6BAED6;font-weight:700;" id="label-psg">PSG 41%</span>
-        <span id="label-draw">Draw 28%</span>
-        <span style="color:#EF0107;font-weight:700;" id="label-ars">Arsenal 31%</span>
+        <span style="color:#6BAED6;font-weight:700;" id="label-psg">PSG 0%</span>
+        <span style="color:var(--y);font-weight:700;" id="label-draw">Draw 100% ✓</span>
+        <span style="color:#EF0107;font-weight:700;" id="label-ars">Arsenal 0%</span>
       </div>
       <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
-        <i class="fa-solid fa-circle-info" style="color:var(--ucl2);margin-right:4px;"></i>
-        Including extra time & penalties — PSG lift trophy: <strong style="color:var(--ucl2);">52%</strong> · Arsenal lift trophy: <strong style="color:#EF0107;">48%</strong>
+        <i class="fa-solid fa-trophy" style="color:var(--ucl2);margin-right:4px;"></i>
+        PSG lifted the UCL trophy — <strong style="color:var(--ucl2);">4-3 on penalties</strong> after <strong style="color:var(--y);">1-1 AET</strong> · Arsenal: Runners-Up
       </div>
     </div>
 
@@ -463,21 +478,21 @@ const KICKOFF_TIME = new Date('2026-05-30T15:00:00Z'); // 17:00 CET
 const SM_UCL  = 'soccer_uefa_champs_league';
 const SM_HOME = 'PSG';
 const SM_AWAY = 'Arsenal';
-const match = { state: 'UPCOMING', minute: 0, stoppage: 0, homeScore: 0, awayScore: 0 };
+const match = { state: 'FINISHED', minute: 120, stoppage: 0, homeScore: 1, awayScore: 1 };
 let countdownInterval = null;
 let orderSide = 'YES', walletBalance = 4271250;
 let miniCharts = {}, probChart;
 const TRADE_NAMES = ['PSG Trophy', 'Arsenal Trophy', 'PSG Win FT', 'Arsenal Win FT', 'Draw FT', 'Over 2.5', 'BTTS', 'Goes AET'];
 
 const MARKETS = [
-  { id:'psg_trophy',  title:'PSG Lift the Trophy',    yes:0.52, vol:'₦28.4M', liq:'₦4.1M', spread:'₦2', history:[0.50,0.51,0.52,0.51,0.53,0.52,0.52,0.51,0.52,0.52] },
-  { id:'ars_trophy',  title:'Arsenal Lift the Trophy', yes:0.48, vol:'₦26.1M', liq:'₦3.8M', spread:'₦2', history:[0.50,0.49,0.48,0.49,0.47,0.48,0.48,0.49,0.48,0.48] },
-  { id:'psg_win',     title:'PSG Win (Full Time)',     yes:0.41, vol:'₦12.2M', liq:'₦2.2M', spread:'₦2', history:[0.40,0.41,0.40,0.42,0.41,0.41,0.40,0.42,0.41,0.41] },
-  { id:'draw',        title:'Draw at Full Time',       yes:0.28, vol:'₦8.8M',  liq:'₦1.4M', spread:'₦3', history:[0.27,0.28,0.29,0.28,0.27,0.28,0.28,0.29,0.28,0.28] },
-  { id:'ars_win',     title:'Arsenal Win (Full Time)', yes:0.31, vol:'₦9.7M',  liq:'₦1.7M', spread:'₦2', history:[0.32,0.31,0.30,0.31,0.32,0.31,0.31,0.30,0.31,0.31] },
-  { id:'over25',      title:'Over 2.5 Goals',          yes:0.55, vol:'₦2.4M',  liq:'₦0.5M', spread:'₦3', history:[0.54,0.55,0.54,0.56,0.55,0.55,0.54,0.56,0.55,0.55] },
-  { id:'btts',        title:'Both Teams To Score',     yes:0.61, vol:'₦1.4M',  liq:'₦0.3M', spread:'₦3', history:[0.60,0.61,0.60,0.62,0.61,0.61,0.60,0.62,0.61,0.61] },
-  { id:'redcard',     title:'🟥 Red Card in Match',    yes:0.44, vol:'₦0.9M',  liq:'₦0.2M', spread:'₦4', history:[0.42,0.43,0.44,0.43,0.45,0.44,0.44,0.43,0.45,0.44] },
+  { id:'psg_trophy',  title:'PSG Lift the Trophy ✓',    yes:1.00, vol:'₦28.4M', liq:'—', spread:'—', history:[0.50,0.51,0.52,0.53,0.54,0.60,0.70,0.85,0.95,1.00], resolved:true },
+  { id:'ars_trophy',  title:'Arsenal Lift the Trophy',   yes:0.00, vol:'₦26.1M', liq:'—', spread:'—', history:[0.50,0.49,0.48,0.47,0.46,0.40,0.30,0.15,0.05,0.00], resolved:true },
+  { id:'psg_win',     title:'PSG Win (Full Time)',        yes:0.00, vol:'₦12.2M', liq:'—', spread:'—', history:[0.40,0.41,0.40,0.42,0.41,0.35,0.20,0.05,0.02,0.00], resolved:true },
+  { id:'draw',        title:'Draw at Full Time ✓',        yes:1.00, vol:'₦8.8M',  liq:'—', spread:'—', history:[0.27,0.28,0.29,0.28,0.27,0.40,0.60,0.80,0.95,1.00], resolved:true },
+  { id:'ars_win',     title:'Arsenal Win (Full Time)',    yes:0.00, vol:'₦9.7M',  liq:'—', spread:'—', history:[0.32,0.31,0.30,0.31,0.32,0.25,0.20,0.15,0.03,0.00], resolved:true },
+  { id:'over25',      title:'Over 2.5 Goals',              yes:0.00, vol:'₦2.4M',  liq:'—', spread:'—', history:[0.54,0.55,0.54,0.56,0.55,0.45,0.30,0.15,0.05,0.00], resolved:true },
+  { id:'btts',        title:'Both Teams To Score ✓',       yes:1.00, vol:'₦1.4M',  liq:'—', spread:'—', history:[0.60,0.61,0.60,0.62,0.61,0.70,0.80,0.90,0.97,1.00], resolved:true },
+  { id:'redcard',     title:'🟥 Red Card in Match',         yes:0.44, vol:'₦0.9M',  liq:'₦0.2M', spread:'₦4', history:[0.42,0.43,0.44,0.43,0.45,0.44,0.44,0.43,0.45,0.44], resolved:false },
 ];
 
 const ORDER_BOOK_DATA = {
@@ -510,24 +525,27 @@ function renderMarkets() {
     const card = document.createElement('div');
     card.className = 'market-card';
     card.id = 'mc-' + m.id;
+    const resolvedBadge = m.resolved
+      ? `<span style="font-family:var(--font-mono);font-size:9px;background:${pct===100?'rgba(34,197,94,.12)':'rgba(239,68,68,.08)'};color:${pct===100?'var(--green)':'var(--red)'};border:1px solid ${pct===100?'rgba(34,197,94,.3)':'rgba(239,68,68,.25)'};padding:2px 6px;border-radius:4px;">RESOLVED</span>`
+      : `<span style="font-family:var(--font-mono);font-size:9px;color:var(--green)">▲ +${Math.floor(Math.random()*4+1)}%</span>`;
+    const btnsHtml = m.resolved
+      ? `<div style="text-align:center;font-family:var(--font-mono);font-size:11px;color:${pct===100?'var(--green)':'var(--text3)'};padding:8px 0;">${pct===100?'✓ RESOLVED YES':'✗ RESOLVED NO'}</div>`
+      : `<div class="market-btns"><button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button><button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button></div>`;
     card.innerHTML = `
       <div class="market-header">
         <div><div class="market-title">${m.title}</div><div class="market-vol">Vol ${m.vol} · Liq ${m.liq}</div></div>
-        <span style="font-family:var(--font-mono);font-size:9px;color:var(--green)">▲ +${Math.floor(Math.random()*4+1)}%</span>
+        ${resolvedBadge}
       </div>
       <div class="market-prob-row">
         <div class="market-prob">${pct}%</div>
-        <div class="market-prob-bar"><div class="market-prob-fill" style="width:${pct}%"></div></div>
+        <div class="market-prob-bar"><div class="market-prob-fill" style="width:${pct}%;background:${pct===100?'var(--green)':pct===0?'var(--red)':'var(--y)'}"></div></div>
       </div>
       <div class="market-price-row">
         <div class="price-chip yes"><div class="price-chip-label">YES</div><div class="price-chip-val">₦${pct}</div></div>
         <div class="price-chip no"><div class="price-chip-label">NO</div><div class="price-chip-val">₦${100-pct}</div></div>
       </div>
       <div class="market-mini-chart"><canvas id="mini-${m.id}"></canvas></div>
-      <div class="market-btns">
-        <button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button>
-        <button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button>
-      </div>
+      ${btnsHtml}
       <div class="market-stats-row">
         <div class="mstat"><div class="mstat-label">SPREAD</div><div class="mstat-val">${m.spread}</div></div>
         <div class="mstat"><div class="mstat-label">VOLUME</div><div class="mstat-val">${m.vol}</div></div>
@@ -750,14 +768,49 @@ async function initOddsAPI() {
   }
 }
 
+function initFinalState() {
+  // Score
+  document.getElementById('score-home').textContent = '1 — 1';
+
+  // Clock
+  document.getElementById('clock-display').textContent = 'FT · PENS';
+  document.getElementById('clock-display').style.color = 'var(--text3)';
+  document.getElementById('clock-icon').className = 'fa-solid fa-whistle';
+
+  // Live indicator
+  const dot = document.getElementById('live-dot');
+  dot.style.background = 'var(--text3)';
+  dot.style.animation = 'none';
+  const lbl = document.getElementById('live-label');
+  lbl.textContent = 'FT';
+  lbl.style.color = 'var(--text3)';
+
+  // Status pill
+  const pill = document.getElementById('match-status');
+  pill.textContent = 'PSG WIN ON PENS';
+  pill.style.background = 'rgba(0,20,137,.15)';
+  pill.style.border = '1px solid rgba(0,20,137,.4)';
+  pill.style.color = 'var(--ucl2)';
+
+  // Nav tag
+  const navTag = document.getElementById('nav-status-tag');
+  if (navTag) {
+    navTag.textContent = 'FT';
+    navTag.style.background = 'rgba(100,100,100,.12)';
+    navTag.style.color = 'var(--text3)';
+    navTag.style.border = '1px solid var(--border)';
+  }
+
+  // Stat box
+  document.getElementById('home-prob-stat').textContent = 'PSG 🏆';
+}
+
 renderMarkets();
 renderOrderBook();
 renderActivity();
 renderTrades();
 updateOrderSummary();
-countdownInterval = setInterval(tickCountdown, 1000);
-setInterval(updateLiveData, 8000);
-initOddsAPI();
+initFinalState();
 </script>
 
 <!-- FOOTER -->
