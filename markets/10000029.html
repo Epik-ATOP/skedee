@@ -182,7 +182,7 @@
 <div class="topbar">
   <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
   <div class="topbar-nav">
-    <a href="../index.html" class="topbar-navlink">Markets</a>
+    <a href="../search.html" class="topbar-navlink">Markets</a>
     <a href="../search.html" class="topbar-navlink">Final Matchday</a>
     <a href="10000029.html" class="topbar-navlink active">PSG vs Arsenal <span id="nav-status-tag" style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(0,20,137,.15);color:var(--ucl2);border:1px solid rgba(0,20,137,.3);padding:1px 5px;border-radius:3px;">TOMORROW</span></a>
     <a href="../about.html" class="topbar-navlink">About</a>
@@ -457,8 +457,12 @@
 </div>
 
 <script src="../script.js"></script>
+<script src="../sportmonks.js"></script>
 <script>
 const KICKOFF_TIME = new Date('2026-05-30T15:00:00Z'); // 17:00 CET
+const SM_UCL  = 'soccer_uefa_champs_league';
+const SM_HOME = 'PSG';
+const SM_AWAY = 'Arsenal';
 const match = { state: 'UPCOMING', minute: 0, stoppage: 0, homeScore: 0, awayScore: 0 };
 let countdownInterval = null;
 let orderSide = 'YES', walletBalance = 4271250;
@@ -690,6 +694,62 @@ function switchTab(name, btn) {
   if (name === 'analytics') setTimeout(drawProbChart, 50);
 }
 
+// ── ODDS API INTEGRATION ─────────────────────────────────────────────────
+
+function applyProbs(probs) {
+  const r = smRound(probs);
+  document.getElementById('bar-psg').style.width   = r.home + '%';
+  document.getElementById('bar-draw').style.width  = r.draw + '%';
+  document.getElementById('bar-ars').style.width   = r.away + '%';
+  document.getElementById('label-psg').textContent  = `PSG ${r.home}%`;
+  document.getElementById('label-draw').textContent = `Draw ${r.draw}%`;
+  document.getElementById('label-ars').textContent  = `Arsenal ${r.away}%`;
+  const psgWin = MARKETS.find(m => m.id === 'psg_win');
+  const draw   = MARKETS.find(m => m.id === 'draw');
+  const arsWin = MARKETS.find(m => m.id === 'ars_win');
+  if (psgWin) { psgWin.yes = probs.home; psgWin.history.push(probs.home); }
+  if (draw)   { draw.yes   = probs.draw; draw.history.push(probs.draw);   }
+  if (arsWin) { arsWin.yes = probs.away; arsWin.history.push(probs.away); }
+  renderMarkets();
+}
+
+function applyLive(gameData) {
+  const state = smParseState(gameData);
+  const score = smParseScore(gameData);
+  if (state === 'live') {
+    match.state     = 'LIVE';
+    match.homeScore = score.home;
+    match.awayScore = score.away;
+    document.getElementById('score-home').textContent = `${score.home} — ${score.away}`;
+    const dot = document.getElementById('live-dot');
+    const lbl = document.getElementById('live-label');
+    const pill = document.getElementById('match-status');
+    dot.style.background  = 'var(--red)';
+    dot.style.animation   = 'live-pulse 1.5s infinite';
+    lbl.style.color       = 'var(--red)';
+    lbl.textContent       = 'LIVE';
+    pill.style.background = 'rgba(239,68,68,.15)';
+    pill.style.border     = '1px solid rgba(239,68,68,.4)';
+    pill.style.color      = 'var(--red)';
+    pill.textContent      = 'LIVE';
+  } else if (state === 'finished') {
+    document.getElementById('live-label').textContent = 'FT';
+    document.getElementById('match-status').textContent = 'FULL TIME';
+  }
+}
+
+async function initOddsAPI() {
+  const probs = await smGetProbs(SM_HOME, SM_AWAY, SM_UCL);
+  if (probs) applyProbs(probs);
+
+  // Poll live scores within ±2 hours of kick-off
+  const now = Date.now();
+  const diffMs = KICKOFF_TIME - now;
+  if (diffMs < 2 * 3600 * 1000 && diffMs > -2 * 3600 * 1000) {
+    smStartPoll(SM_HOME, SM_AWAY, applyLive, 30000, SM_UCL);
+  }
+}
+
 renderMarkets();
 renderOrderBook();
 renderActivity();
@@ -697,6 +757,7 @@ renderTrades();
 updateOrderSummary();
 countdownInterval = setInterval(tickCountdown, 1000);
 setInterval(updateLiveData, 8000);
+initOddsAPI();
 </script>
 
 <!-- FOOTER -->

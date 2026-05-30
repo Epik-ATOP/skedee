@@ -55,6 +55,9 @@ const SM_ALIASES = {
   'chelsea':               'Chelsea',
   'crystal palace':        'Crystal Palace',
   'arsenal':               'Arsenal',
+  'psg':                   'Paris Saint-Germain',
+  'paris saint-germain':   'Paris Saint-Germain',
+  'paris sg':              'Paris Saint-Germain',
 };
 
 // ── INTERNAL HELPERS ──────────────────────────────────────────────────────
@@ -115,10 +118,10 @@ function smTeamKey(name) {
  * Fetch pre-match h2h odds for a fixture (by team names) and return fair probabilities.
  * Returns { home, draw, away } as decimals (0–1), or null if unavailable.
  */
-async function smGetProbs(homeTeam, awayTeam) {
+async function smGetProbs(homeTeam, awayTeam, sport = SM_SPORT) {
   try {
     const games = await _smFetch(
-      `/v4/sports/${SM_SPORT}/odds/?regions=uk&markets=h2h&oddsFormat=decimal`
+      `/v4/sports/${sport}/odds/?regions=uk&markets=h2h&oddsFormat=decimal`
     );
     const game = _smFindGame(games, homeTeam, awayTeam);
     if (!game) {
@@ -169,9 +172,9 @@ async function smGetProbs(homeTeam, awayTeam) {
  * Fetch live/recent score data for a fixture (by team names).
  * Returns the Odds API game object, or null if not found.
  */
-async function smGetLive(homeTeam, awayTeam) {
+async function smGetLive(homeTeam, awayTeam, sport = SM_SPORT) {
   try {
-    const games = await _smFetch(`/v4/sports/${SM_SPORT}/scores/?daysFrom=1`);
+    const games = await _smFetch(`/v4/sports/${sport}/scores/?daysFrom=1`);
     return _smFindGame(games, homeTeam, awayTeam);
   } catch(e) {
     console.warn('[OA] getLive error:', e.message);
@@ -228,11 +231,11 @@ function smParseEvents(_game) {
  * Calls onUpdate(gameData) on each successful tick.
  * Returns a stop() function to cancel polling.
  */
-function smStartPoll(homeTeam, awayTeam, onUpdate, intervalMs = 30000) {
+function smStartPoll(homeTeam, awayTeam, onUpdate, intervalMs = 30000, sport = SM_SPORT) {
   let active = true;
   const tick = async () => {
     if (!active) return;
-    const data = await smGetLive(homeTeam, awayTeam);
+    const data = await smGetLive(homeTeam, awayTeam, sport);
     if (data) onUpdate(data);
     if (active) setTimeout(tick, intervalMs);
   };
