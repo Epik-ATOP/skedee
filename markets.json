@@ -32,6 +32,39 @@
     "score": "VS"
   },
   {
+    "id": "10000004",
+    "emoji": "🎬",
+    "category": "ENTERTAINMENT",
+    "title": "When Will BBNaija S11 Auditions Begin?",
+    "yesPct": 100,
+    "volume": "₦28.4M",
+    "status": "RESOLVED",
+    "closesAt": "May 16",
+    "isMatch": false
+  },
+  {
+    "id": "10000005",
+    "emoji": "💰",
+    "category": "FINANCE",
+    "title": "Will the $1.25bn World Bank Loan be Approved?",
+    "yesPct": 74,
+    "volume": "₦61.4M",
+    "status": "RESOLVED",
+    "closesAt": "Aug 31",
+    "isMatch": false
+  },
+  {
+    "id": "10000007",
+    "emoji": "⛽",
+    "category": "ENERGY",
+    "title": "Will Fuel Price Exceed ₦1,300/litre Before June?",
+    "yesPct": 58,
+    "volume": "₦47.2M",
+    "status": "RESOLVED",
+    "closesAt": "May 31",
+    "isMatch": false
+  },
+  {
     "id": "10000008",
     "emoji": "💱",
     "category": "FINANCE",
@@ -75,38 +108,6 @@
     "score": "VS"
   },
   {
-    "id": "10000011",
-    "emoji": "⚽",
-    "category": "FOOTBALL",
-    "title": "Sunderland vs Everton",
-    "yesPct": 38,
-    "volume": "₦7M",
-    "status": "UPCOMING",
-    "closesAt": "Kickoff",
-    "isMatch": true,
-    "team1": "Sunderland",
-    "team2": "Everton",
-    "team1Emoji": "⚫",
-    "team2Emoji": "🔵",
-    "score": "VS"
-  },
-  {
-    "id": "10000012",
-    "emoji": "⚽",
-    "category": "FOOTBALL",
-    "title": "Brighton vs Leeds",
-    "yesPct": 61,
-    "volume": "₦11M",
-    "status": "UPCOMING",
-    "closesAt": "Kickoff",
-    "isMatch": true,
-    "team1": "Brighton",
-    "team2": "Leeds",
-    "team1Emoji": "🦢",
-    "team2Emoji": "🦚",
-    "score": "VS"
-  },
-  {
     "id": "10000013",
     "emoji": "⚽",
     "category": "FOOTBALL",
@@ -121,6 +122,22 @@
     "team1Emoji": "⚒️",
     "team2Emoji": "⚫",
     "score": "VS"
+  },
+  {
+    "id": "10000014",
+    "emoji": "⚽",
+    "category": "FOOTBALL",
+    "title": "Man City vs Aston Villa",
+    "yesPct": 65,
+    "volume": "₦38M",
+    "status": "RESOLVED",
+    "closesAt": "Full Time",
+    "isMatch": true,
+    "team1": "Man City",
+    "team2": "Aston Villa",
+    "team1Emoji": "🔵",
+    "team2Emoji": "🟣",
+    "score": "1 — 2"
   },
   {
     "id": "music_wizkid",
@@ -324,5 +341,38 @@
     "team1Emoji": "🔵",
     "team2Emoji": "🔴",
     "score": "VS"
+  },
+  {
+    "id": "10000031",
+    "emoji": "🌧️",
+    "category": "WEATHER",
+    "title": "Will it Rain in Lagos this Weekend?",
+    "yesPct": 63,
+    "volume": "₦11.4M",
+    "status": "LIVE",
+    "closesAt": "May 31",
+    "isMatch": false
+  },
+  {
+    "id": "10000032",
+    "emoji": "🌧️",
+    "category": "WEATHER",
+    "title": "Will it Rain in Abuja this Weekend?",
+    "yesPct": 52,
+    "volume": "₦8.2M",
+    "status": "LIVE",
+    "closesAt": "May 31",
+    "isMatch": false
+  },
+  {
+    "id": "10000033",
+    "emoji": "🏆",
+    "category": "FOOTBALL",
+    "title": "2026 FIFA World Cup Winner",
+    "yesPct": 17,
+    "volume": "₦350M",
+    "status": "HOT",
+    "closesAt": "Jul 20",
+    "isMatch": false
   }
 ]
