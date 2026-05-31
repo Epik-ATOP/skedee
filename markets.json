@@ -374,5 +374,21 @@
     "status": "HOT",
     "closesAt": "Jul 20",
     "isMatch": false
+  },
+  {
+    "id": "10000034",
+    "emoji": "🏀",
+    "category": "SPORTS",
+    "title": "New York Knicks vs San Antonio Spurs",
+    "yesPct": 65,
+    "volume": "₦7.2M",
+    "status": "UPCOMING",
+    "closesAt": "Tip-off",
+    "isMatch": true,
+    "team1": "Knicks",
+    "team2": "Spurs",
+    "team1Emoji": "🟠",
+    "team2Emoji": "⬛",
+    "score": "VS"
   }
 ]
