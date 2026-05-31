@@ -268,7 +268,7 @@
     <div class="odds-card">
       <div class="odds-card-header">
         <div class="odds-card-title">Win Probability — All Teams</div>
-        <div class="odds-card-vol">Last updated: just now</div>
+        <div id="odds-source" class="odds-card-vol">Loading live odds…</div>
       </div>
       <div id="odds-table"></div>
     </div>
@@ -686,6 +686,71 @@ function switchTab(name, btn) {
   if (name === 'markets') renderSubMarkets();
 }
 
+// ── POLYMARKET LIVE ODDS ──────────────────────────────────────────────────────
+
+function normalizeName(s) {
+  return s.toLowerCase()
+    .replace(/[^a-z\s]/g, '')  // strip emoji, accents, punctuation
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+async function fetchPolymarketOdds() {
+  const statusEl = document.getElementById('odds-source');
+  try {
+    const res = await fetch(
+      'https://gamma-api.polymarket.com/markets?q=2026+fifa+world+cup+winner&limit=10',
+      { signal: AbortSignal.timeout(8000) }
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const markets = await res.json();
+
+    // Find the multi-outcome WC winner market
+    const market = markets.find(m =>
+      m.outcomes &&
+      m.question &&
+      m.question.toLowerCase().includes('world cup') &&
+      (m.question.toLowerCase().includes('win') || m.question.toLowerCase().includes('winner'))
+    );
+    if (!market) throw new Error('Market not found');
+
+    const outcomes = typeof market.outcomes === 'string'
+      ? JSON.parse(market.outcomes)
+      : market.outcomes;
+    const prices = typeof market.outcomePrices === 'string'
+      ? JSON.parse(market.outcomePrices)
+      : market.outcomePrices;
+
+    let matched = 0;
+    outcomes.forEach((name, i) => {
+      const pct = parseFloat(prices[i]) * 100;
+      const norm = normalizeName(name);
+      const team = TEAMS.find(t => {
+        const tn = normalizeName(t.name);
+        return tn === norm || tn.includes(norm) || norm.includes(tn);
+      });
+      if (team && pct > 0) {
+        const prev = team.pct;
+        team.pct = parseFloat(pct.toFixed(1));
+        team.change = parseFloat((team.pct - prev).toFixed(1));
+        matched++;
+      }
+    });
+
+    if (matched > 0) {
+      renderOdds();
+      renderTopMovers();
+      const t = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      if (statusEl) statusEl.innerHTML = `Live · Polymarket · <span style="color:var(--green);">updated ${t}</span>`;
+    } else {
+      throw new Error('No teams matched');
+    }
+  } catch (e) {
+    console.warn('Polymarket fetch failed, using local data:', e.message);
+    if (statusEl) statusEl.innerHTML = `Local data · <span style="color:var(--text3);">live feed unavailable</span>`;
+  }
+}
+
 // ── LIVE TICK ─────────────────────────────────────────────────────────────────
 
 function liveTick() {
@@ -707,6 +772,8 @@ renderTopMovers();
 renderConfVol();
 updateDaysToFinal();
 updateOrderSummary();
+fetchPolymarketOdds();
+setInterval(fetchPolymarketOdds, 60000);
 setInterval(liveTick, 4000);
 </script>
 
