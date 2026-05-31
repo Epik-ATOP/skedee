@@ -236,7 +236,11 @@
       </div>
     </div>
     <div class="tourn-title">2026 World Cup Winner</div>
+    <div class="hero-sub">
+      Who do you think will lift the trophy in 2026? Back your pick and watch the odds evolve in real-time as the tournament unfolds!
+    </div>
     <div class="tourn-meta">
+      
       <div class="tmeta-item">
         <div class="host-flags"><span class="host-flag">🇺🇸</span><span class="host-flag">🇨🇦</span><span class="host-flag">🇲🇽</span></div>
         USA · Canada · Mexico
@@ -279,55 +283,12 @@
     <div class="chart-card">
       <div class="chart-card-header">
         <div style="font-family:var(--font-display);font-weight:700;font-size:15px;">Probability History</div>
-        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">Sep 2025 → Today</div>
+        <div id="chart-status" style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">Loading…</div>
       </div>
       <div class="chart-legend" id="chart-legend" style="margin-bottom:12px;"></div>
       <div style="position:relative;height:300px;"><canvas id="probChart"></canvas></div>
     </div>
 
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Will France win the 2026 FIFA World Cup?",
-  "description": "Prediction market: Yes 17% · No 83% on Polymarket.",
-  "url": "https://polymarket.com/event/world-cup-winner",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Polymarket",
-    "url": "https://polymarket.com"
-  }
-}
-</script>
-<figure
-	class="polymarket-embed"
-	id="polymarket-will-france-win-the-2026-fifa-world-cup-924"
-	aria-label="Polymarket prediction market: Will France win the 2026 FIFA World Cup?"
-	itemscope
-	itemtype="https://schema.org/WebPage"
-	style="position:relative;display:inline-block;margin:0">
-	<iframe
-		title="Will France win the 2026 FIFA World Cup? — Polymarket Prediction Market"
-		src="https://embed.polymarket.com/market?event=world-cup-winner&rotate=true&theme=dark&volume=false&liveactivity=true&buttons=false&border=true&height=300"
-		width="400"
-		height="300"
-		frameborder="0"
-		allowtransparency="true">
-	</iframe>
-	<a href="https://polymarket.com/event/world-cup-winner"
-		aria-label="View on Polymarket"
-		target="_blank"
-		rel="noopener"
-		style="position:absolute;top:16px;right:20px;width:120px;height:24px;z-index:10">
-	</a>
-	<figcaption style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">
-		<strong>Will France win the 2026 FIFA World Cup?</strong><br>
-		Yes 17% · No 83%<br>
-		<a href="https://polymarket.com/event/world-cup-winner">
-			View full market &amp; trade on Polymarket
-		</a>
-	</figcaption>
-</figure>
 
 
 
@@ -360,8 +321,6 @@
         Each team's price represents the market-implied probability of that team winning the tournament. All team prices should sum to approximately 100% after accounting for platform margin.<br><br>
         <strong style="color:var(--text);">European Winner / CONMEBOL Winner</strong><br>
         Resolves YES if the winning team belongs to the respective confederation. Determined by FIFA's official confederation membership at the time of the tournament.<br><br>
-        <strong style="color:var(--text);">Cancellation / Postponement</strong><br>
-        If the tournament is cancelled or delayed beyond Dec 31, 2026, all positions are refunded in full.<br><br>
         <strong style="color:var(--text);">Data Source</strong><br>
         Official FIFA result and announcement. Resolution within 60 minutes of the final whistle or penalty result.<br><br>
         <strong style="color:var(--text);">Disputes</strong><br>
@@ -514,34 +473,105 @@ function renderOdds() {
 }
 
 let probChart;
-function drawProbChart() {
+
+function sampleHistory(hist, n) {
+  if (hist.length <= n) return hist;
+  const step = (hist.length - 1) / (n - 1);
+  return Array.from({ length: n }, (_, i) => hist[Math.round(i * step)]);
+}
+
+function fmtTs(ts) {
+  return new Date(ts * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+async function fetchChartHistory(tokenId) {
+  const res = await fetch(
+    `https://clob.polymarket.com/prices-history?market=${tokenId}&interval=max&fidelity=60`,
+    { signal: AbortSignal.timeout(10000) }
+  );
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  return data.history || [];
+}
+
+async function drawProbChart() {
   if (probChart) probChart.destroy();
   const isDark = document.body.getAttribute('data-theme') !== 'light';
   const gc = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
   const tc = isDark ? '#9A9880' : '#5C5A48';
-  const top5 = TEAMS.slice(0,5);
+  const top5 = TEAMS.slice(0, 5);
+  const chartStatusEl = document.getElementById('chart-status');
 
   document.getElementById('chart-legend').innerHTML = top5.map(t =>
     `<div class="legend-item"><div class="legend-dot" style="background:${t.color};"></div>${t.flag} ${t.name}</div>`
   ).join('');
 
+  let labels = CHART_LABELS;
+  let datasets;
+
+  if (top5.some(t => teamTokenIds[t.name])) {
+    if (chartStatusEl) chartStatusEl.textContent = 'Fetching Polymarket history…';
+    try {
+      const histories = await Promise.all(
+        top5.map(t => teamTokenIds[t.name]
+          ? fetchChartHistory(teamTokenIds[t.name])
+          : Promise.resolve(null)
+        )
+      );
+
+      const refHist = histories.find(h => h && h.length > 0);
+      if (refHist) {
+        const sampled = sampleHistory(refHist, 60);
+        labels = sampled.map(p => fmtTs(p.t));
+
+        datasets = top5.map((t, i) => {
+          const hist = histories[i];
+          const data = (hist && hist.length > 0)
+            ? sampleHistory(hist, 60).map(p => parseFloat((p.p * 100).toFixed(1)))
+            : t.history;
+          return {
+            label: t.name,
+            data,
+            borderColor: t.color,
+            backgroundColor: t.color + '10',
+            borderWidth: i < 2 ? 2.5 : 1.5,
+            fill: false,
+            tension: 0.4,
+            pointRadius: 0,
+            pointHoverRadius: 5,
+          };
+        });
+
+        if (chartStatusEl) chartStatusEl.innerHTML =
+          `Live · Polymarket · <span style="color:var(--green);">${labels.length} data points</span>`;
+      }
+    } catch (e) {
+      console.warn('Chart history fetch failed:', e.message);
+      if (chartStatusEl) chartStatusEl.innerHTML = `<span style="color:var(--text3);">Estimated data (fetch failed)</span>`;
+    }
+  }
+
+  if (!datasets) {
+    labels = CHART_LABELS;
+    datasets = top5.map((t, i) => ({
+      label: t.name,
+      data: t.history,
+      borderColor: t.color,
+      backgroundColor: t.color + '12',
+      borderWidth: i < 2 ? 2.5 : 1.5,
+      fill: false,
+      tension: 0.4,
+      pointRadius: 3,
+      pointBackgroundColor: t.color,
+      pointHoverRadius: 5,
+    }));
+    if (chartStatusEl && !chartStatusEl.innerHTML.includes('failed'))
+      chartStatusEl.textContent = 'Estimated data · load Odds tab first for live history';
+  }
+
   probChart = new Chart(document.getElementById('probChart').getContext('2d'), {
     type: 'line',
-    data: {
-      labels: CHART_LABELS,
-      datasets: top5.map(t => ({
-        label: t.name,
-        data: t.history,
-        borderColor: t.color,
-        backgroundColor: t.color + '12',
-        borderWidth: t.name === 'France' || t.name === 'Spain' ? 2.5 : 1.5,
-        fill: false,
-        tension: 0.4,
-        pointRadius: 3,
-        pointBackgroundColor: t.color,
-        pointHoverRadius: 5,
-      }))
-    },
+    data: { labels, datasets },
     options: {
       responsive: true, maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
@@ -557,7 +587,7 @@ function drawProbChart() {
         }
       },
       scales: {
-        x: { ticks: { color: tc, font: { size: 10 } }, grid: { color: gc } },
+        x: { ticks: { color: tc, font: { size: 10 }, maxTicksLimit: 8 }, grid: { color: gc } },
         y: { ticks: { color: tc, font: { size: 10 }, callback: v => v + '%' }, grid: { color: gc }, min: 0 }
       }
     }
@@ -682,11 +712,13 @@ function switchTab(name, btn) {
     const el = document.getElementById('tab-' + t);
     if (el) el.style.display = t === name ? '' : 'none';
   });
-  if (name === 'chart') setTimeout(drawProbChart, 50);
+  if (name === 'chart') drawProbChart();
   if (name === 'markets') renderSubMarkets();
 }
 
 // ── POLYMARKET LIVE ODDS ──────────────────────────────────────────────────────
+
+const teamTokenIds = {};  // { teamName: clobTokenId }
 
 function normalizeName(s) {
   return s.toLowerCase()
@@ -720,6 +752,9 @@ async function fetchPolymarketOdds() {
     const prices = typeof market.outcomePrices === 'string'
       ? JSON.parse(market.outcomePrices)
       : market.outcomePrices;
+    const tokenIds = typeof market.clobTokenIds === 'string'
+      ? JSON.parse(market.clobTokenIds)
+      : (market.clobTokenIds || []);
 
     let matched = 0;
     outcomes.forEach((name, i) => {
@@ -733,6 +768,7 @@ async function fetchPolymarketOdds() {
         const prev = team.pct;
         team.pct = parseFloat(pct.toFixed(1));
         team.change = parseFloat((team.pct - prev).toFixed(1));
+        if (tokenIds[i]) teamTokenIds[team.name] = tokenIds[i];
         matched++;
       }
     });
