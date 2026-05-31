@@ -255,11 +255,9 @@
 <div class="topbar">
   <a href="index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
   <div class="topbar-nav">
-    <a href="search.html" class="topbar-navlink active">Markets</a>
-    <a href="markets/10000008.html" class="topbar-navlink">Dollar/Naira? <span style="font-family:var(--font-mono);font-size:8px;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;">LIVE</span></a>
-    <a href="search.html" class="topbar-navlink">Final Matchday <span style="font-family:var(--font-mono);font-size:8px;font-weight:700;background:rgba(100,100,100,.15);color:var(--text3);border:1px solid var(--border);padding:1px 5px;border-radius:3px;">FT</span></a>
-    <a href="about.html" class="topbar-navlink">About</a>
-    <a href="faq.html" class="topbar-navlink">FAQ</a>
+    <a href="../search.html" class="topbar-navlink">Search Markets</a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+    <a href="../faq.html" class="topbar-navlink">FAQ</a>
   </div>
   <div class="search-bar">
     <i class="fa-solid fa-magnifying-glass"></i>
@@ -455,12 +453,12 @@
 // ── DATA ──────────────────────────────────────────────────
 const FEATURED = [
   {
-    emoji:'🏆', cat:'FOOTBALL · UEFA CHAMPIONS LEAGUE FINAL', live:true,
-    title:'PSG vs Arsenal — UCL Final 2025/26',
-    sub:"The biggest club match in the world. PSG face Arsenal at Allianz Arena, Munich — Tomorrow, 17:00 CET. One point of Champions League glory separates these two sides. 8 markets open, ₦89M in volume.",
-    prob:52, probLabel:'PSG WIN', vol:'₦89M', change:'+18%', changeDir:'up',
-    bg:'🏆', yesLabel:'BUY PSG ₦52', noLabel:'BUY ARSENAL ₦48',
-    link:'markets/10000029.html'
+    emoji:'🏆', cat:'ENERGY · NEPA', live:true,
+    title:'Will NEPA bring light to your area tonight?',
+    sub:"Which areas in Lagos will have light by 10PM?",
+    prob:52, probLabel:'LEKKI', vol:'₦11M', change:'+18%', changeDir:'up',
+    bg:'🏆', yesLabel:'BUY YES ₦52', noLabel:'BUY NO ₦48',
+    link:'markets/10000027.html'
   },
   {
     emoji:'🪙', cat:'FINANCE · FOREX', live:true,
@@ -489,6 +487,9 @@ const ALL_MARKETS = [
 
   // ENTERTAINMENT
   { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn box office?", badge:'hot', yes:0.52, no:0.48, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
+
+  { id:5, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'2026 World Cup Winner', badge:'hot', yes:0.17, no:0.83, vol:'₦350M', change:'+3%', dir:'up', link:'markets/10000033.html' },
+
 
 
   // MUSIC
