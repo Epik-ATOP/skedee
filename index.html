@@ -480,7 +480,7 @@ const FEATURED = [
 
 const ALL_MARKETS = [
   // FOOTBALL
-  { id:5, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'Barcelona to win La Liga 2025/26', badge:'hot', yes:0.71, no:0.29, vol:'₦52.8M', change:'+3%', dir:'up', link:'markets/10000028.html' },
+  { id:10000045, cat:'football', emoji:'🦅', catLabel:'FOOTBALL · WORLD CUP', title:'Super Eagles Win World Cup Opener — Jun 12', badge:'upcoming', yes:0.52, vol:'₦63M', change:'+12%', dir:'up', link:'#' },
 
   // WEATHER
   { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · ENVIRONMENT', title:'Will Lagos Experience Major Flooding Before July 2026?', badge:'hot', yes:0.67, no:0.33, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html', isCommodity:true },
@@ -493,17 +493,19 @@ const ALL_MARKETS = [
 
 
   // MUSIC
-  { id:6, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Rema drop a new song this month?', badge:'hot', yes:0.61, no:0.39, vol:'₦28.7M', change:'+12%', dir:'up', link:'#' },
+  { id:6, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Rema drop a new song in June?', badge:'new', yes:0.55, no:0.45, vol:'₦14.2M', change:'+0%', dir:'up', link:'#' },
   { id:7, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Wizkid drop a new album this year?', badge:'new', yes:0.71, no:0.29, vol:'₦55.9M', change:'+4%', dir:'up', link:'#' },
   { id:8, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Burna Boy win a Grammy 2026?', badge:'new', yes:0.44, no:0.56, vol:'₦31.4M', change:'-2%', dir:'down', link:'#' },
 
-  { id:10000029, cat:'football', emoji:'🏆', catLabel:'FOOTBALL · UCL FINAL', title:'PSG vs Arsenal — UCL Final 2025/26', badge:'upcoming', yes:0.52, vol:'₦89M', change:'+18%', dir:'up', link:'markets/10000029.html' },
-  { id:10000028, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · LA LIGA', title:'Barcelona to Win La Liga 2025/26', badge:'hot', yes:0.71, vol:'₦52.8M', change:'+3%', dir:'up', link:'markets/10000028.html' },
-  { id:10000030, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Releases a New Song in May? — Naija', badge:'hot', yes:0.62, vol:'₦18.4M', change:'+11%', dir:'up', link:'markets/10000030.html' },
+  { id:10000029, cat:'football', emoji:'🏆', catLabel:'FOOTBALL · UCL FINAL', title:'PSG vs Arsenal — UCL Final 2025/26', badge:'resolved', yes:1.00, vol:'₦89M', change:'FT', dir:'flat', link:'markets/10000029.html' },
+  { id:10000028, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · LA LIGA', title:'Barcelona to Win La Liga 2025/26', badge:'resolved', yes:1.00, vol:'₦52.8M', change:'YES ✓', dir:'up', link:'markets/10000028.html' },
+  { id:10000037, cat:'football', emoji:'🌍', catLabel:'FOOTBALL · WORLD CUP', title:'Nigeria Advances from World Cup Group Stage', badge:'hot', yes:0.58, vol:'₦41M', change:'+6%', dir:'up', link:'#' },
+  { id:10000030, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Releases a New Song in May? — Naija', badge:'resolved', yes:0.62, vol:'₦18.4M', change:'SETTLED', dir:'flat', link:'markets/10000030.html' },
+  { id:10000038, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Drops a New Song in June? — Naija', badge:'new', yes:0.71, vol:'₦9.2M', change:'+0%', dir:'up', link:'#' },
   { id:10000026, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Will Drop a Studio Album in 2026?', badge:'hot', yes:0.71, vol:'₦114.2M', change:'+22%', dir:'up', link:'markets/10000026.html' },
   { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · LAGOS', title:'Will Lagos Experience Major Flooding Before July?', badge:'hot', yes:0.67, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html' },
-  { id:10000007, cat:'commodities', emoji:'⛽', catLabel:'COMMODITIES · FUEL', title:'Will Petrol Exceed ₦1,200/litre Before June?', badge:'hot', yes:0.58, vol:'₦47.2M', change:'+6%', dir:'up', link:'markets/10000007.html' },
-  { id:10000008, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Naira/Dollar Hit ₦1,500 Before June?', badge:'hot', yes:0.52, vol:'₦88.3M', change:'+9%', dir:'up', link:'markets/10000008.html' },
+  { id:'com_fuel_jul', cat:'commodities', emoji:'⛽', catLabel:'COMMODITIES · FUEL', title:'Will Petrol Exceed ₦1,500/litre Before July?', badge:'hot', yes:0.62, vol:'₦38M', change:'+9%', dir:'up', link:'#' },
+  { id:10000008, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Naira/Dollar Hit ₦1,500 Before June?', badge:'resolved', yes:1.00, vol:'₦44M', change:'YES ✓', dir:'flat', link:'markets/10000008.html' },
   { id:10000027, cat:'miscellaneous', emoji:'⚡', catLabel:'ENERGY · LAGOS', title:'Will NEPA Bring Light Tonight? — Lagos', badge:'live', yes:0.47, vol:'₦8.7M', change:'+2%', dir:'up', link:'markets/10000027.html' },
   { id:10000025, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will It Rain in Lagos Today?', badge:'live', yes:0.58, vol:'₦12.4M', change:'+4%', dir:'up', link:'markets/10000025.html' },
 
@@ -511,7 +513,7 @@ const ALL_MARKETS = [
   // POLITICS
   { id:11, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.45bn loan to Nigeria be approved?', badge:'hot', yes:0.74, no:0.26, vol:'₦61.4M', change:'+8%', dir:'up', link:'#' },
   { id:12, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Labour Party wins 2027 Nigerian Presidential Election', badge:'new', yes:0.29, no:0.71, vol:'₦124.7M', change:'-1%', dir:'down', link:'#' },
-  { id:13, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Tinubu sign the tax reform bill before June?', badge:'new', yes:0.48, no:0.52, vol:'₦38.2M', change:'0%', dir:'flat', link:'#' },
+  { id:13, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Tinubu sign the tax reform bill before July?', badge:'hot', yes:0.54, no:0.46, vol:'₦22M', change:'+6%', dir:'up', link:'#' },
   { id:14, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Obi run for President in 2027?', badge:'new', yes:0.62, no:0.38, vol:'₦47.1M', change:'+5%', dir:'up', link:'#' },
 
   // COMMODITIES
@@ -520,18 +522,32 @@ const ALL_MARKETS = [
   { id:17, cat:'commodities', emoji:'🌾', catLabel:'COMMODITIES', title:'Will a 50kg bag of rice exceed ₦120,000 by August?', badge:'new', yes:0.38, no:0.62, vol:'₦18.7M', change:'+2%', dir:'up', link:'#', isCommodity:true },
   { id:18, cat:'commodities', emoji:'🫘', catLabel:'COMMODITIES', title:'Will beans price rise above ₦90,000 per bag in Q3?', badge:'new', yes:0.44, no:0.56, vol:'₦12.3M', change:'+1%', dir:'up', link:'#', isCommodity:true },
   { id:19, cat:'commodities', emoji:'🥚', catLabel:'COMMODITIES', title:'Will a crate of eggs exceed ₦3,500 before September?', badge:'new', yes:0.61, no:0.39, vol:'₦9.8M', change:'+3%', dir:'up', link:'#', isCommodity:true },
-  { id:20, cat:'commodities', emoji:'🍌', catLabel:'COMMODITIES', title:'Will plantain prices drop below ₦800/bunch by June?', badge:'new', yes:0.29, no:0.71, vol:'₦7.1M', change:'-2%', dir:'down', link:'#', isCommodity:true },
+  { id:20, cat:'commodities', emoji:'🍌', catLabel:'COMMODITIES', title:'Will plantain prices drop below ₦800/bunch by August?', badge:'new', yes:0.29, no:0.71, vol:'₦7.1M', change:'-2%', dir:'down', link:'#', isCommodity:true },
   { id:21, cat:'commodities', emoji:'🌽', catLabel:'COMMODITIES', title:'Will food inflation fall below 30% by end of 2026?', badge:'new', yes:0.33, no:0.67, vol:'₦16.4M', change:'+1%', dir:'up', link:'#', isCommodity:true },
 
 
   // FINANCE
-  { id:22, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,500 before June?', badge:'hot', yes:0.48, no:0.52, vol:'₦88.3M', change:'-3%', dir:'down', link:'markets/10000008.html', isCommodity:true },
+  { id:22, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar hit ₦1,800 before year end?', badge:'hot', yes:0.48, no:0.52, vol:'₦88.3M', change:'+4%', dir:'up', link:'#', isCommodity:true },
   { id:23, cat:'finance', emoji:'📈', catLabel:'FINANCE', title:'Will CBN cut interest rates at June MPC meeting?', badge:'new', yes:0.31, no:0.69, vol:'₦29.5M', change:'+4%', dir:'up', link:'#', isCommodity:true },
 
   // SPORTS
   { id:24, cat:'sports', emoji:'🏀', catLabel:'BASKETBALL', title:'Will the Lakers win the NBA Championship 2026?', badge:'hot', yes:0.18, no:0.82, vol:'₦22.8M', change:'-2%', dir:'down', link:'#' },
   { id:25, cat:'sports', emoji:'🎾', catLabel:'TENNIS', title:'Will Djokovic win Wimbledon 2026?', badge:'new', yes:0.34, no:0.66, vol:'₦15.2M', change:'+1%', dir:'up', link:'#' },
-  { id:26, cat:'sports', emoji:'🌦️', catLabel:'WEATHER', title:'Will it rain in Lagos this weekend?', badge:'new', yes:0.41, no:0.59, vol:'₦12.7M', change:'+2%', dir:'up', link:'markets/10000025.html' },
+  { id:10000035, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 7–8', badge:'live', yes:0.79, vol:'₦6.8M', change:'+8%', dir:'up', link:'#' },
+  { id:10000036, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 7–8', badge:'live', yes:0.55, vol:'₦4.1M', change:'+3%', dir:'up', link:'#' },
+  { id:10000039, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 14–15', badge:'new', yes:0.82, vol:'₦5.1M', change:'+0%', dir:'up', link:'#' },
+  { id:10000040, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 14–15', badge:'new', yes:0.61, vol:'₦3.2M', change:'+0%', dir:'up', link:'#' },
+  { id:10000041, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 21–22', badge:'new', yes:0.85, vol:'₦3.8M', change:'+0%', dir:'up', link:'#' },
+  { id:10000042, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 21–22', badge:'new', yes:0.64, vol:'₦2.4M', change:'+0%', dir:'up', link:'#' },
+  { id:10000043, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 28–29', badge:'new', yes:0.87, vol:'₦3.1M', change:'+0%', dir:'up', link:'#' },
+  { id:10000044, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 28–29', badge:'new', yes:0.66, vol:'₦1.9M', change:'+0%', dir:'up', link:'#' },
+  { id:10000045, cat:'football', emoji:'🦅', catLabel:'FOOTBALL · WORLD CUP', title:'Super Eagles Win World Cup Opener — Jun 12', badge:'upcoming', yes:0.52, vol:'₦63M', change:'+12%', dir:'up', link:'#' },
+  { id:10000046, cat:'football', emoji:'🌍', catLabel:'FOOTBALL · WORLD CUP', title:'Nigeria Tops World Cup Group Stage', badge:'new', yes:0.38, vol:'₦28M', change:'+4%', dir:'up', link:'#' },
+  { id:10000047, cat:'sports', emoji:'🎾', catLabel:'SPORTS · TENNIS', title:'Djokovic Wins Wimbledon 2026', badge:'new', yes:0.34, vol:'₦11M', change:'+1%', dir:'up', link:'#' },
+  { id:10000048, cat:'miscellaneous', emoji:'⚡', catLabel:'ENERGY · NIGERIA', title:'Will NEPA Improve Power Supply in June?', badge:'hot', yes:0.22, vol:'₦14M', change:'-3%', dir:'down', link:'#' },
+  { id:10000034, cat:'sports', emoji:'🏀', catLabel:'BASKETBALL · NBA', title:'New York Knicks vs San Antonio Spurs', badge:'upcoming', yes:0.65, vol:'₦7.2M', change:'+0%', dir:'up', link:'markets/10000034.html' },
+  { id:'politics_tinubu_jul', cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Tinubu signs tax reform bill before July', badge:'hot', yes:0.54, vol:'₦22M', change:'+6%', dir:'up', link:'#' },
+  { id:'fin_dollar_1700', cat:'finance', emoji:'💱', catLabel:'FINANCE · FOREX', title:'Dollar hits ₦1,700 before August', badge:'new', yes:0.44, vol:'₦31M', change:'+2%', dir:'up', link:'#', isCommodity:true },
 
 
 ];
