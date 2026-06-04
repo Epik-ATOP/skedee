@@ -60,7 +60,8 @@
 .team-row:last-child{border-bottom:none;}
 .team-row:hover{background:rgba(245,200,0,.03);}
 .team-rank{font-family:var(--font-mono);font-size:11px;color:var(--text3);width:18px;text-align:center;flex-shrink:0;}
-.team-flag{font-size:20px;flex-shrink:0;width:28px;text-align:center;}
+.team-flag{flex-shrink:0;width:28px;text-align:center;display:flex;align-items:center;justify-content:center;}
+.flag-img{border-radius:2px;display:inline-block;vertical-align:middle;}
 .team-name-col{width:110px;flex-shrink:0;font-size:13px;font-weight:500;color:var(--text);}
 .team-pct-bar{flex:1;display:flex;align-items:center;gap:8px;}
 .pct-track{flex:1;height:6px;background:var(--bg4);border-radius:99px;overflow:hidden;}
@@ -241,7 +242,7 @@
     <div class="tourn-meta">
       
       <div class="tmeta-item">
-        <div class="host-flags"><span class="host-flag">🇺🇸</span><span class="host-flag">🇨🇦</span><span class="host-flag">🇲🇽</span></div>
+        <div class="host-flags"><img class="flag-img" src="https://flagcdn.com/w40/us.png" style="height:16px;width:auto;" alt="us"><img class="flag-img" src="https://flagcdn.com/w40/ca.png" style="height:16px;width:auto;" alt="ca"><img class="flag-img" src="https://flagcdn.com/w40/mx.png" style="height:16px;width:auto;" alt="mx"></div>
         USA · Canada · Mexico
       </div>
       <div class="tmeta-item"><i class="fa-solid fa-calendar-days"></i>Jun 11 – Jul 20, 2026</div>
@@ -297,9 +298,9 @@
     <div class="trending-strip" style="margin-bottom:12px;">
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🔥 Hot Picks</div>
       <div class="trending-pills">
-        <div class="trend-pill" onclick="openOrder('France to Win WC','YES',17)"><div class="trend-pill-name">🇫🇷 France YES</div><div class="trend-pill-prob">₦17 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Spain to Win WC','YES',16)"><div class="trend-pill-name">🇪🇸 Spain YES</div><div class="trend-pill-prob">₦16 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('England to Win WC','YES',11)"><div class="trend-pill-name">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England YES</div><div class="trend-pill-prob">₦11 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('France to Win WC','YES',17)"><div class="trend-pill-name"><img class="flag-img" src="https://flagcdn.com/w40/fr.png" style="height:13px;width:auto;" alt="fr"> France YES</div><div class="trend-pill-prob">₦17 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Spain to Win WC','YES',16)"><div class="trend-pill-name"><img class="flag-img" src="https://flagcdn.com/w40/es.png" style="height:13px;width:auto;" alt="es"> Spain YES</div><div class="trend-pill-prob">₦16 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('England to Win WC','YES',11)"><div class="trend-pill-name"><img class="flag-img" src="https://flagcdn.com/w40/gb-eng.png" style="height:13px;width:auto;" alt="gb-eng"> England YES</div><div class="trend-pill-prob">₦11 YES</div></div>
         <div class="trend-pill" onclick="openOrder('European Team to Win','YES',68)"><div class="trend-pill-name">🌍 European Winner</div><div class="trend-pill-prob">₦68 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Tournament Top Scorer','YES',50)"><div class="trend-pill-name">⚽ Golden Boot</div><div class="trend-pill-prob">₦50 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Over 2.5 Goals in Final','YES',58)"><div class="trend-pill-name">Final Over 2.5</div><div class="trend-pill-prob">₦58 YES</div></div>
@@ -393,22 +394,27 @@
 // ── DATA ─────────────────────────────────────────────────────────────────────
 
 const TEAMS = [
-  { flag:'🇫🇷', name:'France',    pct:17.0, color:'#3B82F6', conf:'UEFA',     change:+0.4, history:[24,22,20,19,18.5,18,17.5,17.2,17.0] },
-  { flag:'🇪🇸', name:'Spain',     pct:16.8, color:'#EF4444', conf:'UEFA',     change:+0.2, history:[20,19,18.5,18,17.5,17,16.8,16.5,16.8] },
-  { flag:'🇧🇷', name:'Brazil',    pct:12.4, color:'#22C55E', conf:'CONMEBOL', change:-0.3, history:[15,14,13.5,13,12.8,12.5,12.2,12.0,12.4] },
-  { flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', name:'England',  pct:11.3, color:'#F59E0B', conf:'UEFA',     change:+1.1, history:[9,9.5,10,10.5,11,11.2,11.3,11.0,11.3] },
-  { flag:'🇵🇹', name:'Portugal',  pct:10.1, color:'#EC4899', conf:'UEFA',     change:-0.5, history:[12,11.5,11,10.8,10.5,10.2,10.0,9.8,10.1] },
-  { flag:'🇦🇷', name:'Argentina', pct:9.2,  color:'#A78BFA', conf:'CONMEBOL', change:-0.2, history:[11,10.5,10,9.8,9.5,9.2,9.0,8.8,9.2] },
-  { flag:'🇩🇪', name:'Germany',   pct:7.8,  color:'#94A3B8', conf:'UEFA',     change:+0.3, history:[6,6.5,7,7.2,7.5,7.6,7.8,7.7,7.8] },
-  { flag:'🇳🇱', name:'Netherlands',pct:5.6, color:'#FB923C', conf:'UEFA',     change:+0.1, history:[4,4.5,5,5.2,5.4,5.5,5.6,5.5,5.6] },
-  { flag:'🇲🇦', name:'Morocco',   pct:2.8,  color:'#34D399', conf:'CAF',      change:+0.4, history:[2,2.2,2.4,2.5,2.6,2.7,2.8,2.7,2.8] },
-  { flag:'🇺🇸', name:'USA',       pct:2.1,  color:'#60A5FA', conf:'CONCACAF', change:+0.2, history:[1.5,1.7,1.8,2.0,2.0,2.1,2.1,2.0,2.1] },
-  { flag:'🇧🇪', name:'Belgium',   pct:1.8,  color:'#FBBF24', conf:'UEFA',     change:-0.1, history:[2.2,2.0,1.9,1.8,1.8,1.8,1.7,1.8,1.8] },
-  { flag:'🇺🇾', name:'Uruguay',   pct:1.4,  color:'#67E8F9', conf:'CONMEBOL', change:0.0,  history:[1.5,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4] },
-  { flag:'🇲🇽', name:'Mexico',    pct:0.9,  color:'#4ADE80', conf:'CONCACAF', change:+0.1, history:[0.7,0.8,0.8,0.9,0.9,0.9,0.9,0.9,0.9] },
-  { flag:'🇯🇵', name:'Japan',     pct:0.8,  color:'#F87171', conf:'AFC',      change:+0.2, history:[0.5,0.6,0.6,0.7,0.7,0.8,0.8,0.8,0.8] },
-  { flag:'🏳️', name:'Others',     pct:0.0,  color:'#64748B', conf:'—',        change:0.0,  history:[] },
+  { cc:'fr',     name:'France',       pct:17.0, color:'#3B82F6', conf:'UEFA',     change:+0.4, history:[24,22,20,19,18.5,18,17.5,17.2,17.0] },
+  { cc:'es',     name:'Spain',        pct:16.8, color:'#EF4444', conf:'UEFA',     change:+0.2, history:[20,19,18.5,18,17.5,17,16.8,16.5,16.8] },
+  { cc:'br',     name:'Brazil',       pct:12.4, color:'#22C55E', conf:'CONMEBOL', change:-0.3, history:[15,14,13.5,13,12.8,12.5,12.2,12.0,12.4] },
+  { cc:'gb-eng', name:'England',      pct:11.3, color:'#F59E0B', conf:'UEFA',     change:+1.1, history:[9,9.5,10,10.5,11,11.2,11.3,11.0,11.3] },
+  { cc:'pt',     name:'Portugal',     pct:10.1, color:'#EC4899', conf:'UEFA',     change:-0.5, history:[12,11.5,11,10.8,10.5,10.2,10.0,9.8,10.1] },
+  { cc:'ar',     name:'Argentina',    pct:9.2,  color:'#A78BFA', conf:'CONMEBOL', change:-0.2, history:[11,10.5,10,9.8,9.5,9.2,9.0,8.8,9.2] },
+  { cc:'de',     name:'Germany',      pct:7.8,  color:'#94A3B8', conf:'UEFA',     change:+0.3, history:[6,6.5,7,7.2,7.5,7.6,7.8,7.7,7.8] },
+  { cc:'nl',     name:'Netherlands',  pct:5.6,  color:'#FB923C', conf:'UEFA',     change:+0.1, history:[4,4.5,5,5.2,5.4,5.5,5.6,5.5,5.6] },
+  { cc:'ma',     name:'Morocco',      pct:2.8,  color:'#34D399', conf:'CAF',      change:+0.4, history:[2,2.2,2.4,2.5,2.6,2.7,2.8,2.7,2.8] },
+  { cc:'us',     name:'USA',          pct:2.1,  color:'#60A5FA', conf:'CONCACAF', change:+0.2, history:[1.5,1.7,1.8,2.0,2.0,2.1,2.1,2.0,2.1] },
+  { cc:'be',     name:'Belgium',      pct:1.8,  color:'#FBBF24', conf:'UEFA',     change:-0.1, history:[2.2,2.0,1.9,1.8,1.8,1.8,1.7,1.8,1.8] },
+  { cc:'uy',     name:'Uruguay',      pct:1.4,  color:'#67E8F9', conf:'CONMEBOL', change:0.0,  history:[1.5,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4] },
+  { cc:'mx',     name:'Mexico',       pct:0.9,  color:'#4ADE80', conf:'CONCACAF', change:+0.1, history:[0.7,0.8,0.8,0.9,0.9,0.9,0.9,0.9,0.9] },
+  { cc:'jp',     name:'Japan',        pct:0.8,  color:'#F87171', conf:'AFC',      change:+0.2, history:[0.5,0.6,0.6,0.7,0.7,0.8,0.8,0.8,0.8] },
+  { cc:null,     name:'Others',       pct:0.0,  color:'#64748B', conf:'—',        change:0.0,  history:[] },
 ];
+
+function flagImg(cc, h) {
+  if (!cc) return '';
+  return `<img class="flag-img" src="https://flagcdn.com/w40/${cc}.png" style="height:${h}px;width:auto;" alt="${cc}">`;
+}
 
 const CHART_LABELS = ['Sep 25','Oct','Nov','Dec','Jan 26','Feb','Mar','Apr','May'];
 
@@ -455,7 +461,7 @@ function renderOdds() {
     return `
     <div class="team-row">
       <div class="team-rank">${i+1}</div>
-      <div class="team-flag">${t.flag}</div>
+      <div class="team-flag">${flagImg(t.cc, 16)}</div>
       <div class="team-name-col">${t.name}<br><span style="font-family:var(--font-mono);font-size:9px;color:var(--text3);">${t.conf}</span></div>
       <div class="team-pct-bar">
         <div class="pct-track"><div class="pct-fill" style="width:${barWidth}%;background:${t.color};"></div></div>
@@ -501,7 +507,7 @@ async function drawProbChart() {
   const chartStatusEl = document.getElementById('chart-status');
 
   document.getElementById('chart-legend').innerHTML = top5.map(t =>
-    `<div class="legend-item"><div class="legend-dot" style="background:${t.color};"></div>${t.flag} ${t.name}</div>`
+    `<div class="legend-item"><div class="legend-dot" style="background:${t.color};"></div>${flagImg(t.cc, 13)} ${t.name}</div>`
   ).join('');
 
   let labels = CHART_LABELS;
@@ -630,7 +636,7 @@ function renderTopMovers() {
                 : t.change < 0 ? `<span class="mover-delta down">▼${Math.abs(t.change).toFixed(1)}%</span>`
                 : `<span class="mover-delta" style="color:var(--text3);">—</span>`;
     return `<div class="top-movers-item">
-      <div class="mover-flag">${t.flag}</div>
+      <div class="mover-flag">${flagImg(t.cc, 16)}</div>
       <div class="mover-name">${t.name}</div>
       <div class="mover-pct" style="color:${t.color};">${t.pct.toFixed(1)}%</div>
       ${delta}
