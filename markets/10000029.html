@@ -312,14 +312,12 @@
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦89M</div><div class="stat-box-sub" style="color:var(--green);">▲ +18% today</div></div>
     <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">8</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
     <div class="stat-box"><div class="stat-box-label">UCL Winner</div><div class="stat-box-val yellow" id="home-prob-stat">PSG 🏆</div><div class="stat-box-sub" style="color:var(--ucl2);">4-3 on Penalties</div></div>
-    <div class="stat-box"><div class="stat-box-label">Traders</div><div class="stat-box-val">14,882</div><div class="stat-box-sub" style="color:var(--text3);">Across all markets</div></div>
   </div>
 
   <!-- TABS -->
   <div class="tabs-bar">
     <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
     <button class="tab" onclick="switchTab('trades',this)">Trades</button>
-    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
     <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
     <button class="tab" onclick="switchTab('rules',this)">Rules</button>
   </div>
@@ -375,12 +373,6 @@
     </div>
   </div>
 
-  <div id="tab-comments" style="display:none;">
-    <div class="positions-card">
-      <div class="positions-title">Community <span class="badge" style="background:var(--ucl2);">93</span></div>
-      <div id="comments-list"></div>
-    </div>
-  </div>
 
   <div id="tab-analytics" style="display:none;">
     <div class="positions-card">
@@ -506,17 +498,7 @@ const ACTIVITY = [
   {type:'sell',text:'<strong>hedge_lord</strong> sold PSG Trophy YES ×1,000 — locking profits before final', time:'27m'},
   {type:'buy', text:'<strong>ucl_final_trader</strong> opened BTTS YES ×3,000 at ₦61', time:'38m'},
   {type:'buy', text:'<strong>over_always</strong> bought Over 2.5 Goals YES ×1,500 at ₦55', time:'52m'},
-];
-
-const COMMENTS_DATA = [
-  {init:'U', user:'ucl_whale', col:'#001489', text:"PSG are the best team in Europe this season. They beat Real Madrid, Bayern, all of them. Arsenal are good but PSG's squad depth is elite. ₦52 YES on PSG lifting the trophy is undervalued.", time:'5 min ago', likes:142},
-  {init:'A', user:'arsenal_faithful', col:'#EF0107', text:"Arsenal's route to the final — knocked out Bayern in the semis. Saka, Odegaard, Martinelli all in form. Arteta outcoached Ancelotti twice this season. He'll do the same to Luis Enrique TODAY.", time:'17 min ago', likes:119},
-  {init:'N', user:'naija_punter_1', col:'#A855F7', text:"Naija traders, this is THE match of the year. UCL Final between two giants. I'm splitting — half on Arsenal Trophy, half on Over 2.5. Either way something is going in the net at Allianz.", time:'29 min ago', likes:88},
-  {init:'H', user:'hedge_lord', col:'#22C55E', text:"Both teams averaging over 2.5 goals per game in this UCL campaign. The BTTS at ₦61 and Over 2.5 at ₦55 are the smartest markets on the board right now.", time:'44 min ago', likes:201},
-  {init:'F', user:'final_day_trader', col:'#F5C800', text:"Whoever wins this, the market moves FAST. Be ready with your orders. Last UCL final the YES price went from ₦50 to ₦95 in the first 30 minutes when the early goal went in. Have your limit orders ready.", time:'1h ago', likes:167},
-];
-
-function renderMarkets() {
+];function renderMarkets() {
   const grid = document.getElementById('markets-grid');
   grid.innerHTML = '';
   MARKETS.forEach(m => {
@@ -594,12 +576,7 @@ function renderTrades() {
   document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t =>
     `<div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${t.price}</span><span class="trade-size">×${t.size.toLocaleString()}</span></div>`
   ).join('');
-}
-
-function renderComments() {
-  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c =>
-    `<div class="comment-item">
-      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
       <div class="comment-body">
         <div class="comment-user">${c.user}</div>
         <div class="comment-text">${c.text}</div>
@@ -707,7 +684,6 @@ function switchTab(name, btn) {
     const el = document.getElementById('tab-' + t);
     if (el) el.style.display = t === name ? '' : 'none';
   });
-  if (name === 'comments') renderComments();
   if (name === 'analytics') setTimeout(drawProbChart, 50);
 }
 

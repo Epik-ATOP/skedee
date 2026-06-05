@@ -239,7 +239,6 @@ to{opacity:1;transform:translateY(0)}
       <div class="hstat"><div class="hstat-label">Total Volume</div><div class="hstat-val yellow">₦61.4M</div></div>
       <div class="hstat"><div class="hstat-label">YES Probability</div><div class="hstat-val green" id="prob-stat">74%</div></div>
       <div class="hstat"><div class="hstat-label">Loan Value</div><div class="hstat-val teal">$1.25B</div></div>
-      <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val">8,204</div></div>
       <div class="hstat"><div class="hstat-label">Vote Date</div><div class="hstat-val yellow">TBC</div></div>
       <div class="hstat"><div class="hstat-label">Market Closes</div><div class="hstat-val green">Aug 31</div></div>
     </div>
@@ -257,7 +256,6 @@ to{opacity:1;transform:translateY(0)}
     <button class="tab" onclick="switchTab('arguments',this)">YES vs NO</button>
     <button class="tab" onclick="switchTab('chart',this)">Chart</button>
     <button class="tab" onclick="switchTab('activity',this)">Activity</button>
-    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
     <button class="tab" onclick="switchTab('rules',this)">Rules</button>
   </div>
 
@@ -422,14 +420,6 @@ to{opacity:1;transform:translateY(0)}
     </div>
   </div>
 
-  <!-- COMMENTS TAB -->
-  <div id="tab-comments" style="display:none;">
-    <div class="card-section">
-      <div class="card-section-title">Community <span style="background:var(--teal);color:#000;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;">54</span></div>
-      <div id="comments-list"></div>
-    </div>
-  </div>
-
   <!-- RULES TAB -->
   <div id="tab-rules" style="display:none;">
     <div class="card-section">
@@ -475,10 +465,6 @@ to{opacity:1;transform:translateY(0)}
       <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">VOLUME</span>
         <span style="color:var(--y);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦61.4M</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
-        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TRADERS</span>
-        <span style="color:var(--text);font-family:var(--font-mono);font-size:11px;" id="trader-count">8,204</span>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">YES PRICE</span>
@@ -561,17 +547,7 @@ const ACTIVITY_DATA = [
   {type:'buy',  text:'<strong>whale_trader</strong> opened <strong>YES</strong> × 10,000 at ₦70',time:'25m'},
   {type:'sell', text:'<strong>risk_off_99</strong> bought <strong>NO</strong> × 1,500 at ₦28 — hedging position',time:'31m'},
   {type:'buy',  text:'<strong>sovereign_fund</strong> bought <strong>YES</strong> × 4,000 at ₦69',time:'38m'},
-];
-
-const COMMENTS_DATA = [
-  {init:'P', user:'policy_watcher', col:'#14B8A6', badge:'ANALYST', badgeCol:'rgba(20,184,166,.2)', badgeText:'var(--teal)', text:"World Bank technical team is currently in Abuja conducting the final verification review. This is standard procedure before a board vote. My reading: approval Q2 2026. I'm heavy YES.", time:'5 min ago', likes:112},
-  {init:'A', user:'abuja_insider',  col:'#F5C800', badge:'TOP TRADER', badgeCol:'rgba(245,200,0,.15)', badgeText:'var(--y)', text:"The ₦74 YES price is the most underpriced thing on Skedee right now. Comparable World Bank DPLs post-prior-action completion have a 95%+ historical approval rate. The 26% NO is pure fear.", time:'14 min ago', likes:87},
-  {init:'N', user:'naija_macro',    col:'#22C55E', badge:null, text:"People buying NO at ₦28 need to understand: the World Bank WANTS to approve this. They've invested 18 months into Nigeria's reform program. Backing out now would embarrass the institution.", time:'22 min ago', likes:64},
-  {init:'R', user:'risk_off_99',    col:'#EF4444', badge:null, text:"Don't sleep on the NO case. Nigeria's debt service ratio is genuinely alarming. If even one major shareholder (US, Germany) asks for a delay to get more data, this thing gets pushed to Q3 and the market voids. I'm hedged.", time:'35 min ago', likes:43},
-  {init:'S', user:'sovereign_fund', col:'#A855F7', badge:'WHALE', badgeCol:'rgba(168,85,247,.15)', badgeText:'var(--purple)', text:"Just added another ₦2M to my YES position. We're buying every dip. The approval is not a question of IF, only WHEN. The only real risk is bureaucratic delay — which is why I check the close date carefully.", time:'48 min ago', likes:156},
-];
-
-const TRADE_SIDES = ['buy','sell'];
+];const TRADE_SIDES = ['buy','sell'];
 
 function generateTrade() {
   const side = Math.random() > 0.7 ? 'sell' : 'buy';
@@ -601,12 +577,7 @@ function renderActivity() {
       <div class="act-text">${a.text}</div>
       <div class="act-time">${a.time}</div>
     </div>`).join('');
-}
-
-function renderComments() {
-  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c => `
-    <div class="comment-item">
-      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
       <div class="comment-body">
         <div class="comment-user">${c.user}${c.badge?`<span class="comment-badge" style="background:${c.badgeCol};color:${c.badgeText};">${c.badge}</span>`:''}</div>
         <div class="comment-text">${c.text}</div>
@@ -714,7 +685,6 @@ function switchTab(name, btn) {
     if (el) el.style.display = t===name?'':'none';
   });
   if (name==='chart') setTimeout(drawCharts,50);
-  if (name==='comments') renderComments();
   if (name==='activity') renderActivity();
 }
 

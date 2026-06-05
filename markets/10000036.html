@@ -290,14 +290,12 @@
     <div class="stat-box"><div class="stat-box-label">YES Probability</div><div class="stat-box-val yellow" id="yes-prob-stat">13%</div><div class="stat-box-sub" style="color:var(--red);">▼ −1% this week</div></div>
     <div class="stat-box"><div class="stat-box-label">Gap to 250M</div><div class="stat-box-val" style="color:var(--red);" id="stat-gap">~7.85M</div><div class="stat-box-sub" style="color:var(--text3);">At current rate: ~473 days</div></div>
     <div class="stat-box"><div class="stat-box-label">Days Left in 2026</div><div class="stat-box-val" id="stat-days">209</div><div class="stat-box-sub" style="color:var(--text3);">Closes Dec 31, 2026</div></div>
-    <div class="stat-box"><div class="stat-box-label">Traders</div><div class="stat-box-val">1,638</div><div class="stat-box-sub" style="color:var(--green);">▲ +88 today</div></div>
   </div>
 
   <!-- TABS -->
   <div class="tabs-bar">
     <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
     <button class="tab" onclick="switchTab('trades',this)">Trades</button>
-    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
     <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
     <button class="tab" onclick="switchTab('rules',this)">Rules</button>
   </div>
@@ -350,12 +348,6 @@
     </div>
   </div>
 
-  <div id="tab-comments" style="display:none;">
-    <div class="positions-card">
-      <div class="positions-title">Community <span class="badge" style="background:var(--ng1);">31</span></div>
-      <div id="comments-list"></div>
-    </div>
-  </div>
 
   <div id="tab-analytics" style="display:none;">
     <div class="positions-card">
@@ -479,17 +471,7 @@ const ACTIVITY = [
   {type:'buy',  text:'<strong>lagos_big_brain</strong> backed 245M by Dec 31 YES ×8,000 at ₦71 — "safe bet"', time:'29m'},
   {type:'buy',  text:'<strong>abuja_economist</strong> opened overtake USA by 2030 YES ×3,500 at ₦58', time:'42m'},
   {type:'buy',  text:'<strong>popgrowth_watcher</strong> opened 250M in 2026 YES ×10,000 at ₦13 — "lottery odds, lottery payout"', time:'1h'},
-];
-
-const COMMENTS_DATA = [
-  {init:'N', user:'naija_stats_nerd', col:'#008751', text:"Everyone is sleeping on the census angle. Nigeria hasn't done a proper census since 2006. If the government finally conducts one this year and the results come in higher than estimates — because people know our population has always been undercounted — we could wake up one morning and Worldometer updates to 255M. YES at ₦13 is free money for a lottery bet.", time:'22 min ago', likes:67},
-  {init:'D', user:'demography_king', col:'#EF4444', text:"The maths is clear. 242M + (16,600 × 209 days) = 242M + 3.47M = ~245.5M by December 31. You need +8M in 209 days at the current rate, which requires an impossible overnight revision. Solid NO at ₦87. Take the ₦87, pocket it, say thank you.", time:'38 min ago', likes:89},
-  {init:'L', user:'lagos_big_brain', col:'#F59E0B', text:"I'm not betting on 250M this year — that's a stretch. But 245M by December is almost certain and ₦71 YES on that one is genuinely good value. Nigeria adds 3.5 million net per year minimum. The math is clean.", time:'55 min ago', likes:44},
-  {init:'A', user:'abuja_economist', col:'#A855F7', text:"The more interesting market here is Nigeria overtaking USA by 2030. USA is at ~340M, Nigeria at ~242M. That's a 98M gap. At 16,600/day net for Nigeria vs ~3,000/day for USA, the gap closes by ~13.6M/year. 7 years × 13.6M = 95M. So by 2033, not 2030. ₦58 YES feels 10 points too high.", time:'1h ago', likes:38},
-  {init:'P', user:'popgrowth_watcher', col:'#06B6D4', text:"Listen, I put ₦5,000 on 250M YES and I'm keeping it. The expected value if there's even a 15% chance of a census revision is incredible. Worst case I lose ₦5k. Best case I walk away with ₦38k. This is the pure definition of a value bet on a low-probability high-payout market.", time:'2h ago', likes:52},
-];
-
-function updatePopCounter() {
+];function updatePopCounter() {
   popCount += NET_PER_SECOND * 2; // tick every 2 seconds
   const el = document.getElementById('pop-counter');
   el.textContent = Math.round(popCount).toLocaleString('en-NG');
@@ -584,19 +566,6 @@ function renderTrades() {
   ).join('');
 }
 
-function renderComments() {
-  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c =>
-    `<div class="comment-item">
-      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
-      <div class="comment-body">
-        <div class="comment-user">${c.user}</div>
-        <div class="comment-text">${c.text}</div>
-        <div class="comment-meta">${c.time} · <span style="color:var(--ng2);">👍 ${c.likes}</span></div>
-      </div>
-    </div>`
-  ).join('');
-}
-
 function drawProbChart() {
   if (probChart) probChart.destroy();
   const isDark = document.body.getAttribute('data-theme') !== 'light';
@@ -686,7 +655,6 @@ function switchTab(name, btn) {
     const el = document.getElementById('tab-' + t);
     if (el) el.style.display = t === name ? '' : 'none';
   });
-  if (name === 'comments')  renderComments();
   if (name === 'analytics') { setTimeout(drawProbChart, 50); setTimeout(drawProjChart, 80); }
 }
 

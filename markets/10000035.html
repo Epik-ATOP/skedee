@@ -323,14 +323,12 @@
     <div class="stat-box"><div class="stat-box-label">YES Probability</div><div class="stat-box-val yellow" id="yes-prob-stat">18%</div><div class="stat-box-sub" style="color:var(--red);">▼ −2% today</div></div>
     <div class="stat-box"><div class="stat-box-label">Current WTI</div><div class="stat-box-val" style="color:var(--oil1);" id="stat-wti">$87.40</div><div class="stat-box-sub" style="color:var(--green);">▲ +0.95% today</div></div>
     <div class="stat-box"><div class="stat-box-label">Days Remaining</div><div class="stat-box-val" id="stat-days">26</div><div class="stat-box-sub" style="color:var(--text3);">Closes Jul 1, 2026</div></div>
-    <div class="stat-box"><div class="stat-box-label">Traders</div><div class="stat-box-val">2,847</div><div class="stat-box-sub" style="color:var(--green);">▲ +143 today</div></div>
   </div>
 
   <!-- TABS -->
   <div class="tabs-bar">
     <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
     <button class="tab" onclick="switchTab('trades',this)">Trades</button>
-    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
     <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
     <button class="tab" onclick="switchTab('rules',this)">Rules</button>
   </div>
@@ -387,12 +385,6 @@
     </div>
   </div>
 
-  <div id="tab-comments" style="display:none;">
-    <div class="positions-card">
-      <div class="positions-title">Community <span class="badge" style="background:var(--oil1);">24</span></div>
-      <div id="comments-list"></div>
-    </div>
-  </div>
 
   <div id="tab-analytics" style="display:none;">
     <div class="positions-card">
@@ -513,17 +505,7 @@ const ACTIVITY = [
   {type:'buy',  text:'<strong>energy_trader_abj</strong> backed $95 Before July YES ×5,000 at ₦31', time:'19m'},
   {type:'buy',  text:'<strong>macroking_lagos</strong> opened $85+ on Jun 30 YES ×10,000 at ₦72 — "safe floor play"', time:'27m'},
   {type:'sell', text:'<strong>forex_and_oil</strong> reduced $100 YES position — "too much premium in these odds now"', time:'44m'},
-];
-
-const COMMENTS_DATA = [
-  {init:'C', user:'crude_watcher_lag', col:'#F59E0B', text:"$100 oil is not impossible — remember June 2022? It spiked from $95 to $120 in days when Russian sanctions escalated. Any major supply shock could do it again. I'm holding YES at ₦18 for the lottery upside. Risk is low, reward is huge.", time:'18 min ago', likes:41},
-  {init:'O', user:'oil_bear_ng', col:'#EF4444', text:"People forget that US shale responds fast now. Any price spike above $90 and shale producers flood the market within weeks. Demand from China is also softer than expected in Q2. I'm heavy NO on the $100 market — ₦82 is genuinely undervalued.", time:'34 min ago', likes:37},
-  {init:'E', user:'energy_trader_abj', col:'#A855F7', text:"The smarter play here is the $90 market at ₦48. That's a coin flip and the probability feels a little low given OPEC+ hasn't given up on their $90 floor target. I'd rather have $90 at 50-50 odds than gamble on $100 at 18%.", time:'52 min ago', likes:29},
-  {init:'M', user:'macroking_lagos', col:'#22C55E', text:"For Nigerian traders this market is fascinating from a macro perspective. If crude hits $100, NNPC revenues spike, naira should strengthen temporarily. YES on this market is a partial hedge against naira weakness for those of us with dollar expenses.", time:'1h ago', likes:53},
-  {init:'F', user:'forex_and_oil', col:'#06B6D4', text:"I track the Saudi OSP (Official Selling Price) adjustments closely. Saudi just raised their July OSP to Asia by $0.50, which signals they believe demand is firm. Doesn't get us to $100 alone but it's a bullish signal. ₦18 feels slightly cheap.", time:'2h ago', likes:22},
-];
-
-const SPARKLINE_PRICES = [85.2,85.8,86.1,85.9,86.4,86.8,87.0,86.7,87.1,87.4,87.2,87.4];
+];const SPARKLINE_PRICES = [85.2,85.8,86.1,85.9,86.4,86.8,87.0,86.7,87.1,87.4,87.2,87.4];
 const PRICE_HISTORY_30D = [
   82.1,81.8,82.5,83.2,83.8,84.1,83.7,84.5,85.2,85.8,85.4,86.1,
   85.9,86.6,86.4,87.1,86.8,87.4,87.0,86.7,87.1,87.4,87.2,87.4,
@@ -619,12 +601,7 @@ function renderTrades() {
   document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t =>
     `<div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${t.price}</span><span class="trade-size">×${t.size.toLocaleString()}</span></div>`
   ).join('');
-}
-
-function renderComments() {
-  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c =>
-    `<div class="comment-item">
-      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
       <div class="comment-body">
         <div class="comment-user">${c.user}</div>
         <div class="comment-text">${c.text}</div>
@@ -787,7 +764,6 @@ function switchTab(name, btn) {
     const el = document.getElementById('tab-' + t);
     if (el) el.style.display = t === name ? '' : 'none';
   });
-  if (name === 'comments')  renderComments();
   if (name === 'analytics') { setTimeout(drawProbChart, 50); setTimeout(drawPriceChart, 80); }
 }
 

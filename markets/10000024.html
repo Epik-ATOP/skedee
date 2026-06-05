@@ -255,7 +255,6 @@
       <div class="hstat"><div class="hstat-label">Total Volume</div><div class="hstat-val yellow">₦34.6M</div></div>
       <div class="hstat"><div class="hstat-label">YES Probability</div><div class="hstat-val green" id="prob-stat">67%</div></div>
       <div class="hstat"><div class="hstat-label">May Rainfall</div><div class="hstat-val blue">112mm</div></div>
-      <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val" id="trader-count">5,847</div></div>
       <div class="hstat"><div class="hstat-label">Market Closes</div><div class="hstat-val yellow">Jun 30</div></div>
     </div>
 
@@ -272,7 +271,6 @@
     <button class="tab" onclick="switchTab('arguments',this)">YES vs NO</button>
     <button class="tab" onclick="switchTab('chart',this)">Chart</button>
     <button class="tab" onclick="switchTab('activity',this)">Activity</button>
-    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
     <button class="tab" onclick="switchTab('rules',this)">Rules</button>
   </div>
 
@@ -480,14 +478,6 @@
     </div>
   </div>
 
-  <!-- COMMENTS TAB -->
-  <div id="tab-comments" style="display:none;">
-    <div class="card-section">
-      <div class="card-section-title">Community <span style="background:var(--blue);color:#fff;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;">41</span></div>
-      <div id="comments-list"></div>
-    </div>
-  </div>
-
   <!-- RULES TAB -->
   <div id="tab-rules" style="display:none;">
     <div class="card-section">
@@ -543,10 +533,6 @@
       <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">VOLUME</span>
         <span style="color:var(--y);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦34.6M</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
-        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TRADERS</span>
-        <span style="color:var(--text);font-family:var(--font-mono);font-size:11px;">5,847</span>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">YES PRICE</span>
@@ -633,17 +619,7 @@ const ACTIVITY_DATA = [
   {type:'sell', text:'<strong>infra_bet</strong> bought <strong>NO</strong> × 1,500 at ₦35 — "₦12bn spend was real. Surulere stations are working"',time:'38m'},
   {type:'buy',  text:'<strong>surulere_local</strong> bought <strong>YES</strong> × 4,200 at ₦62 — "I live here. Nothing has changed underground"',time:'47m'},
   {type:'buy',  text:'<strong>flood_arb</strong> bought <strong>YES</strong> × 6,000 at ₦61 — "Track record alone justifies 67. Should be 75"',time:'59m'},
-];
-
-const COMMENTS_DATA = [
-  {init:'F', user:'flood_watch', col:'#3B82F6', badge:'ANALYST', badgeCol:'rgba(59,130,246,.2)', badgeText:'var(--blue)', text:"People keep asking if Lagos will flood in June. That's the wrong question. The question is whether the flooding will be bad enough that LASEMA officially declares. And given the track record — 2022, 2024, now above-average forecast for 2026 — I'm betting it will be. Heavy YES.", time:'6 min ago', likes:98},
-  {init:'D', user:'dry_season_bull', col:'#EF4444', badge:null, text:"I respect the YES case but people are ignoring the resolution bar. 3 LGAs officially declared. That's not just 'flooding in Lagos' — that's a formal government declaration. Sanwo-Olu avoided declaring in 2023 even when Ikorodu and Ojo were underwater. The politics matter.", time:'21 min ago', likes:61},
-  {init:'N', user:'nimet_tracker', col:'#22C55E', badge:'TOP TRADER', badgeCol:'rgba(34,197,94,.15)', badgeText:'var(--green)', text:"For context: 112mm by May 25. The May monthly average is 170mm, so we're already at 66% of average with 6 days left. June is 330mm average. Even if we get just an average June, the cumulative rainfall will be at 2022 levels. The new pumping stations handle maybe 30% of the drainage load. Not enough.", time:'35 min ago', likes:134},
-  {init:'S', user:'surulere_local', col:'#F59E0B', badge:null, text:"I live in Surulere. They did dredge the canals last year, I saw it. But by March the channels were already blocked again by plastic bags and sand. The government built pumping stations but didn't fix the waste management problem that blocks the drains. Same cycle.", time:'52 min ago', likes:87},
-  {init:'I', user:'infra_bet', col:'#A855F7', badge:'WHALE', badgeCol:'rgba(168,85,247,.15)', badgeText:'#A855F7', text:"Bought ₦3M NO at 34. My thesis: the resolution criteria is strict, Sanwo-Olu is politically motivated to avoid declaring, AND the new Ikorodu pumping station genuinely handles 40,000m³/hour. That's real capacity. 3:1 payout if the govt manages it operationally. I'll take that.", time:'1h ago', likes:72},
-];
-
-function generateTrade() {
+];function generateTrade() {
   const side = Math.random() > 0.35 ? 'buy' : 'sell';
   const price = side === 'buy'
     ? Math.floor(yesPct + (Math.random()*4-2))
@@ -671,12 +647,7 @@ function renderActivity() {
       <div class="act-text">${a.text}</div>
       <div class="act-time">${a.time}</div>
     </div>`).join('');
-}
-
-function renderComments() {
-  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c => `
-    <div class="comment-item">
-      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
       <div class="comment-body">
         <div class="comment-user">${c.user}${c.badge?`<span class="comment-badge" style="background:${c.badgeCol};color:${c.badgeText};">${c.badge}</span>`:''}</div>
         <div class="comment-text">${c.text}</div>
@@ -802,7 +773,6 @@ function switchTab(name, btn) {
     if (el) el.style.display = t===name?'':'none';
   });
   if (name==='chart') setTimeout(drawCharts,50);
-  if (name==='comments') renderComments();
   if (name==='activity') renderActivity();
 }
 

@@ -267,7 +267,6 @@
       <div class="hstat"><div class="hstat-label">Total Volume</div><div class="hstat-val yellow">₦47.2M</div></div>
       <div class="hstat"><div class="hstat-label">YES Probability</div><div class="hstat-val green" id="prob-stat">58%</div></div>
       <div class="hstat"><div class="hstat-label">Current Price</div><div class="hstat-val orange">₦1,130</div></div>
-      <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val">5,819</div></div>
       <div class="hstat"><div class="hstat-label">Market Closes</div><div class="hstat-val yellow">May 31</div></div>
     </div>
 
@@ -284,7 +283,6 @@
     <button class="tab" onclick="switchTab('arguments',this)">YES vs NO</button>
     <button class="tab" onclick="switchTab('chart',this)">Chart</button>
     <button class="tab" onclick="switchTab('activity',this)">Activity</button>
-    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
     <button class="tab" onclick="switchTab('rules',this)">Rules</button>
   </div>
 
@@ -468,14 +466,6 @@
     </div>
   </div>
 
-  <!-- COMMENTS TAB -->
-  <div id="tab-comments" style="display:none;">
-    <div class="card-section">
-      <div class="card-section-title">Community <span style="background:var(--orange);color:#fff;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;">38</span></div>
-      <div id="comments-list"></div>
-    </div>
-  </div>
-
   <!-- RULES TAB -->
   <div id="tab-rules" style="display:none;">
     <div class="card-section">
@@ -531,10 +521,6 @@
       <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">VOLUME</span>
         <span style="color:var(--y);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦47.2M</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
-        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TRADERS</span>
-        <span style="color:var(--text);font-family:var(--font-mono);font-size:11px;" id="trader-count">5,819</span>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">YES PRICE</span>
@@ -621,17 +607,7 @@ const ACTIVITY_DATA = [
   {type:'buy',  text:'<strong>oil_bull_ng</strong> opened <strong>YES</strong> × 8,000 at ₦54',time:'27m'},
   {type:'sell', text:'<strong>caution_capital</strong> sold <strong>YES</strong> × 1,300 — taking profit at ₦58',time:'33m'},
   {type:'buy',  text:'<strong>pump_price_iq</strong> bought <strong>YES</strong> × 6,000 at ₦53 — "formula math doesn\'t lie"',time:'41m'},
-];
-
-const COMMENTS_DATA = [
-  {init:'P', user:'petrol_hawk', col:'#F97316', badge:'ANALYST', badgeCol:'rgba(249,115,22,.2)', badgeText:'var(--orange)', text:"NNPCL is currently selling petrol below cost. At ₦1,130 vs a cost-reflective price of ~₦1,260, they're losing roughly ₦130 per litre. That's not a position they can sustain for long. I'm aggressively YES at anything below ₦62.", time:'4 min ago', likes:94},
-  {init:'L', user:'labour_watcher', col:'#EF4444', badge:'TOP TRADER', badgeCol:'rgba(239,68,68,.15)', badgeText:'var(--red)', text:"I'm NO and I'm comfortable. People are underrating the NLC factor. This isn't 2023 or 2024 — the unions have traction now. Tinubu can't afford a nationwide strike with June 12 two weeks after the market closes. Watch.", time:'15 min ago', likes:61},
-  {init:'E', user:'energy_macro', col:'#22C55E', badge:null, text:"The price gauge on this market is misleading people. ₦70 gap sounds small but in normal times that's a full quarterly hike. The question is whether NNPCL does an inter-quarter emergency hike — and that's actually quite rare.", time:'23 min ago', likes:48},
-  {init:'O', user:'oil_bull_ng', col:'#F5C800', badge:'WHALE', badgeCol:'rgba(245,200,0,.15)', badgeText:'var(--y)', text:"Bought ₦3M YES at 54. My thesis: Brent doesn't need to go higher. The naira deterioration alone is enough. Every week the naira weakens against the dollar, the cost-reflective price climbs. NNPCL will act.", time:'37 min ago', likes:127},
-  {init:'C', user:'caution_capital', col:'#A855F7', badge:null, text:"The 15-day window is genuinely the killer for YES here. I trimmed my position. The market is structurally YES — but the short time horizon is the real risk. If this market had a June 30 close I'd be at 75% YES. At May 31? 58% feels about right.", time:'52 min ago', likes:83},
-];
-
-function generateTrade() {
+];function generateTrade() {
   const side = Math.random() > 0.65 ? 'sell' : 'buy';
   const price = side === 'buy'
     ? Math.floor(yesPct + (Math.random()*4-2))
@@ -659,12 +635,7 @@ function renderActivity() {
       <div class="act-text">${a.text}</div>
       <div class="act-time">${a.time}</div>
     </div>`).join('');
-}
-
-function renderComments() {
-  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c => `
-    <div class="comment-item">
-      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
       <div class="comment-body">
         <div class="comment-user">${c.user}${c.badge?`<span class="comment-badge" style="background:${c.badgeCol};color:${c.badgeText};">${c.badge}</span>`:''}</div>
         <div class="comment-text">${c.text}</div>
@@ -790,7 +761,6 @@ function switchTab(name, btn) {
     if (el) el.style.display = t===name?'':'none';
   });
   if (name==='chart') setTimeout(drawCharts,50);
-  if (name==='comments') renderComments();
   if (name==='activity') renderActivity();
 }
 

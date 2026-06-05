@@ -249,7 +249,6 @@
       <div class="hstat"><div class="hstat-label">Total Volume</div><div class="hstat-val yellow">₦52.1M</div></div>
       <div class="hstat"><div class="hstat-label">YES Probability</div><div class="hstat-val green" id="prob-stat">38%</div></div>
       <div class="hstat"><div class="hstat-label">Current Rate</div><div class="hstat-val orange">₦1,360/$</div></div>
-      <div class="hstat"><div class="hstat-label">Traders</div><div class="hstat-val" id="trader-count">6,418</div></div>
       <div class="hstat"><div class="hstat-label">Market Closes</div><div class="hstat-val yellow">Dec 31</div></div>
     </div>
 
@@ -266,7 +265,6 @@
     <button class="tab" onclick="switchTab('arguments',this)">YES vs NO</button>
     <button class="tab" onclick="switchTab('chart',this)">Chart</button>
     <button class="tab" onclick="switchTab('activity',this)">Activity</button>
-    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
     <button class="tab" onclick="switchTab('rules',this)">Rules</button>
   </div>
 
@@ -462,14 +460,6 @@
     </div>
   </div>
 
-  <!-- COMMENTS TAB -->
-  <div id="tab-comments" style="display:none;">
-    <div class="card-section">
-      <div class="card-section-title">Community <span style="background:var(--orange);color:#fff;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;">41</span></div>
-      <div id="comments-list"></div>
-    </div>
-  </div>
-
   <!-- RULES TAB -->
   <div id="tab-rules" style="display:none;">
     <div class="card-section">
@@ -525,10 +515,6 @@
       <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">VOLUME</span>
         <span style="color:var(--y);font-family:var(--font-mono);font-weight:700;font-size:11px;">₦52.1M</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
-        <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">TRADERS</span>
-        <span style="color:var(--text);font-family:var(--font-mono);font-size:11px;">6,418</span>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border3);">
         <span style="color:var(--text3);font-family:var(--font-mono);font-size:10px;">YES PRICE</span>
@@ -615,17 +601,7 @@ const ACTIVITY_DATA = [
   {type:'buy',  text:'<strong>rate_hawk</strong> bought <strong>YES</strong> × 2,900 at ₦38 — "Every prior level defended was eventually crossed"',time:'38m'},
   {type:'sell', text:'<strong>remit_rx</strong> bought <strong>NO</strong> × 3,500 at ₦62 — "Remittance surge will cover the gap through H2"',time:'49m'},
   {type:'buy',  text:'<strong>macro_ng</strong> bought <strong>YES</strong> × 7,100 at ₦37 — "Structural deficit + election spending = weak naira"',time:'61m'},
-];
-
-const COMMENTS_DATA = [
-  {init:'F', user:'fx_hawk', col:'#F97316', badge:'ANALYST', badgeCol:'rgba(249,115,22,.2)', badgeText:'var(--orange)', text:"I've heard '₦X is a red line' at every single level since 2023. ₦1,000 — red line. ₦1,200 — red line. ₦1,500 — red line. All crossed. The structural FX deficit is ₦400–₦700M per month. That is a force of nature. I'm YES at ₦38.", time:'8 min ago', likes:134},
-  {init:'N', user:'naira_bull', col:'#22C55E', badge:'TOP TRADER', badgeCol:'rgba(34,197,94,.15)', badgeText:'var(--green)', text:"₦2,000 is categorically different. This isn't just an FX number — it's the front page of every newspaper, every tweet, every campaign speech. The CBN will get an emergency injection of political will and hard currency to stop this. I'm heavy NO.", time:'21 min ago', likes:89},
-  {init:'R', user:'rate_hawk', col:'#3B82F6', badge:null, text:"The parallel market is already pricing ₦1,640–₦1,660. The parallel-to-official spread usually leads the official market by 4–8 weeks. If the parallel breaks ₦1,800 before September, the official market follows by November. Watch the parallel closely.", time:'35 min ago', likes:67},
-  {init:'D', user:'dollar_long', col:'#F5C800', badge:'WHALE', badgeCol:'rgba(245,200,0,.15)', badgeText:'var(--y)', text:"Bought ₦4M YES at 37. The numbers are simple: NNPCL spends $1bn/month on fuel imports. Nigeria earns maybe $900M/month in crude. That $100M monthly hole doesn't close without a major policy shift. The naira has nowhere to go but weaker.", time:'52 min ago', likes:178},
-  {init:'E', user:'elect_watcher', col:'#A855F7', badge:null, text:"The election angle cuts both ways. YES: election spending creates massive naira liquidity that weakens the currency. NO: the government has a political incentive to intervene heavily. I think the YES case is structurally stronger, but the timing matters. Holding both sides small.", time:'68 min ago', likes:53},
-];
-
-function generateTrade() {
+];function generateTrade() {
   const side = Math.random() > 0.55 ? 'sell' : 'buy';
   const price = side === 'buy'
     ? Math.floor(yesPct + (Math.random()*4-2))
@@ -653,12 +629,7 @@ function renderActivity() {
       <div class="act-text">${a.text}</div>
       <div class="act-time">${a.time}</div>
     </div>`).join('');
-}
-
-function renderComments() {
-  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c => `
-    <div class="comment-item">
-      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
       <div class="comment-body">
         <div class="comment-user">${c.user}${c.badge?`<span class="comment-badge" style="background:${c.badgeCol};color:${c.badgeText};">${c.badge}</span>`:''}</div>
         <div class="comment-text">${c.text}</div>
@@ -784,7 +755,6 @@ function switchTab(name, btn) {
     if (el) el.style.display = t===name?'':'none';
   });
   if (name==='chart') setTimeout(drawCharts,50);
-  if (name==='comments') renderComments();
   if (name==='activity') renderActivity();
 }
 

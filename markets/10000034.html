@@ -302,14 +302,12 @@
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦7.2M</div><div class="stat-box-sub" style="color:var(--green);">▲ +14% today</div></div>
     <div class="stat-box"><div class="stat-box-label">Result</div><div class="stat-box-val" style="color:var(--knicks1);">NYK 🏆</div><div class="stat-box-sub" style="color:var(--green);">Won by 10</div></div>
     <div class="stat-box"><div class="stat-box-label">Total Points</div><div class="stat-box-val">200</div><div class="stat-box-sub" style="color:var(--red);">Under 222.5</div></div>
-    <div class="stat-box"><div class="stat-box-label">Traders</div><div class="stat-box-val">1,204</div><div class="stat-box-sub" style="color:var(--text3);">Settled</div></div>
   </div>
 
   <!-- TABS -->
   <div class="tabs-bar">
     <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
     <button class="tab" onclick="switchTab('trades',this)">Trades</button>
-    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
     <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
     <button class="tab" onclick="switchTab('rules',this)">Rules</button>
   </div>
@@ -362,12 +360,6 @@
     </div>
   </div>
 
-  <div id="tab-comments" style="display:none;">
-    <div class="positions-card">
-      <div class="positions-title">Community <span class="badge" style="background:var(--knicks1);">18</span></div>
-      <div id="comments-list"></div>
-    </div>
-  </div>
 
   <div id="tab-analytics" style="display:none;">
     <div class="positions-card">
@@ -487,16 +479,7 @@ const ACTIVITY = [
   {type:'sell', text:'<strong>hedge_king_ng</strong> sold Knicks -8.5 YES ×800 — taking profit early', time:'35m'},
   {type:'buy',  text:'<strong>nba_watcher_abuja</strong> opened Spurs Win YES ×600 at ₦35 — "value on the underdog"', time:'51m'},
   {type:'buy',  text:'<strong>over_under_lord</strong> opened Triple-Double YES ×400 at ₦44', time:'1h'},
-];
-
-const COMMENTS_DATA = [
-  {init:'K', user:'knicks_nation', col:'#006BB6', text:"Knicks are heavy favourites at the Garden tonight. The crowd alone gives them +5. Brunson has been balling, OG is locked in defensively. Easy YES on Knicks Win at ₦65 — still good value.", time:'14 min ago', likes:32},
-  {init:'L', user:'lagos_hooper', col:'#F58426', text:"I don't follow NBA much but my cousin in the US says the Spurs are in rebuild mode this season. Wembanyama is exciting but the rest of the squad is too young to win in New York.", time:'28 min ago', likes:19},
-  {init:'N', user:'nba_watcher_abuja', col:'#A855F7', text:"Spurs at ₦35 is an interesting value bet. Wembanyama is a generational talent, if he goes off tonight anything can happen. I'm putting a small bet on the upset. Let's see.", time:'44 min ago', likes:11},
-  {init:'H', user:'hedge_king_ng', col:'#22C55E', text:"Both the winner and the spread market are overpriced on Knicks. I'd rather back Over 222.5 — both teams can score and the Spurs play fast. That ₦54 is the sharpest line on the board.", time:'1h ago', likes:28},
-];
-
-function renderMarkets() {
+];function renderMarkets() {
   const grid = document.getElementById('markets-grid');
   grid.innerHTML = '';
   MARKETS.forEach(m => {
@@ -571,12 +554,7 @@ function renderTrades() {
   document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t =>
     `<div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${t.price}</span><span class="trade-size">×${t.size.toLocaleString()}</span></div>`
   ).join('');
-}
-
-function renderComments() {
-  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c =>
-    `<div class="comment-item">
-      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
       <div class="comment-body">
         <div class="comment-user">${c.user}</div>
         <div class="comment-text">${c.text}</div>
@@ -691,7 +669,6 @@ function switchTab(name, btn) {
     const el = document.getElementById('tab-' + t);
     if (el) el.style.display = t === name ? '' : 'none';
   });
-  if (name === 'comments')  renderComments();
   if (name === 'analytics') setTimeout(drawProbChart, 50);
 }
 
