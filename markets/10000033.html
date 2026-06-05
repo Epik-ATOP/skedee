@@ -29,6 +29,12 @@
 
 /* ── TOURNAMENT HEADER CARD ── */
 .tourn-card{background:var(--bg2);border:1px solid var(--border);border-top:3px solid var(--wc2);border-radius:var(--radius-xl);padding:18px 24px;}
+.tourn-card-inner{display:flex;align-items:center;gap:20px;}
+.tourn-card-text{flex:1;min-width:0;}
+.tourn-emblem{flex-shrink:0;width:90px;height:auto;opacity:.92;filter:drop-shadow(0 4px 16px rgba(192,57,43,.25));}
+@media(max-width:600px){.tourn-emblem{width:64px;}}
+body[data-theme="dark"] .tourn-emblem-light{display:none;}
+body[data-theme="light"] .tourn-emblem-dark{display:none;}
 .tourn-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
 .tourn-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.35);border-radius:6px;padding:3px 10px;font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--wc2);letter-spacing:1px;white-space:nowrap;}
 .tourn-title{font-family:var(--font-display);font-weight:800;font-size:28px;line-height:1.1;color:var(--text);margin-bottom:14px;}
@@ -235,9 +241,15 @@
         <span style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--green);">● OPEN</span>
       </div>
     </div>
-    <div class="tourn-title">2026 World Cup Winner</div>
-    <div class="hero-sub">
-      Who do you think will win the 2026 World Cup?
+    <div class="tourn-card-inner">
+      <div class="tourn-card-text">
+        <div class="tourn-title">2026 World Cup Winner</div>
+        <div class="hero-sub">
+          Who do you think will win the 2026 World Cup?
+        </div>
+      </div>
+      <img class="tourn-emblem tourn-emblem-dark" src="https://upload.wikimedia.org/wikipedia/commons/0/08/2026_FIFA_World_Cup_emblem_%28dark_mode%29.svg" alt="FIFA World Cup 2026 emblem">
+      <img class="tourn-emblem tourn-emblem-light" src="https://upload.wikimedia.org/wikipedia/en/1/17/2026_FIFA_World_Cup_emblem.svg" alt="FIFA World Cup 2026 emblem">
     </div>
     <div class="tourn-meta">
       
