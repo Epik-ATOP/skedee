@@ -182,7 +182,7 @@ body{-webkit-font-smoothing:antialiased;}
     </div>
     <div class="hero-sub">Search all available markets, new markets are added every week</div>
     <div class="hero-stats">
-      <div class="hstat"><div class="hstat-val">50+</div><div class="hstat-label">Markets</div></div>
+      <div class="hstat"><div class="hstat-val">46+</div><div class="hstat-label">Markets</div></div>
       <div class="hstat"><div class="hstat-val">₦350M+</div><div class="hstat-label">Total Volume</div></div>
       <div class="hstat"><div class="hstat-val">15</div><div class="hstat-label">Settled</div></div>
     </div>
@@ -195,14 +195,14 @@ body{-webkit-font-smoothing:antialiased;}
       <input type="text" id="main-search" placeholder="Search markets…" oninput="handleSearch(this.value)" autocomplete="off">
     </div>
     <div class="filter-tags" id="filter-tags">
-      <div class="filter-tag active" data-filter="all" onclick="setFilter('all',this)">🌍 All <span class="tag-count">34</span></div>
-      <div class="filter-tag" data-filter="football" onclick="setFilter('football',this)">⚽ All Football <span class="tag-count">15</span></div>
-      <div class="filter-tag" data-filter="music" onclick="setFilter('music',this)">🎵 Music <span class="tag-count">3</span></div>
+      <div class="filter-tag active" data-filter="all" onclick="setFilter('all',this)">🌍 All <span class="tag-count">46</span></div>
+      <div class="filter-tag" data-filter="football" onclick="setFilter('football',this)">⚽ All Football <span class="tag-count">12</span></div>
+      <div class="filter-tag" data-filter="music" onclick="setFilter('music',this)">🎵 Music <span class="tag-count">2</span></div>
       <div class="filter-tag" data-filter="entertainment" onclick="setFilter('entertainment',this)">🎬 Entertainment <span class="tag-count">2</span></div>
-      <div class="filter-tag" data-filter="politics" onclick="setFilter('politics',this)">⚖️ Politics <span class="tag-count">4</span></div>
-      <div class="filter-tag" data-filter="commodities" onclick="setFilter('commodities',this)">🛢️ Commodities <span class="tag-count">7</span></div>
+      <div class="filter-tag" data-filter="politics" onclick="setFilter('politics',this)">⚖️ Politics <span class="tag-count">2</span></div>
+      <div class="filter-tag" data-filter="commodities" onclick="setFilter('commodities',this)">🛢️ Commodities <span class="tag-count">8</span></div>
     </div>
-    <div class="results-count" id="results-count">Showing <strong id="results-num">34</strong> markets</div>
+    <div class="results-count" id="results-count">Showing <strong id="results-num">46</strong> markets</div>
   </div>
 
   <!-- CONTENT -->
@@ -302,9 +302,15 @@ const OTHER_MARKETS = [
   { id:10000008, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Naira/Dollar Hit ₦1,500 Before June?', badge:'hot', yes:0.52, vol:'₦88.3M', change:'+9%', dir:'up', link:'markets/10000008.html' },
   { id:10000027, cat:'miscellaneous', emoji:'⚡', catLabel:'ENERGY · LAGOS', title:'Will NEPA Bring Light Tonight? — Lagos', badge:'live', yes:0.47, vol:'₦8.7M', change:'+2%', dir:'up', link:'markets/10000027.html' },
   { id:10000005, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.45bn loan to Nigeria be approved?', badge:'hot', yes:0.74, vol:'₦61.4M', change:'+8%', dir:'up', link:'markets/10000005.html' },
-  { id:10000008, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦2,000 this year?', badge:'hot', yes:0.48, vol:'₦88.3M', change:'-3%', dir:'down', link:'#' },
   { id:10000025, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'When Will It Rain in Lagos Today?', badge:'live', yes:0.58, vol:'₦12.4M', change:'+4%', dir:'up', link:'markets/10000025.html' },
   { id:10000035, cat:'commodities', emoji:'🛢️', catLabel:'COMMODITIES · CRUDE OIL', title:'Will Crude Oil Exceed $100/barrel in July?', badge:'hot', yes:0.18, vol:'₦33.8M', change:'-4%', dir:'down', link:'markets/10000035.html' },
+  { id:10000037, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Dollar Hit ₦2,000 This Year?', badge:'hot', yes:0.38, vol:'₦52.1M', change:'+5%', dir:'up', link:'markets/10000037.html' },
+  { id:10000029, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · UCL FINAL', title:'PSG vs Arsenal — UCL Final', badge:'hot', yes:1.00, vol:'₦89.0M', change:'SETTLED', dir:'flat', link:'markets/10000029.html' },
+  { id:10000031, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend?', badge:'live', yes:0.68, vol:'₦11.4M', change:'+4%', dir:'up', link:'markets/10000031.html' },
+  { id:10000032, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend?', badge:'upcoming', yes:0.52, vol:'₦8.2M', change:'+2%', dir:'up', link:'markets/10000032.html' },
+  { id:10000034, cat:'sports', emoji:'🏀', catLabel:'SPORTS · NBA', title:'New York Knicks vs San Antonio Spurs', badge:'hot', yes:1.00, vol:'₦7.2M', change:'SETTLED', dir:'flat', link:'markets/10000034.html' },
+  { id:10000036, cat:'miscellaneous', emoji:'🌍', catLabel:'NIGERIA · POPULATION', title:"Will Nigeria's Population Hit 250M This Year?", badge:'new', yes:0.13, vol:'₦10.1M', change:'-1%', dir:'down', link:'markets/10000036.html' },
+  { id:10000004, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT · BBNAIJA', title:'When Will BBNaija S11 Auditions Begin?', badge:'hot', yes:1.00, vol:'₦28.4M', change:'SETTLED', dir:'flat', link:'markets/10000004.html' },
   // ── INSPIRATION MARKETS (no page yet) ────────────────────────────
   { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn?", badge:'hot', yes:0.52, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
   { id:13, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Tinubu sign the tax reform bill before June?', badge:'new', yes:0.48, vol:'₦38.2M', change:'0%', dir:'flat', link:'#' },
@@ -419,6 +425,19 @@ function render() {
   if (total === 0) {
     content.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div>No markets match "<strong>${q}</strong>"<br><span style="font-size:10px;margin-top:8px;display:block;">Try a team name, category, or keyword</span></div>`;
     return;
+  }
+
+  // Sunday matches section
+  if (sundayMatches.length > 0) {
+    html += `<div>
+      <div class="section-head">
+        <div class="section-title">⚽ Premier League · Matchday 38</div>
+        <div class="section-count">${sundayMatches.length} matches</div>
+      </div>
+      <div class="matchday-grid">
+        ${sundayMatches.map(buildMatchCard).join('')}
+      </div>
+    </div>`;
   }
 
   // Other markets section

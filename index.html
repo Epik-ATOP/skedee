@@ -346,16 +346,16 @@
 
   <!-- CATEGORY PILLS -->
   <div class="cat-pills" id="cat-pills">
-    <div class="cat-pill active" onclick="filterCat('all',this)">🌍 All <span class="pill-count">35</span></div>
-    <div class="cat-pill" onclick="filterCat('live',this)">🔴 Live <span class="pill-count">13</span></div>
-    <div class="cat-pill" onclick="filterCat('football',this)">⚽ Football <span class="pill-count">15</span></div>
-    <div class="cat-pill" onclick="filterCat('sports',this)">🏆 Sports <span class="pill-count">2</span></div>
-    <div class="cat-pill" onclick="filterCat('music',this)">🎵 Music <span class="pill-count">3</span></div>
-    <div class="cat-pill" onclick="filterCat('entertainment',this)">🎬 Entertainment <span class="pill-count">2</span></div>
-    <div class="cat-pill" onclick="filterCat('politics',this)">⚖️ Politics <span class="pill-count">4</span></div>
-    <div class="cat-pill" onclick="filterCat('commodities',this)">🛢️ Commodities <span class="pill-count">7</span></div>
-    <div class="cat-pill" onclick="filterCat('finance',this)">🪙 Finance <span class="pill-count">2</span></div>
-    <div class="cat-pill" onclick="filterCat('weather',this)">🌊 Weather <span class="pill-count">1</span></div>
+    <div class="cat-pill active" onclick="filterCat('all',this)">🌍 All </div>
+    <div class="cat-pill" onclick="filterCat('live',this)">🔴 Live </div>
+    <div class="cat-pill" onclick="filterCat('football',this)">⚽ Football </div>
+    <div class="cat-pill" onclick="filterCat('sports',this)">🏆 Sports </div>
+    <div class="cat-pill" onclick="filterCat('music',this)">🎵 Music </div>
+    <div class="cat-pill" onclick="filterCat('entertainment',this)">🎬 Entertainment </div>
+    <div class="cat-pill" onclick="filterCat('politics',this)">⚖️ Politics </div>
+    <div class="cat-pill" onclick="filterCat('commodities',this)">🛢️ Commodities </div>
+    <div class="cat-pill" onclick="filterCat('finance',this)">🪙 Finance </div>
+    <div class="cat-pill" onclick="filterCat('weather',this)">🌀 Miscellaneous </div>
   </div>
 
   <!-- MARKETS SECTION TITLE -->
@@ -480,22 +480,18 @@ const FEATURED = [
 
 const ALL_MARKETS = [
   // FOOTBALL
-  { id:10000045, cat:'football', emoji:'🦅', catLabel:'FOOTBALL · WORLD CUP', title:'Super Eagles Win World Cup Opener — Jun 12', badge:'upcoming', yes:0.52, vol:'₦63M', change:'+12%', dir:'up', link:'#' },
 
   // WEATHER
   { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · ENVIRONMENT', title:'Will Lagos Experience Major Flooding Before July 2026?', badge:'hot', yes:0.67, no:0.33, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html', isCommodity:true },
 
   // ENTERTAINMENT
-  { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn box office?", badge:'hot', yes:0.52, no:0.48, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
 
-  { id:5, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'2026 World Cup Winner', badge:'hot', yes:0.17, no:0.83, vol:'₦350M', change:'+3%', dir:'up', link:'markets/10000033.html' },
+  { id:10000028, cat:'football', emoji:'⚽', catLabel:'FOOTBALL', title:'2026 World Cup Winner', badge:'hot', yes:0.17, no:0.83, vol:'₦350M', change:'+3%', dir:'up', link:'markets/10000033.html' },
 
 
 
   // MUSIC
-  { id:8, cat:'music', emoji:'🎵', catLabel:'MUSIC', title:'Will Burna Boy win a Grammy 2026?', badge:'new', yes:0.44, no:0.56, vol:'₦31.4M', change:'-2%', dir:'down', link:'#' },
 
-  { id:10000029, cat:'football', emoji:'🏆', catLabel:'FOOTBALL · UCL FINAL', title:'PSG vs Arsenal — UCL Final 2025/26', badge:'resolved', yes:1.00, vol:'₦89M', change:'FT', dir:'flat', link:'markets/10000029.html' },
   { id:10000028, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · LA LIGA', title:'Barcelona to Win La Liga 2025/26', badge:'resolved', yes:1.00, vol:'₦52.8M', change:'YES ✓', dir:'up', link:'markets/10000028.html' },
   { id:10000030, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Releases a New Song in June? — Naija', badge:'resolved', yes:0.62, vol:'₦18.4M', change:'SETTLED', dir:'flat', link:'markets/10000030.html' },
   { id:10000026, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Will Drop a Studio Album in 2026?', badge:'hot', yes:0.71, vol:'₦114.2M', change:'+22%', dir:'up', link:'markets/10000026.html' },
@@ -508,12 +504,11 @@ const ALL_MARKETS = [
 
   // POLITICS
   { id:11, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.45bn loan to Nigeria be approved?', badge:'hot', yes:0.74, no:0.26, vol:'₦61.4M', change:'+8%', dir:'up', link:'#' },
-  { id:12, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Labour Party wins 2027 Nigerian Presidential Election', badge:'new', yes:0.29, no:0.71, vol:'₦124.7M', change:'-1%', dir:'down', link:'#' },
   { id:13, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Tinubu sign the tax reform bill before July?', badge:'hot', yes:0.54, no:0.46, vol:'₦22M', change:'+6%', dir:'up', link:'#' },
   { id:14, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Obi run for President in 2027?', badge:'new', yes:0.62, no:0.38, vol:'₦47.1M', change:'+5%', dir:'up', link:'#' },
 
   // COMMODITIES
-  { id:15, cat:'commodities', emoji:'🛢️', catLabel:'COMMODITIES', title:'Will crude oil price exceed $90/barrel in June?', badge:'hot', yes:0.42, no:0.58, vol:'₦33.8M', change:'-4%', dir:'down', link:'#', isCommodity:true },
+  { id:15, cat:'commodities', emoji:'🛢️', catLabel:'COMMODITIES', title:'Will crude oil price exceed $100/barrel this month?', badge:'hot', yes:0.42, no:0.58, vol:'₦33.8M', change:'-4%', dir:'down', link:'markets/10000036.html', isCommodity:true },
   { id:16, cat:'commodities', emoji:'⛽', catLabel:'COMMODITIES', title:'Will petrol pump price exceed ₦1,200/litre by July?', badge:'new', yes:0.55, no:0.45, vol:'₦22.4M', change:'+6%', dir:'up', link:'#', isCommodity:true },
   { id:17, cat:'commodities', emoji:'🌾', catLabel:'COMMODITIES', title:'Will a 50kg bag of rice exceed ₦120,000 by August?', badge:'new', yes:0.38, no:0.62, vol:'₦18.7M', change:'+2%', dir:'up', link:'#', isCommodity:true },
   { id:18, cat:'commodities', emoji:'🫘', catLabel:'COMMODITIES', title:'Will beans price rise above ₦90,000 per bag in Q3?', badge:'new', yes:0.44, no:0.56, vol:'₦12.3M', change:'+1%', dir:'up', link:'#', isCommodity:true },
