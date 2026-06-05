@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will Crude Oil Hit $100/Barrel Before July? | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png"><link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{--sidebar-w:220px;--rsidebar-w:280px;--oil1:#F59E0B;--oil2:#D97706;--oil3:#92400E;--crude:#78350F;}
+.layout{display:flex;margin-top:52px;height:calc(100vh - 52px);overflow:hidden;}
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 0;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;font-size:13px;}
+.sidebar-item .item-badge{margin-left:auto;background:var(--y);color:#000;font-size:9px;font-weight:700;font-family:var(--font-mono);padding:2px 5px;border-radius:4px;}
+.sidebar-item .item-badge.red{background:var(--red);color:#fff;}
+.trending-event{margin:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;cursor:pointer;}
+.trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.trend-change{font-family:var(--font-mono);font-size:10px;color:var(--green);}
+
+/* ── PRICE CARD ── */
+.price-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:visible;}
+.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--oil1),var(--oil2),var(--oil3),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
+.price-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.category-badge{display:flex;align-items:center;gap:6px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--oil1);letter-spacing:1px;}
+.live-indicator{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;}
+.live-dot{width:7px;height:7px;border-radius:50%;}
+@keyframes live-pulse{0%{box-shadow:0 0 0 0 rgba(245,158,11,.7)}70%{box-shadow:0 0 0 8px rgba(245,158,11,0)}100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}}
+.live-dot.pulsing{animation:live-pulse 1.6s infinite;}
+
+.price-main-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;}
+.price-display{display:flex;flex-direction:column;gap:6px;}
+.price-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;}
+.price-value{font-family:var(--font-num);font-weight:700;font-size:52px;color:var(--text);letter-spacing:-1px;line-height:1;}
+.price-unit{font-family:var(--font-mono);font-size:14px;color:var(--text3);margin-left:4px;}
+.price-change-row{display:flex;align-items:center;gap:12px;margin-top:4px;}
+.price-change{font-family:var(--font-mono);font-size:13px;font-weight:700;}
+.price-change.up{color:var(--green);}
+.price-change.down{color:var(--red);}
+.price-target-badge{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.4);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:11px;color:var(--oil1);font-weight:700;}
+.price-chart-area{flex:1;max-width:340px;height:80px;position:relative;}
+.price-meta{margin-top:14px;padding-top:12px;border-top:1px solid var(--border3);display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.meta-item{display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;}
+
+/* ── STATS / SENTIMENT ── */
+.stats-row{display:flex;gap:10px;}
+.stat-box{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;}
+.stat-box-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.stat-box-val{font-family:var(--font-num);font-weight:700;font-size:26px;color:var(--text);}
+.stat-box-val.yellow{color:var(--y);}
+.stat-box-sub{font-family:var(--font-mono);font-size:10px;margin-top:3px;}
+.sentiment-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.sentiment-bar{height:10px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:8px;}
+.sentiment-yes{background:linear-gradient(90deg,var(--green),rgba(34,197,94,.6));}
+.sentiment-no{background:linear-gradient(90deg,rgba(239,68,68,.6),var(--red));}
+.sentiment-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+
+/* ── TABS ── */
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+
+/* ── HOT MARKETS PILLS ── */
+.trending-strip{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px;}
+.trending-pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.trend-pill{flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:6px 12px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.trend-pill:hover{border-color:var(--y);background:rgba(245,200,0,.06);}
+.trend-pill-name{font-size:12px;font-weight:500;color:var(--text);}
+.trend-pill-prob{font-family:var(--font-mono);font-size:10px;color:var(--y);margin-top:2px;}
+
+/* ── MARKET GRID CARDS ── */
+.markets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.market-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden;}
+.market-card:hover{border-color:var(--border2);background:var(--bg3);}
+.market-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--y);opacity:0;transition:opacity .2s;}
+.market-card:hover::after{opacity:1;}
+.market-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.market-title{font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--text);line-height:1.3;}
+.market-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.market-prob-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.market-prob{font-family:var(--font-num);font-weight:700;font-size:28px;color:var(--y);}
+.market-prob-bar{flex:1;height:5px;background:var(--bg4);border-radius:99px;overflow:hidden;}
+.market-prob-fill{height:100%;background:var(--y);border-radius:99px;transition:width .6s;}
+.market-price-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;}
+.price-chip{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;text-align:center;}
+.price-chip.yes{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04);}
+.price-chip.no{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04);}
+.price-chip-label{font-size:9px;font-family:var(--font-mono);color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.price-chip-val{font-family:var(--font-mono);font-weight:700;font-size:16px;margin-top:1px;}
+.price-chip.yes .price-chip-val{color:var(--green);}
+.price-chip.no .price-chip-val{color:var(--red);}
+.market-mini-chart{height:40px;margin-bottom:12px;}
+.market-btns{display:flex;gap:6px;}
+.btn-yes{flex:1;padding:8px;border-radius:var(--radius);border:1px solid rgba(34,197,94,.3);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;transition:all .15s;background:rgba(34,197,94,.15);color:var(--green);}
+.btn-yes:hover{background:var(--green);color:#000;}
+.btn-no{flex:1;padding:8px;border-radius:var(--radius);border:1px solid rgba(239,68,68,.3);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;transition:all .15s;background:rgba(239,68,68,.1);color:var(--red);}
+.btn-no:hover{background:var(--red);color:#fff;}
+.market-stats-row{display:flex;align-items:center;gap:12px;padding-top:10px;border-top:1px solid var(--border3);margin-top:4px;}
+.mstat{flex:1;text-align:center;}
+.mstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.mstat-val{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--text2);margin-top:2px;}
+
+/* ── RIGHT SIDEBAR ── */
+.right-sidebar{width:var(--rsidebar-w);background:var(--bg2);border-left:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 12px;display:flex;flex-direction:column;gap:16px;}
+.rsidebar-section-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.ob-row{display:flex;align-items:center;gap:8px;padding:3px 0;position:relative;overflow:hidden;}
+.ob-bar{position:absolute;top:0;bottom:0;border-radius:2px;opacity:.12;}
+.ob-bar.ask{background:var(--red);right:0;}
+.ob-bar.bid{background:var(--green);left:0;}
+.ob-price{font-family:var(--font-mono);font-size:11px;font-weight:700;width:40px;}
+.ob-price.ask{color:var(--red);}
+.ob-price.bid{color:var(--green);}
+.ob-size{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto;}
+.ob-total{font-family:var(--font-mono);font-size:10px;color:var(--text3);width:40px;text-align:right;}
+.ob-spread{text-align:center;padding:6px 0;font-family:var(--font-mono);font-size:10px;color:var(--y);border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);margin:4px 0;}
+.activity-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border3);}
+.activity-item:last-child{border-bottom:none;}
+.act-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.act-dot.buy{background:var(--green);}
+.act-dot.sell{background:var(--red);}
+.act-text{flex:1;font-size:11px;color:var(--text2);line-height:1.4;}
+.act-text strong{color:var(--text);font-weight:500;}
+.act-time{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.trade-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border3);}
+.trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side.buy{background:rgba(34,197,94,.15);color:var(--green);}
+.trade-side.sell{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-market{font-size:11px;color:var(--text2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trade-price{font-family:var(--font-mono);font-size:11px;color:var(--text);font-weight:600;}
+.trade-size{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ── ORDER PANEL ── */
+.order-panel{position:fixed;bottom:0;right:var(--rsidebar-w);z-index:200;width:340px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:20px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.5);}
+.order-panel.open{transform:translateY(0);}
+.order-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.order-panel-title{font-family:var(--font-display);font-weight:700;font-size:15px;}
+.btn-close{width:28px;height:28px;background:var(--bg4);border:none;border-radius:50%;cursor:pointer;color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;}
+.btn-close:hover{background:var(--red);color:#fff;}
+.order-market-name{font-size:12px;color:var(--text3);margin-bottom:16px;font-family:var(--font-mono);}
+.order-side-tabs{display:flex;gap:6px;margin-bottom:16px;}
+.order-side-btn{flex:1;padding:8px;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;transition:all .15s;background:var(--bg3);color:var(--text2);}
+.order-side-btn.yes.active{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:var(--green);}
+.order-side-btn.no.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:var(--red);}
+.btn-place{width:100%;padding:14px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:800;font-size:15px;transition:all .15s;background:var(--y);color:#000;}
+.btn-place:hover{background:var(--y2);transform:translateY(-1px);}
+.comment-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border3);}
+.comment-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--font-display);}
+.comment-body{flex:1;}
+.comment-user{font-size:11px;font-weight:600;color:var(--text);}
+.comment-text{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.5;}
+.comment-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;}
+.positions-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.positions-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.positions-title .badge{background:var(--y);color:#000;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;}
+
+/* ── PRICE TICKER WIDGET ── */
+.ticker-widget{display:flex;align-items:center;justify-content:center;gap:32px;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.2);border-radius:var(--radius-lg);padding:14px 20px;}
+.ticker-item{text-align:center;}
+.ticker-item-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
+.ticker-item-val{font-family:var(--font-num);font-weight:700;font-size:18px;color:var(--text);}
+.ticker-item-val.oil{color:var(--oil1);}
+.ticker-sep{color:var(--border2);font-size:20px;}
+
+@media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
+</style>
+<link rel="stylesheet" href="../market-mobile.css">
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="../search.html" class="topbar-navlink">Search Markets</a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+    <a href="../faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search markets..."></div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<div class="layout">
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist</div>
+  <div class="sidebar-item"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Find Markets</div>
+  <div class="sidebar-item"><i class="fa-solid fa-futbol"></i>Football</div>
+  <div class="sidebar-item"><i class="fa-solid fa-medal"></i>Other Sports</div>
+  <div class="sidebar-item"><i class="fa-solid fa-film"></i>Entertainment</div>
+  <div class="sidebar-item"><i class="fa-solid fa-music"></i>Music</div>
+  <div class="sidebar-item"><i class="fa-solid fa-landmark"></i>Politics</div>
+  <div class="sidebar-item active"><i class="fa-solid fa-oil-can"></i>Commodities</div>
+  <div class="sidebar-item"><i class="fa-solid fa-coins"></i>Finance</div>
+  <div class="sidebar-item"><i class="fa-solid fa-shapes"></i>Miscellaneous</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Commodities — Open</div>
+  <div class="trending-event" onclick="window.location='10000035.html'" style="border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.04);">
+    <div class="trend-name">🛢️ Crude Oil $100 Before July</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦14.3M vol</div><div class="trend-change" style="color:var(--oil1);">● LIVE</div></div>
+  </div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Also Trending</div>
+  <div class="trending-event" onclick="window.location='10000033.html'">
+    <div class="trend-name">🌍 2026 World Cup Winner</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦350M vol</div><div class="trend-change" style="color:var(--green);">▲ 8%</div></div>
+  </div>
+  <div class="trending-event" onclick="window.location='10000034.html'">
+    <div class="trend-name">🏀 Knicks vs Spurs — NBA Finals</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦7.2M vol</div><div class="trend-change" style="color:var(--text3);">SETTLED</div></div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- OPEN BANNER -->
+  <div style="background:linear-gradient(135deg,rgba(245,158,11,.13),rgba(245,158,11,.04));border:2px solid rgba(245,158,11,.55);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:180px;opacity:.04;pointer-events:none;line-height:1;user-select:none;overflow:hidden;border-radius:20px;">🛢️</div>
+    <div style="width:64px;height:64px;background:rgba(245,158,11,.15);border:2px solid rgba(245,158,11,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">🛢️</div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--oil2);letter-spacing:2px;margin-bottom:6px;">⚡ COMMODITIES · WTI CRUDE OIL · LIVE MARKET</div>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Will Crude Oil Hit <span style="color:var(--oil1);">$100/barrel</span> Before July?</div>
+      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">WTI currently trading at <strong style="color:var(--oil1);" id="banner-price">$87.40</strong> · Need <strong style="color:var(--text);">+$12.60 (+14.4%)</strong> in <strong style="color:var(--y);" id="days-left">26 days</strong></div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Market resolves YES if WTI crude closes at or above $100/bbl before July 1, 2026 (23:59 UTC)</div>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
+      <div style="color:var(--oil1);font-weight:700;font-size:12px;margin-bottom:4px;">● OPEN</div>
+      <div>Closes Jul 1, 2026</div>
+      <div id="countdown-display" style="color:var(--y);font-weight:700;margin-top:4px;">26D 00H</div>
+    </div>
+  </div>
+
+  <!-- PRICE TICKER -->
+  <div class="ticker-widget">
+    <div class="ticker-item">
+      <div class="ticker-item-label">WTI Crude</div>
+      <div class="ticker-item-val oil" id="wti-price">$87.40</div>
+    </div>
+    <div class="ticker-sep">|</div>
+    <div class="ticker-item">
+      <div class="ticker-item-label">24h Change</div>
+      <div class="ticker-item-val" id="wti-change" style="color:var(--green);">▲ +$0.82 (+0.95%)</div>
+    </div>
+    <div class="ticker-sep">|</div>
+    <div class="ticker-item">
+      <div class="ticker-item-label">Target</div>
+      <div class="ticker-item-val" style="color:var(--text3);">$100.00</div>
+    </div>
+    <div class="ticker-sep">|</div>
+    <div class="ticker-item">
+      <div class="ticker-item-label">Gap</div>
+      <div class="ticker-item-val" id="wti-gap" style="color:var(--red);">−$12.60</div>
+    </div>
+    <div class="ticker-sep">|</div>
+    <div class="ticker-item">
+      <div class="ticker-item-label">Brent</div>
+      <div class="ticker-item-val" id="brent-price" style="color:var(--text2);">$91.15</div>
+    </div>
+  </div>
+
+  <!-- PRICE CARD (mini chart) -->
+  <div class="price-card">
+    <div class="price-card-top">
+      <div class="category-badge"><i class="fa-solid fa-oil-can"></i> WTI CRUDE OIL</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="live-indicator">
+          <div class="live-dot pulsing" style="background:var(--oil1);"></div>
+          <span style="color:var(--oil1);">LIVE FEED</span>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">NYMEX · USD/BBL</div>
+      </div>
+    </div>
+    <div class="price-main-row">
+      <div class="price-display">
+        <div class="price-label">Current Price</div>
+        <div style="display:flex;align-items:baseline;gap:4px;">
+          <div class="price-value" id="big-price">87.40</div>
+          <div class="price-unit">USD/bbl</div>
+        </div>
+        <div class="price-change-row">
+          <div class="price-change up" id="big-change">▲ +$0.82 (+0.95%)</div>
+          <div class="price-target-badge">Target: $100.00</div>
+        </div>
+      </div>
+      <div class="price-chart-area">
+        <canvas id="priceSparkline"></canvas>
+      </div>
+    </div>
+    <div class="price-meta">
+      <div class="meta-item"><i class="fa-solid fa-calendar"></i>Contract: WTI Aug '26</div>
+      <div class="meta-item"><i class="fa-solid fa-clock"></i>Updated: <span id="last-update" style="color:var(--text2);margin-left:3px;">just now</span></div>
+      <div class="meta-item"><i class="fa-solid fa-chart-bar"></i>52-wk range: $68.20 – $97.40</div>
+      <div class="meta-item" style="margin-left:auto;"><span style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Market Volume: </span><span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦14,300,000</span></div>
+    </div>
+  </div>
+
+  <!-- STAT BOXES -->
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-box-label">YES Probability</div><div class="stat-box-val yellow" id="yes-prob-stat">18%</div><div class="stat-box-sub" style="color:var(--red);">▼ −2% today</div></div>
+    <div class="stat-box"><div class="stat-box-label">Current WTI</div><div class="stat-box-val" style="color:var(--oil1);" id="stat-wti">$87.40</div><div class="stat-box-sub" style="color:var(--green);">▲ +0.95% today</div></div>
+    <div class="stat-box"><div class="stat-box-label">Days Remaining</div><div class="stat-box-val" id="stat-days">26</div><div class="stat-box-sub" style="color:var(--text3);">Closes Jul 1, 2026</div></div>
+    <div class="stat-box"><div class="stat-box-label">Traders</div><div class="stat-box-val">2,847</div><div class="stat-box-sub" style="color:var(--green);">▲ +143 today</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('trades',this)">Trades</button>
+    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
+    <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+    <div class="sentiment-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Crude Oil ≥ $100/bbl before July <span style="font-family:var(--font-mono);font-size:9px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:var(--oil1);padding:2px 6px;border-radius:4px;margin-left:6px;">LIVE</span></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦6.1M volume</div>
+      </div>
+      <div class="sentiment-bar">
+        <div class="sentiment-yes" id="bar-yes" style="width:18%;"></div>
+        <div class="sentiment-no" id="bar-no" style="width:82%;"></div>
+      </div>
+      <div class="sentiment-labels">
+        <span style="color:var(--green);font-weight:700;" id="label-yes">YES 18%</span>
+        <span style="color:var(--red);font-weight:700;" id="label-no">NO 82%</span>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
+        <i class="fa-solid fa-triangle-exclamation" style="color:var(--oil2);margin-right:4px;"></i>
+        WTI needs a <strong style="color:var(--text);">+14.4% surge</strong> from current $87.40 to reach $100 — analysts cite OPEC+ cuts and Middle East tensions as key upside drivers
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        <button class="btn-yes" style="flex:1;padding:12px;font-size:14px;" onclick="openOrder('Crude Oil hits $100 before July','YES',18)">BUY YES &nbsp;₦18</button>
+        <button class="btn-no"  style="flex:1;padding:12px;font-size:14px;" onclick="openOrder('Crude Oil hits $100 before July','NO',82)">BUY NO &nbsp;₦82</button>
+      </div>
+    </div>
+
+    <div class="trending-strip" style="margin-top:12px;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🛢️ Quick Markets</div>
+      <div class="trending-pills">
+        <div class="trend-pill" onclick="openOrder('Crude Oil hits $100 before July','YES',18)"><div class="trend-pill-name">$100 Before July</div><div class="trend-pill-prob">₦18 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Crude Oil hits $95 before July','YES',31)"><div class="trend-pill-name">$95 Before July</div><div class="trend-pill-prob">₦31 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Crude Oil hits $90 before July','YES',48)"><div class="trend-pill-name">$90 Before July</div><div class="trend-pill-prob">₦48 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Crude above $85 on June 30','YES',72)"><div class="trend-pill-name">$85+ on Jun 30</div><div class="trend-pill-prob">₦72 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('WTI drops below $80 in June','YES',14)"><div class="trend-pill-name">Drop below $80</div><div class="trend-pill-prob">₦14 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Brent-WTI spread widens to $5+','YES',39)"><div class="trend-pill-name">Brent Spread $5+</div><div class="trend-pill-prob">₦39 YES</div></div>
+      </div>
+    </div>
+
+    <div class="markets-grid" id="markets-grid" style="margin-top:12px;"></div>
+
+    <div class="positions-card">
+      <div class="positions-title">Open Positions <span class="badge">0</span></div>
+      <div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No open positions — pick a market above to get started</div>
+    </div>
+  </div>
+
+  <div id="tab-trades" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Trade History</div>
+      <div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No trades yet</div>
+    </div>
+  </div>
+
+  <div id="tab-comments" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Community <span class="badge" style="background:var(--oil1);">24</span></div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
+
+  <div id="tab-analytics" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Probability Chart — Oil ≥ $100</div>
+      <div style="position:relative;height:220px;"><canvas id="probChart"></canvas></div>
+    </div>
+    <div class="positions-card" style="margin-top:12px;">
+      <div class="positions-title">WTI Price History (30 days)</div>
+      <div style="position:relative;height:200px;"><canvas id="priceChart"></canvas></div>
+    </div>
+  </div>
+
+  <div id="tab-rules" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Market Rules</div>
+      <div style="color:var(--text2);font-size:13px;line-height:1.8;">
+        <strong style="color:var(--text);">Resolution Condition</strong><br>
+        This market resolves YES if WTI Crude Oil (NYMEX front-month contract) records an official closing price at or above <strong style="color:var(--oil1);">$100.00 USD per barrel</strong> on any trading day before July 1, 2026 (23:59 UTC). If the target is not reached, the market resolves NO at market close on June 30, 2026.<br><br>
+        <strong style="color:var(--text);">Price Source</strong><br>
+        Official settlement price from the New York Mercantile Exchange (NYMEX) for the front-month WTI light sweet crude oil futures contract (CL1). Intraday highs do not count — only official daily closing/settlement prices are used.<br><br>
+        <strong style="color:var(--text);">Early Resolution</strong><br>
+        If WTI closes at or above $100 on any eligible day, the market resolves YES immediately after that session's settlement is confirmed (typically 6–8 PM WAT). Positions are settled within 1 hour of resolution.<br><br>
+        <strong style="color:var(--text);">Market Suspension</strong><br>
+        In the event of a trading halt or force majeure on NYMEX, Skedee reserves the right to pause this market until normal trading resumes. Extended halts may result in market cancellation and full refund of all positions.<br><br>
+        <strong style="color:var(--text);">Disputes</strong><br>
+        Contact support@skedee.ng within 24 hours of resolution. Skedee's decision is final.
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- RIGHT SIDEBAR -->
+<div class="right-sidebar">
+  <div>
+    <div class="rsidebar-section-title">Order Book — $100 Before July <span style="color:var(--oil1);font-size:10px;">LIVE</span></div>
+    <div id="order-book-asks"></div>
+    <div class="ob-spread" id="ob-spread-label">Spread: ₦2 · Mid: ₦18</div>
+    <div id="order-book-bids"></div>
+  </div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;">
+    <div class="rsidebar-section-title">Activity Feed</div>
+    <div id="activity-feed"></div>
+  </div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;">
+    <div class="rsidebar-section-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
+  </div>
+</div>
+
+</div><!-- end layout -->
+
+<!-- ORDER PANEL -->
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header">
+    <div class="order-panel-title">Place Order</div>
+    <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="order-market-name" id="op-market-name">Crude Oil hits $100 before July</div>
+  <div class="order-side-tabs">
+    <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
+    <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">OUTCOME</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-outcome-label">YES</div>
+    </div>
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">PRICE</div>
+      <div style="font-family:var(--font-num);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-price-label">₦—</div>
+    </div>
+  </div>
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;padding:0 16px;margin-bottom:8px;">
+    <span style="font-family:var(--font-mono);font-size:22px;color:var(--text3);margin-right:8px;flex-shrink:0;">₦</span>
+    <input type="number" id="op-amount" value="5000" min="100" max="9999999" oninput="updateOrderSummary()"
+      style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
+  </div>
+  <input type="hidden" id="op-price" value="18">
+  <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:20px;padding:0 2px;" id="op-shares-line">— shares of ₦— each</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:0 2px;">
+    <div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:1px;line-height:1.6;">PAYOUT</div>
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;">IF CORRECT</div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:4px;">
+      <span style="font-family:var(--font-mono);font-size:26px;color:var(--text3);">₦</span>
+      <span style="font-family:var(--font-num);font-size:34px;font-weight:700;color:var(--y);line-height:1;" id="op-payout">—</span>
+    </div>
+  </div>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+</div>
+
+<script src="../script.js"></script>
+<script>
+const RESOLUTION_DATE = new Date('2026-07-01T23:59:00Z');
+let orderSide = 'YES', walletBalance = 4271250;
+let miniCharts = {}, probChart, priceChart, sparklineChart;
+let wtiPrice = 87.40, brentPrice = 91.15;
+
+const MARKETS = [
+  { id:'oil_100_july',  title:'Crude ≥ $100 Before July',     yes:0.18, vol:'₦6.1M', liq:'₦2.2M', spread:'₦2', history:[0.24,0.22,0.21,0.20,0.19,0.20,0.19,0.18,0.18,0.18] },
+  { id:'oil_95_july',   title:'Crude ≥ $95 Before July',      yes:0.31, vol:'₦3.4M', liq:'₦1.4M', spread:'₦2', history:[0.38,0.36,0.35,0.34,0.33,0.33,0.32,0.31,0.31,0.31] },
+  { id:'oil_90_july',   title:'Crude ≥ $90 Before July',      yes:0.48, vol:'₦2.8M', liq:'₦1.1M', spread:'₦3', history:[0.51,0.50,0.49,0.49,0.48,0.49,0.48,0.48,0.48,0.48] },
+  { id:'oil_85_jun30',  title:'Crude Above $85 on Jun 30',    yes:0.72, vol:'₦1.2M', liq:'₦0.6M', spread:'₦3', history:[0.68,0.69,0.70,0.71,0.71,0.72,0.72,0.72,0.72,0.72] },
+  { id:'oil_drop_80',   title:'WTI Drops Below $80 in June',  yes:0.14, vol:'₦0.5M', liq:'₦0.3M', spread:'₦2', history:[0.16,0.16,0.15,0.15,0.14,0.14,0.14,0.14,0.14,0.14] },
+  { id:'brent_spread',  title:'Brent–WTI Spread Above $5',    yes:0.39, vol:'₦0.3M', liq:'₦0.2M', spread:'₦4', history:[0.35,0.36,0.37,0.38,0.38,0.39,0.39,0.39,0.39,0.39] },
+];
+
+const ORDER_BOOK_DATA = {
+  asks: [{p:'₦20',s:840,t:1680},{p:'₦19',s:1200,t:2280},{p:'₦18',s:3600,t:6480},{p:'₦17',s:1050,t:1785}],
+  bids: [{p:'₦16',s:1400,t:2240},{p:'₦15',s:920,t:1380},{p:'₦14',s:1100,t:1540},{p:'₦13',s:480,t:624}]
+};
+
+const ACTIVITY = [
+  {type:'buy',  text:'<strong>crude_watcher_lag</strong> opened $100 Before July YES ×8,000 at ₦18 — "OPEC+ emergency cut rumours"', time:'3m'},
+  {type:'sell', text:'<strong>oil_bear_ng</strong> sold $100 YES ×3,500 — "fundamentals don\'t support a $12 rally in 26 days"', time:'11m'},
+  {type:'buy',  text:'<strong>energy_trader_abj</strong> backed $95 Before July YES ×5,000 at ₦31', time:'19m'},
+  {type:'buy',  text:'<strong>macroking_lagos</strong> opened $85+ on Jun 30 YES ×10,000 at ₦72 — "safe floor play"', time:'27m'},
+  {type:'sell', text:'<strong>forex_and_oil</strong> reduced $100 YES position — "too much premium in these odds now"', time:'44m'},
+];
+
+const COMMENTS_DATA = [
+  {init:'C', user:'crude_watcher_lag', col:'#F59E0B', text:"$100 oil is not impossible — remember June 2022? It spiked from $95 to $120 in days when Russian sanctions escalated. Any major supply shock could do it again. I'm holding YES at ₦18 for the lottery upside. Risk is low, reward is huge.", time:'18 min ago', likes:41},
+  {init:'O', user:'oil_bear_ng', col:'#EF4444', text:"People forget that US shale responds fast now. Any price spike above $90 and shale producers flood the market within weeks. Demand from China is also softer than expected in Q2. I'm heavy NO on the $100 market — ₦82 is genuinely undervalued.", time:'34 min ago', likes:37},
+  {init:'E', user:'energy_trader_abj', col:'#A855F7', text:"The smarter play here is the $90 market at ₦48. That's a coin flip and the probability feels a little low given OPEC+ hasn't given up on their $90 floor target. I'd rather have $90 at 50-50 odds than gamble on $100 at 18%.", time:'52 min ago', likes:29},
+  {init:'M', user:'macroking_lagos', col:'#22C55E', text:"For Nigerian traders this market is fascinating from a macro perspective. If crude hits $100, NNPC revenues spike, naira should strengthen temporarily. YES on this market is a partial hedge against naira weakness for those of us with dollar expenses.", time:'1h ago', likes:53},
+  {init:'F', user:'forex_and_oil', col:'#06B6D4', text:"I track the Saudi OSP (Official Selling Price) adjustments closely. Saudi just raised their July OSP to Asia by $0.50, which signals they believe demand is firm. Doesn't get us to $100 alone but it's a bullish signal. ₦18 feels slightly cheap.", time:'2h ago', likes:22},
+];
+
+const SPARKLINE_PRICES = [85.2,85.8,86.1,85.9,86.4,86.8,87.0,86.7,87.1,87.4,87.2,87.4];
+const PRICE_HISTORY_30D = [
+  82.1,81.8,82.5,83.2,83.8,84.1,83.7,84.5,85.2,85.8,85.4,86.1,
+  85.9,86.6,86.4,87.1,86.8,87.4,87.0,86.7,87.1,87.4,87.2,87.4,
+  87.6,87.3,87.4,87.5,87.4,87.4
+];
+
+function renderMarkets() {
+  const grid = document.getElementById('markets-grid');
+  grid.innerHTML = '';
+  MARKETS.forEach(m => {
+    const pct = Math.round(m.yes * 100);
+    const card = document.createElement('div');
+    card.className = 'market-card';
+    card.id = 'mc-' + m.id;
+    const trendDir = Math.random() > 0.4;
+    const trendPct = (Math.random() * 2 + 0.2).toFixed(1);
+    card.innerHTML = `
+      <div class="market-header">
+        <div><div class="market-title">${m.title}</div><div class="market-vol">Vol ${m.vol} · Liq ${m.liq}</div></div>
+        <span style="font-family:var(--font-mono);font-size:10px;color:${trendDir?'var(--green)':'var(--red)'};">${trendDir?'▲':'▼'} ${trendDir?'+':'−'}${trendPct}%</span>
+      </div>
+      <div class="market-prob-row">
+        <div class="market-prob">${pct}%</div>
+        <div class="market-prob-bar"><div class="market-prob-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="market-price-row">
+        <div class="price-chip yes"><div class="price-chip-label">YES</div><div class="price-chip-val">₦${pct}</div></div>
+        <div class="price-chip no"><div class="price-chip-label">NO</div><div class="price-chip-val">₦${100-pct}</div></div>
+      </div>
+      <div class="market-mini-chart"><canvas id="mini-${m.id}"></canvas></div>
+      <div class="market-btns">
+        <button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button>
+        <button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button>
+      </div>
+      <div class="market-stats-row">
+        <div class="mstat"><div class="mstat-label">SPREAD</div><div class="mstat-val">${m.spread}</div></div>
+        <div class="mstat"><div class="mstat-label">VOLUME</div><div class="mstat-val">${m.vol}</div></div>
+        <div class="mstat"><div class="mstat-label">LIQUIDITY</div><div class="mstat-val">${m.liq}</div></div>
+      </div>`;
+    grid.appendChild(card);
+    setTimeout(() => drawMiniChart(m), 50);
+  });
+}
+
+function drawMiniChart(m) {
+  const canvas = document.getElementById('mini-' + m.id);
+  if (!canvas || !window.Chart) return;
+  if (miniCharts[m.id]) miniCharts[m.id].destroy();
+  const color = m.yes > 0.5 ? '#22C55E' : (m.yes < 0.25 ? '#EF4444' : '#F59E0B');
+  miniCharts[m.id] = new Chart(canvas.getContext('2d'), {
+    type:'line',
+    data:{ labels:m.history.map((_,i)=>i), datasets:[{data:m.history.map(v=>Math.round(v*100)), borderColor:color, backgroundColor:color+'18', borderWidth:1.5, fill:true, tension:0.4, pointRadius:0}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{enabled:false}}, scales:{x:{display:false},y:{display:false,min:0,max:100}}, animation:{duration:0} }
+  });
+}
+
+function drawSparkline() {
+  const canvas = document.getElementById('priceSparkline');
+  if (!canvas || !window.Chart) return;
+  if (sparklineChart) sparklineChart.destroy();
+  sparklineChart = new Chart(canvas.getContext('2d'), {
+    type:'line',
+    data:{ labels:SPARKLINE_PRICES.map((_,i)=>i), datasets:[{data:SPARKLINE_PRICES, borderColor:'#F59E0B', backgroundColor:'rgba(245,158,11,0.08)', borderWidth:1.5, fill:true, tension:0.3, pointRadius:0}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{enabled:false}}, scales:{x:{display:false},y:{display:false}}, animation:{duration:0} }
+  });
+}
+
+function renderOrderBook() {
+  const maxSize = Math.max(...ORDER_BOOK_DATA.asks.map(r=>r.t), ...ORDER_BOOK_DATA.bids.map(r=>r.t));
+  document.getElementById('order-book-asks').innerHTML = ORDER_BOOK_DATA.asks.slice().reverse().map(r =>
+    `<div class="ob-row"><div class="ob-bar ask" style="width:${Math.round(r.t/maxSize*100)}%"></div><span class="ob-price ask">${r.p}</span><span class="ob-size">${r.s.toLocaleString()}</span><span class="ob-total">${r.t.toLocaleString()}</span></div>`
+  ).join('');
+  document.getElementById('order-book-bids').innerHTML = ORDER_BOOK_DATA.bids.map(r =>
+    `<div class="ob-row"><div class="ob-bar bid" style="width:${Math.round(r.t/maxSize*100)}%"></div><span class="ob-price bid">${r.p}</span><span class="ob-size">${r.s.toLocaleString()}</span><span class="ob-total">${r.t.toLocaleString()}</span></div>`
+  ).join('');
+}
+
+function renderActivity() {
+  document.getElementById('activity-feed').innerHTML = ACTIVITY.map(a =>
+    `<div class="activity-item"><div class="act-dot ${a.type}"></div><div class="act-text">${a.text}</div><div class="act-time">${a.time}</div></div>`
+  ).join('');
+}
+
+let recentTrades = [];
+function generateTrade() {
+  const m = MARKETS[Math.floor(Math.random() * MARKETS.length)];
+  const side = Math.random() > 0.45 ? 'buy' : 'sell';
+  const pct = Math.round(m.yes * 100);
+  return { side, market: m.title.replace(' Before July','').replace(' in June','').replace(' on Jun 30',''), price: pct, size: Math.floor(Math.random()*2000+200) };
+}
+function renderTrades() {
+  if (!recentTrades.length) for (let i = 0; i < 8; i++) recentTrades.push(generateTrade());
+  document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t =>
+    `<div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${t.price}</span><span class="trade-size">×${t.size.toLocaleString()}</span></div>`
+  ).join('');
+}
+
+function renderComments() {
+  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c =>
+    `<div class="comment-item">
+      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+      <div class="comment-body">
+        <div class="comment-user">${c.user}</div>
+        <div class="comment-text">${c.text}</div>
+        <div class="comment-meta">${c.time} · <span style="color:var(--oil1);">👍 ${c.likes}</span></div>
+      </div>
+    </div>`
+  ).join('');
+}
+
+function drawProbChart() {
+  if (probChart) probChart.destroy();
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  probChart = new Chart(document.getElementById('probChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels:['7d ago','6d ago','5d ago','4d ago','3d ago','2d ago','Yesterday','Today'],
+      datasets:[
+        {label:'YES %', data:[24,22,21,20,19,20,18,18], borderColor:'#22C55E', backgroundColor:'rgba(34,197,94,0.06)', borderWidth:2, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#22C55E'},
+        {label:'NO %',  data:[76,78,79,80,81,80,82,82], borderColor:'#EF4444', backgroundColor:'rgba(239,68,68,0.04)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#EF4444'},
+      ]
+    },
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true,labels:{color:tc,font:{size:10},usePointStyle:true}}}, scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},min:0,max:100}}}
+  });
+}
+
+function drawPriceChart() {
+  if (priceChart) priceChart.destroy();
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  const labels = PRICE_HISTORY_30D.map((_,i) => {
+    const d = new Date('2026-05-06'); d.setDate(d.getDate() + i);
+    return d.toLocaleDateString('en-GB',{month:'short',day:'numeric'});
+  });
+  priceChart = new Chart(document.getElementById('priceChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        {label:'WTI Price (USD/bbl)', data:PRICE_HISTORY_30D, borderColor:'#F59E0B', backgroundColor:'rgba(245,158,11,0.08)', borderWidth:2, fill:true, tension:0.4, pointRadius:0},
+        {label:'$100 Target', data:PRICE_HISTORY_30D.map(()=>100), borderColor:'rgba(239,68,68,0.5)', borderWidth:1.5, fill:false, tension:0, pointRadius:0, borderDash:[6,4]},
+      ]
+    },
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true,labels:{color:tc,font:{size:10},usePointStyle:true}}}, scales:{x:{ticks:{color:tc,font:{size:10},maxTicksLimit:8},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>'$'+v},grid:{color:'rgba(255,255,255,0.04)'},min:78,max:105}}}
+  });
+}
+
+function tickCountdown() {
+  const diff = RESOLUTION_DATE - Date.now();
+  const el = document.getElementById('countdown-display');
+  if (diff <= 0) { el.textContent = 'EXPIRED'; return; }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  el.textContent = d > 0 ? `${d}D ${h}H ${m}M` : `${h}H ${m}M`;
+}
+
+function updateLiveData() {
+  // nudge WTI price
+  const priceNudge = (Math.random() - 0.48) * 0.12;
+  wtiPrice = Math.max(82, Math.min(94, wtiPrice + priceNudge));
+  brentPrice = wtiPrice + 3.75 + (Math.random() - 0.5) * 0.2;
+  const priceChange = wtiPrice - 86.58;
+
+  document.getElementById('wti-price').textContent = '$' + wtiPrice.toFixed(2);
+  document.getElementById('big-price').textContent = wtiPrice.toFixed(2);
+  document.getElementById('brent-price').textContent = '$' + brentPrice.toFixed(2);
+  document.getElementById('stat-wti').textContent = '$' + wtiPrice.toFixed(2);
+  document.getElementById('banner-price').textContent = '$' + wtiPrice.toFixed(2);
+  const gap = 100 - wtiPrice;
+  document.getElementById('wti-gap').textContent = (gap > 0 ? '−' : '+') + '$' + Math.abs(gap).toFixed(2);
+  document.getElementById('wti-gap').style.color = gap > 0 ? 'var(--red)' : 'var(--green)';
+  const changeSign = priceChange >= 0;
+  const changeTxt = (changeSign ? '▲ +' : '▼ ') + '$' + Math.abs(priceChange).toFixed(2) + ' (' + (changeSign?'+':'') + (priceChange/86.58*100).toFixed(2) + '%)';
+  document.getElementById('wti-change').textContent = changeTxt;
+  document.getElementById('wti-change').style.color = changeSign ? 'var(--green)' : 'var(--red)';
+  document.getElementById('big-change').textContent = changeTxt;
+  document.getElementById('big-change').className = 'price-change ' + (changeSign ? 'up' : 'down');
+
+  // nudge yes prob slightly
+  MARKETS.forEach(m => {
+    const delta = (Math.random() - 0.5) * 0.004;
+    m.yes = Math.max(0.04, Math.min(0.96, m.yes + delta));
+    m.history.push(m.yes);
+    if (m.history.length > 12) m.history.shift();
+    const pct = Math.round(m.yes * 100);
+    const card = document.getElementById('mc-' + m.id);
+    if (!card) return;
+    const yesChip = card.querySelector('.price-chip.yes .price-chip-val');
+    const noChip  = card.querySelector('.price-chip.no .price-chip-val');
+    const prob    = card.querySelector('.market-prob');
+    const fill    = card.querySelector('.market-prob-fill');
+    const btnYes  = card.querySelector('.btn-yes');
+    const btnNo   = card.querySelector('.btn-no');
+    if (yesChip) yesChip.textContent = '₦' + pct;
+    if (noChip)  noChip.textContent  = '₦' + (100 - pct);
+    if (prob)    prob.textContent    = pct + '%';
+    if (fill)    fill.style.width    = pct + '%';
+    if (btnYes)  btnYes.textContent  = `BUY YES ₦${pct}`;
+    if (btnNo)   btnNo.textContent   = `BUY NO ₦${100 - pct}`;
+    drawMiniChart(m);
+  });
+
+  const mainPct = Math.round(MARKETS[0].yes * 100);
+  document.getElementById('yes-prob-stat').textContent = mainPct + '%';
+  document.getElementById('bar-yes').style.width = mainPct + '%';
+  document.getElementById('bar-no').style.width  = (100 - mainPct) + '%';
+  document.getElementById('label-yes').textContent = `YES ${mainPct}%`;
+  document.getElementById('label-no').textContent  = `NO ${100 - mainPct}%`;
+
+  renderOrderBook();
+  recentTrades.unshift(generateTrade());
+  if (recentTrades.length > 12) recentTrades.pop();
+  renderTrades();
+
+  document.getElementById('last-update').textContent = 'just now';
+  SPARKLINE_PRICES.push(wtiPrice);
+  if (SPARKLINE_PRICES.length > 12) SPARKLINE_PRICES.shift();
+  drawSparkline();
+}
+
+function openOrder(name, side, price) {
+  document.getElementById('op-market-name').textContent = name;
+  document.getElementById('op-price').value = parseInt(price);
+  setOrderSide(side);
+  document.getElementById('order-panel').classList.add('open');
+}
+function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
+function setOrderSide(side) {
+  orderSide = side;
+  document.getElementById('op-yes-btn').classList.toggle('active', side === 'YES');
+  document.getElementById('op-no-btn').classList.toggle('active', side === 'NO');
+  document.getElementById('op-side-label').textContent = side;
+  const outcomeEl    = document.getElementById('op-outcome-label');
+  const priceLabelEl = document.getElementById('op-price-label');
+  if (outcomeEl)    { outcomeEl.textContent = side; outcomeEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
+  if (priceLabelEl) { const p = parseFloat(document.getElementById('op-price').value) || 0; priceLabelEl.textContent = '₦' + p; priceLabelEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
+  updateOrderSummary();
+}
+function updateOrderSummary() {
+  const amt   = Math.min(parseFloat(document.getElementById('op-amount').value) || 0, 9999999);
+  const price = parseFloat(document.getElementById('op-price').value) || 1;
+  const shares = Math.floor(amt / price);
+  const payout = shares * 100;
+  document.getElementById('op-shares-line').textContent = shares.toLocaleString('en-NG') + ' shares of ₦' + Math.round(price) + ' each';
+  document.getElementById('op-payout').textContent = payout.toLocaleString('en-NG');
+}
+function placeOrder() {
+  const amt = parseFloat(document.getElementById('op-amount').value) || 0;
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  document.getElementById('wallet-display').textContent = '₦' + walletBalance.toLocaleString('en-NG', {maximumFractionDigits:0});
+  closeOrder();
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview','trades','comments','analytics','rules'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === name ? '' : 'none';
+  });
+  if (name === 'comments')  renderComments();
+  if (name === 'analytics') { setTimeout(drawProbChart, 50); setTimeout(drawPriceChart, 80); }
+}
+
+renderMarkets();
+renderOrderBook();
+renderActivity();
+renderTrades();
+updateOrderSummary();
+drawSparkline();
+setInterval(tickCountdown, 1000);
+setInterval(updateLiveData, 3500);
+tickCountdown();
+</script>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="../about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="../policy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms of Service</a>
+          <a href="../report.html" style="color:var(--red);">Report an Issue</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../index.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
+</body>
+</html>

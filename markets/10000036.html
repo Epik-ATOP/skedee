@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will Nigeria's Population Hit 250M This Year? | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png"><link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{--sidebar-w:220px;--rsidebar-w:280px;--ng1:#008751;--ng2:#00a85f;--ng3:#005c38;}
+.layout{display:flex;margin-top:52px;height:calc(100vh - 52px);overflow:hidden;}
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 0;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item:hover{color:var(--text);background:rgba(245,200,0,.04);}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;font-size:13px;}
+.sidebar-item .item-badge{margin-left:auto;background:var(--y);color:#000;font-size:9px;font-weight:700;font-family:var(--font-mono);padding:2px 5px;border-radius:4px;}
+.sidebar-item .item-badge.red{background:var(--red);color:#fff;}
+.trending-event{margin:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;cursor:pointer;}
+.trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.trend-change{font-family:var(--font-mono);font-size:10px;color:var(--green);}
+
+/* ── POP COUNTER ── */
+.pop-counter-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:24px;position:relative;}
+.pop-counter-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ng1),var(--ng2),var(--ng1),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
+.pop-counter-inner{display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px 0;}
+.pop-counter-label{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;}
+.pop-counter-value{font-family:var(--font-num);font-weight:700;font-size:52px;color:var(--text);letter-spacing:4px;line-height:1;transition:color .3s;}
+.pop-counter-value.flash{color:var(--ng2);}
+.pop-counter-target{display:flex;align-items:center;gap:24px;margin-top:6px;}
+.pop-target-item{text-align:center;}
+.pop-target-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+.pop-target-val{font-family:var(--font-num);font-weight:700;font-size:18px;}
+.pop-progress-wrap{width:100%;background:var(--bg4);border-radius:99px;height:12px;overflow:hidden;position:relative;margin-top:4px;}
+.pop-progress-fill{height:100%;background:linear-gradient(90deg,var(--ng3),var(--ng1),var(--ng2));border-radius:99px;transition:width .8s ease;}
+.pop-progress-target{position:absolute;top:0;bottom:0;width:2px;background:var(--y);right:0;}
+.pop-rate-row{display:flex;gap:20px;justify-content:center;margin-top:8px;}
+.rate-chip{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:7px 14px;text-align:center;}
+.rate-chip-label{font-family:var(--font-mono);font-size:8px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+.rate-chip-val{font-family:var(--font-num);font-weight:700;font-size:15px;color:var(--ng2);}
+
+/* ── STATS / SENTIMENT ── */
+.stats-row{display:flex;gap:10px;}
+.stat-box{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;}
+.stat-box-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.stat-box-val{font-family:var(--font-num);font-weight:700;font-size:26px;color:var(--text);}
+.stat-box-val.yellow{color:var(--y);}
+.stat-box-sub{font-family:var(--font-mono);font-size:10px;margin-top:3px;}
+.sentiment-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.sentiment-bar{height:10px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:8px;}
+.sentiment-yes{background:linear-gradient(90deg,var(--green),rgba(34,197,94,.6));}
+.sentiment-no{background:linear-gradient(90deg,rgba(239,68,68,.6),var(--red));}
+.sentiment-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+
+/* ── TABS ── */
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+
+/* ── PILLS ── */
+.trending-strip{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px;}
+.trending-pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.trend-pill{flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:6px 12px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.trend-pill:hover{border-color:var(--y);background:rgba(245,200,0,.06);}
+.trend-pill-name{font-size:12px;font-weight:500;color:var(--text);}
+.trend-pill-prob{font-family:var(--font-mono);font-size:10px;color:var(--y);margin-top:2px;}
+
+/* ── MARKET GRID ── */
+.markets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.market-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden;}
+.market-card:hover{border-color:var(--border2);background:var(--bg3);}
+.market-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--y);opacity:0;transition:opacity .2s;}
+.market-card:hover::after{opacity:1;}
+.market-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.market-title{font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--text);line-height:1.3;}
+.market-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.market-prob-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.market-prob{font-family:var(--font-num);font-weight:700;font-size:28px;color:var(--y);}
+.market-prob-bar{flex:1;height:5px;background:var(--bg4);border-radius:99px;overflow:hidden;}
+.market-prob-fill{height:100%;background:var(--y);border-radius:99px;transition:width .6s;}
+.market-price-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;}
+.price-chip{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;text-align:center;}
+.price-chip.yes{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04);}
+.price-chip.no{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04);}
+.price-chip-label{font-size:9px;font-family:var(--font-mono);color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.price-chip-val{font-family:var(--font-mono);font-weight:700;font-size:16px;margin-top:1px;}
+.price-chip.yes .price-chip-val{color:var(--green);}
+.price-chip.no .price-chip-val{color:var(--red);}
+.market-mini-chart{height:40px;margin-bottom:12px;}
+.market-btns{display:flex;gap:6px;}
+.btn-yes{flex:1;padding:8px;border-radius:var(--radius);border:1px solid rgba(34,197,94,.3);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;transition:all .15s;background:rgba(34,197,94,.15);color:var(--green);}
+.btn-yes:hover{background:var(--green);color:#000;}
+.btn-no{flex:1;padding:8px;border-radius:var(--radius);border:1px solid rgba(239,68,68,.3);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;transition:all .15s;background:rgba(239,68,68,.1);color:var(--red);}
+.btn-no:hover{background:var(--red);color:#fff;}
+.market-stats-row{display:flex;align-items:center;gap:12px;padding-top:10px;border-top:1px solid var(--border3);margin-top:4px;}
+.mstat{flex:1;text-align:center;}
+.mstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.mstat-val{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--text2);margin-top:2px;}
+
+/* ── RIGHT SIDEBAR ── */
+.right-sidebar{width:var(--rsidebar-w);background:var(--bg2);border-left:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 12px;display:flex;flex-direction:column;gap:16px;}
+.rsidebar-section-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.ob-row{display:flex;align-items:center;gap:8px;padding:3px 0;position:relative;overflow:hidden;}
+.ob-bar{position:absolute;top:0;bottom:0;border-radius:2px;opacity:.12;}
+.ob-bar.ask{background:var(--red);right:0;}
+.ob-bar.bid{background:var(--green);left:0;}
+.ob-price{font-family:var(--font-mono);font-size:11px;font-weight:700;width:40px;}
+.ob-price.ask{color:var(--red);}
+.ob-price.bid{color:var(--green);}
+.ob-size{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto;}
+.ob-total{font-family:var(--font-mono);font-size:10px;color:var(--text3);width:40px;text-align:right;}
+.ob-spread{text-align:center;padding:6px 0;font-family:var(--font-mono);font-size:10px;color:var(--y);border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);margin:4px 0;}
+.activity-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border3);}
+.activity-item:last-child{border-bottom:none;}
+.act-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.act-dot.buy{background:var(--green);}
+.act-dot.sell{background:var(--red);}
+.act-text{flex:1;font-size:11px;color:var(--text2);line-height:1.4;}
+.act-text strong{color:var(--text);font-weight:500;}
+.act-time{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.trade-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border3);}
+.trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side.buy{background:rgba(34,197,94,.15);color:var(--green);}
+.trade-side.sell{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-market{font-size:11px;color:var(--text2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trade-price{font-family:var(--font-mono);font-size:11px;color:var(--text);font-weight:600;}
+.trade-size{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+
+/* ── ORDER PANEL ── */
+.order-panel{position:fixed;bottom:0;right:var(--rsidebar-w);z-index:200;width:340px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:20px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.5);}
+.order-panel.open{transform:translateY(0);}
+.order-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.order-panel-title{font-family:var(--font-display);font-weight:700;font-size:15px;}
+.btn-close{width:28px;height:28px;background:var(--bg4);border:none;border-radius:50%;cursor:pointer;color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;}
+.btn-close:hover{background:var(--red);color:#fff;}
+.order-market-name{font-size:12px;color:var(--text3);margin-bottom:16px;font-family:var(--font-mono);}
+.order-side-tabs{display:flex;gap:6px;margin-bottom:16px;}
+.order-side-btn{flex:1;padding:8px;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;transition:all .15s;background:var(--bg3);color:var(--text2);}
+.order-side-btn.yes.active{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:var(--green);}
+.order-side-btn.no.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:var(--red);}
+.btn-place{width:100%;padding:14px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:800;font-size:15px;transition:all .15s;background:var(--y);color:#000;}
+.btn-place:hover{background:var(--y2);transform:translateY(-1px);}
+.comment-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border3);}
+.comment-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--font-display);}
+.comment-body{flex:1;}
+.comment-user{font-size:11px;font-weight:600;color:var(--text);}
+.comment-text{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.5;}
+.comment-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;}
+.positions-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.positions-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.positions-title .badge{background:var(--y);color:#000;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;}
+
+@media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
+</style>
+<link rel="stylesheet" href="../market-mobile.css">
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="../search.html" class="topbar-navlink">Search Markets</a>
+    <a href="../about.html" class="topbar-navlink">About</a>
+    <a href="../faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search markets..."></div>
+  <div class="topbar-right">
+    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div></div>
+    <div class="avatar" onclick="toggleProfile()">TK</div>
+  </div>
+</div>
+
+<div class="profile-dropdown" id="profile-dd">
+  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
+  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
+  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
+</div>
+
+<div class="layout">
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist</div>
+  <div class="sidebar-item"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Find Markets</div>
+  <div class="sidebar-item"><i class="fa-solid fa-futbol"></i>Football</div>
+  <div class="sidebar-item"><i class="fa-solid fa-medal"></i>Other Sports</div>
+  <div class="sidebar-item"><i class="fa-solid fa-film"></i>Entertainment</div>
+  <div class="sidebar-item"><i class="fa-solid fa-music"></i>Music</div>
+  <div class="sidebar-item"><i class="fa-solid fa-landmark"></i>Politics</div>
+  <div class="sidebar-item"><i class="fa-solid fa-oil-can"></i>Commodities</div>
+  <div class="sidebar-item"><i class="fa-solid fa-coins"></i>Finance</div>
+  <div class="sidebar-item active"><i class="fa-solid fa-shapes"></i>Miscellaneous</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Trending — Misc</div>
+  <div class="trending-event" onclick="window.location='10000036.html'" style="border-color:rgba(0,135,81,.4);background:rgba(0,135,81,.04);">
+    <div class="trend-name">🇳🇬 Nigeria Pop 250M in 2026?</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦8.4M vol</div><div class="trend-change" style="color:var(--ng2);">● LIVE</div></div>
+  </div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Also Trending</div>
+  <div class="trending-event" onclick="window.location='10000035.html'">
+    <div class="trend-name">🛢️ Crude Oil $100 Before July</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦14.3M vol</div><div class="trend-change" style="color:var(--green);">▲ 3%</div></div>
+  </div>
+  <div class="trending-event" onclick="window.location='10000033.html'">
+    <div class="trend-name">🌍 2026 World Cup Winner</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦350M vol</div><div class="trend-change" style="color:var(--green);">▲ 8%</div></div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- BANNER -->
+  <div style="background:linear-gradient(135deg,rgba(0,135,81,.15),rgba(0,135,81,.04));border:2px solid rgba(0,135,81,.55);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:180px;opacity:.04;pointer-events:none;line-height:1;user-select:none;overflow:hidden;border-radius:20px;">🇳🇬</div>
+    <div style="width:64px;height:64px;background:rgba(0,135,81,.15);border:2px solid rgba(0,135,81,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">🇳🇬</div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--ng2);letter-spacing:2px;margin-bottom:6px;">🌍 DEMOGRAPHY · NIGERIA · 2026</div>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Will Nigeria's Population Hit <span style="color:var(--ng2);">250 Million</span> This Year?</div>
+      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Currently at <strong style="color:var(--ng2);">~242M</strong> · Need <strong style="color:var(--text);">+8 million more people</strong> before <strong style="color:var(--y);">Dec 31, 2026</strong></div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Source: Worldometer live estimate · Nigeria's annual growth ~2.6% · ~16,600 net new people per day</div>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
+      <div style="color:var(--ng2);font-weight:700;font-size:12px;margin-bottom:4px;">● OPEN</div>
+      <div>Closes Dec 31, 2026</div>
+      <div id="countdown-display" style="color:var(--y);font-weight:700;margin-top:4px;">209D</div>
+    </div>
+  </div>
+
+  <!-- LIVE POPULATION COUNTER -->
+  <div class="pop-counter-card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;">Live Population Estimate</div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--ng2);animation:live-pulse 1.6s infinite;"></div>
+        <span style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--ng2);">COUNTING</span>
+      </div>
+    </div>
+    <style>@keyframes live-pulse{0%{box-shadow:0 0 0 0 rgba(0,168,95,.7)}70%{box-shadow:0 0 0 8px rgba(0,168,95,0)}100%{box-shadow:0 0 0 0 rgba(0,168,95,0)}}</style>
+    <div class="pop-counter-inner">
+      <div class="pop-counter-label">Nigeria Population — 2026</div>
+      <div class="pop-counter-value" id="pop-counter">242,150,000</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">vs target of <strong style="color:var(--y);">250,000,000</strong></div>
+    </div>
+
+    <!-- Progress bar -->
+    <div style="margin:4px 0 10px;">
+      <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-bottom:5px;">
+        <span>200M</span>
+        <span style="color:var(--ng2);font-weight:700;" id="progress-pct">96.9%</span>
+        <span style="color:var(--y);">250M target</span>
+      </div>
+      <div class="pop-progress-wrap">
+        <div class="pop-progress-fill" id="pop-progress" style="width:96.9%;"></div>
+      </div>
+    </div>
+
+    <!-- Rate chips -->
+    <div class="pop-rate-row">
+      <div class="rate-chip"><div class="rate-chip-label">Births / Day</div><div class="rate-chip-val">~49,400</div></div>
+      <div class="rate-chip"><div class="rate-chip-label">Deaths / Day</div><div class="rate-chip-val">~16,700</div></div>
+      <div class="rate-chip"><div class="rate-chip-label">Net Growth / Day</div><div class="rate-chip-val" style="color:var(--ng2);">~16,600</div></div>
+      <div class="rate-chip"><div class="rate-chip-label">Days to 250M</div><div class="rate-chip-val" id="days-to-target" style="color:var(--red);">~482</div></div>
+    </div>
+  </div>
+
+  <!-- STAT BOXES -->
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-box-label">YES Probability</div><div class="stat-box-val yellow" id="yes-prob-stat">13%</div><div class="stat-box-sub" style="color:var(--red);">▼ −1% this week</div></div>
+    <div class="stat-box"><div class="stat-box-label">Gap to 250M</div><div class="stat-box-val" style="color:var(--red);" id="stat-gap">~7.85M</div><div class="stat-box-sub" style="color:var(--text3);">At current rate: ~473 days</div></div>
+    <div class="stat-box"><div class="stat-box-label">Days Left in 2026</div><div class="stat-box-val" id="stat-days">209</div><div class="stat-box-sub" style="color:var(--text3);">Closes Dec 31, 2026</div></div>
+    <div class="stat-box"><div class="stat-box-label">Traders</div><div class="stat-box-val">1,638</div><div class="stat-box-sub" style="color:var(--green);">▲ +88 today</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('trades',this)">Trades</button>
+    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
+    <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+    <div class="sentiment-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Nigeria hits 250M in 2026 <span style="font-family:var(--font-mono);font-size:9px;background:rgba(0,135,81,.12);border:1px solid rgba(0,135,81,.3);color:var(--ng2);padding:2px 6px;border-radius:4px;margin-left:6px;">LIVE</span></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦3.2M volume</div>
+      </div>
+      <div class="sentiment-bar">
+        <div class="sentiment-yes" id="bar-yes" style="width:13%;"></div>
+        <div class="sentiment-no" id="bar-no" style="width:87%;"></div>
+      </div>
+      <div class="sentiment-labels">
+        <span style="color:var(--green);font-weight:700;" id="label-yes">YES 13%</span>
+        <span style="color:var(--red);font-weight:700;" id="label-no">NO 87%</span>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
+        <i class="fa-solid fa-calculator" style="color:var(--ng2);margin-right:4px;"></i>
+        At the current growth rate of ~16,600/day, Nigeria reaches 250M in approximately <strong style="color:var(--text);">~473 more days</strong> — meaning <strong style="color:var(--y);">mid-2027</strong>, not 2026
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        <button class="btn-yes" style="flex:1;padding:12px;font-size:14px;" onclick="openOrder('Nigeria Population hits 250M in 2026','YES',13)">BUY YES &nbsp;₦13</button>
+        <button class="btn-no"  style="flex:1;padding:12px;font-size:14px;" onclick="openOrder('Nigeria Population hits 250M in 2026','NO',87)">BUY NO &nbsp;₦87</button>
+      </div>
+    </div>
+
+    <div class="trending-strip" style="margin-top:12px;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🇳🇬 Quick Markets</div>
+      <div class="trending-pills">
+        <div class="trend-pill" onclick="openOrder('Nigeria hits 250M in 2026','YES',13)"><div class="trend-pill-name">250M in 2026</div><div class="trend-pill-prob">₦13 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Nigeria hits 248M by Dec 31','YES',24)"><div class="trend-pill-name">248M by Dec 31</div><div class="trend-pill-prob">₦24 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Nigeria hits 245M by Dec 31','YES',71)"><div class="trend-pill-name">245M by Dec 31</div><div class="trend-pill-prob">₦71 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Nigeria hits 244M by Dec 31','YES',88)"><div class="trend-pill-name">244M by Dec 31</div><div class="trend-pill-prob">₦88 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Nigeria hits 250M before 2028','YES',91)"><div class="trend-pill-name">250M before 2028</div><div class="trend-pill-prob">₦91 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Nigeria overtakes USA pop by 2030','YES',58)"><div class="trend-pill-name">Overtake USA by 2030</div><div class="trend-pill-prob">₦58 YES</div></div>
+      </div>
+    </div>
+
+    <div class="markets-grid" id="markets-grid" style="margin-top:12px;"></div>
+
+    <div class="positions-card">
+      <div class="positions-title">Open Positions <span class="badge">0</span></div>
+      <div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No open positions — pick a market above to get started</div>
+    </div>
+  </div>
+
+  <div id="tab-trades" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Trade History</div>
+      <div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No trades yet</div>
+    </div>
+  </div>
+
+  <div id="tab-comments" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Community <span class="badge" style="background:var(--ng1);">31</span></div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
+
+  <div id="tab-analytics" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">YES Probability History</div>
+      <div style="position:relative;height:220px;"><canvas id="probChart"></canvas></div>
+    </div>
+    <div class="positions-card" style="margin-top:12px;">
+      <div class="positions-title">Population Growth Projection</div>
+      <div style="position:relative;height:220px;"><canvas id="projChart"></canvas></div>
+    </div>
+  </div>
+
+  <div id="tab-rules" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Market Rules</div>
+      <div style="color:var(--text2);font-size:13px;line-height:1.8;">
+        <strong style="color:var(--text);">Resolution Condition</strong><br>
+        This market resolves YES if the Worldometer live population counter for Nigeria displays a figure of <strong style="color:var(--ng2);">250,000,000 or higher</strong> at any point before 23:59 WAT on December 31, 2026. Resolution is based on Worldometer's real-time estimate, which uses UN population projections with real-time birth/death rate extrapolation.<br><br>
+        <strong style="color:var(--text);">Data Source</strong><br>
+        Worldometer (worldometers.info/world-population/nigeria-population) — the same source used to establish the current baseline of ~242M. A screenshot with timestamp will be published at resolution. The UN World Population Prospects data may also be used as a secondary confirmation source.<br><br>
+        <strong style="color:var(--text);">Why It Probably Won't Happen</strong><br>
+        Nigeria's current net growth is approximately 16,600 people per day. To add 8 million people in the remaining ~209 days of 2026 would require an average of ~38,300 net new people per day — more than double the current rate. No credible demographic scenario supports this.<br><br>
+        <strong style="color:var(--text);">Why It Might (Long Shot)</strong><br>
+        Population estimates carry uncertainty. A revision to Nigeria's baseline figures — as has happened before with census data releases — could theoretically push the Worldometer estimate over 250M. The last Nigerian census was in 2006; any new official count could surprise.<br><br>
+        <strong style="color:var(--text);">Disputes</strong><br>
+        Contact support@skedee.ng within 24 hours of resolution. Skedee's decision is final.
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- RIGHT SIDEBAR -->
+<div class="right-sidebar">
+  <div>
+    <div class="rsidebar-section-title">Order Book — 250M in 2026 <span style="color:var(--ng2);font-size:10px;">LIVE</span></div>
+    <div id="order-book-asks"></div>
+    <div class="ob-spread">Spread: ₦2 · Mid: ₦13</div>
+    <div id="order-book-bids"></div>
+  </div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;">
+    <div class="rsidebar-section-title">Activity Feed</div>
+    <div id="activity-feed"></div>
+  </div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;">
+    <div class="rsidebar-section-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
+  </div>
+</div>
+
+</div><!-- end layout -->
+
+<!-- ORDER PANEL -->
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header">
+    <div class="order-panel-title">Place Order</div>
+    <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="order-market-name" id="op-market-name">Nigeria Population hits 250M in 2026</div>
+  <div class="order-side-tabs">
+    <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
+    <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">OUTCOME</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-outcome-label">YES</div>
+    </div>
+    <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">PRICE</div>
+      <div style="font-family:var(--font-num);font-weight:700;font-size:22px;color:var(--green);line-height:1;" id="op-price-label">₦—</div>
+    </div>
+  </div>
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;padding:0 16px;margin-bottom:8px;">
+    <span style="font-family:var(--font-mono);font-size:22px;color:var(--text3);margin-right:8px;flex-shrink:0;">₦</span>
+    <input type="number" id="op-amount" value="5000" min="100" max="9999999" oninput="updateOrderSummary()"
+      style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
+  </div>
+  <input type="hidden" id="op-price" value="13">
+  <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:20px;padding:0 2px;" id="op-shares-line">— shares of ₦— each</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:0 2px;">
+    <div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:1px;line-height:1.6;">PAYOUT</div>
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:.5px;">IF CORRECT</div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:4px;">
+      <span style="font-family:var(--font-mono);font-size:26px;color:var(--text3);">₦</span>
+      <span style="font-family:var(--font-num);font-size:34px;font-weight:700;color:var(--y);line-height:1;" id="op-payout">—</span>
+    </div>
+  </div>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+</div>
+
+<script src="../script.js"></script>
+<script>
+const RESOLUTION_DATE = new Date('2026-12-31T23:59:00+01:00');
+let orderSide = 'YES', walletBalance = 4271250;
+let miniCharts = {}, probChart, projChart;
+
+// Population counter
+let popCount = 242150000;
+const NET_PER_SECOND = 16600 / 86400; // ~0.192/s
+
+const MARKETS = [
+  { id:'pop_250_2026',  title:'Nigeria hits 250M in 2026',       yes:0.13, vol:'₦3.2M', liq:'₦1.1M', spread:'₦2', history:[0.16,0.15,0.15,0.14,0.14,0.13,0.13,0.13,0.13,0.13] },
+  { id:'pop_248_dec31', title:'Nigeria hits 248M by Dec 31',      yes:0.24, vol:'₦1.8M', liq:'₦0.7M', spread:'₦3', history:[0.28,0.27,0.26,0.25,0.25,0.24,0.24,0.24,0.24,0.24] },
+  { id:'pop_245_dec31', title:'Nigeria hits 245M by Dec 31',      yes:0.71, vol:'₦2.1M', liq:'₦0.9M', spread:'₦3', history:[0.68,0.69,0.70,0.70,0.71,0.71,0.71,0.71,0.71,0.71] },
+  { id:'pop_244_dec31', title:'Nigeria hits 244M by Dec 31',      yes:0.88, vol:'₦1.4M', liq:'₦0.5M', spread:'₦2', history:[0.85,0.86,0.87,0.87,0.88,0.88,0.88,0.88,0.88,0.88] },
+  { id:'pop_250_2028',  title:'Nigeria hits 250M before 2028',    yes:0.91, vol:'₦0.9M', liq:'₦0.4M', spread:'₦3', history:[0.88,0.89,0.90,0.90,0.91,0.91,0.91,0.91,0.91,0.91] },
+  { id:'pop_usa_2030',  title:'Nigeria overtakes USA pop by 2030',yes:0.58, vol:'₦0.7M', liq:'₦0.3M', spread:'₦4', history:[0.55,0.56,0.57,0.57,0.58,0.58,0.58,0.58,0.58,0.58] },
+];
+
+const ORDER_BOOK_DATA = {
+  asks: [{p:'₦15',s:620,t:930},{p:'₦14',s:980,t:1372},{p:'₦13',s:4200,t:5460},{p:'₦12',s:810,t:972}],
+  bids: [{p:'₦11',s:1100,t:1210},{p:'₦10',s:740,t:740},{p:'₦9', s:520,t:468}, {p:'₦8', s:310,t:248}]
+};
+
+const ACTIVITY = [
+  {type:'buy',  text:'<strong>naija_stats_nerd</strong> opened 250M in 2026 YES ×5,000 at ₦13 — "census revision incoming"', time:'6m'},
+  {type:'sell', text:'<strong>demography_king</strong> sold 250M YES ×2,000 — "maths don\'t add up, it\'s 2027 at earliest"', time:'18m'},
+  {type:'buy',  text:'<strong>lagos_big_brain</strong> backed 245M by Dec 31 YES ×8,000 at ₦71 — "safe bet"', time:'29m'},
+  {type:'buy',  text:'<strong>abuja_economist</strong> opened overtake USA by 2030 YES ×3,500 at ₦58', time:'42m'},
+  {type:'buy',  text:'<strong>popgrowth_watcher</strong> opened 250M in 2026 YES ×10,000 at ₦13 — "lottery odds, lottery payout"', time:'1h'},
+];
+
+const COMMENTS_DATA = [
+  {init:'N', user:'naija_stats_nerd', col:'#008751', text:"Everyone is sleeping on the census angle. Nigeria hasn't done a proper census since 2006. If the government finally conducts one this year and the results come in higher than estimates — because people know our population has always been undercounted — we could wake up one morning and Worldometer updates to 255M. YES at ₦13 is free money for a lottery bet.", time:'22 min ago', likes:67},
+  {init:'D', user:'demography_king', col:'#EF4444', text:"The maths is clear. 242M + (16,600 × 209 days) = 242M + 3.47M = ~245.5M by December 31. You need +8M in 209 days at the current rate, which requires an impossible overnight revision. Solid NO at ₦87. Take the ₦87, pocket it, say thank you.", time:'38 min ago', likes:89},
+  {init:'L', user:'lagos_big_brain', col:'#F59E0B', text:"I'm not betting on 250M this year — that's a stretch. But 245M by December is almost certain and ₦71 YES on that one is genuinely good value. Nigeria adds 3.5 million net per year minimum. The math is clean.", time:'55 min ago', likes:44},
+  {init:'A', user:'abuja_economist', col:'#A855F7', text:"The more interesting market here is Nigeria overtaking USA by 2030. USA is at ~340M, Nigeria at ~242M. That's a 98M gap. At 16,600/day net for Nigeria vs ~3,000/day for USA, the gap closes by ~13.6M/year. 7 years × 13.6M = 95M. So by 2033, not 2030. ₦58 YES feels 10 points too high.", time:'1h ago', likes:38},
+  {init:'P', user:'popgrowth_watcher', col:'#06B6D4', text:"Listen, I put ₦5,000 on 250M YES and I'm keeping it. The expected value if there's even a 15% chance of a census revision is incredible. Worst case I lose ₦5k. Best case I walk away with ₦38k. This is the pure definition of a value bet on a low-probability high-payout market.", time:'2h ago', likes:52},
+];
+
+function updatePopCounter() {
+  popCount += NET_PER_SECOND * 2; // tick every 2 seconds
+  const el = document.getElementById('pop-counter');
+  el.textContent = Math.round(popCount).toLocaleString('en-NG');
+  el.classList.add('flash');
+  setTimeout(() => el.classList.remove('flash'), 300);
+
+  const pct = ((popCount - 200000000) / (250000000 - 200000000) * 100).toFixed(1);
+  document.getElementById('pop-progress').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = ((popCount / 250000000) * 100).toFixed(2) + '%';
+
+  const gap = 250000000 - popCount;
+  const daysToTarget = Math.round(gap / 16600);
+  document.getElementById('days-to-target').textContent = '~' + daysToTarget.toLocaleString();
+  document.getElementById('stat-gap').textContent = '~' + (gap / 1000000).toFixed(2) + 'M';
+}
+
+function renderMarkets() {
+  const grid = document.getElementById('markets-grid');
+  grid.innerHTML = '';
+  MARKETS.forEach(m => {
+    const pct = Math.round(m.yes * 100);
+    const card = document.createElement('div');
+    card.className = 'market-card';
+    card.id = 'mc-' + m.id;
+    card.innerHTML = `
+      <div class="market-header">
+        <div><div class="market-title">${m.title}</div><div class="market-vol">Vol ${m.vol} · Liq ${m.liq}</div></div>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">${m.spread} spread</span>
+      </div>
+      <div class="market-prob-row">
+        <div class="market-prob">${pct}%</div>
+        <div class="market-prob-bar"><div class="market-prob-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="market-price-row">
+        <div class="price-chip yes"><div class="price-chip-label">YES</div><div class="price-chip-val">₦${pct}</div></div>
+        <div class="price-chip no"><div class="price-chip-label">NO</div><div class="price-chip-val">₦${100-pct}</div></div>
+      </div>
+      <div class="market-mini-chart"><canvas id="mini-${m.id}"></canvas></div>
+      <div class="market-btns">
+        <button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button>
+        <button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button>
+      </div>
+      <div class="market-stats-row">
+        <div class="mstat"><div class="mstat-label">SPREAD</div><div class="mstat-val">${m.spread}</div></div>
+        <div class="mstat"><div class="mstat-label">VOLUME</div><div class="mstat-val">${m.vol}</div></div>
+        <div class="mstat"><div class="mstat-label">LIQUIDITY</div><div class="mstat-val">${m.liq}</div></div>
+      </div>`;
+    grid.appendChild(card);
+    setTimeout(() => drawMiniChart(m), 50);
+  });
+}
+
+function drawMiniChart(m) {
+  const canvas = document.getElementById('mini-' + m.id);
+  if (!canvas || !window.Chart) return;
+  if (miniCharts[m.id]) miniCharts[m.id].destroy();
+  const color = m.yes >= 0.7 ? '#22C55E' : (m.yes < 0.25 ? '#EF4444' : '#F59E0B');
+  miniCharts[m.id] = new Chart(canvas.getContext('2d'), {
+    type:'line',
+    data:{ labels:m.history.map((_,i)=>i), datasets:[{data:m.history.map(v=>Math.round(v*100)), borderColor:color, backgroundColor:color+'18', borderWidth:1.5, fill:true, tension:0.4, pointRadius:0}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{enabled:false}}, scales:{x:{display:false},y:{display:false,min:0,max:100}}, animation:{duration:0} }
+  });
+}
+
+function renderOrderBook() {
+  const maxSize = Math.max(...ORDER_BOOK_DATA.asks.map(r=>r.t), ...ORDER_BOOK_DATA.bids.map(r=>r.t));
+  document.getElementById('order-book-asks').innerHTML = ORDER_BOOK_DATA.asks.slice().reverse().map(r =>
+    `<div class="ob-row"><div class="ob-bar ask" style="width:${Math.round(r.t/maxSize*100)}%"></div><span class="ob-price ask">${r.p}</span><span class="ob-size">${r.s.toLocaleString()}</span><span class="ob-total">${r.t.toLocaleString()}</span></div>`
+  ).join('');
+  document.getElementById('order-book-bids').innerHTML = ORDER_BOOK_DATA.bids.map(r =>
+    `<div class="ob-row"><div class="ob-bar bid" style="width:${Math.round(r.t/maxSize*100)}%"></div><span class="ob-price bid">${r.p}</span><span class="ob-size">${r.s.toLocaleString()}</span><span class="ob-total">${r.t.toLocaleString()}</span></div>`
+  ).join('');
+}
+
+function renderActivity() {
+  document.getElementById('activity-feed').innerHTML = ACTIVITY.map(a =>
+    `<div class="activity-item"><div class="act-dot ${a.type}"></div><div class="act-text">${a.text}</div><div class="act-time">${a.time}</div></div>`
+  ).join('');
+}
+
+let recentTrades = [];
+function generateTrade() {
+  const m = MARKETS[Math.floor(Math.random() * MARKETS.length)];
+  const side = Math.random() > 0.4 ? 'buy' : 'sell';
+  const pct = Math.round(m.yes * 100);
+  return { side, market: m.title.replace('Nigeria ','').replace(' by Dec 31','').replace(' in 2026','').replace(' before 2028',''), price: pct, size: Math.floor(Math.random()*3000+300) };
+}
+function renderTrades() {
+  if (!recentTrades.length) for (let i = 0; i < 8; i++) recentTrades.push(generateTrade());
+  document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t =>
+    `<div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${t.price}</span><span class="trade-size">×${t.size.toLocaleString()}</span></div>`
+  ).join('');
+}
+
+function renderComments() {
+  document.getElementById('comments-list').innerHTML = COMMENTS_DATA.map(c =>
+    `<div class="comment-item">
+      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+      <div class="comment-body">
+        <div class="comment-user">${c.user}</div>
+        <div class="comment-text">${c.text}</div>
+        <div class="comment-meta">${c.time} · <span style="color:var(--ng2);">👍 ${c.likes}</span></div>
+      </div>
+    </div>`
+  ).join('');
+}
+
+function drawProbChart() {
+  if (probChart) probChart.destroy();
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  probChart = new Chart(document.getElementById('probChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels:['30d ago','25d ago','20d ago','15d ago','10d ago','7d ago','5d ago','3d ago','Yesterday','Today'],
+      datasets:[
+        {label:'YES %', data:[18,17,17,16,15,15,14,14,13,13], borderColor:'#22C55E', backgroundColor:'rgba(34,197,94,0.06)', borderWidth:2, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#22C55E'},
+        {label:'NO %',  data:[82,83,83,84,85,85,86,86,87,87], borderColor:'#EF4444', backgroundColor:'rgba(239,68,68,0.04)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#EF4444'},
+      ]
+    },
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true,labels:{color:tc,font:{size:10},usePointStyle:true}}}, scales:{x:{ticks:{color:tc,font:{size:10},maxTicksLimit:6},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},min:0,max:100}}}
+  });
+}
+
+function drawProjChart() {
+  if (projChart) projChart.destroy();
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const baseJan = 240_540_000;
+  const dailyNet = 16600;
+  const projected = months.map((_,i) => Math.round((baseJan + (i * 30.4 * dailyNet)) / 1e6 * 10) / 10);
+  projChart = new Chart(document.getElementById('projChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels: months,
+      datasets:[
+        {label:'Projected Population (M)', data:projected, borderColor:'#008751', backgroundColor:'rgba(0,135,81,0.08)', borderWidth:2, fill:true, tension:0.3, pointRadius:4, pointBackgroundColor:'#008751'},
+        {label:'250M Target', data:months.map(()=>250), borderColor:'rgba(245,200,0,0.6)', borderWidth:1.5, fill:false, tension:0, pointRadius:0, borderDash:[6,4]},
+      ]
+    },
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true,labels:{color:tc,font:{size:10},usePointStyle:true}}}, scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'M'},grid:{color:'rgba(255,255,255,0.04)'},min:239,max:252}}}
+  });
+}
+
+function tickCountdown() {
+  const diff = RESOLUTION_DATE - Date.now();
+  const el = document.getElementById('countdown-display');
+  if (diff <= 0) { el.textContent = 'CLOSED'; return; }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  el.textContent = `${d}D ${h}H`;
+  document.getElementById('stat-days').textContent = d;
+}
+
+function openOrder(name, side, price) {
+  document.getElementById('op-market-name').textContent = name;
+  document.getElementById('op-price').value = parseInt(price);
+  setOrderSide(side);
+  document.getElementById('order-panel').classList.add('open');
+}
+function closeOrder() { document.getElementById('order-panel').classList.remove('open'); }
+function setOrderSide(side) {
+  orderSide = side;
+  document.getElementById('op-yes-btn').classList.toggle('active', side === 'YES');
+  document.getElementById('op-no-btn').classList.toggle('active', side === 'NO');
+  document.getElementById('op-side-label').textContent = side;
+  const outcomeEl    = document.getElementById('op-outcome-label');
+  const priceLabelEl = document.getElementById('op-price-label');
+  if (outcomeEl)    { outcomeEl.textContent = side; outcomeEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
+  if (priceLabelEl) { const p = parseFloat(document.getElementById('op-price').value) || 0; priceLabelEl.textContent = '₦' + p; priceLabelEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
+  updateOrderSummary();
+}
+function updateOrderSummary() {
+  const amt   = Math.min(parseFloat(document.getElementById('op-amount').value) || 0, 9999999);
+  const price = parseFloat(document.getElementById('op-price').value) || 1;
+  const shares = Math.floor(amt / price);
+  const payout = shares * 100;
+  document.getElementById('op-shares-line').textContent = shares.toLocaleString('en-NG') + ' shares of ₦' + Math.round(price) + ' each';
+  document.getElementById('op-payout').textContent = payout.toLocaleString('en-NG');
+}
+function placeOrder() {
+  const amt = parseFloat(document.getElementById('op-amount').value) || 0;
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  document.getElementById('wallet-display').textContent = '₦' + walletBalance.toLocaleString('en-NG', {maximumFractionDigits:0});
+  closeOrder();
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview','trades','comments','analytics','rules'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === name ? '' : 'none';
+  });
+  if (name === 'comments')  renderComments();
+  if (name === 'analytics') { setTimeout(drawProbChart, 50); setTimeout(drawProjChart, 80); }
+}
+
+renderMarkets();
+renderOrderBook();
+renderActivity();
+renderTrades();
+updateOrderSummary();
+setInterval(tickCountdown, 1000);
+setInterval(updatePopCounter, 2000);
+setInterval(() => {
+  recentTrades.unshift(generateTrade());
+  if (recentTrades.length > 12) recentTrades.pop();
+  renderTrades();
+}, 5000);
+tickCountdown();
+updatePopCounter();
+</script>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="../about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="../policy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms of Service</a>
+          <a href="../report.html" style="color:var(--red);">Report an Issue</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+          <a href="#"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+      </a>
+      <a href="#" class="store-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+      </a>
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<nav class="mobile-bottom-nav">
+  <a class="mob-nav-item" href="../index.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-star"></i>Watch</a>
+  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
+  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+  <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
+</body>
+</html>
