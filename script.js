@@ -1,3 +1,10 @@
+function addAmount(n) {
+  const el = document.getElementById('op-amount');
+  if (!el) return;
+  el.value = Math.min((parseFloat(el.value) || 0) + n, 9999999);
+  if (typeof updateOrderSummary === 'function') updateOrderSummary();
+}
+
 function toggleTheme() {
   const isDark = document.body.getAttribute('data-theme') !== 'light';
   document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
