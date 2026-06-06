@@ -181,11 +181,6 @@ body{-webkit-font-smoothing:antialiased;}
       Search all Markets
     </div>
     <div class="hero-sub">Search all available markets, new markets are added every week</div>
-    <div class="hero-stats">
-      <div class="hstat"><div class="hstat-val">46+</div><div class="hstat-label">Markets</div></div>
-      <div class="hstat"><div class="hstat-val">₦350M+</div><div class="hstat-label">Total Volume</div></div>
-      <div class="hstat"><div class="hstat-val">15</div><div class="hstat-label">Settled</div></div>
-    </div>
   </div>
 
   <!-- FILTERS BAR -->
@@ -195,12 +190,12 @@ body{-webkit-font-smoothing:antialiased;}
       <input type="text" id="main-search" placeholder="Search markets…" oninput="handleSearch(this.value)" autocomplete="off">
     </div>
     <div class="filter-tags" id="filter-tags">
-      <div class="filter-tag active" data-filter="all" onclick="setFilter('all',this)">🌍 All <span class="tag-count">46</span></div>
-      <div class="filter-tag" data-filter="football" onclick="setFilter('football',this)">⚽ All Football <span class="tag-count">12</span></div>
-      <div class="filter-tag" data-filter="music" onclick="setFilter('music',this)">🎵 Music <span class="tag-count">2</span></div>
-      <div class="filter-tag" data-filter="entertainment" onclick="setFilter('entertainment',this)">🎬 Entertainment <span class="tag-count">2</span></div>
-      <div class="filter-tag" data-filter="politics" onclick="setFilter('politics',this)">⚖️ Politics <span class="tag-count">2</span></div>
-      <div class="filter-tag" data-filter="commodities" onclick="setFilter('commodities',this)">🛢️ Commodities <span class="tag-count">8</span></div>
+      <div class="filter-tag active" data-filter="all" onclick="setFilter('all',this)">🌍 All <span class="tag-count"></span></div>
+      <div class="filter-tag" data-filter="football" onclick="setFilter('football',this)">⚽ Football <span class="tag-count"></span></div>
+      <div class="filter-tag" data-filter="music" onclick="setFilter('music',this)">🎵 Music <span class="tag-count"></span></div>
+      <div class="filter-tag" data-filter="entertainment" onclick="setFilter('entertainment',this)">🎬 Entertainment <span class="tag-count"></span></div>
+      <div class="filter-tag" data-filter="politics" onclick="setFilter('politics',this)">⚖️ Politics <span class="tag-count"></span></div>
+      <div class="filter-tag" data-filter="commodities" onclick="setFilter('commodities',this)">🛢️ Commodities <span class="tag-count"></span></div>
     </div>
     <div class="results-count" id="results-count">Showing <strong id="results-num">46</strong> markets</div>
   </div>
@@ -244,8 +239,8 @@ body{-webkit-font-smoothing:antialiased;}
         <div class="footer-col">
           <div class="footer-col-title">COMPANY</div>
           <a href="about.html">About</a>
-          <a href="blog.html">Blog</a>
-          <a href="careers.html">Careers</a>
+          <a href="brand.html">Brand</a>
+          <a href="payment.html">Payment</a>
           <a href="faq.html">FAQ</a>
           <a href="policy.html">Privacy Policy</a>
           <a href="terms.html">Terms of Service</a>
@@ -279,38 +274,21 @@ body{-webkit-font-smoothing:antialiased;}
 <script src="script.js"></script>
 <script>
 // ── DATA ──────────────────────────────────────────────────────────
-const SUNDAY_MATCHES = [
-  { id:10000014, home:'Man City', homeAbbr:'MCI', homeColor:'#6CABDD', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg', away:'Aston Villa', awayAbbr:'AVL', awayColor:'#95003C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/9/9a/Aston_Villa_FC_new_crest.svg', homeProb:0, drawProb:0, awayProb:100, homeScore:1, awayScore:2, vol:'₦38M', link:'markets/10000014.html' },
-  { id:10000015, home:'Brighton', homeAbbr:'BHA', homeColor:'#0057B8', homeLogo:'https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg', away:'Man United', awayAbbr:'MUN', awayColor:'#DA291C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg', homeProb:0, drawProb:0, awayProb:100, homeScore:0, awayScore:3, vol:'₦22M', link:'markets/10000015.html' },
-  { id:10000016, home:'Fulham', homeAbbr:'FUL', homeColor:'#BBBBBB', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/eb/Fulham_FC_%28shield%29.svg', away:'Newcastle', awayAbbr:'NEW', awayColor:'#888888', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg', homeProb:100, drawProb:0, awayProb:0, homeScore:2, awayScore:0, vol:'₦14M', link:'markets/10000016.html' },
-  { id:10000017, home:'Spurs', homeAbbr:'TOT', homeColor:'#CCCCCC', homeLogo:'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg', away:'Everton', awayAbbr:'EVE', awayColor:'#003399', awayLogo:'https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg', homeProb:100, drawProb:0, awayProb:0, homeScore:1, awayScore:0, vol:'₦18M', link:'markets/10000017.html' },
-  { id:10000018, home:'Liverpool', homeAbbr:'LIV', homeColor:'#C8102E', homeLogo:'https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg', away:'Brentford', awayAbbr:'BRE', awayColor:'#E30613', awayLogo:'https://upload.wikimedia.org/wikipedia/en/2/2a/Brentford_FC_crest.svg', homeProb:0, drawProb:100, awayProb:0, homeScore:1, awayScore:1, vol:'₦44M', link:'markets/10000018.html' },
-  { id:10000019, home:'Burnley', homeAbbr:'BUR', homeColor:'#6C1D45', homeLogo:'https://upload.wikimedia.org/wikipedia/en/6/6d/Burnley_FC_Logo.svg', away:'Wolves', awayAbbr:'WOL', awayColor:'#FDB913', awayLogo:'https://upload.wikimedia.org/wikipedia/en/f/fc/Wolverhampton_Wanderers.svg', homeProb:0, drawProb:100, awayProb:0, homeScore:1, awayScore:1, vol:'₦8M', link:'markets/10000019.html' },
-  { id:10000020, home:'Nottm Forest', homeAbbr:'NFO', homeColor:'#DD0000', homeLogo:'https://upload.wikimedia.org/wikipedia/en/e/e5/Nottingham_Forest_F.C._logo.svg', away:'Bournemouth', awayAbbr:'BOU', awayColor:'#DA291C', awayLogo:'https://upload.wikimedia.org/wikipedia/en/e/e5/AFC_Bournemouth_%282013%29.svg', homeProb:0, drawProb:100, awayProb:0, homeScore:1, awayScore:1, vol:'₦11M', link:'markets/10000020.html' },
-  { id:10000021, home:'West Ham', homeAbbr:'WHU', homeColor:'#7A263A', homeLogo:'https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg', away:'Leeds', awayAbbr:'LEE', awayColor:'#FFCD00', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/54/Leeds_United_F.C._logo.svg', homeProb:100, drawProb:0, awayProb:0, homeScore:3, awayScore:0, vol:'₦9M', link:'markets/10000021.html' },
-  { id:10000022, home:'Sunderland', homeAbbr:'SUN', homeColor:'#EB172B', homeLogo:'https://upload.wikimedia.org/wikipedia/en/7/77/Logo_Sunderland.svg', away:'Chelsea', awayAbbr:'CHE', awayColor:'#034694', awayLogo:'https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg', homeProb:100, drawProb:0, awayProb:0, homeScore:2, awayScore:1, vol:'₦16M', link:'markets/10000022.html' },
-  { id:10000023, home:'Crystal Palace', homeAbbr:'CRY', homeColor:'#1B458F', homeLogo:'https://upload.wikimedia.org/wikipedia/en/a/a2/Crystal_Palace_FC_logo_%282022%29.svg', away:'Arsenal', awayAbbr:'ARS', awayColor:'#EF0107', awayLogo:'https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg', homeProb:0, drawProb:0, awayProb:100, homeScore:1, awayScore:2, vol:'₦26M', link:'markets/10000023.html' },
-];
-
 const OTHER_MARKETS = [
   // ── REAL MARKETS ─────────────────────────────────────────────────
   { id:10000033, cat:'football', emoji:'🏆', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'2026 World Cup Winner', badge:'upcoming', yes:0.19, vol:'₦350M', change:'+12%', dir:'up', link:'markets/10000033.html' },
-  { id:10000030, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Releases a New Song in June?', badge:'hot', yes:0.62, vol:'₦18.4M', change:'+11%', dir:'up', link:'markets/10000030.html' },
-  { id:10000026, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Will Drop a Studio Album in 2026?', badge:'hot', yes:0.71, vol:'₦114.2M', change:'+22%', dir:'up', link:'markets/10000026.html' },
+  { id:10000026, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Will Drop an Album this year?', badge:'hot', yes:0.71, vol:'₦114.2M', change:'+22%', dir:'up', link:'markets/10000026.html' },
+  { id:10000030, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Drops a New Song in June?', badge:'new', yes:0.71, vol:'₦9.2M', change:'+3%', dir:'up', link:'markets/10000030.html' },
+  { id:10000037, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Dollar to Naira hit ₦2,000 this year?', badge:'hot', yes:0.38, vol:'₦82.1M', change:'+5%', dir:'up', link:'markets/10000037.html' },
+  { id:10000008, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Dollar to Naira hit ₦1,400 before July?', badge:'hot', yes:0.52, vol:'₦88.3M', change:'+9%', dir:'up', link:'markets/10000008.html' },
+  { id:10000007, cat:'energy', emoji:'⛽', catLabel:'ENERGY · FUEL', title:'Will fuel hit ₦1,400/litre before July?', badge:'hot', yes:0.58, vol:'₦47.2M', change:'+6%', dir:'up', link:'markets/10000007.html' },
+  { id:10000027, cat:'energy', emoji:'⚡', catLabel:'ENERGY · LAGOS', title:'Will NEPA Bring Light Tonight? — Lagos', badge:'live', yes:0.47, vol:'₦8.7M', change:'+2%', dir:'up', link:'markets/10000027.html' },
+  { id:10000005, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.25bn World Bank Loan be Approved?', badge:'hot', yes:0.74, vol:'₦61.4M', change:'+8%', dir:'up', link:'markets/10000005.html' },
   { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · LAGOS', title:'Will Lagos Experience Major Flooding Before July?', badge:'hot', yes:0.67, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html' },
-  { id:10000007, cat:'commodities', emoji:'⛽', catLabel:'COMMODITIES · FUEL', title:'Will Petrol Exceed ₦1,200/litre Before June?', badge:'hot', yes:0.58, vol:'₦47.2M', change:'+6%', dir:'up', link:'markets/10000007.html' },
-  { id:10000008, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Naira/Dollar Hit ₦1,500 Before June?', badge:'hot', yes:0.52, vol:'₦88.3M', change:'+9%', dir:'up', link:'markets/10000008.html' },
-  { id:10000027, cat:'miscellaneous', emoji:'⚡', catLabel:'ENERGY · LAGOS', title:'Will NEPA Bring Light Tonight? — Lagos', badge:'live', yes:0.47, vol:'₦8.7M', change:'+2%', dir:'up', link:'markets/10000027.html' },
-  { id:10000005, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.45bn loan to Nigeria be approved?', badge:'hot', yes:0.74, vol:'₦61.4M', change:'+8%', dir:'up', link:'markets/10000005.html' },
-  { id:10000025, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'When Will It Rain in Lagos Today?', badge:'live', yes:0.58, vol:'₦12.4M', change:'+4%', dir:'up', link:'markets/10000025.html' },
-  { id:10000035, cat:'commodities', emoji:'🛢️', catLabel:'COMMODITIES · CRUDE OIL', title:'Will Crude Oil Exceed $100/barrel in July?', badge:'hot', yes:0.18, vol:'₦33.8M', change:'-4%', dir:'down', link:'markets/10000035.html' },
-  { id:10000037, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Dollar Hit ₦2,000 This Year?', badge:'hot', yes:0.38, vol:'₦52.1M', change:'+5%', dir:'up', link:'markets/10000037.html' },
-  { id:10000029, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · UCL FINAL', title:'PSG vs Arsenal — UCL Final', badge:'hot', yes:1.00, vol:'₦89.0M', change:'SETTLED', dir:'flat', link:'markets/10000029.html' },
-  { id:10000031, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend?', badge:'live', yes:0.68, vol:'₦11.4M', change:'+4%', dir:'up', link:'markets/10000031.html' },
-  { id:10000032, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend?', badge:'upcoming', yes:0.52, vol:'₦8.2M', change:'+2%', dir:'up', link:'markets/10000032.html' },
-  { id:10000034, cat:'sports', emoji:'🏀', catLabel:'SPORTS · NBA', title:'New York Knicks vs San Antonio Spurs', badge:'hot', yes:1.00, vol:'₦7.2M', change:'SETTLED', dir:'flat', link:'markets/10000034.html' },
-  { id:10000036, cat:'miscellaneous', emoji:'🌍', catLabel:'NIGERIA · POPULATION', title:"Will Nigeria's Population Hit 250M This Year?", badge:'new', yes:0.13, vol:'₦10.1M', change:'-1%', dir:'down', link:'markets/10000036.html' },
-  { id:10000004, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT · BBNAIJA', title:'When Will BBNaija S11 Auditions Begin?', badge:'hot', yes:1.00, vol:'₦28.4M', change:'SETTLED', dir:'flat', link:'markets/10000004.html' },
+  { id:10000025, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'When will it rain the most in Lagos today?', badge:'live', yes:0.58, vol:'₦12.4M', change:'+4%', dir:'up', link:'markets/10000025.html' },
+  { id:10000035, cat:'commodities', emoji:'🛢️', catLabel:'COMMODITIES · CRUDE OIL', title:'Will crude oil hit $100/barrel before July?', badge:'new', yes:0.18, vol:'₦18.7M', change:'+2%', dir:'up', link:'markets/10000035.html' },
+  { id:10000035, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend?', badge:'live', yes:0.79, vol:'₦6.8M', change:'+4%', dir:'up', link:'markets/10000031.html' },
+  { id:10000038, cat:'sports', emoji:'🏀', catLabel:'SPORTS · NBA', title:'Who Will Win the 2026 NBA Championship?', badge:'hot', yes:1.00, vol:'₦7.2M', change:'SETTLED', dir:'flat', link:'markets/10000038.html' },
   // ── INSPIRATION MARKETS (no page yet) ────────────────────────────
   { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn?", badge:'hot', yes:0.52, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
   { id:13, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Tinubu sign the tax reform bill before June?', badge:'new', yes:0.48, vol:'₦38.2M', change:'0%', dir:'flat', link:'#' },
@@ -330,47 +308,6 @@ let currentFilter = 'all';
 let currentQuery = '';
 
 // ── RENDERING ─────────────────────────────────────────────────────
-function buildMatchCard(m) {
-  const winnerHome = m.homeScore > m.awayScore;
-  const winnerAway = m.awayScore > m.homeScore;
-  const isDraw = m.homeScore === m.awayScore;
-  return `
-    <a class="match-card" href="${m.link}">
-      <div class="mc-league">
-        <span>⚽ PREMIER LEAGUE · MATCHDAY 38</span>
-        <span class="mc-badge" style="background:rgba(100,100,100,.12);color:var(--text3);border:1px solid var(--border);">🏁 FT</span>
-      </div>
-      <div class="teams-row">
-        <div class="team-col">
-          <div class="team-logo-sm" style="${winnerHome?'border-color:var(--y);':''}""><img src="${m.homeLogo}" alt="${m.home}"></div>
-          <div class="team-nm" style="${winnerHome?'color:var(--y);font-weight:700;':''}">${m.home}</div>
-        </div>
-        <div class="vs-block">
-          <div style="font-family:var(--font-num);font-weight:700;font-size:22px;color:var(--text);line-height:1;">${m.homeScore} — ${m.awayScore}</div>
-          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;">FULL TIME</div>
-        </div>
-        <div class="team-col">
-          <div class="team-logo-sm" style="${winnerAway?'border-color:var(--y);':''}""><img src="${m.awayLogo}" alt="${m.away}"></div>
-          <div class="team-nm" style="${winnerAway?'color:var(--y);font-weight:700;':''}">${m.away}</div>
-        </div>
-      </div>
-      <div class="prob-bar-row">
-        <div class="prob-bar-h" style="width:${m.homeProb}%;background:${m.homeColor};"></div>
-        <div class="prob-bar-d" style="width:${m.drawProb}%;"></div>
-        <div class="prob-bar-a" style="width:${m.awayProb}%;background:${m.awayColor};"></div>
-      </div>
-      <div class="prob-labels">
-        <span style="color:${winnerHome?m.homeColor:'var(--text3)'};font-weight:${winnerHome?'700':'400'};">${m.homeAbbr} ${m.homeProb}%</span>
-        <span style="${isDraw?'color:var(--y);font-weight:700;':''}">Draw ${m.drawProb}%</span>
-        <span style="color:${winnerAway?m.awayColor:'var(--text3)'};font-weight:${winnerAway?'700':'400'};">${m.awayAbbr} ${m.awayProb}%</span>
-      </div>
-      <div class="mc-meta">
-        <span class="mc-vol">Vol ${m.vol}</span>
-        <span class="mc-time" style="color:var(--text3);"><i class="fa-solid fa-flag-checkered" style="font-size:9px;margin-right:3px;"></i>Full Time</span>
-      </div>
-    </a>`;
-}
-
 function buildMktRow(m) {
   const pct = Math.round(m.yes * 100);
   const badgeCls = m.badge === 'live' ? 'live' : m.badge === 'hot' ? 'hot' : m.badge === 'upcoming' ? 'upcoming' : 'new';
@@ -401,60 +338,29 @@ function render() {
   const q = currentQuery;
   const f = currentFilter;
 
-  // Filter Sunday matches
-  let sundayMatches = SUNDAY_MATCHES.filter(m => {
-    if (f === 'football' || f === 'sunday') return true;
+  const markets = OTHER_MARKETS.filter(m => {
     if (f === 'all') return true;
-    return false;
-  }).filter(m => !q || matchesQuery(m.home + ' ' + m.away));
-
-  // Filter other markets
-  let otherMarkets = OTHER_MARKETS.filter(m => {
-    if (f === 'sunday') return false;
-    if (f === 'all') return true;
-    if (f === 'football') return m.cat === 'football';
     return m.cat === f;
   }).filter(m => !q || matchesQuery(m.title + ' ' + m.catLabel));
 
   const content = document.getElementById('content');
-  let html = '';
+  document.getElementById('results-num').textContent = markets.length;
 
-  const total = sundayMatches.length + otherMarkets.length;
-  document.getElementById('results-num').textContent = total;
-
-  if (total === 0) {
+  if (markets.length === 0) {
     content.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div>No markets match "<strong>${q}</strong>"<br><span style="font-size:10px;margin-top:8px;display:block;">Try a team name, category, or keyword</span></div>`;
     return;
   }
 
-  // Sunday matches section
-  if (sundayMatches.length > 0) {
-    html += `<div>
-      <div class="section-head">
-        <div class="section-title">⚽ Premier League · Matchday 38</div>
-        <div class="section-count">${sundayMatches.length} matches</div>
-      </div>
-      <div class="matchday-grid">
-        ${sundayMatches.map(buildMatchCard).join('')}
-      </div>
-    </div>`;
-  }
-
-  // Other markets section
-  if (otherMarkets.length > 0) {
-    const catName = f === 'football' ? 'Other Football' : f === 'all' ? 'All Markets' : 'Markets';
-    html += `<div>
-      <div class="section-head">
-        <div class="section-title">${catName}</div>
-        <div class="section-count">${otherMarkets.length} markets</div>
-      </div>
-      <div class="all-markets-list">
-        ${otherMarkets.map(buildMktRow).join('')}
-      </div>
-    </div>`;
-  }
-
-  content.innerHTML = html;
+  const catName = f === 'all' ? 'All Markets' : 'Markets';
+  content.innerHTML = `<div>
+    <div class="section-head">
+      <div class="section-title">${catName}</div>
+      <div class="section-count">${markets.length} markets</div>
+    </div>
+    <div class="all-markets-list">
+      ${markets.map(buildMktRow).join('')}
+    </div>
+  </div>`;
 }
 
 function setFilter(filter, el) {
@@ -466,7 +372,6 @@ function setFilter(filter, el) {
 
 function handleSearch(val) {
   currentQuery = val;
-  // sync topbar
   document.getElementById('topbar-search').value = val;
   document.getElementById('main-search').value = val;
   render();

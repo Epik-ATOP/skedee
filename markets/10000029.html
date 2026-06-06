@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -582,7 +582,22 @@ function renderTrades() {
   document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t =>
     `<div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${t.price}</span><span class="trade-size">×${t.size.toLocaleString()}</span></div>`
   ).join('');
-}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+}
+
+const COMMENTS = [
+  {col:'#004C98',init:'PB',user:'psg_bull',text:"PSG through on penalties after the draw. Called it at ₦50 when everyone was fading them. Easiest 100% payout of the tournament.",time:'5m',likes:22},
+  {col:'#EF0107',init:'AG',user:'arsenal_gone',text:'Draw at FT was the best hedge. Covered my Arsenal WIN losses. BTTS paid out too — salvaged the night.',time:'18m',likes:14},
+  {col:'#22C55E',init:'GH',user:'goals_hawk',text:'Over 2.5 not hitting with a draw was a risk I underpriced. Penalty shootouts just kill the total.',time:'30m',likes:8},
+  {col:'#F59E0B',init:'UC',user:'ucl_arb',text:'Both teams scoring in a draw was the cleanest trade here. 97% settlement was almost free money from the 60th minute.',time:'47m',likes:5},
+  {col:'#A855F7',init:'RC',user:'red_card_watch',text:'Red card market at 44% still unresolved through FT and ET. Deep into penalties now — basically a coin flip.',time:'1h',likes:3},
+];
+
+function renderComments() {
+  const el = document.getElementById('comments-list');
+  if (!el) return;
+  el.innerHTML = COMMENTS.map(c =>
+    `<div class="comment-item">
+      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
       <div class="comment-body">
         <div class="comment-user">${c.user}</div>
         <div class="comment-text">${c.text}</div>
@@ -803,8 +818,8 @@ initFinalState();
         <div class="footer-col">
           <div class="footer-col-title">COMPANY</div>
           <a href="../about.html">About</a>
-          <a href="blog.html">Blog</a>
-          <a href="careers.html">Careers</a>
+          <a href="brand.html">Brand</a>
+          <a href="payment.html">Payment</a>
           <a href="../faq.html">FAQ</a>
           <a href="../policy.html">Privacy Policy</a>
           <a href="../terms.html">Terms of Service</a>

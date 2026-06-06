@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -635,7 +635,22 @@ function renderActivity() {
       <div class="act-text">${a.text}</div>
       <div class="act-time">${a.time}</div>
     </div>`).join('');
-}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+}
+
+const COMMENTS = [
+  {col:'#F59E0B',init:'FH',user:'fx_hawk',badge:'Verified',badgeCol:'#F59E0B22',badgeText:'#F59E0B',text:"Structural deficit plus election spending is a one-way ticket. Every prior level they defended eventually fell. ₦2,000 is when, not if.",time:'7m',likes:14},
+  {col:'#22C55E',init:'NB',user:'naira_bull',badge:null,badgeCol:'',badgeText:'',text:"CBN will do whatever it takes. ₦2,000 is a political red line — Tinubu cannot campaign with that headline.",time:'22m',likes:9},
+  {col:'#EF4444',init:'DL',user:'dollar_long',badge:null,badgeCol:'',badgeText:'',text:"The gap from current rate to ₦2,000 is shrinking fast. At this depreciation pace we hit it inside 9 months.",time:'35m',likes:7},
+  {col:'#3B82F6',init:'RR',user:'remit_rx',badge:null,badgeCol:'',badgeText:'',text:'Diaspora remittances running at record levels. That dollar supply keeps the naira from a clean break above ₦1,800.',time:'58m',likes:5},
+  {col:'#A855F7',init:'MN',user:'macro_ng',badge:'Top Trader',badgeCol:'#A855F722',badgeText:'#A855F7',text:'I model 34% probability. Market at 38% is slightly rich but I respect the momentum case.',time:'1h',likes:3},
+];
+
+function renderComments() {
+  const el = document.getElementById('comments-list');
+  if (!el) return;
+  el.innerHTML = COMMENTS.map(c =>
+    `<div class="comment-item">
+      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
       <div class="comment-body">
         <div class="comment-user">${c.user}${c.badge?`<span class="comment-badge" style="background:${c.badgeCol};color:${c.badgeText};">${c.badge}</span>`:''}</div>
         <div class="comment-text">${c.text}</div>
@@ -762,6 +777,7 @@ function switchTab(name, btn) {
   });
   if (name==='chart') setTimeout(drawCharts,50);
   if (name==='activity') renderActivity();
+  if (name==='comments') renderComments();
 }
 
 
@@ -785,8 +801,8 @@ setInterval(() => {
         <div class="footer-col">
           <div class="footer-col-title">COMPANY</div>
           <a href="../about.html">About</a>
-          <a href="blog.html">Blog</a>
-          <a href="careers.html">Careers</a>
+          <a href="brand.html">Brand</a>
+          <a href="payment.html">Payment</a>
           <a href="../faq.html">FAQ</a>
           <a href="../policy.html">Privacy Policy</a>
           <a href="../terms.html">Terms of Service</a>

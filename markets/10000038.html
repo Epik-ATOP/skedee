@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New York Knicks vs San Antonio Spurs | Skedee</title>
+<title>Who Will Win the 2026 NBA Championship? | Skedee</title>
 <link rel="icon" type="image/png" href="../assets/skedee-1.png"><link rel="manifest" href="../manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#F5C800">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="../style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root{--sidebar-w:220px;--rsidebar-w:280px;--knicks1:#006BB6;--knicks2:#F58426;--spurs1:#8A8D8F;--nba:#C9082A;}
+:root{--sidebar-w:220px;--rsidebar-w:280px;--nba:#C9082A;--knicks1:#006BB6;--knicks2:#F58426;--spurs1:#8A8D8F;--spurs2:#000000;}
 .layout{display:flex;margin-top:52px;height:calc(100vh - 52px);overflow:hidden;}
 .sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 0;}
 .sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;}
@@ -25,29 +25,29 @@
 .trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
 .trend-change{font-family:var(--font-mono);font-size:10px;color:var(--green);}
 
-/* ── MATCH CARD ── */
-.match-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:visible;}
-.match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--knicks1),var(--knicks2),var(--spurs1),transparent);animation:scan 3s ease-in-out infinite;}
+/* ── CHAMPIONSHIP HERO CARD ── */
+.champ-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:hidden;}
+.champ-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--nba),var(--knicks1),var(--knicks2),var(--spurs1),transparent);animation:scan 3s ease-in-out infinite;}
 @keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
-.match-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.champ-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
 .league-badge{display:flex;align-items:center;gap:6px;background:rgba(201,8,42,.1);border:1px solid rgba(201,8,42,.3);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--nba);letter-spacing:1px;}
 .live-indicator{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;}
 .live-dot{width:7px;height:7px;border-radius:50%;}
-@keyframes live-pulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.6)}70%{box-shadow:0 0 0 8px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
-.match-center{display:flex;align-items:center;justify-content:center;gap:20px;}
-.team-block{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
-.team-logo{width:72px;height:72px;border-radius:50%;border:2px solid var(--border2);padding:10px;background:var(--bg3);display:flex;align-items:center;justify-content:center;}
-.team-logo img{width:100%;height:100%;object-fit:contain;}
-.team-name{font-family:var(--font-display);font-weight:700;font-size:16px;text-align:center;}
-.team-record{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
-.score-block{display:flex;flex-direction:column;align-items:center;gap:8px;}
-.ticker-score{display:flex;align-items:center;gap:10px;font-family:var(--font-num);font-weight:700;font-size:38px;color:var(--text);letter-spacing:2px;line-height:1;}
-.ticker-sep{color:var(--y);font-size:28px;font-weight:700;padding:0 2px;}
-.ticker-pts{min-width:28px;text-align:center;}
-.match-clock{font-family:var(--font-mono);font-size:13px;color:var(--knicks2);background:rgba(245,132,38,.1);border:1px solid rgba(245,132,38,.25);border-radius:6px;padding:4px 10px;display:flex;align-items:center;gap:5px;}
-.match-status-pill{font-family:var(--font-mono);font-size:10px;font-weight:700;border-radius:4px;padding:3px 8px;}
-.match-meta{margin-top:10px;padding-top:10px;border-top:1px solid var(--border3);display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
-.meta-item{display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;}
+@keyframes live-pulse{0%{box-shadow:0 0 0 0 rgba(201,8,42,.7)}70%{box-shadow:0 0 0 8px rgba(201,8,42,0)}100%{box-shadow:0 0 0 0 rgba(201,8,42,0)}}
+.live-dot.pulsing{animation:live-pulse 1.6s infinite;}
+
+/* ── FINALS MATCHUP ── */
+.finals-matchup{display:flex;align-items:center;justify-content:center;gap:16px;padding:8px 0 20px;}
+.finalist-block{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;max-width:180px;}
+.finalist-logo{width:80px;height:80px;border-radius:50%;border:2px solid var(--border2);padding:12px;background:var(--bg3);display:flex;align-items:center;justify-content:center;}
+.finalist-logo img{width:100%;height:100%;object-fit:contain;}
+.finalist-name{font-family:var(--font-display);font-weight:700;font-size:15px;text-align:center;}
+.finalist-record{font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:center;}
+.finalist-prob{font-family:var(--font-num);font-weight:800;font-size:32px;text-align:center;line-height:1;}
+.vs-block{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;}
+.vs-text{font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text3);}
+.series-score{font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--y);letter-spacing:3px;}
+.series-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
 
 /* ── STATS / SENTIMENT ── */
 .stats-row{display:flex;gap:10px;}
@@ -58,8 +58,8 @@
 .stat-box-sub{font-family:var(--font-mono);font-size:10px;margin-top:3px;}
 .sentiment-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
 .sentiment-bar{height:10px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:8px;}
-.sentiment-home{background:linear-gradient(90deg,#006BB6,rgba(0,107,182,.7));}
-.sentiment-away{background:linear-gradient(90deg,rgba(138,141,143,.6),#3a3a3a);}
+.sentiment-knicks{background:linear-gradient(90deg,var(--knicks1),rgba(0,107,182,.6));}
+.sentiment-spurs{background:linear-gradient(90deg,rgba(138,141,143,.6),#555);}
 .sentiment-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
 
 /* ── TABS ── */
@@ -209,105 +209,106 @@
   <div class="sidebar-item"><i class="fa-solid fa-coins"></i>Finance</div>
   <div class="sidebar-item"><i class="fa-solid fa-shapes"></i>Miscellaneous</div>
   <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
-  <div class="sidebar-label">NBA — Tonight</div>
+  <div class="sidebar-label">NBA — Finals</div>
+  <div class="trending-event" onclick="window.location='10000038.html'" style="border-color:rgba(201,8,42,.4);background:rgba(201,8,42,.04);">
+    <div class="trend-name">🏆 2026 NBA Champion</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦28.4M vol</div><div class="trend-change" style="color:var(--nba);">● LIVE</div></div>
+  </div>
   <div class="trending-event" onclick="window.location='10000034.html'">
-    <div class="trend-name">🏀 Knicks vs Spurs</div>
-    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦7.2M vol</div><div class="trend-change">TONIGHT</div></div>
+    <div class="trend-name">🏀 Knicks vs Spurs — Game 1</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦7.2M vol</div><div class="trend-change" style="color:var(--text3);">SETTLED</div></div>
   </div>
   <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
   <div class="sidebar-label">Also Trending</div>
-  <div class="trending-event" onclick="window.location='10000029.html'">
-    <div class="trend-name">🏆 PSG vs Arsenal — UCL</div>
-    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦89M vol</div><div class="trend-change" style="color:var(--text3);">FT</div></div>
-  </div>
   <div class="trending-event" onclick="window.location='10000033.html'">
     <div class="trend-name">🌍 2026 World Cup Winner</div>
     <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦350M vol</div><div class="trend-change" style="color:var(--green);">▲ 8%</div></div>
+  </div>
+  <div class="trending-event" onclick="window.location='10000035.html'">
+    <div class="trend-name">🛢️ Crude Oil $100 Before July</div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦14.3M vol</div><div class="trend-change" style="color:var(--oil1);">● LIVE</div></div>
   </div>
 </div>
 
 <div class="main">
 
-  <!-- DETERMINED BANNER -->
-  <div style="background:linear-gradient(135deg,rgba(245,200,0,.13),rgba(245,200,0,.04));border:2px solid rgba(245,200,0,.65);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
-    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:180px;opacity:.03;pointer-events:none;line-height:1;user-select:none;overflow:hidden;border-radius:20px;">🏀</div>
-    <div style="width:64px;height:64px;background:rgba(0,107,182,.2);border:2px solid rgba(0,107,182,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">🏀</div>
+  <!-- OPEN BANNER -->
+  <div style="background:linear-gradient(135deg,rgba(201,8,42,.13),rgba(201,8,42,.04));border:2px solid rgba(201,8,42,.55);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:180px;opacity:.04;pointer-events:none;line-height:1;user-select:none;overflow:hidden;border-radius:20px;">🏆</div>
+    <div style="width:64px;height:64px;background:rgba(201,8,42,.15);border:2px solid rgba(201,8,42,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">🏆</div>
     <div style="flex:1;min-width:0;">
-      <div style="font-family:var(--font-mono);font-size:10px;color:var(--knicks2);letter-spacing:2px;margin-bottom:6px;">🏆 NBA FINALS · GAME 1 · 2025/26</div>
-      <div style="font-family:var(--font-display);font-weight:800;font-size:26px;color:var(--y);letter-spacing:3px;line-height:1.1;">DETERMINED — KNICKS WIN!</div>
-      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;"><strong style="color:var(--knicks1);">New York Knicks 105</strong> — San Antonio Spurs 95 · <strong style="color:var(--knicks2);">NYK leads series 1–0</strong></div>
-      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Market resolved · YES positions paid ₦100/share · NO positions paid ₦0</div>
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--nba);letter-spacing:2px;margin-bottom:6px;">🏀 NBA FINALS · 2025/26 · KNICKS vs SPURS · SERIES LIVE</div>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Who Will Win the <span style="color:var(--y);">2026 NBA Championship?</span></div>
+      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Knicks lead series <strong style="color:var(--knicks1);">1–0</strong> after Game 1 win (105–95) · Game 2 at Madison Square Garden</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Market resolves YES for Knicks or Spurs once a team wins 4 games in the Finals series</div>
     </div>
     <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-      <div style="color:var(--green);font-weight:700;font-size:12px;margin-bottom:4px;">● Settled</div>
-      <div>3 Jun 2026</div>
-      <div>Final</div>
+      <div style="color:var(--nba);font-weight:700;font-size:12px;margin-bottom:4px;">● SERIES LIVE</div>
+      <div>NYK leads 1–0</div>
+      <div id="countdown-display" style="color:var(--y);font-weight:700;margin-top:4px;">BEST OF 7</div>
     </div>
   </div>
 
-  <!-- MATCH CARD -->
-  <div class="match-card">
-    <div class="match-card-top">
-      <div class="league-badge">🏆 NBA FINALS · GAME 1 · 2025/26</div>
+  <!-- CHAMPIONSHIP HERO CARD -->
+  <div class="champ-card">
+    <div class="champ-card-top">
+      <div class="league-badge">🏆 NBA FINALS 2025/26</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <div class="live-indicator">
-          <div class="live-dot" id="live-dot" style="background:var(--knicks2);"></div>
-          <span id="live-label" style="color:var(--knicks2);">TONIGHT</span>
+          <div class="live-dot pulsing" style="background:var(--nba);"></div>
+          <span style="color:var(--nba);">SERIES LIVE</span>
         </div>
-        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Madison Square Garden, New York</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Best of 7 · NYK leads 1–0</div>
       </div>
     </div>
-
-    <div class="match-center">
-      <div class="team-block">
-        <div class="team-logo" style="border-color:rgba(0,107,182,.4);background:rgba(0,107,182,.06);">
+    <div class="finals-matchup">
+      <div class="finalist-block">
+        <div class="finalist-logo" style="border-color:rgba(0,107,182,.4);background:rgba(0,107,182,.06);">
           <img src="https://upload.wikimedia.org/wikipedia/en/2/25/New_York_Knicks_logo.svg" alt="Knicks">
         </div>
-        <div class="team-name" style="color:var(--knicks1);">NEW YORK</div>
-        <div class="team-name" style="margin-top:-4px;">KNICKS</div>
-        <div class="team-record" style="color:var(--green);">Series: 1 — 0 ✓</div>
+        <div class="finalist-name" style="color:var(--knicks1);">NEW YORK</div>
+        <div class="finalist-name" style="margin-top:-4px;">KNICKS</div>
+        <div class="finalist-record">Series: <strong style="color:var(--green);">1</strong> — 0</div>
+        <div class="finalist-prob" style="color:var(--knicks1);" id="knicks-prob">68%</div>
+        <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);">CHAMPIONSHIP ODDS</div>
       </div>
-      <div class="score-block">
-        <div class="ticker-score">
-          <span class="ticker-pts" style="color:var(--knicks1);font-size:38px;">105</span>
-          <span style="color:var(--text3);font-size:22px;padding:0 6px;">—</span>
-          <span class="ticker-pts" style="color:var(--spurs1);font-size:38px;">95</span>
-        </div>
-        <div class="match-clock">
-          <i class="fa-solid fa-whistle" style="font-size:11px;"></i>
-          <span style="font-size:11px;color:var(--text3);">FINAL · Q1:19-27 · Q2:29-28 · Q3:28-21 · Q4:29-19</span>
-        </div>
-        <div class="match-status-pill" style="background:rgba(100,100,100,.1);border:1px solid var(--border);color:var(--text3);">FULL TIME</div>
+      <div class="vs-block">
+        <div class="vs-text">VS</div>
+        <div class="series-score" id="series-score">1 — 0</div>
+        <div class="series-label">Finals Series</div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:8px;">Game 2</div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--y);font-weight:700;">Jun 8 · MSG</div>
       </div>
-      <div class="team-block">
-        <div class="team-logo" style="border-color:rgba(138,141,143,.3);background:rgba(138,141,143,.06);">
+      <div class="finalist-block">
+        <div class="finalist-logo" style="border-color:rgba(138,141,143,.3);background:rgba(138,141,143,.06);">
           <img src="https://upload.wikimedia.org/wikipedia/en/a/a2/San_Antonio_Spurs.svg" alt="Spurs">
         </div>
-        <div class="team-name" style="color:var(--spurs1);">SAN ANTONIO</div>
-        <div class="team-name" style="margin-top:-4px;">SPURS</div>
-        <div class="team-record" style="color:var(--red);">Series: 0 — 1</div>
+        <div class="finalist-name" style="color:var(--spurs1);">SAN ANTONIO</div>
+        <div class="finalist-name" style="margin-top:-4px;">SPURS</div>
+        <div class="finalist-record">Series: 0 — <strong style="color:var(--red);">1</strong></div>
+        <div class="finalist-prob" style="color:var(--spurs1);" id="spurs-prob">32%</div>
+        <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);">CHAMPIONSHIP ODDS</div>
       </div>
     </div>
-
-    <div class="match-meta">
-      <div class="meta-item"><i class="fa-solid fa-location-dot"></i>Madison Square Garden, New York</div>
-      <div class="meta-item"><i class="fa-solid fa-calendar"></i>Jun 3, 2026 · Final</div>
-      <div class="meta-item"><i class="fa-solid fa-trophy" style="color:var(--y);"></i><span style="color:var(--y);font-family:var(--font-mono);font-size:11px;">NBA FINALS · NYK leads 1–0</span></div>
-      <div class="meta-item" style="margin-left:auto;"><span style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Volume: </span><span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦7,200,000</span></div>
+    <div style="padding-top:12px;border-top:1px solid var(--border3);display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;"><i class="fa-solid fa-location-dot"></i>Game 2 — Madison Square Garden, New York</div>
+      <div style="display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;"><i class="fa-solid fa-calendar"></i>Jun 8, 2026 · 1:00 AM WAT</div>
+      <div style="margin-left:auto;font-family:var(--font-mono);font-size:11px;"><span style="color:var(--text3);">Market Volume: </span><span style="color:var(--y);font-weight:700;">₦28,400,000</span></div>
     </div>
   </div>
 
   <!-- STAT BOXES -->
   <div class="stats-row">
-    <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦7.2M</div><div class="stat-box-sub" style="color:var(--green);">▲ +14% today</div></div>
-    <div class="stat-box"><div class="stat-box-label">Result</div><div class="stat-box-val" style="color:var(--knicks1);">NYK 🏆</div><div class="stat-box-sub" style="color:var(--green);">Won by 10</div></div>
-    <div class="stat-box"><div class="stat-box-label">Total Points</div><div class="stat-box-val">200</div><div class="stat-box-sub" style="color:var(--red);">Under 222.5</div></div>
+    <div class="stat-box"><div class="stat-box-label">Knicks to Win Ring</div><div class="stat-box-val yellow" id="knicks-stat">68%</div><div class="stat-box-sub" style="color:var(--green);">▲ +12% after G1</div></div>
+    <div class="stat-box"><div class="stat-box-label">Series Lead</div><div class="stat-box-val" style="color:var(--knicks1);">NYK 1–0</div><div class="stat-box-sub" style="color:var(--text3);">Knicks won Game 1</div></div>
+    <div class="stat-box"><div class="stat-box-label">Games Remaining</div><div class="stat-box-val">3–6</div><div class="stat-box-sub" style="color:var(--text3);">Min 3 · Max 6 left</div></div>
   </div>
 
   <!-- TABS -->
   <div class="tabs-bar">
     <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
     <button class="tab" onclick="switchTab('trades',this)">Trades</button>
+    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
     <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
     <button class="tab" onclick="switchTab('rules',this)">Rules</button>
   </div>
@@ -316,32 +317,36 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Game Winner <span style="font-family:var(--font-mono);font-size:9px;background:rgba(245,132,38,.1);border:1px solid rgba(245,132,38,.25);color:var(--knicks2);padding:2px 6px;border-radius:4px;margin-left:6px;">UPCOMING</span></div>
-        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦2.8M volume</div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">2026 NBA Champion <span style="font-family:var(--font-mono);font-size:9px;background:rgba(201,8,42,.12);border:1px solid rgba(201,8,42,.3);color:var(--nba);padding:2px 6px;border-radius:4px;margin-left:6px;">SERIES LIVE</span></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦14.6M volume</div>
       </div>
       <div class="sentiment-bar">
-        <div class="sentiment-home" id="bar-knicks" style="width:100%;"></div>
-        <div class="sentiment-away" id="bar-spurs" style="width:0%;"></div>
+        <div class="sentiment-knicks" id="bar-knicks" style="width:68%;"></div>
+        <div class="sentiment-spurs" id="bar-spurs" style="width:32%;"></div>
       </div>
       <div class="sentiment-labels">
-        <span style="color:var(--knicks1);font-weight:700;" id="label-knicks">Knicks 105 ✓</span>
-        <span style="color:var(--spurs1);font-weight:700;" id="label-spurs">Spurs 95</span>
+        <span style="color:var(--knicks1);font-weight:700;" id="label-knicks">KNICKS 68%</span>
+        <span style="color:var(--spurs1);font-weight:700;" id="label-spurs">SPURS 32%</span>
       </div>
       <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
-        <i class="fa-solid fa-trophy" style="color:var(--knicks1);margin-right:4px;"></i>
-        Knicks win Game 1 — <strong style="color:var(--knicks1);">105–95</strong> · NYK leads Finals 1–0 · Q scores: 19·29·28·29 vs 27·28·21·19
+        <i class="fa-solid fa-circle-info" style="color:var(--knicks2);margin-right:4px;"></i>
+        Teams leading 1–0 in the Finals win the series <strong style="color:var(--text);">~73% of the time</strong> — Knicks favoured but Spurs aren't out
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        <button class="btn-yes" style="flex:1;padding:12px;font-size:14px;border-color:rgba(0,107,182,.4);color:var(--knicks1);background:rgba(0,107,182,.12);" onclick="openOrder('Knicks Win 2026 Championship','YES',68)">KNICKS WIN &nbsp;₦68</button>
+        <button class="btn-no"  style="flex:1;padding:12px;font-size:14px;border-color:rgba(138,141,143,.35);color:var(--spurs1);background:rgba(138,141,143,.08);" onclick="openOrder('Spurs Win 2026 Championship','YES',32)">SPURS WIN &nbsp;₦32</button>
       </div>
     </div>
 
     <div class="trending-strip" style="margin-top:12px;">
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🏀 Quick Markets</div>
       <div class="trending-pills">
-        <div class="trend-pill" onclick="openOrder('Knicks Win','YES',65)"><div class="trend-pill-name">Knicks Win</div><div class="trend-pill-prob">₦65 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Spurs Win','YES',35)"><div class="trend-pill-name">Spurs Win</div><div class="trend-pill-prob">₦35 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Over 222.5 Points','YES',54)"><div class="trend-pill-name">Over 222.5 Pts</div><div class="trend-pill-prob">₦54 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Knicks -8.5 (Spread)','YES',51)"><div class="trend-pill-name">Knicks -8.5</div><div class="trend-pill-prob">₦51 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Knicks lead at halftime','YES',62)"><div class="trend-pill-name">Knicks HT lead</div><div class="trend-pill-prob">₦62 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Triple-double in game','YES',44)"><div class="trend-pill-name">Triple-Double</div><div class="trend-pill-prob">₦44 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Knicks Win Championship','YES',68)"><div class="trend-pill-name">Knicks Win Ring</div><div class="trend-pill-prob">₦68 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Spurs Win Championship','YES',32)"><div class="trend-pill-name">Spurs Win Ring</div><div class="trend-pill-prob">₦32 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Series goes 7 Games','YES',38)"><div class="trend-pill-name">Goes 7 Games</div><div class="trend-pill-prob">₦38 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Knicks sweep (4-0)','YES',14)"><div class="trend-pill-name">Knicks Sweep</div><div class="trend-pill-prob">₦14 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Spurs win Game 2','YES',41)"><div class="trend-pill-name">Spurs Win G2</div><div class="trend-pill-prob">₦41 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Finals MVP — Knicks player','YES',62)"><div class="trend-pill-name">Knicks Finals MVP</div><div class="trend-pill-prob">₦62 YES</div></div>
       </div>
     </div>
 
@@ -360,11 +365,21 @@
     </div>
   </div>
 
+  <div id="tab-comments" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Comments <span class="badge">6</span></div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
 
   <div id="tab-analytics" style="display:none;">
     <div class="positions-card">
-      <div class="positions-title">Probability Chart — Knicks Win</div>
+      <div class="positions-title">Championship Probability — Since Season Start</div>
       <div style="position:relative;height:220px;"><canvas id="probChart"></canvas></div>
+    </div>
+    <div class="positions-card" style="margin-top:12px;">
+      <div class="positions-title">Series Outcome Probabilities</div>
+      <div style="position:relative;height:200px;"><canvas id="outcomeChart"></canvas></div>
     </div>
   </div>
 
@@ -372,20 +387,16 @@
     <div class="positions-card">
       <div class="positions-title">Market Rules</div>
       <div style="color:var(--text2);font-size:13px;line-height:1.8;">
-        <strong style="color:var(--text);">Game Winner</strong><br>
-        Resolves YES if the specified team wins at the end of regulation. Overtime counts — whatever the official final score is determines the winner.<br><br>
-        <strong style="color:var(--text);">Point Spread (Knicks -8.5)</strong><br>
-        Resolves YES if the Knicks win by 9 or more points. Overtime counts.<br><br>
-        <strong style="color:var(--text);">Over / Under 222.5</strong><br>
-        Resolves YES if the combined total points scored by both teams (including overtime) exceed 222. Resolves NO if 222 or fewer.<br><br>
-        <strong style="color:var(--text);">Halftime Leader</strong><br>
-        Resolves YES if the specified team leads at the end of the 2nd quarter. Tied at halftime resolves NO for both.<br><br>
-        <strong style="color:var(--text);">Triple-Double</strong><br>
-        Resolves YES if any player in the game records a triple-double (10+ in three stat categories).<br><br>
+        <strong style="color:var(--text);">Resolution Condition</strong><br>
+        This market resolves YES for the team that wins 4 games in the 2026 NBA Finals series. The first team to win 4 games is crowned NBA Champion and all positions on that team resolve YES at ₦100 per share. Positions on the losing team resolve NO at ₦0.<br><br>
+        <strong style="color:var(--text);">Market Structure</strong><br>
+        Two separate outcome markets: "Knicks Win Championship" and "Spurs Win Championship." Each is priced so both markets sum to approximately ₦100, reflecting the exhaustive set of outcomes (one team must win). You can hold positions in both.<br><br>
         <strong style="color:var(--text);">Data Source</strong><br>
-        Official NBA box score. Resolution within 30 minutes of the final buzzer.<br><br>
+        Official NBA results. Resolution occurs within 2 hours of the final buzzer of the clinching game, once officially confirmed.<br><br>
+        <strong style="color:var(--text);">Series Suspension / Cancellation</strong><br>
+        If the Finals series is cancelled, indefinitely suspended, or abandoned before a champion is crowned, all positions are refunded in full. Skedee reserves the right to extend the market close date to accommodate schedule changes.<br><br>
         <strong style="color:var(--text);">Disputes</strong><br>
-        Contact support@skedee.ng within 24 hours. Skedee's decision is final.
+        Contact support@skedee.ng within 24 hours of resolution. Skedee's decision is final.
       </div>
     </div>
   </div>
@@ -395,9 +406,9 @@
 <!-- RIGHT SIDEBAR -->
 <div class="right-sidebar">
   <div>
-    <div class="rsidebar-section-title">Order Book — Knicks Win <span style="color:var(--knicks2);font-size:10px;">PRE</span></div>
+    <div class="rsidebar-section-title">Order Book — Knicks Win <span style="color:var(--knicks2);font-size:10px;">LIVE</span></div>
     <div id="order-book-asks"></div>
-    <div class="ob-spread">Spread: ₦2 · Mid: ₦65</div>
+    <div class="ob-spread" id="ob-spread-label">Spread: ₦2 · Mid: ₦68</div>
     <div id="order-book-bids"></div>
   </div>
   <div style="border-top:1px solid var(--border3);padding-top:16px;">
@@ -418,7 +429,7 @@
     <div class="order-panel-title">Place Order</div>
     <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
   </div>
-  <div class="order-market-name" id="op-market-name">Knicks Win</div>
+  <div class="order-market-name" id="op-market-name">Knicks Win Championship</div>
   <div class="order-side-tabs">
     <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
     <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
@@ -438,8 +449,8 @@
     <input type="number" id="op-amount" value="5000" min="100" max="9999999" oninput="updateOrderSummary()"
       style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
   </div>
-  <input type="hidden" id="op-price" value="65">
-    <div class="quick-amt-row">
+  <input type="hidden" id="op-price" value="68">
+  <div class="quick-amt-row">
     <button class="quick-amt-btn" onclick="addAmount(1000)">+₦1K</button>
     <button class="quick-amt-btn" onclick="addAmount(2000)">+₦2K</button>
     <button class="quick-amt-btn" onclick="addAmount(5000)">+₦5K</button>
@@ -461,31 +472,42 @@
 
 <script src="../script.js"></script>
 <script>
-const TIPOFF_TIME = new Date('2026-06-03T00:00:00Z'); // 1:00 AM WAT (7 PM ET)
 let orderSide = 'YES', walletBalance = 4271250;
-let miniCharts = {}, probChart;
+let miniCharts = {}, probChart, outcomeChart;
+let knicksPct = 68;
 
 const MARKETS = [
-  { id:'knicks_win',   title:'Knicks Win ✓',            yes:1.00, vol:'₦2.8M', liq:'—', spread:'—', history:[0.58,0.60,0.62,0.63,0.64,0.63,0.65,0.70,0.85,1.00], resolved:true },
-  { id:'spurs_win',    title:'Spurs Win',                yes:0.00, vol:'₦1.4M', liq:'—', spread:'—', history:[0.42,0.40,0.38,0.37,0.36,0.37,0.35,0.30,0.15,0.00], resolved:true },
-  { id:'over_222',     title:'Over 222.5 Total Points',  yes:0.00, vol:'₦1.2M', liq:'—', spread:'—', history:[0.50,0.51,0.52,0.53,0.53,0.54,0.54,0.45,0.20,0.00], resolved:true },
-  { id:'spread_knicks',title:'Knicks Win by 9+ (−8.5) ✓',yes:1.00, vol:'₦0.9M', liq:'—', spread:'—', history:[0.48,0.49,0.50,0.50,0.51,0.50,0.52,0.65,0.85,1.00], resolved:true },
-  { id:'ht_knicks',    title:'Knicks Lead at Halftime',  yes:0.00, vol:'₦0.5M', liq:'—', spread:'—', history:[0.58,0.59,0.60,0.61,0.61,0.62,0.62,0.50,0.25,0.00], resolved:true },
-  { id:'triple',       title:'Triple-Double in Game',    yes:0.00, vol:'₦0.4M', liq:'—', spread:'—', history:[0.40,0.41,0.42,0.43,0.43,0.44,0.44,0.35,0.15,0.00], resolved:true },
+  { id:'knicks_champ',  title:'Knicks Win Championship',      yes:0.68, vol:'₦14.6M', liq:'₦5.2M', spread:'₦2', history:[0.52,0.54,0.55,0.57,0.58,0.60,0.62,0.63,0.65,0.68] },
+  { id:'spurs_champ',   title:'Spurs Win Championship',       yes:0.32, vol:'₦7.8M',  liq:'₦3.1M', spread:'₦2', history:[0.48,0.46,0.45,0.43,0.42,0.40,0.38,0.37,0.35,0.32] },
+  { id:'goes_7',        title:'Series Goes 7 Games',          yes:0.38, vol:'₦2.4M',  liq:'₦0.9M', spread:'₦3', history:[0.40,0.39,0.39,0.38,0.38,0.38,0.39,0.38,0.38,0.38] },
+  { id:'knicks_sweep',  title:'Knicks Sweep (4–0)',            yes:0.14, vol:'₦1.2M',  liq:'₦0.5M', spread:'₦2', history:[0.10,0.11,0.12,0.12,0.13,0.13,0.13,0.14,0.14,0.14] },
+  { id:'spurs_g2',      title:'Spurs Win Game 2',             yes:0.41, vol:'₦1.8M',  liq:'₦0.8M', spread:'₦3', history:[0.45,0.44,0.44,0.43,0.43,0.42,0.42,0.41,0.41,0.41] },
+  { id:'knicks_mvp',    title:'Finals MVP — Knicks Player',   yes:0.62, vol:'₦0.6M',  liq:'₦0.3M', spread:'₦4', history:[0.55,0.56,0.57,0.58,0.59,0.60,0.61,0.61,0.62,0.62] },
 ];
 
 const ORDER_BOOK_DATA = {
-  asks: [{p:'₦67',s:180,t:320},{p:'₦66',s:260,t:480},{p:'₦65',s:1400,t:2600},{p:'₦64',s:310,t:560}],
-  bids: [{p:'₦63',s:420,t:740},{p:'₦62',s:240,t:420},{p:'₦61',s:320,t:580},{p:'₦60',s:160,t:280}]
+  asks: [{p:'₦70',s:920,t:1840},{p:'₦69',s:1400,t:2730},{p:'₦68',s:4200,t:8200},{p:'₦67',s:1100,t:2090}],
+  bids: [{p:'₦66',s:1600,t:3040},{p:'₦65',s:1100,t:2090},{p:'₦64',s:940,t:1784},{p:'₦63',s:520,t:988}]
 };
 
 const ACTIVITY = [
-  {type:'buy',  text:'<strong>knicks_nation</strong> opened Knicks Win YES ×3,000 at ₦65 — "MSG is a fortress"', time:'8m'},
-  {type:'buy',  text:'<strong>lagos_hooper</strong> backed Over 222.5 YES ×1,500 at ₦54', time:'22m'},
-  {type:'sell', text:'<strong>hedge_king_ng</strong> sold Knicks -8.5 YES ×800 — taking profit early', time:'35m'},
-  {type:'buy',  text:'<strong>nba_watcher_abuja</strong> opened Spurs Win YES ×600 at ₦35 — "value on the underdog"', time:'51m'},
-  {type:'buy',  text:'<strong>over_under_lord</strong> opened Triple-Double YES ×400 at ₦44', time:'1h'},
-];function renderMarkets() {
+  {type:'buy',  text:'<strong>knicks_nation</strong> backed Knicks Championship YES ×12,000 at ₦68 — "MSG fortress, series in 5"', time:'6m'},
+  {type:'buy',  text:'<strong>hoops_value_ng</strong> bought Spurs Win YES ×4,000 at ₦32 — "great series value, Wembanyama is dangerous"', time:'18m'},
+  {type:'sell', text:'<strong>hedge_king_abj</strong> reduced Knicks Championship YES — taking some profit post-G1', time:'29m'},
+  {type:'buy',  text:'<strong>nba_plug_lag</strong> opened Goes 7 Games YES ×3,000 at ₦38', time:'42m'},
+  {type:'buy',  text:'<strong>brooklyn_expat</strong> backed Knicks Sweep YES ×1,500 at ₦14 — "long shot but the value is there"', time:'1h'},
+];
+
+const COMMENTS = [
+  {col:'#006BB6',init:'KN',user:'knicks_nation',text:'MSG in game 2 is a wrap. The Knicks have home court advantage through the Finals. Spurs need a miracle.',time:'9m',likes:22},
+  {col:'#8A8D8F',init:'HV',user:'hoops_value_ng',text:"I know most of us don't really follow basketball sha but Wembanyama is genuinely different. At 32% the Spurs are value. Game 2 in MSG could flip this series.",time:'24m',likes:14},
+  {col:'#F58426',init:'BP',user:'brooklyn_expat',text:'Anyone else just here for the Wembanyama hype? Guy is 7ft 5 and moves like a guard. Spurs are live at these odds.',time:'41m',likes:11},
+  {col:'#22C55E',init:'NP',user:'nba_plug_lag',text:'Betting the series goes 7. Neither team has the depth to close it out quickly. This is going the distance.',time:'58m',likes:8},
+  {col:'#EF4444',init:'HK',user:'hedge_king_abj',text:'Took profit on my Knicks position after G1. Will re-enter if odds drift back toward 60. Discipline first.',time:'1h',likes:6},
+  {col:'#A855F7',init:'SK',user:'skedee_kulture',text:'History says 1-0 series leaders win ~73% of the time in Finals. Math backs Knicks here.',time:'2h',likes:4},
+];
+
+function renderMarkets() {
   const grid = document.getElementById('markets-grid');
   grid.innerHTML = '';
   MARKETS.forEach(m => {
@@ -493,10 +515,12 @@ const ACTIVITY = [
     const card = document.createElement('div');
     card.className = 'market-card';
     card.id = 'mc-' + m.id;
+    const trendDir = Math.random() > 0.4;
+    const trendPct = (Math.random() * 2 + 0.2).toFixed(1);
     card.innerHTML = `
       <div class="market-header">
         <div><div class="market-title">${m.title}</div><div class="market-vol">Vol ${m.vol} · Liq ${m.liq}</div></div>
-        <span style="font-family:var(--font-mono);font-size:10px;color:var(--green)">▲ +${Math.floor(Math.random()*3+1)}%</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:${trendDir?'var(--green)':'var(--red)'};">${trendDir?'▲':'▼'} ${trendDir?'+':'−'}${trendPct}%</span>
       </div>
       <div class="market-prob-row">
         <div class="market-prob">${pct}%</div>
@@ -525,9 +549,10 @@ function drawMiniChart(m) {
   const canvas = document.getElementById('mini-' + m.id);
   if (!canvas || !window.Chart) return;
   if (miniCharts[m.id]) miniCharts[m.id].destroy();
+  const color = m.yes > 0.5 ? '#22C55E' : (m.yes < 0.25 ? '#EF4444' : '#F59E0B');
   miniCharts[m.id] = new Chart(canvas.getContext('2d'), {
     type:'line',
-    data:{ labels:m.history.map((_,i)=>i), datasets:[{data:m.history.map(v=>Math.round(v*100)), borderColor:'#F58426', backgroundColor:'#F5842615', borderWidth:1.5, fill:true, tension:0.4, pointRadius:0}] },
+    data:{ labels:m.history.map((_,i)=>i), datasets:[{data:m.history.map(v=>Math.round(v*100)), borderColor:color, backgroundColor:color+'18', borderWidth:1.5, fill:true, tension:0.4, pointRadius:0}] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{enabled:false}}, scales:{x:{display:false},y:{display:false,min:0,max:100}}, animation:{duration:0} }
   });
 }
@@ -551,9 +576,9 @@ function renderActivity() {
 let recentTrades = [];
 function generateTrade() {
   const m = MARKETS[Math.floor(Math.random() * MARKETS.length)];
-  const side = Math.random() > 0.4 ? 'buy' : 'sell';
+  const side = Math.random() > 0.45 ? 'buy' : 'sell';
   const pct = Math.round(m.yes * 100);
-  return { side, market: m.title.replace(' Total Points','').replace(' at Halftime','').replace(' in Game',''), price: pct, size: Math.floor(Math.random()*1000+100) };
+  return { side, market: m.title.replace(' Championship','').replace(' Games','G').replace(' Player',''), price: pct, size: Math.floor(Math.random()*3000+300) };
 }
 function renderTrades() {
   if (!recentTrades.length) for (let i = 0; i < 8; i++) recentTrades.push(generateTrade());
@@ -561,14 +586,6 @@ function renderTrades() {
     `<div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${t.price}</span><span class="trade-size">×${t.size.toLocaleString()}</span></div>`
   ).join('');
 }
-
-const COMMENTS = [
-  {col:'#006BB6',init:'KB',user:'knicks_believer',text:"Called this all series. Brunson in iso mode vs an old Spurs team was free points. Knicks covered easy.",time:'8m',likes:15},
-  {col:'#22C55E',init:'HK',user:'hedge_king',text:'Locked in YES at ₦63 before Game 5. Easiest hold of the playoffs.',time:'22m',likes:9},
-  {col:'#F59E0B',init:'PP',user:'prop_player',text:'Spurs covered the first two halftime markets then collapsed. Fade the halftime lead next time.',time:'35m',likes:6},
-  {col:'#EF4444',init:'SA',user:'spurs_arc',text:'Over 222.5 was a trap. Knicks went defensive in Q4. Total points market got me.',time:'51m',likes:4},
-  {col:'#A855F7',init:'BB',user:'ball_arb',text:'Triple-double market at 40% was value. Should have been lower given the matchup. Sharp money was right.',time:'1h',likes:2},
-];
 
 function renderComments() {
   const el = document.getElementById('comments-list');
@@ -579,7 +596,7 @@ function renderComments() {
       <div class="comment-body">
         <div class="comment-user">${c.user}</div>
         <div class="comment-text">${c.text}</div>
-        <div class="comment-meta">${c.time} · <span style="color:var(--knicks1);">👍 ${c.likes}</span></div>
+        <div class="comment-meta">${c.time} · <span style="color:var(--nba);">👍 ${c.likes}</span></div>
       </div>
     </div>`
   ).join('');
@@ -592,32 +609,41 @@ function drawProbChart() {
   probChart = new Chart(document.getElementById('probChart').getContext('2d'), {
     type:'line',
     data:{
-      labels:['Open','6h ago','5h ago','4h ago','3h ago','2h ago','1h ago','30m ago','Now'],
+      labels:['Season Start','Conf. Semis','Conf. Finals','Finals Open','After G1'],
       datasets:[
-        {label:'Knicks Win %', data:[58,60,62,63,64,63,65,64,65], borderColor:'#006BB6', backgroundColor:'rgba(0,107,182,0.08)', borderWidth:2, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#006BB6'},
-        {label:'Spurs Win %',  data:[42,40,38,37,36,37,35,36,35], borderColor:'#8A8D8F', backgroundColor:'rgba(138,141,143,0.06)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#8A8D8F'},
+        {label:'Knicks %', data:[22,38,48,56,68], borderColor:'#006BB6', backgroundColor:'rgba(0,107,182,0.08)', borderWidth:2, fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'#006BB6'},
+        {label:'Spurs %',  data:[18,24,32,44,32], borderColor:'#8A8D8F', backgroundColor:'rgba(138,141,143,0.06)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'#8A8D8F'},
       ]
     },
     options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true,labels:{color:tc,font:{size:10},usePointStyle:true}}}, scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},min:0,max:100}}}
   });
 }
 
-function tickCountdown() {
-  const diff = TIPOFF_TIME - Date.now();
-  const el = document.getElementById('clock-display');
-  if (diff <= 0) { el.textContent = 'TIP-OFF'; return; }
-  const h = Math.floor(diff / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  const s = Math.floor((diff % 60000) / 1000);
-  if (h > 0) el.textContent = `${h}H ${m}M`;
-  else if (m > 0) el.textContent = `${m}M ${String(s).padStart(2,'0')}S`;
-  else { el.textContent = `${s}S`; el.style.color = 'var(--red)'; }
+function drawOutcomeChart() {
+  if (outcomeChart) outcomeChart.destroy();
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  const tc = isDark ? '#9A9880' : '#5C5A48';
+  outcomeChart = new Chart(document.getElementById('outcomeChart').getContext('2d'), {
+    type:'bar',
+    data:{
+      labels:['Knicks 4-0','Knicks 4-1','Knicks 4-2','Knicks 4-3','Spurs 4-3','Spurs 4-2','Spurs 4-1'],
+      datasets:[{
+        label:'Probability',
+        data:[14,22,18,14,10,8,7],
+        backgroundColor:['#006BB6aa','#006BB6aa','#006BB6aa','#006BB6aa','#8A8D8Faa','#8A8D8Faa','#8A8D8Faa'],
+        borderColor:['#006BB6','#006BB6','#006BB6','#006BB6','#8A8D8F','#8A8D8F','#8A8D8F'],
+        borderWidth:1,
+        borderRadius:4,
+      }]
+    },
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.parsed.y}%`}}}, scales:{x:{ticks:{color:tc,font:{size:9}},grid:{display:false}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},min:0,max:30}}}
+  });
 }
 
 function updateLiveData() {
   MARKETS.forEach(m => {
     const delta = (Math.random() - 0.5) * 0.005;
-    m.yes = Math.max(0.05, Math.min(0.95, m.yes + delta));
+    m.yes = Math.max(0.04, Math.min(0.96, m.yes + delta));
     m.history.push(m.yes);
     if (m.history.length > 12) m.history.shift();
     const pct = Math.round(m.yes * 100);
@@ -637,12 +663,17 @@ function updateLiveData() {
     if (btnNo)   btnNo.textContent   = `BUY NO ₦${100 - pct}`;
     drawMiniChart(m);
   });
-  const knicksPct = Math.round(MARKETS[0].yes * 100);
-  document.getElementById('home-prob-stat').textContent = knicksPct + '%';
-  document.getElementById('bar-knicks').style.width = knicksPct + '%';
-  document.getElementById('bar-spurs').style.width  = (100 - knicksPct) + '%';
-  document.getElementById('label-knicks').textContent = `Knicks ${knicksPct}%`;
-  document.getElementById('label-spurs').textContent  = `Spurs ${100 - knicksPct}%`;
+
+  knicksPct = Math.round(MARKETS[0].yes * 100);
+  const spursPct = 100 - knicksPct;
+  document.getElementById('knicks-prob').textContent = knicksPct + '%';
+  document.getElementById('spurs-prob').textContent  = spursPct + '%';
+  document.getElementById('knicks-stat').textContent = knicksPct + '%';
+  document.getElementById('bar-knicks').style.width  = knicksPct + '%';
+  document.getElementById('bar-spurs').style.width   = spursPct + '%';
+  document.getElementById('label-knicks').textContent = `KNICKS ${knicksPct}%`;
+  document.getElementById('label-spurs').textContent  = `SPURS ${spursPct}%`;
+
   renderOrderBook();
   recentTrades.unshift(generateTrade());
   if (recentTrades.length > 12) recentTrades.pop();
@@ -661,7 +692,7 @@ function setOrderSide(side) {
   document.getElementById('op-yes-btn').classList.toggle('active', side === 'YES');
   document.getElementById('op-no-btn').classList.toggle('active', side === 'NO');
   document.getElementById('op-side-label').textContent = side;
-  const outcomeEl   = document.getElementById('op-outcome-label');
+  const outcomeEl    = document.getElementById('op-outcome-label');
   const priceLabelEl = document.getElementById('op-price-label');
   if (outcomeEl)    { outcomeEl.textContent = side; outcomeEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
   if (priceLabelEl) { const p = parseFloat(document.getElementById('op-price').value) || 0; priceLabelEl.textContent = '₦' + p; priceLabelEl.style.color = side === 'YES' ? 'var(--green)' : 'var(--red)'; }
@@ -690,7 +721,8 @@ function switchTab(name, btn) {
     const el = document.getElementById('tab-' + t);
     if (el) el.style.display = t === name ? '' : 'none';
   });
-  if (name === 'analytics') setTimeout(drawProbChart, 50);
+  if (name === 'analytics') { setTimeout(drawProbChart, 50); setTimeout(drawOutcomeChart, 80); }
+  if (name === 'comments') renderComments();
 }
 
 renderMarkets();
@@ -698,9 +730,7 @@ renderOrderBook();
 renderActivity();
 renderTrades();
 updateOrderSummary();
-setInterval(tickCountdown, 1000);
-setInterval(updateLiveData, 4000);
-tickCountdown();
+setInterval(updateLiveData, 3500);
 </script>
 
 <!-- FOOTER -->

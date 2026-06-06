@@ -276,10 +276,10 @@
 <!-- SIDEBAR -->
 <div class="sidebar">
   <div class="sidebar-label">Browse</div>
-  <div class="sidebar-item active" onclick="filterCat('all',this)"><i class="fa-solid fa-border-all"></i> All Markets <span class="s-badge">34</span></div>
-  <div class="sidebar-item" onclick="filterCat('live',this)"><i class="fa-solid fa-circle" style="color:var(--red);font-size:8px;"></i> Live Now <span class="s-badge red">13</span></div>
-  <div class="sidebar-item" onclick="filterCat('trending',this)"><i class="fa-solid fa-fire"></i> Trending <span class="s-badge">HOT</span></div>
-  <div class="sidebar-item" onclick="filterCat('new',this)"><i class="fa-solid fa-bolt"></i> New <span class="s-badge blue">8</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-star"></i>Watchlist</div>
+  <div class="sidebar-item active"><i class="fa-solid fa-fire"></i>Trending <span class="item-badge red">HOT</span></div>
+  <div class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i>My Positions</div>
 
   <div class="sidebar-divider"></div>
   <div class="sidebar-label">Find Markets</div>
@@ -394,8 +394,8 @@
         <div class="footer-col">
           <div class="footer-col-title">COMPANY</div>
           <a href="about.html">About</a>
-          <a href="blog.html">Blog</a>
-          <a href="careers.html">Careers</a>
+          <a href="brand.html">Brand</a>
+          <a href="payment.html">Payment</a>
           <a href="faq.html">FAQ</a>
           <a href="policy.html">Privacy Policy</a>
           <a href="terms.html">Terms of Service</a>
@@ -456,14 +456,14 @@ const FEATURED = [
     emoji:'⚡', cat:'ENERGY · NEPA', live:true,
     title:'Will NEPA bring light to your area tonight?',
     sub:"Which areas in Lagos will have light by 10PM?",
-    prob:52, probLabel:'LEKKI', vol:'₦11M', change:'+18%', changeDir:'up',
+    prob:52, vol:'₦74.5M', change:'+9%', changeDir:'up',
     bg:'🏆', yesLabel:'BUY YES ₦52', noLabel:'BUY NO ₦48',
     link:'markets/10000027.html'
   },
   {
     emoji:'🪙', cat:'FINANCE · FOREX', live:true,
-    title:'Will the Dollar/Naira rate hit ₦1,500 before June?',
-    sub:"The naira has been under sustained pressure. As the CBN weighs rate decisions and FX reserves shift, traders are betting on whether ₦1,500 per dollar becomes reality before the end of the month.",
+    title:'Will the Dollar/Naira rate hit <i>₦</i>1,400 before July?',
+    sub:"Will Dollar to Naira hit ₦1,400 before the end of the month.",
     prob:41, vol:'₦74.5M', change:'+9%', changeDir:'up',
     bg:'🪙', yesLabel:'BUY YES ₦41', noLabel:'BUY NO ₦59',
     link:'markets/10000008.html'
@@ -496,7 +496,7 @@ const ALL_MARKETS = [
   { id:10000030, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Releases a New Song in June? — Naija', badge:'resolved', yes:0.62, vol:'₦18.4M', change:'SETTLED', dir:'flat', link:'markets/10000030.html' },
   { id:10000026, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Will Drop a Studio Album in 2026?', badge:'hot', yes:0.71, vol:'₦114.2M', change:'+22%', dir:'up', link:'markets/10000026.html' },
   { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · LAGOS', title:'Will Lagos Experience Major Flooding Before July?', badge:'hot', yes:0.67, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html' },
-  { id:10000024, cat:'commodities', emoji:'⛽', catLabel:'COMMODITIES · FUEL', title:'Will Petrol Exceed ₦1,500/litre Before July?', badge:'hot', yes:0.62, vol:'₦38M', change:'+9%', dir:'up', link:'markets/10000008.html' },
+  { id:10000024, cat:'commodities', emoji:'⛽', catLabel:'COMMODITIES · FUEL', title:'Will fuel hit ₦1,400 before July?', badge:'hot', yes:0.62, vol:'₦38M', change:'+9%', dir:'up', link:'markets/10000007.html' },
   { id:10000008, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Naira/Dollar Hit ₦1,500 Before June?', badge:'resolved', yes:1.00, vol:'₦44M', change:'YES ✓', dir:'flat', link:'markets/10000008.html' },
   { id:10000027, cat:'miscellaneous', emoji:'⚡', catLabel:'ENERGY · LAGOS', title:'Will NEPA Bring Light Tonight?', badge:'live', yes:0.47, vol:'₦8.7M', change:'+2%', dir:'up', link:'markets/10000027.html' },
   { id:10000025, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'When Will It Rain in Lagos Today?', badge:'live', yes:0.58, vol:'₦12.4M', change:'+4%', dir:'up', link:'markets/10000025.html' },
