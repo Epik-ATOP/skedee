@@ -329,6 +329,7 @@
   <div class="tabs-bar">
     <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
     <button class="tab" onclick="switchTab('trades',this)">Trades</button>
+    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
     <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
     <button class="tab" onclick="switchTab('rules',this)">Rules</button>
   </div>
@@ -385,6 +386,13 @@
     </div>
   </div>
 
+
+  <div id="tab-comments" style="display:none;">
+    <div class="positions-card">
+      <div class="positions-title">Comments <span class="badge">5</span></div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
 
   <div id="tab-analytics" style="display:none;">
     <div class="positions-card">
@@ -517,6 +525,13 @@ const PRICE_HISTORY_30D = [
   85.9,86.6,86.4,87.1,86.8,87.4,87.0,86.7,87.1,87.4,87.2,87.4,
   87.6,87.3,87.4,87.5,87.4,87.4
 ];
+const COMMENTS = [
+  {col:'#F59E0B',init:'CW',user:'crude_watcher_lag',text:"OPEC+ emergency cut would be the only catalyst getting us to $100 before July. Otherwise momentum just isn't there.",time:'4m',likes:12},
+  {col:'#22C55E',init:'ET',user:'energy_trader_abj',text:"WTI at $87.40 needs a 14.5% move in 26 days. Not impossible — we've seen bigger short squeezes in the futures market.",time:'18m',likes:8},
+  {col:'#EF4444',init:'OB',user:'oil_bear_ng',text:'Fundamentals do not support this. US rig count is up, storage builds continuing. I am heavy NO.',time:'31m',likes:6},
+  {col:'#3B82F6',init:'MK',user:'macroking_lagos',text:'Middle East tension premium is real but priced in. $100 is psychological resistance that will take extraordinary news to break.',time:'52m',likes:4},
+  {col:'#A855F7',init:'FO',user:'forex_and_oil',text:'Skedee markets are pretty accurate on this stuff. Respecting the 18% probability here.',time:'1h',likes:3},
+];
 
 function renderMarkets() {
   const grid = document.getElementById('markets-grid');
@@ -607,7 +622,14 @@ function renderTrades() {
   document.getElementById('recent-trades').innerHTML = recentTrades.slice(0,8).map(t =>
     `<div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${t.price}</span><span class="trade-size">×${t.size.toLocaleString()}</span></div>`
   ).join('');
-}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
+}
+
+function renderComments() {
+  const el = document.getElementById('comments-list');
+  if (!el) return;
+  el.innerHTML = COMMENTS.map(c =>
+    `<div class="comment-item">
+      <div class="comment-avatar" style="background:${c.col}22;color:${c.col};border:1px solid ${c.col}44;">${c.init}</div>
       <div class="comment-body">
         <div class="comment-user">${c.user}</div>
         <div class="comment-text">${c.text}</div>
@@ -777,6 +799,7 @@ renderMarkets();
 renderOrderBook();
 renderActivity();
 renderTrades();
+renderComments();
 updateOrderSummary();
 drawSparkline();
 setInterval(tickCountdown, 1000);
