@@ -5,15 +5,29 @@ function addAmount(n) {
   if (typeof updateOrderSummary === 'function') updateOrderSummary();
 }
 
-function toggleTheme() {
+function syncThemeIcon() {
   const isDark = document.body.getAttribute('data-theme') !== 'light';
-  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  const icon = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+  const icon = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
   const el = document.getElementById('theme-icon');
   const elM = document.getElementById('theme-icon-mobile');
   if (el) el.className = icon;
   if (elM) elM.className = icon;
 }
+
+function applySystemTheme() {
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.body.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+  syncThemeIcon();
+}
+
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') !== 'light';
+  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  syncThemeIcon();
+}
+
+applySystemTheme();
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applySystemTheme);
 
 function toggleNotif() {
   document.getElementById('notif-dd')?.classList.toggle('open');
