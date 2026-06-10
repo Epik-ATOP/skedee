@@ -173,6 +173,15 @@
 .positions-title .badge{background:var(--y);color:#000;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;}
 
 @media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}.order-panel{right:0;width:100%;}.topbar-nav{display:none;}}
+@media(max-width:600px){
+  .upcoming-banner{padding:14px 16px!important;gap:12px!important;}
+  .upcoming-banner .banner-icon{display:none;}
+  .upcoming-banner .banner-status{display:none!important;}
+  .upcoming-banner .banner-cat{font-size:8px!important;letter-spacing:1px!important;}
+  .upcoming-banner .banner-title{font-size:17px!important;}
+  .upcoming-banner .banner-meta{font-size:10px!important;}
+  .upcoming-banner .banner-sub{font-size:10px!important;}
+}
 </style>
 <link rel="stylesheet" href="../market-mobile.css">
 </head>
@@ -244,16 +253,16 @@
 <div class="main">
 
   <!-- UPCOMING BANNER -->
-  <div style="background:linear-gradient(135deg,rgba(245,200,0,.08),rgba(245,200,0,.03));border:2px solid rgba(245,200,0,.4);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
+  <div class="upcoming-banner" style="background:linear-gradient(135deg,rgba(245,200,0,.08),rgba(245,200,0,.03));border:2px solid rgba(245,200,0,.4);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
     <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:160px;opacity:.04;pointer-events:none;line-height:1;user-select:none;overflow:hidden;border-radius:20px;">⚽</div>
-    <div style="width:64px;height:64px;background:rgba(245,200,0,.1);border:2px solid rgba(245,200,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">⚽</div>
+    <div class="banner-icon" style="width:64px;height:64px;background:rgba(245,200,0,.1);border:2px solid rgba(245,200,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">⚽</div>
     <div style="flex:1;min-width:0;">
-      <div style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP A · MATCHDAY 1</div>
-      <div style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;display:flex;align-items:center;gap:10px;">Mexico vs South Africa</div>
-      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Estadio Azteca, Mexico City · Jun 11, 2026 · 8:00 PM WAT</div>
-      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 10 markets available</div>
+      <div class="banner-cat" style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP A · MATCHDAY 1</div>
+      <div class="banner-title" style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Mexico vs South Africa</div>
+      <div class="banner-meta" style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Estadio Azteca, Mexico City · Jun 11, 2026 · 8:00 PM WAT</div>
+      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 10 markets available</div>
     </div>
-    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
+    <div class="banner-status" style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
       <div style="color:var(--wc);font-weight:700;font-size:12px;margin-bottom:4px;">● PRE-MATCH</div>
       <div>Jun 11, 2026</div>
       <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;"></div>
