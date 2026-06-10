@@ -60,7 +60,7 @@ document.addEventListener('click', e => {
     <div class="more-overlay" id="more-overlay"></div>
     <div class="more-drawer" id="more-drawer">
       <div class="more-drawer-header">
-        <div class="logo"><div class="logo-dot"></div>Skedee</div>
+        <div class="more-drawer-brand"><div class="more-drawer-brand-dot"></div>Skedee</div>
       </div>
       <div class="more-drawer-nav">
         <a href="${r}index.html"   class="more-drawer-link"><i class="fa-solid fa-chart-line"></i>Markets</a>
