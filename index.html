@@ -453,11 +453,19 @@
 // ── DATA ──────────────────────────────────────────────────
 const FEATURED = [
   {
+    emoji:'⚽', cat:'UPCOMING · FOOTBALL · FIFA WORLD CUP', live:false,
+    title:'Mexico vs South Africa',
+    sub:'2026 FIFA World Cup · Group A · Matchday 1 · Estadio Azteca, Mexico City · Tomorrow 8:00 PM WAT · 8 markets open',
+    prob:'58%', vol:'₦42.6M', change:'+26%', changeDir:'up',
+    bg:'⚽', yesLabel:'Mexico Win ₦58', probLabel:'MEXICO WIN',
+    link:'markets/10000040.html'
+  },
+  {
     emoji:'⚡', cat:'ENERGY · NEPA', live:true,
     title:'Will NEPA bring light to your area tonight?',
     sub:"Which areas in Lagos will have light by 10PM?",
     prob:52, vol:'₦74.5M', change:'+9%', changeDir:'up',
-    bg:'🏆', yesLabel:'BUY YES ₦52', noLabel:'BUY NO ₦48',
+    bg:'⚡', yesLabel:'BUY YES ₦52', noLabel:'BUY NO ₦48',
     link:'markets/10000027.html'
   },
   {
@@ -468,14 +476,6 @@ const FEATURED = [
     bg:'🪙', yesLabel:'BUY YES ₦41', noLabel:'BUY NO ₦59',
     link:'markets/10000008.html'
   },
-  {
-    emoji:'⚖️', cat:'POLITICS · NIGERIA', live:false,
-    title:'Will the $1.45bn loan to Nigeria be approved?',
-    sub:'The World Bank board is set to vote on a major $1.45bn development loan to Nigeria. Approval odds have spiked this week on positive signals from Washington.',
-    prob:74, vol:'₦61.4M', change:'+8%', changeDir:'up',
-    bg:'⚖️', yesLabel:'BUY YES ₦74', noLabel:'BUY NO ₦26',
-    link:'markets/10000005.html'
-  }
 ];
 
 const ALL_MARKETS = [
@@ -527,13 +527,14 @@ const ALL_MARKETS = [
   { id:10000035, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 7–8', badge:'live', yes:0.79, vol:'₦6.8M', change:'+8%', dir:'up', link:'#' },
   { id:10000036, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 7–8', badge:'live', yes:0.55, vol:'₦4.1M', change:'+3%', dir:'up', link:'#' },
   { id:10000039, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 14–15', badge:'new', yes:0.82, vol:'₦5.1M', change:'+0%', dir:'up', link:'#' },
-  { id:10000040, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 14–15', badge:'new', yes:0.61, vol:'₦3.2M', change:'+0%', dir:'up', link:'#' },
+  { id:10000049, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 14–15', badge:'new', yes:0.61, vol:'₦3.2M', change:'+0%', dir:'up', link:'#' },
   { id:10000041, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 21–22', badge:'new', yes:0.85, vol:'₦3.8M', change:'+0%', dir:'up', link:'#' },
   { id:10000042, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 21–22', badge:'new', yes:0.64, vol:'₦2.4M', change:'+0%', dir:'up', link:'#' },
   { id:10000043, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 28–29', badge:'new', yes:0.87, vol:'₦3.1M', change:'+0%', dir:'up', link:'#' },
   { id:10000044, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 28–29', badge:'new', yes:0.66, vol:'₦1.9M', change:'+0%', dir:'up', link:'#' },
   { id:10000045, cat:'football', emoji:'🦅', catLabel:'FOOTBALL · WORLD CUP', title:'Super Eagles Win World Cup Opener — Jun 12', badge:'upcoming', yes:0.52, vol:'₦63M', change:'+12%', dir:'up', link:'#' },
   { id:10000046, cat:'football', emoji:'🌍', catLabel:'FOOTBALL · WORLD CUP', title:'Nigeria Tops World Cup Group Stage', badge:'new', yes:0.38, vol:'₦28M', change:'+4%', dir:'up', link:'#' },
+  { id:10000040, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Mexico vs South Africa — World Cup Group A', badge:'upcoming', yes:0.58, vol:'₦42.6M', change:'+26%', dir:'up', link:'markets/10000040.html' },
   { id:10000047, cat:'sports', emoji:'🎾', catLabel:'SPORTS · TENNIS', title:'Djokovic Wins Wimbledon 2026', badge:'new', yes:0.34, vol:'₦11M', change:'+1%', dir:'up', link:'#' },
   { id:10000048, cat:'miscellaneous', emoji:'⚡', catLabel:'ENERGY · NIGERIA', title:'Will NEPA Improve Power Supply in June?', badge:'hot', yes:0.22, vol:'₦14M', change:'-3%', dir:'down', link:'#' },
   { id:10000034, cat:'sports', emoji:'🏀', catLabel:'BASKETBALL · NBA', title:'New York Knicks vs San Antonio Spurs', badge:'upcoming', yes:0.65, vol:'₦7.2M', change:'+0%', dir:'up', link:'markets/10000034.html' },

@@ -222,5 +222,20 @@
     "status": "NEW",
     "closesAt": "Jun 30",
     "isMatch": false
+  },
+  {
+    "id": "10000040",
+    "emoji": "⚽",
+    "category": "FOOTBALL",
+    "title": "Mexico vs South Africa — World Cup Group A",
+    "yesPct": 58,
+    "volume": "₦42.6M",
+    "status": "UPCOMING",
+    "closesAt": "Jun 11",
+    "isMatch": true,
+    "team1": "Mexico",
+    "team2": "South Africa",
+    "team1Emoji": "🇲🇽",
+    "team2Emoji": "🇿🇦"
   }
 ]
