@@ -251,7 +251,7 @@
       <div style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP A · MATCHDAY 1</div>
       <div style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;display:flex;align-items:center;gap:10px;">Mexico vs South Africa</div>
       <div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Estadio Azteca, Mexico City · Jun 11, 2026 · 8:00 PM WAT</div>
-      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 8 markets available</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 10 markets available</div>
     </div>
     <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
       <div style="color:var(--wc);font-weight:700;font-size:12px;margin-bottom:4px;">● PRE-MATCH</div>
@@ -326,7 +326,7 @@
   <div class="stats-row">
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦42.6M</div><div class="stat-box-sub" style="color:var(--green);">▲ +26% in 2h</div></div>
     <div class="stat-box"><div class="stat-box-label">Mexico Win</div><div class="stat-box-val" style="color:var(--mex1);font-size:22px;" id="home-prob-stat">58%</div><div class="stat-box-sub" style="color:var(--text3);">Implied probability</div></div>
-    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">8</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
+    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">10</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
   </div>
 
   <!-- TABS -->
@@ -371,6 +371,8 @@
         <div class="trend-pill" onclick="openOrder('Both Teams To Score','YES',40)"><div class="trend-pill-name">BTTS</div><div class="trend-pill-prob">₦40 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Mexico Clean Sheet','YES',54)"><div class="trend-pill-name">Mexico CS</div><div class="trend-pill-prob">₦54 YES</div></div>
         <div class="trend-pill" onclick="openOrder('🟥 Red Card in Match','YES',32)"><div class="trend-pill-name">🟥 Red Card</div><div class="trend-pill-prob">₦32 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Mexico First to Score','YES',60)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/mx.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">Mex 1st Goal</div><div class="trend-pill-prob">₦60 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('South Africa First to Score','YES',30)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/za.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">RSA 1st Goal</div><div class="trend-pill-prob">₦30 YES</div></div>
       </div>
     </div>
 
@@ -421,6 +423,8 @@
         Resolves YES if the specified team does not concede any goals during the full 90 minutes including added time.<br><br>
         <strong style="color:var(--text);">Red Card</strong><br>
         Resolves YES if any player from either team receives a red card (direct or two yellows) at any point during the match, including added time.<br><br>
+        <strong style="color:var(--text);">First to Score</strong><br>
+        Resolves YES if the specified team scores the first goal of the match. Own goals count as a goal for the team that concedes. If the match ends 0–0, both markets resolve NO.<br><br>
         <strong style="color:var(--text);">Market Lock</strong><br>
         All markets lock at confirmed kickoff. No orders can be placed after the match begins.<br><br>
         <strong style="color:var(--text);">Data Source</strong><br>
@@ -522,6 +526,8 @@ const MARKETS = [
   { id:'mex_cs',    title:'Mexico Clean Sheet',         yes:0.54, vol:'₦1.6M',  liq:'₦0.5M', spread:'₦5', history:[0.53,0.54,0.53,0.54,0.55,0.54,0.53,0.54,0.54,0.54] },
   { id:'mex_nil',   title:'Mexico Win to Nil',          yes:0.40, vol:'₦0.9M',  liq:'₦0.3M', spread:'₦5', history:[0.39,0.40,0.39,0.40,0.41,0.40,0.40,0.39,0.40,0.40] },
   { id:'redcard',   title:'🟥 Red Card in Match',        yes:0.32, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦6', history:[0.31,0.32,0.31,0.32,0.32,0.33,0.32,0.32,0.31,0.32] },
+  { id:'mex_first', title:'Mexico First to Score',       yes:0.60, vol:'₦1.4M',  liq:'₦0.4M', spread:'₦5', history:[0.59,0.60,0.59,0.60,0.61,0.60,0.60,0.59,0.60,0.60] },
+  { id:'rsa_first', title:'South Africa First to Score', yes:0.30, vol:'₦1.1M',  liq:'₦0.3M', spread:'₦6', history:[0.31,0.30,0.31,0.30,0.30,0.29,0.30,0.30,0.31,0.30] },
 ];
 
 const ORDER_BOOK_DATA = {
