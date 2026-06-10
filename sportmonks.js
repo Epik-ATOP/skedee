@@ -58,6 +58,13 @@ const SM_ALIASES = {
   'psg':                   'Paris Saint-Germain',
   'paris saint-germain':   'Paris Saint-Germain',
   'paris sg':              'Paris Saint-Germain',
+  // World Cup teams
+  'mexico':                'Mexico',
+  'south africa':          'South Africa',
+  'bafana bafana':         'South Africa',
+  'usa':                   'United States',
+  'united states':         'United States',
+  'canada':                'Canada',
 };
 
 // ── INTERNAL HELPERS ──────────────────────────────────────────────────────

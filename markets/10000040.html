@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="../style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root{--sidebar-w:220px;--rsidebar-w:280px;--mex1:#006847;--mex2:#CE1126;--rsa1:#007A4D;--rsa2:#FFB81C;--wc:#5E0A87;}
+:root{--sidebar-w:220px;--rsidebar-w:280px;--mex1:#006847;--mex2:#CE1126;--rsa1:#007A4D;--rsa2:#FFB81C;--wc:#F5C800;}
 .layout{display:flex;margin-top:52px;height:calc(100vh - 52px);overflow:hidden;}
 .sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 0;}
 .sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;}
@@ -30,7 +30,7 @@
 .match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--mex1),var(--mex2),var(--rsa2),var(--rsa1),transparent);animation:scan 3s ease-in-out infinite;}
 @keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
 .match-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
-.league-badge{display:flex;align-items:center;gap:6px;background:rgba(94,10,135,.12);border:1px solid rgba(94,10,135,.35);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--wc);letter-spacing:1px;}
+.league-badge{display:flex;align-items:center;gap:6px;background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.3);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--wc);letter-spacing:1px;}
 .live-indicator{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;}
 .live-dot{width:7px;height:7px;border-radius:50%;}
 @keyframes live-pulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.6)}70%{box-shadow:0 0 0 8px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
@@ -49,7 +49,7 @@
 .meta-item{display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;}
 
 /* ── COUNTDOWN TIMER ── */
-.kickoff-timer{background:linear-gradient(135deg,rgba(94,10,135,.1),rgba(94,10,135,.03));border:1px solid rgba(94,10,135,.3);border-radius:var(--radius-lg);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.kickoff-timer{background:linear-gradient(135deg,rgba(245,200,0,.08),rgba(245,200,0,.03));border:1px solid rgba(245,200,0,.25);border-radius:var(--radius-lg);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
 .kickoff-info{display:flex;flex-direction:column;gap:2px;}
 .kickoff-title{font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--text);}
 .kickoff-sub{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
@@ -221,8 +221,8 @@
   <div class="sidebar-item"><i class="fa-solid fa-shapes"></i>Miscellaneous</div>
   <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
   <div class="sidebar-label">World Cup — Today</div>
-  <div class="trending-event" style="border-color:rgba(94,10,135,.4);background:rgba(94,10,135,.04);">
-    <div class="trend-name">🇲🇽 Mexico vs South Africa 🇿🇦</div>
+  <div class="trending-event" style="border-color:rgba(245,200,0,.35);background:rgba(245,200,0,.04);">
+    <div class="trend-name"><img src="https://flagcdn.com/w20/mx.png" style="height:11px;vertical-align:middle;border-radius:2px;margin-right:3px;">Mexico vs South Africa <img src="https://flagcdn.com/w20/za.png" style="height:11px;vertical-align:middle;border-radius:2px;margin-left:3px;"></div>
     <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦42.6M vol</div><div class="trend-change" style="color:var(--wc);">TOMORROW</div></div>
   </div>
   <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
@@ -244,12 +244,12 @@
 <div class="main">
 
   <!-- UPCOMING BANNER -->
-  <div style="background:linear-gradient(135deg,rgba(94,10,135,.12),rgba(94,10,135,.03));border:2px solid rgba(94,10,135,.45);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
+  <div style="background:linear-gradient(135deg,rgba(245,200,0,.08),rgba(245,200,0,.03));border:2px solid rgba(245,200,0,.4);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
     <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:160px;opacity:.04;pointer-events:none;line-height:1;user-select:none;overflow:hidden;border-radius:20px;">⚽</div>
-    <div style="width:64px;height:64px;background:rgba(94,10,135,.15);border:2px solid rgba(94,10,135,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">⚽</div>
+    <div style="width:64px;height:64px;background:rgba(245,200,0,.1);border:2px solid rgba(245,200,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">⚽</div>
     <div style="flex:1;min-width:0;">
       <div style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP A · MATCHDAY 1</div>
-      <div style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">🇲🇽 <span style="color:var(--mex1);">Mexico</span> <span style="color:var(--text3);">vs</span> <span style="color:var(--rsa2);">South Africa</span> 🇿🇦</div>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;display:flex;align-items:center;gap:10px;">Mexico vs South Africa</div>
       <div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Estadio Azteca, Mexico City · Jun 11, 2026 · 8:00 PM WAT</div>
       <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 8 markets available</div>
     </div>
@@ -275,24 +275,24 @@
 
     <div class="match-center">
       <div class="team-block">
-        <div class="team-logo" style="border-color:rgba(0,104,71,.4);background:rgba(0,104,71,.08);">🇲🇽</div>
+        <div class="team-logo" style="border-color:rgba(0,104,71,.4);background:rgba(0,104,71,.08);font-size:0;"><img src="https://flagcdn.com/w80/mx.png" alt="Mexico" style="width:54px;height:auto;border-radius:3px;"></div>
         <div class="team-name" style="color:var(--mex1);">MEXICO</div>
         <div class="team-record">Group A · Host Nation</div>
       </div>
       <div class="score-block">
         <div class="ticker-score">
           <span class="ticker-abbr" style="color:var(--mex1);">MEX</span>
-          <span class="ticker-sep">vs</span>
+          <span class="ticker-sep" id="score-display">vs</span>
           <span class="ticker-abbr" style="color:var(--rsa2);">RSA</span>
         </div>
         <div class="match-clock">
           <i class="fa-solid fa-clock" style="font-size:11px;"></i>
           <span id="clock-display" style="font-size:11px;">8:00 PM WAT</span>
         </div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(94,10,135,.1);border:1px solid rgba(94,10,135,.3);color:var(--wc);">PRE-MATCH</div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);">PRE-MATCH</div>
       </div>
       <div class="team-block">
-        <div class="team-logo" style="border-color:rgba(0,122,77,.4);background:rgba(0,122,77,.08);">🇿🇦</div>
+        <div class="team-logo" style="border-color:rgba(0,122,77,.4);background:rgba(0,122,77,.08);font-size:0;"><img src="https://flagcdn.com/w80/za.png" alt="South Africa" style="width:54px;height:auto;border-radius:3px;"></div>
         <div class="team-name" style="color:var(--rsa2);">SOUTH AFRICA</div>
         <div class="team-record">Group A · Bafana Bafana</div>
       </div>
@@ -342,7 +342,7 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(94,10,135,.1);border:1px solid rgba(94,10,135,.3);color:var(--wc);padding:2px 6px;border-radius:4px;margin-left:6px;">PRE-MATCH</span></div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);padding:2px 6px;border-radius:4px;margin-left:6px;">PRE-MATCH</span></div>
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦42.6M total volume</div>
       </div>
       <div class="sentiment-bar">
@@ -364,9 +364,9 @@
     <div class="trending-strip" style="margin-top:12px;">
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🔥 Hot Markets</div>
       <div class="trending-pills">
-        <div class="trend-pill" onclick="openOrder('Mexico Win (FT)','YES',58)"><div class="trend-pill-name">🇲🇽 Mexico Win</div><div class="trend-pill-prob">₦58 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Mexico Win (FT)','YES',58)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/mx.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">Mexico Win</div><div class="trend-pill-prob">₦58 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Draw (FT)','YES',26)"><div class="trend-pill-name">Draw FT</div><div class="trend-pill-prob">₦26 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('South Africa Win (FT)','YES',16)"><div class="trend-pill-name">🇿🇦 South Africa Win</div><div class="trend-pill-prob">₦16 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('South Africa Win (FT)','YES',16)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/za.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">South Africa Win</div><div class="trend-pill-prob">₦16 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Over 2.5 Goals','YES',46)"><div class="trend-pill-name">Over 2.5 Goals</div><div class="trend-pill-prob">₦46 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Both Teams To Score','YES',40)"><div class="trend-pill-name">BTTS</div><div class="trend-pill-prob">₦40 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Mexico Clean Sheet','YES',54)"><div class="trend-pill-name">Mexico CS</div><div class="trend-pill-prob">₦54 YES</div></div>
@@ -501,8 +501,15 @@
 </div>
 
 <script src="../script.js"></script>
+<script src="../sportmonks.js"></script>
 <script>
 const KICKOFF_TIME = new Date('2026-06-11T19:00:00Z'); // 8:00 PM WAT
+// The Odds API sport key for FIFA World Cup 2026
+// If the match doesn't appear, check available keys at:
+// https://skedee-sm.atypeofperson08.workers.dev/v4/sports/?all=true
+const SM_WC   = 'soccer_fifa_world_cup';
+const SM_HOME = 'Mexico';
+const SM_AWAY = 'South Africa';
 let orderSide = 'YES', walletBalance = 4271250;
 let miniCharts = {}, probChart;
 
@@ -747,6 +754,57 @@ function switchTab(name, btn) {
   if (name === 'comments') renderComments();
 }
 
+// ── THE ODDS API INTEGRATION ─────────────────────────────────────────────
+
+function applyProbs(probs) {
+  const r = smRound(probs);
+  document.getElementById('bar-mex').style.width  = r.home + '%';
+  document.getElementById('bar-draw').style.width = r.draw + '%';
+  document.getElementById('bar-rsa').style.width  = r.away + '%';
+  document.getElementById('label-mex').textContent  = `Mexico ${r.home}%`;
+  document.getElementById('label-draw').textContent = `Draw ${r.draw}%`;
+  document.getElementById('label-rsa').textContent  = `South Africa ${r.away}%`;
+  document.getElementById('home-prob-stat').textContent = r.home + '%';
+  const mexM  = MARKETS.find(m => m.id === 'mex_win');
+  const drawM = MARKETS.find(m => m.id === 'draw');
+  const rsaM  = MARKETS.find(m => m.id === 'rsa_win');
+  if (mexM)  mexM.yes  = probs.home;
+  if (drawM) drawM.yes = probs.draw;
+  if (rsaM)  rsaM.yes  = probs.away;
+  renderMarkets();
+}
+
+function applyLive(gameData) {
+  const state = smParseState(gameData);
+  const score = smParseScore(gameData);
+  const dot   = document.getElementById('live-dot');
+  const lbl   = document.getElementById('live-label');
+  const pill  = document.getElementById('match-status');
+  const disp  = document.getElementById('score-display');
+  if (state === 'live') {
+    if (disp) disp.textContent = `${score.home} — ${score.away}`;
+    if (dot)  { dot.style.background = 'var(--red)'; dot.style.animation = 'live-pulse 1.5s infinite'; }
+    if (lbl)  { lbl.style.color = 'var(--red)'; lbl.textContent = 'LIVE'; }
+    if (pill) { pill.style.background = 'rgba(239,68,68,.15)'; pill.style.border = '1px solid rgba(239,68,68,.4)'; pill.style.color = 'var(--red)'; pill.textContent = 'LIVE'; }
+  } else if (state === 'finished') {
+    if (disp) disp.textContent = `${score.home} — ${score.away}`;
+    if (dot)  { dot.style.background = 'var(--text3)'; dot.style.animation = 'none'; }
+    if (lbl)  { lbl.style.color = 'var(--text3)'; lbl.textContent = 'FT'; }
+    if (pill) { pill.style.background = 'rgba(100,100,100,.1)'; pill.style.border = '1px solid var(--border)'; pill.style.color = 'var(--text3)'; pill.textContent = 'FULL TIME'; }
+  }
+}
+
+async function initOddsAPI() {
+  // Load pre-match probabilities immediately
+  const probs = await smGetProbs(SM_HOME, SM_AWAY, SM_WC);
+  if (probs) applyProbs(probs);
+  // Start live score polling within ±2h of kickoff
+  const diffMs = KICKOFF_TIME - Date.now();
+  if (diffMs < 2 * 3600000 && diffMs > -3 * 3600000) {
+    smStartPoll(SM_HOME, SM_AWAY, applyLive, 30000, SM_WC);
+  }
+}
+
 renderMarkets();
 renderOrderBook();
 renderActivity();
@@ -755,6 +813,7 @@ updateOrderSummary();
 updateCountdown();
 setInterval(updateLiveData, 4000);
 setInterval(updateCountdown, 1000);
+initOddsAPI();
 </script>
 
 <!-- FOOTER -->
