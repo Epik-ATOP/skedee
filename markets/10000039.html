@@ -234,42 +234,6 @@
     </div>
   </div>
 
-  <!-- RATE HERO -->
-  <div class="rate-card">
-    <div class="rate-card-top">
-      <div class="fx-badge">💵 NGN/USD RATE</div>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div class="live-indicator">
-          <div class="live-dot pulsing" style="background:var(--fx1);"></div>
-          <span style="color:var(--fx1);">LIVE</span>
-        </div>
-        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Last update: just now</div>
-      </div>
-    </div>
-    <div class="rate-main-row">
-      <div class="rate-display">
-        <div class="rate-label">Current Rate</div>
-        <div style="display:flex;align-items:baseline;gap:2px;">
-          <div class="rate-value" id="live-rate">1,358</div>
-          <div style="font-family:var(--font-mono);font-size:18px;color:var(--text3);margin-left:4px;">.40</div>
-          <div class="rate-unit">NGN per $1</div>
-        </div>
-        <div class="rate-change-row">
-          <span class="rate-change up" id="rate-change">▲ +3.20 (+0.24%)</span>
-          <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">vs yesterday's close</span>
-        </div>
-      </div>
-      <div class="rate-chart-area">
-        <canvas id="rateSparkline"></canvas>
-      </div>
-    </div>
-    <div style="padding-top:12px;border-top:1px solid var(--border3);display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:12px;">
-      <div style="display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;"><i class="fa-solid fa-building-columns"></i>CBN Official Window Rate</div>
-      <div style="display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;"><i class="fa-solid fa-calendar"></i>Session: Jun 8 2PM → Jun 9 10PM WAT</div>
-      <div style="margin-left:auto;font-family:var(--font-mono);font-size:11px;"><span style="color:var(--text3);">Volume: </span><span style="color:var(--y);font-weight:700;">₦8,421,500</span></div>
-    </div>
-  </div>
-
   <!-- SESSION TIMER -->
   <div class="session-bar">
     <div class="session-info">
@@ -287,10 +251,10 @@
 
   <!-- STAT BOXES -->
   <div class="stats-row">
-    <div class="stat-box"><div class="stat-box-label">Current Bracket</div><div class="stat-box-val" style="font-size:16px;color:var(--fx1);">₦1355–1360</div><div class="stat-box-sub" style="color:var(--green);">Rate: ₦1,358.40</div></div>
-    <div class="stat-box"><div class="stat-box-label">Today's Range</div><div class="stat-box-val" style="font-size:15px;">1,352 – 1,361</div><div class="stat-box-sub" style="color:var(--text3);">₦9 spread so far</div></div>
+    <div class="stat-box"><div class="stat-box-label">Current Bracket</div><div class="stat-box-val" style="font-size:16px;color:var(--fx1);">₦1365</div><div class="stat-box-sub" style="color:var(--green);">Rate: ₦1,365.20</div></div>
+    <div class="stat-box"><div class="stat-box-label">Today's Range</div><div class="stat-box-val" style="font-size:15px;">1,362 – 1,367</div><div class="stat-box-sub" style="color:var(--text3);">₦5 spread so far</div></div>
     <div class="stat-box"><div class="stat-box-label">24h Volume</div><div class="stat-box-val yellow">₦8.4M</div><div class="stat-box-sub" style="color:var(--green);">▲ 34% vs yesterday</div></div>
-    <div class="stat-box"><div class="stat-box-label">Leading Bracket</div><div class="stat-box-val green" style="font-size:16px;">₦1355–60</div><div class="stat-box-sub" style="color:var(--text3);">22% implied prob</div></div>
+    <div class="stat-box"><div class="stat-box-label">Leading Bracket</div><div class="stat-box-val green" style="font-size:16px;">₦1365</div><div class="stat-box-sub" style="color:var(--text3);">16% implied prob</div></div>
   </div>
 
   <!-- TABS -->
@@ -382,9 +346,9 @@
 <!-- RIGHT SIDEBAR -->
 <div class="right-sidebar">
   <div>
-    <div class="rsidebar-section-title">Order Book — ₦1355–60 <span style="color:var(--fx1);font-size:10px;">LIVE</span></div>
+    <div class="rsidebar-section-title">Order Book — ₦1365 <span style="color:var(--fx1);font-size:10px;">LIVE</span></div>
     <div id="order-book-asks"></div>
-    <div class="ob-spread" id="ob-spread-label">Spread: ₦2 · Mid: ₦22</div>
+    <div class="ob-spread" id="ob-spread-label">Spread: ₦2 · Mid: ₦16</div>
     <div id="order-book-bids"></div>
   </div>
   <div style="border-top:1px solid var(--border3);padding-top:16px;">
@@ -405,11 +369,11 @@
     <div class="order-panel-title">Place Order</div>
     <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
   </div>
-  <div class="order-market-name" id="op-market-name">₦1355 – ₦1360</div>
+  <div class="order-market-name" id="op-market-name">₦1365</div>
   <div style="display:flex;gap:8px;margin-bottom:16px;">
     <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">BRACKET</div>
-      <div style="font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--fx1);line-height:1;" id="op-bracket-label">₦1355–1360</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--fx1);line-height:1;" id="op-bracket-label">₦1365</div>
     </div>
     <div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;">
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:7px;">PRICE</div>
@@ -421,7 +385,7 @@
     <input type="number" id="op-amount" value="5000" min="100" max="9999999" oninput="updateOrderSummary()"
       style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
   </div>
-  <input type="hidden" id="op-price" value="22">
+  <input type="hidden" id="op-price" value="16">
   <div class="quick-amt-row">
     <button class="quick-amt-btn" onclick="addAmount(1000)">+₦1K</button>
     <button class="quick-amt-btn" onclick="addAmount(2000)">+₦2K</button>
@@ -439,7 +403,7 @@
       <span style="font-family:var(--font-num);font-size:34px;font-weight:700;color:var(--y);line-height:1;" id="op-payout">—</span>
     </div>
   </div>
-  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-bracket-btn-label">₦1355–1360</span></button>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-bracket-btn-label">₦1365</span></button>
 </div>
 
 <script src="../script.js"></script>
@@ -448,16 +412,18 @@ let walletBalance = 4271250;
 let historyChart, distChart, sparkline;
 
 const BRACKETS = [
-  { id:'b0',  label:'Under ₦1340',    short:'<₦1340',  prob:0.03, emoji:'📉', current:false },
-  { id:'b1',  label:'₦1340 – ₦1345', short:'1340–45', prob:0.05, emoji:'📊', current:false },
-  { id:'b2',  label:'₦1345 – ₦1350', short:'1345–50', prob:0.08, emoji:'📊', current:false },
-  { id:'b3',  label:'₦1350 – ₦1355', short:'1350–55', prob:0.14, emoji:'📈', current:false },
-  { id:'b4',  label:'₦1355 – ₦1360', short:'1355–60', prob:0.22, emoji:'🎯', current:true  },
-  { id:'b5',  label:'₦1360 – ₦1365', short:'1360–65', prob:0.19, emoji:'📊', current:false },
-  { id:'b6',  label:'₦1365 – ₦1370', short:'1365–70', prob:0.13, emoji:'📊', current:false },
-  { id:'b7',  label:'₦1370 – ₦1375', short:'1370–75', prob:0.08, emoji:'📊', current:false },
-  { id:'b8',  label:'₦1375 – ₦1380', short:'1375–80', prob:0.05, emoji:'📊', current:false },
-  { id:'b9',  label:'Over ₦1380',     short:'>₦1380',  prob:0.03, emoji:'📈', current:false },
+  { id:'b0',  label:'Under ₦1360', short:'<₦1360',  prob:0.04, emoji:'', current:false },
+  { id:'b1',  label:'₦1361',       short:'₦1361',   prob:0.05, emoji:'', current:false },
+  { id:'b2',  label:'₦1362',       short:'₦1362',   prob:0.08, emoji:'', current:false },
+  { id:'b3',  label:'₦1363',       short:'₦1363',   prob:0.11, emoji:'', current:false },
+  { id:'b4',  label:'₦1364',       short:'₦1364',   prob:0.14, emoji:'', current:false },
+  { id:'b5',  label:'₦1365',       short:'₦1365',   prob:0.16, emoji:'', current:false },
+  { id:'b6',  label:'₦1366',       short:'₦1366',   prob:0.14, emoji:'', current:false },
+  { id:'b7',  label:'₦1367',       short:'₦1367',   prob:0.11, emoji:'', current:false },
+  { id:'b8',  label:'₦1368',       short:'₦1368',   prob:0.08, emoji:'', current:false },
+  { id:'b9',  label:'₦1369',       short:'₦1369',   prob:0.05, emoji:'', current:false },
+  { id:'b10', label:'₦1370',       short:'₦1370',   prob:0.02, emoji:'', current:false },
+  { id:'b11', label:'Over ₦1370',  short:'>₦1370',  prob:0.02, emoji:'', current:false },
 ];
 
 const ACTIVITY = [
@@ -566,12 +532,12 @@ function renderComments() {
 function drawSparkline() {
   const ctx = document.getElementById('rateSparkline');
   if (!ctx || !window.Chart) return;
-  const data = [1350,1352,1354,1353,1356,1358,1357,1359,1358,1358.4];
+  const data = [1360,1362,1363,1361,1364,1365,1364,1366,1365,1365.2];
   if (sparkline) sparkline.destroy();
   sparkline = new Chart(ctx.getContext('2d'), {
     type:'line',
     data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:'#10B981',backgroundColor:'rgba(16,185,129,0.1)',borderWidth:2,fill:true,tension:0.4,pointRadius:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false,min:1340,max:1380}},animation:{duration:0}}
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false,min:1355,max:1375}},animation:{duration:0}}
   });
 }
 
@@ -585,7 +551,7 @@ function drawHistoryChart() {
       labels:['Jun 1','Jun 2','Jun 3','Jun 4','Jun 5','Jun 6','Jun 7','Jun 8'],
       datasets:[{
         label:'NGN/USD Close',
-        data:[1346,1349,1352,1350,1354,1356,1355,1358],
+        data:[1356,1358,1361,1360,1362,1364,1363,1365],
         borderColor:'#10B981',backgroundColor:'rgba(16,185,129,0.06)',borderWidth:2,fill:true,tension:0.4,
         pointRadius:4,pointBackgroundColor:'#10B981'
       }]
@@ -593,7 +559,7 @@ function drawHistoryChart() {
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>'₦'+ctx.parsed.y.toLocaleString()}}},
       scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},
-        y:{ticks:{color:tc,font:{size:10},callback:v=>'₦'+v},grid:{color:'rgba(255,255,255,0.04)'},min:1335,max:1375}}}
+        y:{ticks:{color:tc,font:{size:10},callback:v=>'₦'+v},grid:{color:'rgba(255,255,255,0.04)'},min:1350,max:1375}}}
   });
 }
 
@@ -621,10 +587,10 @@ function drawDistChart() {
 }
 
 /* ── LIVE UPDATES ── */
-let liveRate = 1358.4;
+let liveRate = 1365.2;
 function updateLiveData() {
   const delta = (Math.random() - 0.48) * 0.8;
-  liveRate = Math.max(1338, Math.min(1392, liveRate + delta));
+  liveRate = Math.max(1355, Math.min(1378, liveRate + delta));
   const rateInt = Math.floor(liveRate);
   const rateDec = (liveRate % 1).toFixed(2).slice(1);
   document.querySelector('#live-rate') && (document.querySelector('#live-rate').textContent = rateInt.toLocaleString('en-NG'));
