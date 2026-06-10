@@ -52,3 +52,39 @@ document.addEventListener('click', e => {
   }), { threshold: 0.08 });
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 })();
+
+// ── MORE DRAWER ───────────────────────────────────────────────────────────────
+(function() {
+  const r = window.location.pathname.includes('/markets/') ? '../' : '';
+  document.body.insertAdjacentHTML('beforeend', `
+    <div class="more-overlay" id="more-overlay"></div>
+    <div class="more-drawer" id="more-drawer">
+      <div class="more-drawer-header">
+        <div class="logo"><div class="logo-dot"></div>Skedee</div>
+      </div>
+      <nav class="more-drawer-nav">
+        <a href="${r}index.html"   class="more-drawer-link"><i class="fa-solid fa-chart-line"></i>Markets</a>
+        <a href="${r}search.html"  class="more-drawer-link"><i class="fa-solid fa-magnifying-glass"></i>Search Markets</a>
+        <a href="${r}about.html"   class="more-drawer-link"><i class="fa-solid fa-circle-info"></i>About</a>
+        <a href="${r}faq.html"     class="more-drawer-link"><i class="fa-solid fa-circle-question"></i>FAQ</a>
+        <a href="${r}terms.html"   class="more-drawer-link"><i class="fa-solid fa-file-lines"></i>Terms of Service</a>
+        <a href="${r}policy.html"  class="more-drawer-link"><i class="fa-solid fa-shield-halved"></i>Privacy Policy</a>
+      </nav>
+      <div class="more-drawer-footer">
+        <a href="${r}signup.html" class="more-drawer-signup">Sign Up</a>
+        <a href="${r}login.html"  class="more-drawer-login">Login</a>
+      </div>
+    </div>`);
+  document.getElementById('more-overlay').addEventListener('click', closeMoreDrawer);
+})();
+
+function openMoreDrawer() {
+  document.getElementById('more-overlay').classList.add('open');
+  document.getElementById('more-drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMoreDrawer() {
+  document.getElementById('more-overlay').classList.remove('open');
+  document.getElementById('more-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}

@@ -774,11 +774,10 @@ setInterval(liveTick, 6000);
 
 <!-- MOBILE BOTTOM NAV -->
 <nav class="mobile-bottom-nav">
-  <a class="mob-nav-item" href="../search.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
+  <a class="mob-nav-item" href="../index.html"><i class="fa-solid fa-chart-line"></i>Markets</a>
   <a class="mob-nav-item" href="../search.html"><i class="fa-solid fa-magnifying-glass"></i>Search</a>
-  <button class="mob-nav-trade" onclick="document.getElementById('order-panel').classList.toggle('open')" aria-label="Trade"><i class="fa-solid fa-plus"></i></button>
-  <a class="mob-nav-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
   <button class="mob-nav-item" onclick="if(typeof toggleProfile==='function')toggleProfile()"><i class="fa-solid fa-user"></i>Profile</button>
+  <button class="mob-nav-item" onclick="openMoreDrawer()"><i class="fa-solid fa-bars"></i>More</button>
 </nav>
 </body>
 </html>
