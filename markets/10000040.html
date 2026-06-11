@@ -289,7 +289,7 @@
         </div>
         <div class="match-clock">
           <i class="fa-solid fa-clock" style="font-size:11px;"></i>
-          <span id="clock-display" style="font-size:11px;">46'</span>
+          <span id="clock-display" style="font-size:11px;">52'</span>
         </div>
         <div class="match-status-pill" id="match-status" style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:var(--red);">LIVE</div>
       </div>
@@ -519,7 +519,7 @@ const MARKETS = [
   { id:'mex_first', title:'Mexico First to Score',           yes:0.60, vol:'₦1.4M',  liq:'₦0.4M', spread:'₦5', history:[0.59,0.60,0.59,0.60,0.61,0.60,0.60,0.59,0.60,0.60] },
   { id:'rsa_first', title:'South Africa First to Score',     yes:0.30, vol:'₦1.1M',  liq:'₦0.3M', spread:'₦6', history:[0.31,0.30,0.31,0.30,0.30,0.29,0.30,0.30,0.31,0.30] },
   { id:'btts',      title:'Both Teams To Score',        yes:0.40, vol:'₦3.2M',  liq:'₦0.9M', spread:'₦4', history:[0.40,0.41,0.40,0.41,0.40,0.40,0.41,0.40,0.40,0.40] },
-  { id:'redcard',   title:'🟥 Red Card in Match',        yes:0.32, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦6', history:[0.31,0.32,0.31,0.32,0.32,0.33,0.32,0.32,0.31,0.32] },
+  { id:'redcard',   title:'🟥 Red Card in Match',        yes:0.98, vol:'₦1.4M',  liq:'₦0.0M', spread:'₦1', history:[0.31,0.32,0.45,0.60,0.75,0.88,0.94,0.97,0.98,0.98] },
 
 ];
 
@@ -529,6 +529,7 @@ const ORDER_BOOK_DATA = {
 };
 
 const ACTIVITY = [
+  {type:'buy',  text:'🟥 <strong>RED CARD</strong> — Sphephelo Sithole (#13, South Africa) dismissed. RSA down to 10 men.', time:'now'},
   {type:'buy',  text:'<strong>azteca_punter</strong> opened Mexico Win YES ×6,000 at ₦58 — "Azteca crowd is a 12th man. Mexico dont lose openers at home"', time:'5m'},
   {type:'buy',  text:'<strong>africa_bets_ng</strong> backed South Africa Win YES ×2,500 at ₦16 — "Bafana Bafana shocked the world in 2010. Why not again?"', time:'14m'},
   {type:'buy',  text:'<strong>goals_merchant</strong> opened Over 2.5 Goals YES ×3,000 at ₦46 — "Mexico love to attack at the Azteca"', time:'28m'},
