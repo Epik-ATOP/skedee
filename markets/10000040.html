@@ -70,7 +70,7 @@
 .sentiment-bar{height:10px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:8px;}
 .sentiment-mex{background:linear-gradient(90deg,#006847,rgba(0,104,71,.7));}
 .sentiment-draw{background:rgba(100,100,100,.4);}
-.sentiment-rsa{background:linear-gradient(90deg,rgba(0,122,77,.6),#FFB81C);}
+.sentiment-rsa{background:linear-gradient(90deg,#F97316,#FFB81C);}
 .sentiment-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
 
 /* ── TABS ── */
@@ -197,21 +197,14 @@
   </div>
   <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search markets..."></div>
   <div class="topbar-right">
-    <div class="btn-icon"><i class="fa-solid fa-bell"></i><span class="notif-badge">2</span></div>
     <div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
-    <div class="wallet-pill"><div><div class="wallet-label">BALANCE</div><div class="wallet-bal" id="wallet-display">₦4,271,250</div></div></div>
-    <div class="avatar" onclick="toggleProfile()">TK</div>
+    <a href="../login.html"><button class="btn-auth">Log in</button></a>
+    <a href="../signup.html"><button class="btn-launch">Sign Up</button></a>
   </div>
 </div>
 
-<div class="profile-dropdown" id="profile-dd">
-  <div class="profile-item"><i class="fa-solid fa-user"></i>Profile</div>
-  <div class="profile-item"><i class="fa-solid fa-wallet"></i>Portfolio</div>
-  <div class="profile-item"><i class="fa-solid fa-gear"></i>Settings</div>
-  <div class="profile-item"><i class="fa-solid fa-right-from-bracket"></i>Sign out</div>
-</div>
-
 <div class="layout">
+
 <div class="sidebar">
   <div class="sidebar-label">Browse</div>
   <div class="sidebar-item"><i class="fa-solid fa-bolt"></i>Live Now <span class="item-badge">12</span></div>
@@ -232,7 +225,7 @@
   <div class="sidebar-label">World Cup — Today</div>
   <div class="trending-event" style="border-color:rgba(245,200,0,.35);background:rgba(245,200,0,.04);">
     <div class="trend-name"><img src="https://flagcdn.com/w20/mx.png" style="height:11px;vertical-align:middle;border-radius:2px;margin-right:3px;">Mexico vs South Africa <img src="https://flagcdn.com/w20/za.png" style="height:11px;vertical-align:middle;border-radius:2px;margin-left:3px;"></div>
-    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦42.6M vol</div><div class="trend-change" style="color:var(--wc);">TOMORROW</div></div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦42.6M vol</div><div class="trend-change" style="color:var(--wc);">TODAY</div></div>
   </div>
   <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
   <div class="sidebar-label">Also Trending</div>
@@ -260,7 +253,7 @@
       <div class="banner-cat" style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP A · MATCHDAY 1</div>
       <div class="banner-title" style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Mexico vs South Africa</div>
       <div class="banner-meta" style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Estadio Azteca, Mexico City · Jun 11, 2026 · 8:00 PM WAT</div>
-      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 10 markets available</div>
+      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 12 markets available</div>
     </div>
     <div class="banner-status" style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
       <div style="color:var(--wc);font-weight:700;font-size:12px;margin-bottom:4px;">● PRE-MATCH</div>
@@ -335,7 +328,7 @@
   <div class="stats-row">
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦42.6M</div><div class="stat-box-sub" style="color:var(--green);">▲ +26% in 2h</div></div>
     <div class="stat-box"><div class="stat-box-label">Mexico Win</div><div class="stat-box-val" style="color:var(--mex1);font-size:22px;" id="home-prob-stat">58%</div><div class="stat-box-sub" style="color:var(--text3);">Implied probability</div></div>
-    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">10</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
+    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">12</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
   </div>
 
   <!-- TABS -->
@@ -366,7 +359,7 @@
       </div>
       <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
         <i class="fa-solid fa-chart-line" style="color:var(--mex1);margin-right:4px;"></i>
-        Mexico favored as host nation · South Africa's first World Cup since 2010 · Azteca crowd factor is massive
+        Fun fact: This is South Africa's first World Cup since 2010
       </div>
     </div>
 
@@ -382,6 +375,8 @@
         <div class="trend-pill" onclick="openOrder('🟥 Red Card in Match','YES',32)"><div class="trend-pill-name">🟥 Red Card</div><div class="trend-pill-prob">₦32 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Mexico First to Score','YES',60)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/mx.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">Mex 1st Goal</div><div class="trend-pill-prob">₦60 YES</div></div>
         <div class="trend-pill" onclick="openOrder('South Africa First to Score','YES',30)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/za.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">RSA 1st Goal</div><div class="trend-pill-prob">₦30 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('South Africa Clean Sheet','YES',30)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/za.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">RSA Clean Sheet</div><div class="trend-pill-prob">₦30 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('South Africa Win to Nil','YES',9)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/za.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">RSA Win to Nil</div><div class="trend-pill-prob">₦9 YES</div></div>
       </div>
     </div>
 
@@ -528,15 +523,18 @@ let miniCharts = {}, probChart;
 
 const MARKETS = [
   { id:'mex_win',   title:'Mexico Win (FT)',          yes:0.58, vol:'₦16.2M', liq:'₦4.1M', spread:'₦2', history:[0.56,0.57,0.56,0.58,0.57,0.58,0.58,0.57,0.59,0.58] },
-  { id:'draw',      title:'Draw (Full Time)',           yes:0.26, vol:'₦9.8M',  liq:'₦2.4M', spread:'₦3', history:[0.27,0.26,0.27,0.26,0.26,0.27,0.26,0.26,0.27,0.26] },
   { id:'rsa_win',   title:'South Africa Win (FT)',     yes:0.16, vol:'₦6.1M',  liq:'₦1.8M', spread:'₦3', history:[0.17,0.16,0.17,0.16,0.16,0.17,0.16,0.17,0.16,0.16] },
+  { id:'draw',      title:'Draw (Full Time)',           yes:0.26, vol:'₦9.8M',  liq:'₦2.4M', spread:'₦3', history:[0.27,0.26,0.27,0.26,0.26,0.27,0.26,0.26,0.27,0.26] },
   { id:'over25',    title:'Over 2.5 Goals',             yes:0.46, vol:'₦4.8M',  liq:'₦1.2M', spread:'₦4', history:[0.45,0.46,0.45,0.47,0.46,0.46,0.47,0.46,0.46,0.46] },
-  { id:'btts',      title:'Both Teams To Score',        yes:0.40, vol:'₦3.2M',  liq:'₦0.9M', spread:'₦4', history:[0.40,0.41,0.40,0.41,0.40,0.40,0.41,0.40,0.40,0.40] },
   { id:'mex_cs',    title:'Mexico Clean Sheet',         yes:0.54, vol:'₦1.6M',  liq:'₦0.5M', spread:'₦5', history:[0.53,0.54,0.53,0.54,0.55,0.54,0.53,0.54,0.54,0.54] },
   { id:'mex_nil',   title:'Mexico Win to Nil',          yes:0.40, vol:'₦0.9M',  liq:'₦0.3M', spread:'₦5', history:[0.39,0.40,0.39,0.40,0.41,0.40,0.40,0.39,0.40,0.40] },
+  { id:'rsa_cs',    title:'South Africa Clean Sheet',        yes:0.30, vol:'₦0.7M',  liq:'₦0.2M', spread:'₦6', history:[0.31,0.30,0.31,0.30,0.30,0.31,0.30,0.29,0.30,0.30] },
+  { id:'rsa_nil',   title:'South Africa Win to Nil',         yes:0.09, vol:'₦0.5M',  liq:'₦0.2M', spread:'₦7', history:[0.09,0.10,0.09,0.09,0.10,0.09,0.09,0.10,0.09,0.09] },
+  { id:'mex_first', title:'Mexico First to Score',           yes:0.60, vol:'₦1.4M',  liq:'₦0.4M', spread:'₦5', history:[0.59,0.60,0.59,0.60,0.61,0.60,0.60,0.59,0.60,0.60] },
+  { id:'rsa_first', title:'South Africa First to Score',     yes:0.30, vol:'₦1.1M',  liq:'₦0.3M', spread:'₦6', history:[0.31,0.30,0.31,0.30,0.30,0.29,0.30,0.30,0.31,0.30] },
+  { id:'btts',      title:'Both Teams To Score',        yes:0.40, vol:'₦3.2M',  liq:'₦0.9M', spread:'₦4', history:[0.40,0.41,0.40,0.41,0.40,0.40,0.41,0.40,0.40,0.40] },
   { id:'redcard',   title:'🟥 Red Card in Match',        yes:0.32, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦6', history:[0.31,0.32,0.31,0.32,0.32,0.33,0.32,0.32,0.31,0.32] },
-  { id:'mex_first', title:'Mexico First to Score',       yes:0.60, vol:'₦1.4M',  liq:'₦0.4M', spread:'₦5', history:[0.59,0.60,0.59,0.60,0.61,0.60,0.60,0.59,0.60,0.60] },
-  { id:'rsa_first', title:'South Africa First to Score', yes:0.30, vol:'₦1.1M',  liq:'₦0.3M', spread:'₦6', history:[0.31,0.30,0.31,0.30,0.30,0.29,0.30,0.30,0.31,0.30] },
+
 ];
 
 const ORDER_BOOK_DATA = {
