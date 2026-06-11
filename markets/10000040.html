@@ -313,8 +313,8 @@
   <!-- STAT BOXES -->
   <div class="stats-row">
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦42.6M</div><div class="stat-box-sub" style="color:var(--green);">▲ +26% in 2h</div></div>
-    <div class="stat-box"><div class="stat-box-label">Mexico Win</div><div class="stat-box-val" style="color:var(--mex1);font-size:22px;" id="home-prob-stat">58%</div><div class="stat-box-sub" style="color:var(--text3);">Implied probability</div></div>
-    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">12</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
+    <div class="stat-box"><div class="stat-box-label">Mexico Win</div><div class="stat-box-val" style="color:var(--green);font-size:22px;" id="home-prob-stat">✓ YES</div><div class="stat-box-sub" style="color:var(--green);">Market settled</div></div>
+    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val" style="color:var(--text3);font-size:22px;">0</div><div class="stat-box-sub" style="color:var(--text3);">All settled</div></div>
   </div>
 
   <!-- TABS -->
@@ -330,22 +330,22 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);padding:2px 6px;border-radius:4px;margin-left:6px;">PRE-MATCH</span></div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);padding:2px 6px;border-radius:4px;margin-left:6px;">✓ SETTLED</span></div>
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦42.6M total volume</div>
       </div>
       <div class="sentiment-bar">
-        <div class="sentiment-mex" id="bar-mex" style="width:58%;"></div>
-        <div class="sentiment-draw" id="bar-draw" style="width:26%;"></div>
-        <div class="sentiment-rsa" id="bar-rsa" style="width:16%;"></div>
+        <div class="sentiment-mex" id="bar-mex" style="width:100%;"></div>
+        <div class="sentiment-draw" id="bar-draw" style="width:0%;"></div>
+        <div class="sentiment-rsa" id="bar-rsa" style="width:0%;"></div>
       </div>
       <div class="sentiment-labels">
-        <span style="color:var(--mex1);font-weight:700;" id="label-mex">Mexico 58%</span>
-        <span style="color:var(--text2);font-weight:700;" id="label-draw">Draw 26%</span>
-        <span style="color:var(--rsa2);font-weight:700;" id="label-rsa">South Africa 16%</span>
+        <span style="color:var(--green);font-weight:700;" id="label-mex">✓ Mexico WON</span>
+        <span style="color:var(--text3);font-weight:700;" id="label-draw">Draw</span>
+        <span style="color:var(--text3);font-weight:700;" id="label-rsa">South Africa</span>
       </div>
       <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
-        <i class="fa-solid fa-chart-line" style="color:var(--mex1);margin-right:4px;"></i>
-        Fun fact: This is South Africa's first World Cup since 2010
+        <i class="fa-solid fa-futbol" style="color:var(--mex1);margin-right:4px;"></i>
+        Quiñones 9' · Jiménez 67' · Sithole 🟥 red card
       </div>
     </div>
 
@@ -508,19 +508,18 @@ let orderSide = 'YES', walletBalance = 4271250;
 let miniCharts = {}, probChart;
 
 const MARKETS = [
-  { id:'mex_win',   title:'Mexico Win (FT)',          yes:0.58, vol:'₦16.2M', liq:'₦4.1M', spread:'₦2', history:[0.56,0.57,0.56,0.58,0.57,0.58,0.58,0.57,0.59,0.58] },
-  { id:'rsa_win',   title:'South Africa Win (FT)',     yes:0.16, vol:'₦6.1M',  liq:'₦1.8M', spread:'₦3', history:[0.17,0.16,0.17,0.16,0.16,0.17,0.16,0.17,0.16,0.16] },
-  { id:'draw',      title:'Draw (Full Time)',           yes:0.26, vol:'₦9.8M',  liq:'₦2.4M', spread:'₦3', history:[0.27,0.26,0.27,0.26,0.26,0.27,0.26,0.26,0.27,0.26] },
-  { id:'over25',    title:'Over 2.5 Goals',             yes:0.46, vol:'₦4.8M',  liq:'₦1.2M', spread:'₦4', history:[0.45,0.46,0.45,0.47,0.46,0.46,0.47,0.46,0.46,0.46] },
-  { id:'mex_cs',    title:'Mexico Clean Sheet',         yes:0.54, vol:'₦1.6M',  liq:'₦0.5M', spread:'₦5', history:[0.53,0.54,0.53,0.54,0.55,0.54,0.53,0.54,0.54,0.54] },
-  { id:'mex_nil',   title:'Mexico Win to Nil',          yes:0.40, vol:'₦0.9M',  liq:'₦0.3M', spread:'₦5', history:[0.39,0.40,0.39,0.40,0.41,0.40,0.40,0.39,0.40,0.40] },
-  { id:'rsa_cs',    title:'South Africa Clean Sheet',        yes:0.30, vol:'₦0.7M',  liq:'₦0.2M', spread:'₦6', history:[0.31,0.30,0.31,0.30,0.30,0.31,0.30,0.29,0.30,0.30] },
-  { id:'rsa_nil',   title:'South Africa Win to Nil',         yes:0.09, vol:'₦0.5M',  liq:'₦0.2M', spread:'₦7', history:[0.09,0.10,0.09,0.09,0.10,0.09,0.09,0.10,0.09,0.09] },
-  { id:'mex_first', title:'Mexico First to Score',           yes:0.60, vol:'₦1.4M',  liq:'₦0.4M', spread:'₦5', history:[0.59,0.60,0.59,0.60,0.61,0.60,0.60,0.59,0.60,0.60] },
-  { id:'rsa_first', title:'South Africa First to Score',     yes:0.30, vol:'₦1.1M',  liq:'₦0.3M', spread:'₦6', history:[0.31,0.30,0.31,0.30,0.30,0.29,0.30,0.30,0.31,0.30] },
-  { id:'btts',      title:'Both Teams To Score',        yes:0.40, vol:'₦3.2M',  liq:'₦0.9M', spread:'₦4', history:[0.40,0.41,0.40,0.41,0.40,0.40,0.41,0.40,0.40,0.40] },
-  { id:'redcard',   title:'🟥 Red Card in Match',        yes:0.98, vol:'₦1.4M',  liq:'₦0.0M', spread:'₦1', history:[0.31,0.32,0.45,0.60,0.75,0.88,0.94,0.97,0.98,0.98] },
-
+  { id:'mex_win',   title:'Mexico Win (FT)',               yes:1.00, vol:'₦16.2M', liq:'₦0.0M', spread:'₦0', history:[0.56,0.57,0.58,0.60,0.65,0.72,0.85,0.94,0.98,1.00] },
+  { id:'rsa_win',   title:'South Africa Win (FT)',          yes:0.00, vol:'₦6.1M',  liq:'₦0.0M', spread:'₦0', history:[0.17,0.16,0.16,0.14,0.10,0.07,0.04,0.02,0.01,0.00] },
+  { id:'draw',      title:'Draw (Full Time)',                yes:0.00, vol:'₦9.8M',  liq:'₦0.0M', spread:'₦0', history:[0.27,0.26,0.25,0.22,0.18,0.14,0.09,0.05,0.02,0.00] },
+  { id:'over25',    title:'Over 2.5 Goals',                  yes:0.00, vol:'₦4.8M',  liq:'₦0.0M', spread:'₦0', history:[0.46,0.46,0.45,0.44,0.40,0.35,0.28,0.18,0.08,0.00] },
+  { id:'mex_cs',    title:'Mexico Clean Sheet',              yes:1.00, vol:'₦1.6M',  liq:'₦0.0M', spread:'₦0', history:[0.54,0.55,0.56,0.60,0.68,0.78,0.88,0.94,0.98,1.00] },
+  { id:'mex_nil',   title:'Mexico Win to Nil',               yes:1.00, vol:'₦0.9M',  liq:'₦0.0M', spread:'₦0', history:[0.40,0.41,0.42,0.46,0.54,0.64,0.76,0.88,0.95,1.00] },
+  { id:'rsa_cs',    title:'South Africa Clean Sheet',        yes:0.00, vol:'₦0.7M',  liq:'₦0.0M', spread:'₦0', history:[0.30,0.28,0.24,0.18,0.12,0.07,0.03,0.01,0.00,0.00] },
+  { id:'rsa_nil',   title:'South Africa Win to Nil',         yes:0.00, vol:'₦0.5M',  liq:'₦0.0M', spread:'₦0', history:[0.09,0.08,0.07,0.05,0.03,0.02,0.01,0.00,0.00,0.00] },
+  { id:'mex_first', title:'Mexico First to Score',           yes:1.00, vol:'₦1.4M',  liq:'₦0.0M', spread:'₦0', history:[0.60,0.62,0.70,0.85,0.95,0.98,1.00,1.00,1.00,1.00] },
+  { id:'rsa_first', title:'South Africa First to Score',     yes:0.00, vol:'₦1.1M',  liq:'₦0.0M', spread:'₦0', history:[0.30,0.28,0.20,0.10,0.05,0.02,0.00,0.00,0.00,0.00] },
+  { id:'btts',      title:'Both Teams To Score',             yes:0.00, vol:'₦3.2M',  liq:'₦0.0M', spread:'₦0', history:[0.40,0.38,0.34,0.28,0.20,0.13,0.07,0.03,0.01,0.00] },
+  { id:'redcard',   title:'🟥 Red Card in Match',             yes:1.00, vol:'₦1.4M',  liq:'₦0.0M', spread:'₦0', history:[0.32,0.45,0.60,0.75,0.88,0.94,0.97,0.99,1.00,1.00] },
 ];
 
 const ORDER_BOOK_DATA = {
@@ -570,8 +569,9 @@ function renderMarkets() {
       </div>
       <div class="market-mini-chart"><canvas id="mini-${m.id}"></canvas></div>
       <div class="market-btns">
-        <button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button>
-        <button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button>
+        ${m.yes >= 0.99 || m.yes <= 0.01
+          ? `<div style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid ${m.yes>=0.99?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};background:${m.yes>=0.99?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'};font-family:var(--font-display);font-weight:700;font-size:13px;text-align:center;color:${m.yes>=0.99?'var(--green)':'var(--red)'};">SETTLED — ${m.yes>=0.99?'YES ✓':'NO ✗'}</div>`
+          : `<button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button><button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button>`}
       </div>
       <div class="market-stats-row">
         <div class="mstat"><div class="mstat-label">SPREAD</div><div class="mstat-val">${m.spread}</div></div>
@@ -672,6 +672,7 @@ function updateCountdown() {
 
 function updateLiveData() {
   MARKETS.forEach(m => {
+    if (m.yes >= 0.99 || m.yes <= 0.01) return;
     const delta = (Math.random() - 0.5) * 0.006;
     m.yes = Math.max(0.02, Math.min(0.98, m.yes + delta));
     m.history.push(m.yes);
