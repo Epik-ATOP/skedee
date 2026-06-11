@@ -530,8 +530,9 @@ function renderMarkets() {
       </div>
       <div class="market-mini-chart"><canvas id="mini-${m.id}"></canvas></div>
       <div class="market-btns">
-        <button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button>
-        <button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button>
+        ${m.yes >= 0.99 || m.yes <= 0.01
+          ? `<div style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid ${m.yes>=0.99?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};background:${m.yes>=0.99?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'};font-family:var(--font-display);font-weight:700;font-size:13px;text-align:center;color:${m.yes>=0.99?'var(--green)':'var(--red)'};">SETTLED — ${m.yes>=0.99?'YES ✓':'NO ✗'}</div>`
+          : `<button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button><button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button>`}
       </div>
       <div class="market-stats-row">
         <div class="mstat"><div class="mstat-label">SPREAD</div><div class="mstat-val">${m.spread}</div></div>
@@ -632,6 +633,7 @@ function updateCountdown() {
 
 function updateLiveData() {
   MARKETS.forEach(m => {
+    if (m.yes >= 0.99 || m.yes <= 0.01) return;
     const delta = (Math.random() - 0.5) * 0.006;
     m.yes = Math.max(0.02, Math.min(0.98, m.yes + delta));
     m.history.push(m.yes);
@@ -722,6 +724,132 @@ updateOrderSummary();
 updateCountdown();
 setInterval(updateLiveData, 4000);
 setInterval(updateCountdown, 1000);
+
+// ── API-FOOTBALL LIVE FEED ────────────────────────────────────────
+const AF_KEY     = '537fc407993fe20fd8f3ac68bee2ed2d';
+const AF_FIXTURE = 1539000; // Canada vs Bosnia & Herzegovina
+const AF_HOME    = 'Canada';
+const AF_AWAY    = 'Bosnia & Herzegovina';
+const seenEvents = new Set();
+let   matchDone  = false;
+
+async function fetchLiveMatch() {
+  if (matchDone) return;
+  try {
+    const res  = await fetch('https://v3.football.api-sports.io/fixtures?id=' + AF_FIXTURE, {
+      headers: { 'x-apisports-key': AF_KEY }
+    });
+    const data = await res.json();
+    if (!data.response?.length) return;
+    applyFixture(data.response[0]);
+  } catch(e) { console.warn('[API-Football]', e); }
+}
+
+function applyFixture(fix) {
+  const s  = fix.fixture.status.short;
+  const el = fix.fixture.status.elapsed;
+  const hg = fix.goals.home ?? 0;
+  const ag = fix.goals.away ?? 0;
+
+  if (s !== 'NS') {
+    document.getElementById('score-display').textContent = hg + ' — ' + ag;
+  }
+
+  const clockEl  = document.getElementById('clock-display');
+  const statusEl = document.getElementById('match-status');
+
+  if (s === '1H' || s === '2H' || s === 'ET') {
+    clockEl.textContent  = el + ''';
+    statusEl.textContent = '● LIVE';
+    statusEl.style.cssText = 'background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:var(--red);';
+    document.querySelector('.kickoff-timer')?.style.setProperty('display','none');
+    document.getElementById('banner-countdown').textContent = el + ''';
+  } else if (s === 'HT') {
+    clockEl.textContent  = 'HT';
+    statusEl.textContent = 'HALF TIME';
+    statusEl.style.cssText = 'background:rgba(245,200,0,.1);border:1px solid rgba(245,200,0,.4);color:var(--y);';
+    document.getElementById('banner-countdown').textContent = 'Half Time';
+  } else if (s === 'FT' || s === 'AET' || s === 'PEN') {
+    clockEl.textContent  = 'FT';
+    statusEl.textContent = '✓ FULL TIME';
+    statusEl.style.cssText = 'background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);';
+    document.getElementById('banner-countdown').textContent = 'Full Time';
+    matchDone = true;
+    settleMarketsAF(fix, hg, ag);
+  }
+
+  (fix.events || []).forEach(ev => {
+    const key = ev.time.elapsed + '-' + ev.type + '-' + (ev.player?.name || '');
+    if (seenEvents.has(key)) return;
+    seenEvents.add(key);
+    pushLiveEvent(ev, hg, ag);
+  });
+}
+
+function pushLiveEvent(ev, hg, ag) {
+  const feed = document.getElementById('activity-feed');
+  if (!feed) return;
+  const min  = ev.time.elapsed + (ev.time.extra ? '+' + ev.time.extra : '');
+  const name = ev.player?.name || 'Unknown';
+  const team = ev.team?.name  || '';
+  let text, type;
+
+  if (ev.type === 'Goal') {
+    text = '⚽ <strong>' + name + '</strong> GOAL! ' + team + ' — <span style="color:var(--y)">' + hg + '–' + ag + '</span>';
+    type = 'buy';
+  } else if (ev.type === 'Card' && ev.detail === 'Red Card') {
+    text = '🟥 <strong>' + name + '</strong> RED CARD — ' + team + ' (' + min + '')';
+    type = 'sell';
+  } else if (ev.type === 'Card' && ev.detail === 'Yellow Card') {
+    text = '🟨 <strong>' + name + '</strong> Yellow Card — ' + team + ' (' + min + '')';
+    type = 'sell';
+  } else if (ev.type === 'subst') {
+    text = '⇄ Sub: <strong>' + (ev.assist?.name || '') + '</strong> on for <strong>' + name + '</strong> — ' + team + ' (' + min + '')';
+    type = 'buy';
+  } else { return; }
+
+  const item = document.createElement('div');
+  item.className = 'activity-item';
+  item.innerHTML = '<div class="act-dot ' + type + '"></div><div class="act-text">' + text + '</div><div class="act-time">' + min + ''</div>';
+  feed.insertBefore(item, feed.firstChild);
+}
+
+function settleMarketsAF(fix, hg, ag) {
+  const events    = fix.events || [];
+  const firstGoal = events.find(ev => ev.type === 'Goal');
+  const hasRed    = events.some(ev => ev.type === 'Card' && ev.detail === 'Red Card');
+  MARKETS.forEach(m => {
+    let yes;
+    if      (m.id === 'can_win')   yes = hg > ag   ? 1 : 0;
+    else if (m.id === 'bos_win')   yes = ag > hg   ? 1 : 0;
+    else if (m.id === 'draw')      yes = hg === ag  ? 1 : 0;
+    else if (m.id === 'over25')    yes = (hg+ag) > 2 ? 1 : 0;
+    else if (m.id === 'btts')      yes = (hg>0 && ag>0) ? 1 : 0;
+    else if (m.id === 'can_cs')    yes = ag === 0   ? 1 : 0;
+    else if (m.id === 'bos_cs')    yes = hg === 0   ? 1 : 0;
+    else if (m.id === 'can_nil')   yes = (hg>ag && ag===0) ? 1 : 0;
+    else if (m.id === 'bos_nil')   yes = (ag>hg && hg===0) ? 1 : 0;
+    else if (m.id === 'redcard')   yes = hasRed ? 1 : 0;
+    else if (m.id === 'can_first') yes = firstGoal ? (firstGoal.team.name===AF_HOME ? 1:0) : 0;
+    else if (m.id === 'bos_first') yes = firstGoal ? (firstGoal.team.name===AF_AWAY ? 1:0) : 0;
+    else return;
+    m.yes = yes;
+  });
+  renderMarkets();
+}
+
+// Start polling — only within match window (30 min before to 130 min after kickoff)
+(function startPolling() {
+  const now   = Date.now();
+  const start = KICKOFF_TIME.getTime() - 30 * 60 * 1000;
+  const end   = KICKOFF_TIME.getTime() + 130 * 60 * 1000;
+  if (now < start || now > end) return;
+  fetchLiveMatch();
+  const iv = setInterval(() => {
+    if (matchDone) { clearInterval(iv); return; }
+    fetchLiveMatch();
+  }, 60000);
+})();
 </script>
 
 <!-- FOOTER -->
