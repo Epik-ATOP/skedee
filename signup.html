@@ -355,6 +355,7 @@ input.valid { border-color:rgba(34,197,94,0.4); }
       <span id="btn-text">Create Account</span>
       <div class="spinner" id="spinner"></div>
     </button>
+    <div id="auth-error" style="display:none;margin-top:10px;padding:10px 14px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:var(--radius);font-family:var(--font-mono);font-size:11px;color:var(--red);"></div>
 
     <div class="divider">
       <div class="divider-line"></div>
@@ -401,19 +402,26 @@ input.valid { border-color:rgba(34,197,94,0.4); }
 </div>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
-const _supabase = supabase.createClient(
-  'https://swrccbvzclixttmewnrx.supabase.co',
-  'sb_publishable_4KKwojkPHYICk7_w3Psoeg_XVCF-xoy'
-)
+firebase.initializeApp({
+  apiKey: "AIzaSyBAmvJQ7Hm3iPtI_SMste2l5D-B0fdp4OU",
+  authDomain: "skedee-login-46d76.firebaseapp.com",
+  projectId: "skedee-login-46d76",
+  storageBucket: "skedee-login-46d76.firebasestorage.app",
+  messagingSenderId: "141126905479",
+  appId: "1:141126905479:web:35ef3e9b5ec5964e9ed222"
+});
+const auth = firebase.auth();
 
 async function signInWithGoogle() {
-  await _supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo: window.location.origin + '/index.html' }
-  })
+  try {
+    await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    window.location.href = 'index.html';
+  } catch(e) {
+    showAuthError(e.code);
+  }
 }
 </script>
 
@@ -509,20 +517,46 @@ function togglePW(id, btn) {
   btn.innerHTML = isText ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>';
 }
 
-function submitForm() {
+async function submitForm() {
   const btn = document.getElementById('submit-btn');
   const spinner = document.getElementById('spinner');
   const btnText = document.getElementById('btn-text');
+  const password = document.getElementById('password').value;
+  const email = method === 'phone'
+    ? document.getElementById('phone').value.replace(/\s/g,'') + '@skedee.ng'
+    : document.getElementById('email').value;
 
   btn.disabled = true;
   spinner.style.display = 'block';
   btnText.textContent = 'Creating account...';
+  hideAuthError();
 
-  // Simulate API call
-  setTimeout(() => {
+  try {
+    await auth.createUserWithEmailAndPassword(email, password);
     document.getElementById('form-state').style.display = 'none';
     document.getElementById('success-state').style.display = 'block';
-  }, 1800);
+  } catch(e) {
+    btn.disabled = false;
+    spinner.style.display = 'none';
+    btnText.textContent = 'Create Account';
+    showAuthError(e.code);
+  }
+}
+
+function showAuthError(code) {
+  const msgs = {
+    'auth/email-already-in-use': 'An account already exists with this email.',
+    'auth/invalid-email': 'Invalid email address.',
+    'auth/weak-password': 'Password must be at least 6 characters.',
+    'auth/too-many-requests': 'Too many attempts. Try again later.',
+  };
+  const el = document.getElementById('auth-error');
+  el.textContent = msgs[code] || 'Something went wrong. Please try again.';
+  el.style.display = 'block';
+}
+
+function hideAuthError() {
+  document.getElementById('auth-error').style.display = 'none';
 }
 </script>
 <script src="script.js"></script>
