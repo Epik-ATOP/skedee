@@ -793,19 +793,19 @@ function pushLiveEvent(ev, hg, ag) {
     text = '⚽ <strong>' + name + '</strong> GOAL! ' + team + ' — <span style="color:var(--y)">' + hg + '–0' + ag + '</span>';
     type = 'buy';
   } else if (ev.type === 'Card' && ev.detail === 'Red Card') {
-    text = '🟥 <strong>' + name + '</strong> RED CARD — ' + team + ' (' + min + '')';
+    text = '🟥 <strong>' + name + '</strong> RED CARD — ' + team + ' (' + min + ")";
     type = 'sell';
   } else if (ev.type === 'Card' && ev.detail === 'Yellow Card') {
-    text = '🟨 <strong>' + name + '</strong> Yellow Card — ' + team + ' (' + min + '')';
+    text = '🟨 <strong>' + name + '</strong> Yellow Card — ' + team + ' (' + min + ")";
     type = 'sell';
   } else if (ev.type === 'subst') {
-    text = '⇄ Sub: <strong>' + (ev.assist?.name || '') + '</strong> on for <strong>' + name + '</strong> — ' + team + ' (' + min + '')';
+    text = '⇄ Sub: <strong>' + (ev.assist?.name || '') + '</strong> on for <strong>' + name + '</strong> — ' + team + ' (' + min + '")"';
     type = 'buy';
   } else { return; }
 
   const item = document.createElement('div');
   item.className = 'activity-item';
-  item.innerHTML = '<div class="act-dot ' + type + '"></div><div class="act-text">' + text + '</div><div class="act-time">' + min + ''</div>';
+  item.innerHTML = '<div class="act-dot ' + type + '"></div><div class="act-text">' + text + '</div><div class="act-time">' + min + '"</div>'.
   feed.insertBefore(item, feed.firstChild);
 }
 
