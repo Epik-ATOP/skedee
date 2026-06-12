@@ -238,14 +238,14 @@
     <div class="banner-icon" style="width:64px;height:64px;background:rgba(245,200,0,.1);border:2px solid rgba(245,200,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">⚽</div>
     <div style="flex:1;min-width:0;">
       <div class="banner-cat" style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP F · MATCHDAY 1</div>
-      <div class="banner-title" style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Korea vs Czech Republic</div>
+      <div class="banner-title" style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Korea vs Czech</div>
       <div class="banner-meta" style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">AT&T Stadium, Dallas · Jun 12, 2026 · 3:00 AM WAT</div>
       <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 12 markets available</div>
     </div>
     <div class="banner-status" style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-      <div style="color:var(--wc);font-weight:700;font-size:12px;margin-bottom:4px;">● PRE-MATCH</div>
+      <div style="color:var(--green);font-weight:700;font-size:12px;margin-bottom:4px;">✓ FULL TIME</div>
       <div>Jun 12, 2026</div>
-      <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;"></div>
+      <div id="banner-countdown" style="color:var(--green);font-weight:700;margin-top:4px;">Korea 2 — 1 Czech Republic</div>
     </div>
   </div>
 
@@ -256,7 +256,7 @@
       <div style="display:flex;align-items:center;gap:12px;">
         <div class="live-indicator">
           <div class="live-dot" id="live-dot" style="background:var(--wc);"></div>
-          <span id="live-label" style="color:var(--wc);">PRE-MATCH</span>
+          <span id="live-label" style="color:var(--green);">FULL TIME</span>
         </div>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">AT&T Stadium, Dallas</div>
       </div>
@@ -271,14 +271,14 @@
       <div class="score-block">
         <div class="ticker-score">
           <span class="ticker-abbr" style="color:var(--kor1);">KOR</span>
-          <span class="ticker-sep" id="score-display">vs</span>
+          <span class="ticker-sep" id="score-display">2 — 1</span>
           <span class="ticker-abbr" style="color:var(--cze2);">CZE</span>
         </div>
         <div class="match-clock">
           <i class="fa-solid fa-clock" style="font-size:11px;"></i>
-          <span id="clock-display" style="font-size:11px;">3:00 AM WAT</span>
+          <span id="clock-display" style="font-size:11px;">FT</span>
         </div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);">PRE-MATCH</div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);">✓ FULL TIME</div>
       </div>
       <div class="team-block">
         <div class="team-logo" style="border-color:rgba(17,69,126,.4);background:rgba(17,69,126,.08);font-size:0;"><img src="https://flagcdn.com/w80/cz.png" alt="Czech Republic" style="width:54px;height:auto;border-radius:3px;"></div>
@@ -296,26 +296,20 @@
     </div>
   </div>
 
-  <!-- KICKOFF COUNTDOWN -->
-  <div class="kickoff-timer">
+  <!-- SETTLED BANNER -->
+  <div class="kickoff-timer" style="background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(34,197,94,.03));border-color:rgba(34,197,94,.3);">
     <div class="kickoff-info">
-      <div class="kickoff-title">Kickoff — Jun 12, 2026 · 3:00 AM WAT</div>
-      <div class="kickoff-sub">Markets lock at kickoff · All open positions settle post full time</div>
+      <div class="kickoff-title" style="color:var(--green);">✓ SETTLED — Korea Republic 2–1 Czech Republic</div>
+      <div class="kickoff-sub">Scorers: Krejčí 59' · Hwang In-beom 67' · Oh Hyeon-gyu 80'</div>
     </div>
-    <div class="timer-block">
-      <div class="timer-seg"><div class="timer-num" id="t-h">--</div><div class="timer-label">HRS</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-m">--</div><div class="timer-label">MIN</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-s">--</div><div class="timer-label">SEC</div></div>
-    </div>
+    <div style="font-family:var(--font-mono);font-size:11px;color:var(--green);font-weight:700;">FULL TIME</div>
   </div>
 
   <!-- STAT BOXES -->
   <div class="stats-row">
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦18.4M</div><div class="stat-box-sub" style="color:var(--green);">▲ +14% in 2h</div></div>
-    <div class="stat-box"><div class="stat-box-label">Korea Win</div><div class="stat-box-val" style="color:var(--kor1);font-size:22px;" id="home-prob-stat">40%</div><div class="stat-box-sub" style="color:var(--text3);">Implied probability</div></div>
-    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">12</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
+    <div class="stat-box"><div class="stat-box-label">Korea Win</div><div class="stat-box-val" style="color:var(--green);font-size:22px;" id="home-prob-stat">✓ YES</div><div class="stat-box-sub" style="color:var(--green);">Settled</div></div>
+    <div class="stat-box"><div class="stat-box-label">Settled Markets</div><div class="stat-box-val" style="color:var(--green);">12</div><div class="stat-box-sub" style="color:var(--green);">All settled</div></div>
   </div>
 
   <!-- TABS -->
@@ -331,18 +325,18 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);padding:2px 6px;border-radius:4px;margin-left:6px;">PRE-MATCH</span></div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);padding:2px 6px;border-radius:4px;margin-left:6px;">✓ SETTLED</span></div>
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦18.4M total volume</div>
       </div>
       <div class="sentiment-bar">
-        <div class="sentiment-kor" id="bar-kor" style="width:40%;"></div>
-        <div class="sentiment-draw" id="bar-draw" style="width:27%;"></div>
-        <div class="sentiment-cze" id="bar-cze" style="width:33%;"></div>
+        <div class="sentiment-kor" id="bar-kor" style="width:100%;"></div>
+        <div class="sentiment-draw" id="bar-draw" style="width:0%;"></div>
+        <div class="sentiment-cze" id="bar-cze" style="width:0%;"></div>
       </div>
       <div class="sentiment-labels">
-        <span style="color:var(--kor1);font-weight:700;" id="label-kor">Korea 40%</span>
-        <span style="color:var(--text2);font-weight:700;" id="label-draw">Draw 27%</span>
-        <span style="color:var(--cze2);font-weight:700;" id="label-cze">Czech Rep. 33%</span>
+        <span style="color:var(--green);font-weight:700;" id="label-kor">Korea WIN ✓</span>
+        <span style="color:var(--text3);font-weight:700;" id="label-draw">Draw NO ✗</span>
+        <span style="color:var(--text3);font-weight:700;" id="label-cze">Czech Rep. NO ✗</span>
       </div>
       <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
         <i class="fa-solid fa-chart-line" style="color:var(--kor1);margin-right:4px;"></i>
@@ -473,18 +467,18 @@ let orderSide = 'YES', walletBalance = 4271250;
 let miniCharts = {}, probChart;
 
 const MARKETS = [
-  { id:'kor_win',   title:'Korea Win (FT)',                  yes:0.40, vol:'₦7.2M',  liq:'₦2.1M', spread:'₦2', history:[0.39,0.40,0.41,0.40,0.39,0.40,0.41,0.40,0.40,0.40] },
-  { id:'cze_win',   title:'Czech Republic Win (FT)',          yes:0.33, vol:'₦5.8M',  liq:'₦1.6M', spread:'₦3', history:[0.33,0.32,0.33,0.34,0.33,0.32,0.33,0.34,0.33,0.33] },
-  { id:'draw',      title:'Draw (Full Time)',                  yes:0.27, vol:'₦4.1M',  liq:'₦1.2M', spread:'₦3', history:[0.27,0.28,0.27,0.26,0.27,0.28,0.27,0.27,0.26,0.27] },
-  { id:'over25',    title:'Over 2.5 Goals',                   yes:0.48, vol:'₦2.2M',  liq:'₦0.7M', spread:'₦4', history:[0.47,0.48,0.47,0.49,0.48,0.48,0.47,0.48,0.49,0.48] },
-  { id:'kor_cs',    title:'Korea Clean Sheet',                 yes:0.44, vol:'₦0.9M',  liq:'₦0.3M', spread:'₦5', history:[0.43,0.44,0.43,0.44,0.45,0.44,0.43,0.44,0.44,0.44] },
-  { id:'kor_nil',   title:'Korea Win to Nil',                  yes:0.28, vol:'₦0.5M',  liq:'₦0.2M', spread:'₦6', history:[0.27,0.28,0.27,0.28,0.29,0.28,0.28,0.27,0.28,0.28] },
-  { id:'cze_cs',    title:'Czech Republic Clean Sheet',        yes:0.38, vol:'₦0.7M',  liq:'₦0.2M', spread:'₦5', history:[0.38,0.37,0.38,0.39,0.38,0.37,0.38,0.39,0.38,0.38] },
-  { id:'cze_nil',   title:'Czech Republic Win to Nil',         yes:0.22, vol:'₦0.4M',  liq:'₦0.1M', spread:'₦7', history:[0.22,0.23,0.22,0.21,0.22,0.23,0.22,0.21,0.22,0.22] },
-  { id:'kor_first', title:'Korea First to Score',              yes:0.46, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦5', history:[0.45,0.46,0.45,0.46,0.47,0.46,0.45,0.46,0.46,0.46] },
-  { id:'cze_first', title:'Czech Republic First to Score',     yes:0.42, vol:'₦0.7M',  liq:'₦0.2M', spread:'₦5', history:[0.41,0.42,0.43,0.42,0.41,0.42,0.43,0.42,0.41,0.42] },
-  { id:'btts',      title:'Both Teams To Score',               yes:0.42, vol:'₦1.4M',  liq:'₦0.4M', spread:'₦4', history:[0.42,0.41,0.42,0.43,0.42,0.41,0.42,0.43,0.42,0.42] },
-  { id:'redcard',   title:'🟥 Red Card in Match',              yes:0.28, vol:'₦0.5M',  liq:'₦0.1M', spread:'₦6', history:[0.27,0.28,0.27,0.28,0.29,0.28,0.27,0.28,0.29,0.28] },
+  { id:'kor_win',   title:'Korea Win (FT)',                  yes:1.00, vol:'₦7.2M',  liq:'₦2.1M', spread:'₦2', history:[0.39,0.40,0.41,0.42,0.44,0.52,0.68,0.82,0.91,1.00] },
+  { id:'cze_win',   title:'Czech Republic Win (FT)',          yes:0.00, vol:'₦5.8M',  liq:'₦1.6M', spread:'₦3', history:[0.33,0.32,0.33,0.34,0.28,0.18,0.10,0.05,0.02,0.00] },
+  { id:'draw',      title:'Draw (Full Time)',                  yes:0.00, vol:'₦4.1M',  liq:'₦1.2M', spread:'₦3', history:[0.27,0.28,0.27,0.26,0.25,0.18,0.10,0.05,0.02,0.00] },
+  { id:'over25',    title:'Over 2.5 Goals',                   yes:1.00, vol:'₦2.2M',  liq:'₦0.7M', spread:'₦4', history:[0.47,0.48,0.47,0.49,0.55,0.72,0.88,0.95,0.98,1.00] },
+  { id:'kor_cs',    title:'Korea Clean Sheet',                 yes:0.00, vol:'₦0.9M',  liq:'₦0.3M', spread:'₦5', history:[0.43,0.44,0.43,0.44,0.38,0.18,0.08,0.03,0.01,0.00] },
+  { id:'kor_nil',   title:'Korea Win to Nil',                  yes:0.00, vol:'₦0.5M',  liq:'₦0.2M', spread:'₦6', history:[0.27,0.28,0.27,0.28,0.20,0.10,0.04,0.02,0.01,0.00] },
+  { id:'cze_cs',    title:'Czech Republic Clean Sheet',        yes:0.00, vol:'₦0.7M',  liq:'₦0.2M', spread:'₦5', history:[0.38,0.37,0.38,0.39,0.30,0.15,0.06,0.02,0.01,0.00] },
+  { id:'cze_nil',   title:'Czech Republic Win to Nil',         yes:0.00, vol:'₦0.4M',  liq:'₦0.1M', spread:'₦7', history:[0.22,0.23,0.22,0.21,0.15,0.06,0.02,0.01,0.00,0.00] },
+  { id:'kor_first', title:'Korea First to Score',              yes:0.00, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦5', history:[0.45,0.46,0.45,0.46,0.38,0.18,0.06,0.02,0.01,0.00] },
+  { id:'cze_first', title:'Czech Republic First to Score',     yes:1.00, vol:'₦0.7M',  liq:'₦0.2M', spread:'₦5', history:[0.41,0.42,0.43,0.42,0.55,0.72,0.88,0.95,0.98,1.00] },
+  { id:'btts',      title:'Both Teams To Score',               yes:1.00, vol:'₦1.4M',  liq:'₦0.4M', spread:'₦4', history:[0.42,0.41,0.42,0.43,0.52,0.68,0.82,0.92,0.97,1.00] },
+  { id:'redcard',   title:'🟥 Red Card in Match',              yes:0.00, vol:'₦0.5M',  liq:'₦0.1M', spread:'₦6', history:[0.27,0.28,0.27,0.28,0.24,0.15,0.08,0.03,0.01,0.00] },
 ];
 
 const ORDER_BOOK_DATA = {
@@ -493,11 +487,11 @@ const ORDER_BOOK_DATA = {
 };
 
 const ACTIVITY = [
-  {type:'buy',  text:'<strong>seoul_trader</strong> opened Korea Win YES ×3,500 at ₦40 — "Sons form is unreal. Korea will cause an upset"', time:'8m'},
-  {type:'buy',  text:'<strong>prague_punter</strong> backed Czech Republic Win YES ×2,000 at ₦33 — "Czech have been solid in qualifying. 33 is great value"', time:'22m'},
-  {type:'buy',  text:'<strong>goals_ng</strong> opened Over 2.5 Goals YES ×1,800 at ₦48 — "Both teams love to attack"', time:'41m'},
-  {type:'sell', text:'<strong>arb_king</strong> sold Draw YES ×600 — rotating into Czech Win', time:'55m'},
-  {type:'buy',  text:'<strong>btts_lord</strong> opened BTTS YES ×1,200 at ₦42', time:'1h 10m'},
+  {type:'buy',  text:'⚽ <strong>Oh Hyeon-gyu</strong> GOAL! Korea Republic — <span style="color:var(--y)">2–1</span> · Korea WIN confirmed', time:'80\''},
+  {type:'buy',  text:'⚽ <strong>Hwang In-beom</strong> GOAL! Korea Republic equalise — <span style="color:var(--y)">1–1</span>', time:'67\''},
+  {type:'sell', text:'⚽ <strong>Ladislav Krejčí</strong> GOAL! Czech Republic take the lead — <span style="color:var(--y)">0–1</span>', time:'59\''},
+  {type:'buy',  text:'<strong>seoul_trader</strong> opened Korea Win YES ×3,500 at ₦40 — "Sons form is unreal. Korea will cause an upset"', time:'Pre'},
+  {type:'buy',  text:'<strong>btts_lord</strong> opened BTTS YES ×1,200 at ₦42', time:'Pre'},
 ];
 
 const COMMENTS = [
@@ -722,8 +716,9 @@ renderActivity();
 renderTrades();
 updateOrderSummary();
 updateCountdown();
-setInterval(updateLiveData, 4000);
-setInterval(updateCountdown, 1000);
+// match over — no live fluctuation or countdown needed
+// setInterval(updateLiveData, 4000);
+// setInterval(updateCountdown, 1000);
 
 // ── API-FOOTBALL LIVE FEED ────────────────────────────────────────
 const AF_KEY     = '537fc407993fe20fd8f3ac68bee2ed2d';
