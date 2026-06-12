@@ -759,11 +759,11 @@ function applyFixture(fix) {
   const statusEl = document.getElementById('match-status');
 
   if (s === '1H' || s === '2H' || s === 'ET') {
-    clockEl.textContent  = el + ''';
+    clockEl.textContent  = el + "'";
     statusEl.textContent = '● LIVE';
     statusEl.style.cssText = 'background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:var(--red);';
     document.querySelector('.kickoff-timer')?.style.setProperty('display','none');
-    document.getElementById('banner-countdown').textContent = el + ''';
+    document.getElementById('banner-countdown').textContent = el + "'";
   } else if (s === 'HT') {
     clockEl.textContent  = 'HT';
     statusEl.textContent = 'HALF TIME';
@@ -798,19 +798,19 @@ function pushLiveEvent(ev, hg, ag) {
     text = '⚽ <strong>' + name + '</strong> GOAL! ' + team + ' — <span style="color:var(--y)">' + hg + '–' + ag + '</span>';
     type = 'buy';
   } else if (ev.type === 'Card' && ev.detail === 'Red Card') {
-    text = '🟥 <strong>' + name + '</strong> RED CARD — ' + team + ' (' + min + '')';
+    text = '🟥 <strong>' + name + '</strong> RED CARD — ' + team + ' (' + min + "')";
     type = 'sell';
   } else if (ev.type === 'Card' && ev.detail === 'Yellow Card') {
-    text = '🟨 <strong>' + name + '</strong> Yellow Card — ' + team + ' (' + min + '')';
+    text = '🟨 <strong>' + name + '</strong> Yellow Card — ' + team + ' (' + min + "')";
     type = 'sell';
   } else if (ev.type === 'subst') {
-    text = '⇄ Sub: <strong>' + (ev.assist?.name || '') + '</strong> on for <strong>' + name + '</strong> — ' + team + ' (' + min + '')';
+    text = '⇄ Sub: <strong>' + (ev.assist?.name || '') + '</strong> on for <strong>' + name + '</strong> — ' + team + ' (' + min + "')";
     type = 'buy';
   } else { return; }
 
   const item = document.createElement('div');
   item.className = 'activity-item';
-  item.innerHTML = '<div class="act-dot ' + type + '"></div><div class="act-text">' + text + '</div><div class="act-time">' + min + ''</div>';
+  item.innerHTML = '<div class="act-dot ' + type + '"></div><div class="act-text">' + text + '</div><div class="act-time">' + min + "'</div>";
   feed.insertBefore(item, feed.firstChild);
 }
 
