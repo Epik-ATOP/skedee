@@ -248,12 +248,12 @@
       <div class="banner-cat" style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP E · MATCHDAY 1</div>
       <div class="banner-title" style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Brazil vs Morocco</div>
       <div class="banner-meta" style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Hard Rock Stadium, Miami, FL · Jun 13, 2026 · 11:00 PM WAT</div>
-      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 12 markets available</div>
+      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Match in progress · Markets locked · Settles at full time</div>
     </div>
     <div class="banner-status" style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-      <div style="color:var(--y);font-weight:700;font-size:12px;margin-bottom:4px;">● PRE-MATCH</div>
+      <div style="color:var(--red);font-weight:700;font-size:12px;margin-bottom:4px;">● LIVE</div>
       <div>Jun 13, 2026</div>
-      <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;"></div>
+      <div id="banner-countdown" style="color:var(--red);font-weight:700;margin-top:4px;">31'</div>
     </div>
   </div>
 
@@ -263,8 +263,8 @@
       <div class="league-badge">🌍 FIFA WORLD CUP 2026 · GROUP E · MATCHDAY 1</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <div class="live-indicator">
-          <div class="live-dot" id="live-dot" style="background:var(--y);"></div>
-          <span id="live-label" style="color:var(--y);">PRE-MATCH</span>
+          <div class="live-dot" id="live-dot" style="background:var(--red);animation:live-pulse 1.4s infinite;"></div>
+          <span id="live-label" style="color:var(--red);">LIVE</span>
         </div>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Hard Rock Stadium, FL</div>
       </div>
@@ -284,9 +284,9 @@
         </div>
         <div class="match-clock">
           <i class="fa-solid fa-clock" style="font-size:11px;"></i>
-          <span id="clock-display" style="font-size:11px;">11:00 PM WAT</span>
+          <span id="clock-display" style="font-size:11px;">31'</span>
         </div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);">PRE-MATCH</div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:var(--red);">● LIVE</div>
       </div>
       <div class="team-block">
         <div class="team-logo" style="border-color:rgba(193,39,45,.4);background:rgba(193,39,45,.06);font-size:0;"><img src="https://flagcdn.com/w80/ma.png" alt="Morocco" style="width:54px;height:auto;border-radius:3px;"></div>
@@ -304,19 +304,13 @@
     </div>
   </div>
 
-  <!-- KICKOFF COUNTDOWN -->
-  <div class="kickoff-timer">
+  <!-- MARKETS LOCKED INDICATOR -->
+  <div class="kickoff-timer" style="border-color:rgba(239,68,68,.3);background:linear-gradient(135deg,rgba(239,68,68,.06),rgba(239,68,68,.02));">
     <div class="kickoff-info">
-      <div class="kickoff-title">Kickoff — Jun 13, 2026 · 11:00 PM WAT</div>
-      <div class="kickoff-sub">Markets lock at kickoff · All open positions settle post full time</div>
+      <div class="kickoff-title" style="color:var(--red);">● Match In Progress — BRA 0 · 1 MAR</div>
+      <div class="kickoff-sub">Markets locked at kickoff · All positions settle at full time</div>
     </div>
-    <div class="timer-block">
-      <div class="timer-seg"><div class="timer-num" id="t-h">--</div><div class="timer-label">HRS</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-m">--</div><div class="timer-label">MIN</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-s">--</div><div class="timer-label">SEC</div></div>
-    </div>
+    <div style="font-family:var(--font-mono);font-size:11px;color:var(--red);font-weight:700;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);border-radius:8px;padding:8px 16px;">MARKETS LOCKED</div>
   </div>
 
   <!-- STAT BOXES -->
@@ -339,7 +333,7 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(245,200,0,.1);border:1px solid rgba(245,200,0,.3);color:var(--wc);padding:2px 6px;border-radius:4px;margin-left:6px;">● PRE-MATCH</span></div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:var(--red);padding:2px 6px;border-radius:4px;margin-left:6px;" id="sentiment-live-tag">● LIVE 31'</span></div>
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦84.2M total volume</div>
       </div>
       <div class="sentiment-bar">
@@ -353,8 +347,8 @@
         <span style="color:var(--mar1);font-weight:700;" id="label-mar">Morocco 13%</span>
       </div>
       <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
-        <i class="fa-solid fa-clock" style="color:var(--wc);margin-right:4px;"></i>
-        Kickoff 11:00 PM WAT · Markets open · Locks at kickoff
+        <i class="fa-solid fa-clock" style="color:var(--red);margin-right:4px;"></i>
+        Match in progress · Markets locked · Settles at full time
       </div>
     </div>
 
@@ -475,7 +469,7 @@
 <script>
 const KICKOFF_TIME = new Date('2026-06-13T22:00:00Z'); // 11:00 PM WAT
 const AF_KEY     = '537fc407993fe20fd8f3ac68bee2ed2d';
-const AF_FIXTURE = null; // update with real fixture ID once known
+const AF_FIXTURE = 1489371;
 const AF_HOME    = 'Brazil';
 const AF_AWAY    = 'Morocco';
 let orderSide = 'YES', walletBalance = 4271250;
