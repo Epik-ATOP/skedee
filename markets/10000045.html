@@ -767,11 +767,13 @@ function applyFixture(fix) {
     if (liveDot)   { liveDot.style.background = 'var(--red)'; liveDot.style.animation = 'live-pulse 1.4s infinite'; }
     document.querySelector('.kickoff-timer')?.style.setProperty('display','none');
     document.getElementById('banner-countdown').textContent = el + "'";
+    resolveMidMatch(hg, ag, fix.events || []);
   } else if (s === 'HT') {
     clockEl.textContent  = 'HT';
     statusEl.textContent = 'HALF TIME';
     statusEl.style.cssText = 'background:rgba(245,200,0,.1);border:1px solid rgba(245,200,0,.4);color:var(--y);';
     document.getElementById('banner-countdown').textContent = 'Half Time';
+    resolveMidMatch(hg, ag, fix.events || []);
   } else if (s === 'FT' || s === 'AET' || s === 'PEN') {
     clockEl.textContent  = 'FT';
     statusEl.textContent = '✓ FULL TIME';
@@ -814,6 +816,58 @@ function pushLiveEvent(ev, hg, ag) {
   item.className = 'activity-item';
   item.innerHTML = '<div class="act-dot ' + type + '"></div><div class="act-text">' + text + '</div><div class="act-time">' + min + "'</div>";
   feed.insertBefore(item, feed.firstChild);
+}
+
+function settleCard(m) {
+  const card = document.getElementById('mc-' + m.id);
+  if (!card) return;
+  const pct = Math.round(m.yes * 100);
+  const prob = card.querySelector('.market-prob');
+  const fill = card.querySelector('.market-prob-fill');
+  const yesChip = card.querySelector('.price-chip.yes .price-chip-val');
+  const noChip  = card.querySelector('.price-chip.no .price-chip-val');
+  const btns    = card.querySelector('.market-btns');
+  if (prob)    prob.textContent      = pct + '%';
+  if (fill)    fill.style.width      = pct + '%';
+  if (yesChip) yesChip.textContent   = '₦' + pct;
+  if (noChip)  noChip.textContent    = '₦' + (100 - pct);
+  if (btns) btns.innerHTML = `<div style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid ${m.yes>=0.99?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};background:${m.yes>=0.99?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'};font-family:var(--font-display);font-weight:700;font-size:13px;text-align:center;color:${m.yes>=0.99?'var(--green)':'var(--red)'};">SETTLED — ${m.yes>=0.99?'YES ✓':'NO ✗'}</div>`;
+  drawMiniChart(m);
+}
+
+function resolveMidMatch(hg, ag, events) {
+  const settle = (id, yes) => {
+    const m = MARKETS.find(m => m.id === id);
+    if (!m || m.yes >= 0.99 || m.yes <= 0.01) return; // already settled
+    m.yes = yes ? 1.00 : 0.00;
+    m.history.push(m.yes);
+    if (m.history.length > 12) m.history.shift();
+    settleCard(m);
+  };
+
+  const firstGoal = events.find(ev => ev.type === 'Goal');
+  const hasRed    = events.some(ev => ev.type === 'Card' && ev.detail === 'Red Card');
+  const total     = hg + ag;
+
+  // First to score — deterministic once first goal occurs
+  if (firstGoal) {
+    const braScored = firstGoal.team.name === AF_HOME;
+    settle('bra_first', braScored);
+    settle('mar_first', !braScored);
+  }
+
+  // Clean sheets / win-to-nil — flip to NO as soon as the team concedes
+  if (ag > 0) { settle('bra_cs', false); settle('bra_nil', false); }
+  if (hg > 0) { settle('mar_cs', false); settle('mar_nil', false); }
+
+  // BTTS — YES the moment both teams have scored
+  if (hg > 0 && ag > 0) settle('btts', true);
+
+  // Over 2.5 — YES the moment the 3rd goal goes in
+  if (total > 2) settle('over25', true);
+
+  // Red card — YES the moment it's shown
+  if (hasRed) settle('redcard', true);
 }
 
 function settleMarketsAF(fix, hg, ag) {
