@@ -244,12 +244,12 @@
       <div class="banner-cat" style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP B · MATCHDAY 1</div>
       <div class="banner-title" style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Qatar vs Switzerland</div>
       <div class="banner-meta" style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">AT&amp;T Stadium, Arlington, TX · Jun 13, 2026 · 8:00 PM WAT</div>
-      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 12 markets available</div>
+      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Match in progress · Markets locked · 12 active markets</div>
     </div>
     <div class="banner-status" style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-      <div style="color:var(--y);font-weight:700;font-size:12px;margin-bottom:4px;">● PRE-MATCH</div>
+      <div style="color:var(--red);font-weight:700;font-size:12px;margin-bottom:4px;">● LIVE</div>
       <div>Jun 13, 2026</div>
-      <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;"></div>
+      <div id="banner-countdown" style="color:var(--red);font-weight:700;margin-top:4px;"></div>
     </div>
   </div>
 
@@ -259,8 +259,8 @@
       <div class="league-badge">🌍 FIFA WORLD CUP 2026 · GROUP B · MATCHDAY 1</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <div class="live-indicator">
-          <div class="live-dot" id="live-dot" style="background:var(--y);"></div>
-          <span id="live-label" style="color:var(--y);">PRE-MATCH</span>
+          <div class="live-dot" id="live-dot" style="background:var(--red);animation:live-pulse 1.4s infinite;"></div>
+          <span id="live-label" style="color:var(--red);">LIVE</span>
         </div>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">AT&amp;T Stadium, TX</div>
       </div>
@@ -280,9 +280,9 @@
         </div>
         <div class="match-clock">
           <i class="fa-solid fa-clock" style="font-size:11px;"></i>
-          <span id="clock-display" style="font-size:11px;">8:00 PM WAT</span>
+          <span id="clock-display" style="font-size:11px;">1'</span>
         </div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);">PRE-MATCH</div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:var(--red);">● LIVE</div>
       </div>
       <div class="team-block">
         <div class="team-logo" style="border-color:rgba(208,2,27,.4);background:rgba(208,2,27,.06);font-size:0;"><img src="https://flagcdn.com/w80/ch.png" alt="Switzerland" style="width:54px;height:auto;border-radius:3px;"></div>
@@ -300,26 +300,20 @@
     </div>
   </div>
 
-  <!-- KICKOFF COUNTDOWN -->
-  <div class="kickoff-timer">
+  <!-- MARKETS LOCKED INDICATOR -->
+  <div class="kickoff-timer" style="border-color:rgba(239,68,68,.3);background:linear-gradient(135deg,rgba(239,68,68,.06),rgba(239,68,68,.02));">
     <div class="kickoff-info">
-      <div class="kickoff-title">Kickoff — Jun 13, 2026 · 8:00 PM WAT</div>
-      <div class="kickoff-sub">Markets lock at kickoff · All open positions settle post full time</div>
+      <div class="kickoff-title" style="color:var(--red);">● Match In Progress</div>
+      <div class="kickoff-sub">Markets locked at kickoff · All positions settle at full time</div>
     </div>
-    <div class="timer-block">
-      <div class="timer-seg"><div class="timer-num" id="t-h">--</div><div class="timer-label">HRS</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-m">--</div><div class="timer-label">MIN</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-s">--</div><div class="timer-label">SEC</div></div>
-    </div>
+    <div style="font-family:var(--font-mono);font-size:11px;color:var(--red);font-weight:700;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);border-radius:8px;padding:8px 16px;">MARKETS LOCKED</div>
   </div>
 
   <!-- STAT BOXES -->
   <div class="stats-row">
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦18.6M</div><div class="stat-box-sub" style="color:var(--green);">▲ +22% in 2h</div></div>
     <div class="stat-box"><div class="stat-box-label">Switzerland Win</div><div class="stat-box-val" style="color:var(--che1);font-size:22px;" id="home-prob-stat">50%</div><div class="stat-box-sub" style="color:var(--text3);">Implied probability</div></div>
-    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">12</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
+    <div class="stat-box"><div class="stat-box-label">Locked Markets</div><div class="stat-box-val">12</div><div class="stat-box-sub" style="color:var(--red);">● Live — settling at FT</div></div>
   </div>
 
   <!-- TABS -->
@@ -335,7 +329,7 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(245,200,0,.1);border:1px solid rgba(245,200,0,.3);color:var(--wc);padding:2px 6px;border-radius:4px;margin-left:6px;">● PRE-MATCH</span></div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:var(--red);padding:2px 6px;border-radius:4px;margin-left:6px;" id="sentiment-live-tag">● LIVE 1'</span></div>
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦18.6M total volume</div>
       </div>
       <div class="sentiment-bar">
@@ -349,8 +343,8 @@
         <span style="color:var(--che1);font-weight:700;" id="label-che">Switzerland 50%</span>
       </div>
       <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
-        <i class="fa-solid fa-clock" style="color:var(--wc);margin-right:4px;"></i>
-        Kickoff 8:00 PM WAT · Markets open · Locks at kickoff
+        <i class="fa-solid fa-clock" style="color:var(--red);margin-right:4px;"></i>
+        Match in progress · Markets locked · Settles at full time
       </div>
     </div>
 
