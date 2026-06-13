@@ -268,5 +268,36 @@
     "team2": "Bosnia & Herzegovina",
     "team1Emoji": "🇨🇦",
     "team2Emoji": "🇧🇦"
+  },
+  {
+    "id": "10000043",
+    "emoji": "⚽",
+    "category": "FOOTBALL",
+    "title": "USA vs Paraguay — 2026 FIFA World Cup Group D",
+    "yesPct": 100,
+    "volume": "₦52.4M",
+    "status": "RESOLVED",
+    "closesAt": "Full Time",
+    "isMatch": true,
+    "team1": "USA",
+    "team2": "Paraguay",
+    "team1Emoji": "🇺🇸",
+    "team2Emoji": "🇵🇾",
+    "score": "4 — 1"
+  },
+  {
+    "id": "10000044",
+    "emoji": "⚽",
+    "category": "FOOTBALL",
+    "title": "Qatar vs Switzerland — 2026 FIFA World Cup Group B",
+    "yesPct": 50,
+    "volume": "₦18.6M",
+    "status": "UPCOMING",
+    "closesAt": "Jun 13",
+    "isMatch": true,
+    "team1": "Qatar",
+    "team2": "Switzerland",
+    "team1Emoji": "🇶🇦",
+    "team2Emoji": "🇨🇭"
   }
 ]

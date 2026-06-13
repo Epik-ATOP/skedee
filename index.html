@@ -440,12 +440,12 @@
 // ── DATA ──────────────────────────────────────────────────
 const FEATURED = [
   {
-    emoji:'⚽', cat:' FOOTBALL · FIFA WORLD CUP', live:true,
-    title:'Canada vs Boznia',
-    sub:'2026 FIFA World Cup · Group C · Matchday 1 · Today  7:00 PM WAT',
-    prob:'58%', vol:'₦42.6M', change:'+26%', changeDir:'up',
-    bg:'⚽', yesLabel:'Mexico Win ₦58', probLabel:'MEXICO WIN',
-    link:'markets/10000042.html'
+    emoji:'⚽', cat:' FOOTBALL · FIFA WORLD CUP', live:false,
+    title:'Qatar vs Switzerland',
+    sub:'2026 FIFA World Cup · Group B · Matchday 1 · Tonight · 8:00 PM WAT',
+    prob:'50', vol:'₦18.6M', change:'+22%', changeDir:'up',
+    bg:'⚽', yesLabel:'Switzerland Win ₦50', noLabel:'Qatar Win ₦22', probLabel:'SWISS WIN',
+    link:'markets/10000044.html'
   },
   {
     emoji:'⚡', cat:'ENERGY · NEPA', live:true,
@@ -515,10 +515,12 @@ const ALL_MARKETS = [
   { id:10000036, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 7–8', badge:'live', yes:0.55, vol:'₦4.1M', change:'+3%', dir:'up', link:'#' },
   { id:10000039, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 14–15', badge:'new', yes:0.82, vol:'₦5.1M', change:'+0%', dir:'up', link:'#' },
   { id:10000049, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 14–15', badge:'new', yes:0.61, vol:'₦3.2M', change:'+0%', dir:'up', link:'#' },
-  { id:10000041, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 21–22', badge:'new', yes:0.85, vol:'₦3.8M', change:'+0%', dir:'up', link:'#' },
-  { id:10000042, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 21–22', badge:'new', yes:0.64, vol:'₦2.4M', change:'+0%', dir:'up', link:'#' },
-  { id:10000043, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 28–29', badge:'new', yes:0.87, vol:'₦3.1M', change:'+0%', dir:'up', link:'#' },
-  { id:10000044, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 28–29', badge:'new', yes:0.66, vol:'₦1.9M', change:'+0%', dir:'up', link:'#' },
+  { id:90041, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 21–22', badge:'new', yes:0.85, vol:'₦3.8M', change:'+0%', dir:'up', link:'#' },
+  { id:90042, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 21–22', badge:'new', yes:0.64, vol:'₦2.4M', change:'+0%', dir:'up', link:'#' },
+  { id:90043, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 28–29', badge:'new', yes:0.87, vol:'₦3.1M', change:'+0%', dir:'up', link:'#' },
+  { id:90044, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 28–29', badge:'new', yes:0.66, vol:'₦1.9M', change:'+0%', dir:'up', link:'#' },
+  { id:10000043, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'USA vs Paraguay — World Cup Group D (FT 4–1)', badge:'resolved', yes:1.00, vol:'₦52.4M', change:'SETTLED', dir:'flat', link:'markets/10000043.html' },
+  { id:10000044, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Qatar vs Switzerland — World Cup Group B', badge:'live', yes:0.50, vol:'₦18.6M', change:'+22%', dir:'up', link:'markets/10000044.html' },
   { id:10000045, cat:'football', emoji:'🦅', catLabel:'FOOTBALL · WORLD CUP', title:'Super Eagles Win World Cup Opener — Jun 12', badge:'upcoming', yes:0.52, vol:'₦63M', change:'+12%', dir:'up', link:'#' },
   { id:10000046, cat:'football', emoji:'🌍', catLabel:'FOOTBALL · WORLD CUP', title:'Nigeria Tops World Cup Group Stage', badge:'new', yes:0.38, vol:'₦28M', change:'+4%', dir:'up', link:'#' },
   { id:10000040, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Mexico vs South Africa — World Cup Group A', badge:'upcoming', yes:0.58, vol:'₦42.6M', change:'+26%', dir:'up', link:'markets/10000040.html' },
