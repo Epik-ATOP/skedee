@@ -292,12 +292,28 @@
     "title": "Qatar vs Switzerland — 2026 FIFA World Cup Group B",
     "yesPct": 50,
     "volume": "₦18.6M",
-    "status": "UPCOMING",
-    "closesAt": "Jun 13",
+    "status": "RESOLVED",
+    "closesAt": "Full Time",
     "isMatch": true,
     "team1": "Qatar",
     "team2": "Switzerland",
+    "score": "1 — 1",
     "team1Emoji": "🇶🇦",
     "team2Emoji": "🇨🇭"
+  },
+  {
+    "id": "10000045",
+    "emoji": "⚽",
+    "category": "FOOTBALL",
+    "title": "Brazil vs Morocco — 2026 FIFA World Cup Group E",
+    "yesPct": 65,
+    "volume": "₦84.2M",
+    "status": "UPCOMING",
+    "closesAt": "Jun 13",
+    "isMatch": true,
+    "team1": "Brazil",
+    "team2": "Morocco",
+    "team1Emoji": "🇧🇷",
+    "team2Emoji": "🇲🇦"
   }
 ]

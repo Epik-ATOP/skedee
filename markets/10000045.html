@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Qatar vs Switzerland — 2026 FIFA World Cup | Skedee</title>
+<title>Brazil vs Morocco — 2026 FIFA World Cup | Skedee</title>
 <link rel="icon" type="image/png" href="../assets/skedee-1.png"><link rel="manifest" href="../manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#F5C800">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="../style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root{--sidebar-w:220px;--rsidebar-w:280px;--qat1:#8D1B3D;--qat2:#FFFFFF;--che1:#D0021B;--che2:#FFFFFF;--wc:#F5C800;}
+:root{--sidebar-w:220px;--rsidebar-w:280px;--bra1:#009C3B;--bra2:#FFDF00;--mar1:#C1272D;--mar2:#006233;--wc:#F5C800;}
 .layout{display:flex;margin-top:52px;height:calc(100vh - 52px);overflow:hidden;}
 .sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 0;}
 .sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;}
@@ -26,7 +26,7 @@
 .trend-change{font-family:var(--font-mono);font-size:10px;color:var(--green);}
 
 .match-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px 24px;position:relative;overflow:visible;}
-.match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--qat1),var(--wc),var(--che1),transparent);animation:scan 3s ease-in-out infinite;}
+.match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--bra1),var(--bra2),var(--mar1),transparent);animation:scan 3s ease-in-out infinite;}
 @keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
 .match-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
 .league-badge{display:flex;align-items:center;gap:6px;background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.3);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--wc);letter-spacing:1px;}
@@ -65,9 +65,9 @@
 .stat-box-sub{font-family:var(--font-mono);font-size:10px;margin-top:3px;}
 .sentiment-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
 .sentiment-bar{height:10px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:8px;}
-.sentiment-qat{background:linear-gradient(90deg,#8D1B3D,rgba(141,27,61,.7));}
+.sentiment-bra{background:linear-gradient(90deg,#009C3B,rgba(0,156,59,.7));}
 .sentiment-draw{background:rgba(100,100,100,.4);}
-.sentiment-che{background:linear-gradient(90deg,#D0021B,rgba(208,2,27,.7));}
+.sentiment-mar{background:linear-gradient(90deg,#C1272D,rgba(193,39,45,.7));}
 .sentiment-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
 
 .tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
@@ -215,8 +215,12 @@
   <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
   <div class="sidebar-label">World Cup — Tonight</div>
   <div class="trending-event" style="border-color:rgba(245,200,0,.35);background:rgba(245,200,0,.04);">
+    <div class="trend-name"><img src="https://flagcdn.com/w20/br.png" style="height:11px;vertical-align:middle;border-radius:2px;margin-right:3px;">Brazil vs Morocco <img src="https://flagcdn.com/w20/ma.png" style="height:11px;vertical-align:middle;border-radius:2px;margin-left:3px;"></div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦84.2M vol</div><div class="trend-change" style="color:var(--wc);">11:00 PM</div></div>
+  </div>
+  <div class="trending-event" onclick="window.location='10000044.html'">
     <div class="trend-name"><img src="https://flagcdn.com/w20/qa.png" style="height:11px;vertical-align:middle;border-radius:2px;margin-right:3px;">Qatar vs Switzerland <img src="https://flagcdn.com/w20/ch.png" style="height:11px;vertical-align:middle;border-radius:2px;margin-left:3px;"></div>
-    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦18.6M vol</div><div class="trend-change" style="color:var(--wc);">8:00 PM</div></div>
+    <div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦18.6M vol</div><div class="trend-change" style="color:var(--red);">● LIVE</div></div>
   </div>
   <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
   <div class="sidebar-label">Earlier Today</div>
@@ -237,83 +241,89 @@
 <div class="main">
 
   <!-- BANNER -->
-  <div class="upcoming-banner" style="background:linear-gradient(135deg,rgba(141,27,61,.05),rgba(208,2,27,.05));border:2px solid rgba(245,200,0,.4);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
+  <div class="upcoming-banner" style="background:linear-gradient(135deg,rgba(0,156,59,.05),rgba(193,39,45,.05));border:2px solid rgba(245,200,0,.4);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
     <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:160px;opacity:.04;pointer-events:none;line-height:1;user-select:none;overflow:hidden;border-radius:20px;">⚽</div>
     <div class="banner-icon" style="width:64px;height:64px;background:rgba(245,200,0,.1);border:2px solid rgba(245,200,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">⚽</div>
     <div style="flex:1;min-width:0;">
-      <div class="banner-cat" style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP B · MATCHDAY 1</div>
-      <div class="banner-title" style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Qatar vs Switzerland</div>
-      <div class="banner-meta" style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">AT&amp;T Stadium, Arlington, TX · Jun 13, 2026 · 8:00 PM WAT</div>
-      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Full Time · QAT 1 — 1 SUI · All 12 markets settled</div>
+      <div class="banner-cat" style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP E · MATCHDAY 1</div>
+      <div class="banner-title" style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Brazil vs Morocco</div>
+      <div class="banner-meta" style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Hard Rock Stadium, Miami, FL · Jun 13, 2026 · 11:00 PM WAT</div>
+      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 12 markets available</div>
     </div>
     <div class="banner-status" style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-      <div style="color:var(--green);font-weight:700;font-size:12px;margin-bottom:4px;">✓ FULL TIME</div>
+      <div style="color:var(--y);font-weight:700;font-size:12px;margin-bottom:4px;">● PRE-MATCH</div>
       <div>Jun 13, 2026</div>
-      <div style="color:var(--y);font-weight:700;margin-top:4px;font-family:var(--font-mono);font-size:10px;">QAT 1 — 1 SUI</div>
+      <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;"></div>
     </div>
   </div>
 
   <!-- MATCH CARD -->
   <div class="match-card">
     <div class="match-card-top">
-      <div class="league-badge">🌍 FIFA WORLD CUP 2026 · GROUP B · MATCHDAY 1</div>
+      <div class="league-badge">🌍 FIFA WORLD CUP 2026 · GROUP E · MATCHDAY 1</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <div class="live-indicator">
-          <div class="live-dot" id="live-dot" style="background:var(--green);"></div>
-          <span id="live-label" style="color:var(--green);">FULL TIME</span>
+          <div class="live-dot" id="live-dot" style="background:var(--y);"></div>
+          <span id="live-label" style="color:var(--y);">PRE-MATCH</span>
         </div>
-        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">AT&amp;T Stadium, TX</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Hard Rock Stadium, FL</div>
       </div>
     </div>
 
     <div class="match-center">
       <div class="team-block">
-        <div class="team-logo" style="border-color:rgba(141,27,61,.4);background:rgba(141,27,61,.06);font-size:0;"><img src="https://flagcdn.com/w80/qa.png" alt="Qatar" style="width:54px;height:auto;border-radius:3px;"></div>
-        <div class="team-name" style="color:var(--qat1);">QATAR</div>
-        <div class="team-record">Group B · Al Annabi</div>
+        <div class="team-logo" style="border-color:rgba(0,156,59,.4);background:rgba(0,156,59,.06);font-size:0;"><img src="https://flagcdn.com/w80/br.png" alt="Brazil" style="width:54px;height:auto;border-radius:3px;"></div>
+        <div class="team-name" style="color:var(--bra2);">BRAZIL</div>
+        <div class="team-record">Group E · Seleção</div>
       </div>
       <div class="score-block">
         <div class="ticker-score">
-          <span class="ticker-abbr" style="color:var(--qat1);">QAT</span>
-          <span class="ticker-sep" id="score-display">1 — 1</span>
-          <span class="ticker-abbr" style="color:var(--che1);">CHE</span>
+          <span class="ticker-abbr" style="color:var(--bra1);">BRA</span>
+          <span class="ticker-sep" id="score-display">vs</span>
+          <span class="ticker-abbr" style="color:var(--mar1);">MAR</span>
         </div>
         <div class="match-clock">
           <i class="fa-solid fa-clock" style="font-size:11px;"></i>
-          <span id="clock-display" style="font-size:11px;">FT</span>
+          <span id="clock-display" style="font-size:11px;">11:00 PM WAT</span>
         </div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);">✓ FULL TIME</div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);">PRE-MATCH</div>
       </div>
       <div class="team-block">
-        <div class="team-logo" style="border-color:rgba(208,2,27,.4);background:rgba(208,2,27,.06);font-size:0;"><img src="https://flagcdn.com/w80/ch.png" alt="Switzerland" style="width:54px;height:auto;border-radius:3px;"></div>
-        <div class="team-name" style="color:var(--che1);">SWITZERLAND</div>
-        <div class="team-record">Group B · Nati</div>
+        <div class="team-logo" style="border-color:rgba(193,39,45,.4);background:rgba(193,39,45,.06);font-size:0;"><img src="https://flagcdn.com/w80/ma.png" alt="Morocco" style="width:54px;height:auto;border-radius:3px;"></div>
+        <div class="team-name" style="color:var(--mar1);">MOROCCO</div>
+        <div class="team-record">Group E · Atlas Lions</div>
       </div>
     </div>
 
     <div class="match-meta">
-      <div class="meta-item"><i class="fa-solid fa-location-dot"></i>AT&amp;T Stadium, Arlington, TX</div>
-      <div class="meta-item"><i class="fa-solid fa-calendar"></i>Jun 13, 2026 · 8:00 PM WAT</div>
-      <div class="meta-item"><i class="fa-solid fa-users"></i>80,000 Capacity</div>
+      <div class="meta-item"><i class="fa-solid fa-location-dot"></i>Hard Rock Stadium, Miami, FL</div>
+      <div class="meta-item"><i class="fa-solid fa-calendar"></i>Jun 13, 2026 · 11:00 PM WAT</div>
+      <div class="meta-item"><i class="fa-solid fa-users"></i>65,326 Capacity</div>
       <div class="meta-item"><i class="fa-solid fa-trophy" style="color:var(--wc);"></i><span style="color:var(--wc);font-family:var(--font-mono);font-size:11px;">WORLD CUP GROUP STAGE</span></div>
-      <div class="meta-item" style="margin-left:auto;"><span style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Volume: </span><span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦18,600,000</span></div>
+      <div class="meta-item" style="margin-left:auto;"><span style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Volume: </span><span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦84,200,000</span></div>
     </div>
   </div>
 
-  <!-- RESULT BANNER -->
-  <div class="kickoff-timer" style="border-color:rgba(34,197,94,.3);background:linear-gradient(135deg,rgba(34,197,94,.06),rgba(34,197,94,.02));">
+  <!-- KICKOFF COUNTDOWN -->
+  <div class="kickoff-timer">
     <div class="kickoff-info">
-      <div class="kickoff-title" style="color:var(--green);">✓ Full Time — Qatar 1 — 1 Switzerland</div>
-      <div class="kickoff-sub">Switzerland scored first · All 12 markets settled · Payouts processing</div>
+      <div class="kickoff-title">Kickoff — Jun 13, 2026 · 11:00 PM WAT</div>
+      <div class="kickoff-sub">Markets lock at kickoff · All open positions settle post full time</div>
     </div>
-    <div style="font-family:var(--font-mono);font-size:11px;color:var(--green);font-weight:700;border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.08);border-radius:8px;padding:8px 16px;">✓ SETTLED</div>
+    <div class="timer-block">
+      <div class="timer-seg"><div class="timer-num" id="t-h">--</div><div class="timer-label">HRS</div></div>
+      <div class="timer-colon">:</div>
+      <div class="timer-seg"><div class="timer-num" id="t-m">--</div><div class="timer-label">MIN</div></div>
+      <div class="timer-colon">:</div>
+      <div class="timer-seg"><div class="timer-num" id="t-s">--</div><div class="timer-label">SEC</div></div>
+    </div>
   </div>
 
   <!-- STAT BOXES -->
   <div class="stats-row">
-    <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦18.6M</div><div class="stat-box-sub" style="color:var(--green);">▲ +22% in 2h</div></div>
-    <div class="stat-box"><div class="stat-box-label">Final Result</div><div class="stat-box-val" style="color:var(--y);font-size:20px;" id="home-prob-stat">1 — 1</div><div class="stat-box-sub" style="color:var(--text3);">Draw · Full Time</div></div>
-    <div class="stat-box"><div class="stat-box-label">Settled Markets</div><div class="stat-box-val" style="color:var(--green);">12</div><div class="stat-box-sub" style="color:var(--green);">✓ All resolved</div></div>
+    <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦84.2M</div><div class="stat-box-sub" style="color:var(--green);">▲ +18% in 2h</div></div>
+    <div class="stat-box"><div class="stat-box-label">Brazil Win</div><div class="stat-box-val" style="color:var(--bra1);font-size:22px;" id="home-prob-stat">65%</div><div class="stat-box-sub" style="color:var(--text3);">Implied probability</div></div>
+    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">12</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
   </div>
 
   <!-- TABS -->
@@ -329,35 +339,35 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);padding:2px 6px;border-radius:4px;margin-left:6px;" id="sentiment-live-tag">✓ SETTLED</span></div>
-        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦18.6M total volume</div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(245,200,0,.1);border:1px solid rgba(245,200,0,.3);color:var(--wc);padding:2px 6px;border-radius:4px;margin-left:6px;">● PRE-MATCH</span></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦84.2M total volume</div>
       </div>
       <div class="sentiment-bar">
-        <div class="sentiment-qat" id="bar-qat" style="width:0%;"></div>
-        <div class="sentiment-draw" id="bar-draw" style="width:100%;"></div>
-        <div class="sentiment-che" id="bar-che" style="width:0%;"></div>
+        <div class="sentiment-bra" id="bar-bra" style="width:65%;"></div>
+        <div class="sentiment-draw" id="bar-draw" style="width:22%;"></div>
+        <div class="sentiment-mar" id="bar-mar" style="width:13%;"></div>
       </div>
       <div class="sentiment-labels">
-        <span style="color:var(--qat1);font-weight:700;" id="label-qat">Qatar 0%</span>
-        <span style="color:var(--text2);font-weight:700;" id="label-draw">Draw 100% ✓</span>
-        <span style="color:var(--che1);font-weight:700;" id="label-che">Switzerland 0%</span>
+        <span style="color:var(--bra1);font-weight:700;" id="label-bra">Brazil 65%</span>
+        <span style="color:var(--text2);font-weight:700;" id="label-draw">Draw 22%</span>
+        <span style="color:var(--mar1);font-weight:700;" id="label-mar">Morocco 13%</span>
       </div>
-      <div style="margin-top:10px;font-size:11px;color:var(--green);font-family:var(--font-mono);">
-        <i class="fa-solid fa-check-circle" style="margin-right:4px;"></i>
-        Full Time · Qatar 1 — 1 Switzerland · Switzerland scored first
+      <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
+        <i class="fa-solid fa-clock" style="color:var(--wc);margin-right:4px;"></i>
+        Kickoff 11:00 PM WAT · Markets open · Locks at kickoff
       </div>
     </div>
 
     <div class="trending-strip" style="margin-top:12px;">
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🔥 Hot Markets</div>
       <div class="trending-pills">
-        <div class="trend-pill" onclick="openOrder('Switzerland Win (FT)','YES',50)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/ch.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">Switzerland Win</div><div class="trend-pill-prob">₦50 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Draw (FT)','YES',28)"><div class="trend-pill-name">Draw FT</div><div class="trend-pill-prob">₦28 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Qatar Win (FT)','YES',22)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/qa.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">Qatar Win</div><div class="trend-pill-prob">₦22 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Over 2.5 Goals','YES',52)"><div class="trend-pill-name">Over 2.5 Goals</div><div class="trend-pill-prob">₦52 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Both Teams To Score','YES',48)"><div class="trend-pill-name">BTTS</div><div class="trend-pill-prob">₦48 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('Switzerland Clean Sheet','YES',36)"><div class="trend-pill-name">Switzerland CS</div><div class="trend-pill-prob">₦36 YES</div></div>
-        <div class="trend-pill" onclick="openOrder('🟥 Red Card in Match','YES',28)"><div class="trend-pill-name">🟥 Red Card</div><div class="trend-pill-prob">₦28 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Brazil Win (FT)','YES',65)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/br.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">Brazil Win</div><div class="trend-pill-prob">₦65 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Draw (FT)','YES',22)"><div class="trend-pill-name">Draw FT</div><div class="trend-pill-prob">₦22 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Morocco Win (FT)','YES',13)"><div class="trend-pill-name"><img src="https://flagcdn.com/w20/ma.png" style="height:12px;vertical-align:middle;border-radius:2px;margin-right:4px;">Morocco Win</div><div class="trend-pill-prob">₦13 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Over 2.5 Goals','YES',62)"><div class="trend-pill-name">Over 2.5 Goals</div><div class="trend-pill-prob">₦62 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Both Teams To Score','YES',52)"><div class="trend-pill-name">BTTS</div><div class="trend-pill-prob">₦52 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Brazil Clean Sheet','YES',38)"><div class="trend-pill-name">Brazil CS</div><div class="trend-pill-prob">₦38 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('🟥 Red Card in Match','YES',32)"><div class="trend-pill-name">🟥 Red Card</div><div class="trend-pill-prob">₦32 YES</div></div>
       </div>
     </div>
 
@@ -376,7 +386,7 @@
     <div class="positions-card"><div class="positions-title">Comments <span class="badge">4</span></div><div id="comments-list"></div></div>
   </div>
   <div id="tab-analytics" style="display:none;">
-    <div class="positions-card"><div class="positions-title">Probability Chart — Switzerland Win</div><div style="position:relative;height:220px;"><canvas id="probChart"></canvas></div></div>
+    <div class="positions-card"><div class="positions-title">Probability Chart — Brazil Win</div><div style="position:relative;height:220px;"><canvas id="probChart"></canvas></div></div>
   </div>
   <div id="tab-rules" style="display:none;">
     <div class="positions-card">
@@ -385,7 +395,7 @@
         <strong style="color:var(--text);">Match Winner (Full Time)</strong><br>Resolves YES if the specified team wins at the end of 90 minutes. Added time counts. Extra time and penalties do NOT apply.<br><br>
         <strong style="color:var(--text);">Over / Under 2.5 Goals</strong><br>Resolves YES if the combined total goals exceeds 2. Own goals count.<br><br>
         <strong style="color:var(--text);">Both Teams To Score (BTTS)</strong><br>Resolves YES if both teams score at least one goal during 90 minutes.<br><br>
-        <strong style="color:var(--font-mono);">Market Lock</strong><br>All markets lock at confirmed kickoff.<br><br>
+        <strong style="color:var(--text);">Market Lock</strong><br>All markets lock at confirmed kickoff.<br><br>
         <strong style="color:var(--text);">Data Source</strong><br>Official FIFA match report. Resolution within 30 minutes of final whistle.
       </div>
     </div>
@@ -396,33 +406,18 @@
 <!-- RIGHT SIDEBAR -->
 <div class="right-sidebar">
   <div>
-    <div class="rsidebar-section-title">Final Score</div>
-    <div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--border3);">
-      <div style="text-align:center;"><img src="https://flagcdn.com/w40/qa.png" style="width:36px;height:auto;border-radius:3px;display:block;margin:0 auto 6px;"><div style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--qat1);">QAT</div></div>
-      <div style="font-family:var(--font-num);font-size:32px;font-weight:700;color:var(--y);">1 — 1</div>
-      <div style="text-align:center;"><img src="https://flagcdn.com/w40/ch.png" style="width:36px;height:auto;border-radius:3px;display:block;margin:0 auto 6px;"><div style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--che1);">SUI</div></div>
-    </div>
-    <div style="padding:12px 0;border-bottom:1px solid var(--border3);">
-      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Key Outcomes</div>
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Draw (FT)</span><span style="color:var(--green);font-family:var(--font-mono);font-weight:700;">YES ✓</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Both Teams To Score</span><span style="color:var(--green);font-family:var(--font-mono);font-weight:700;">YES ✓</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Switzerland First to Score</span><span style="color:var(--green);font-family:var(--font-mono);font-weight:700;">YES ✓</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Switzerland Win (FT)</span><span style="color:var(--red);font-family:var(--font-mono);font-weight:700;">NO ✗</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Qatar Win (FT)</span><span style="color:var(--red);font-family:var(--font-mono);font-weight:700;">NO ✗</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Over 2.5 Goals</span><span style="color:var(--red);font-family:var(--font-mono);font-weight:700;">NO ✗</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Red Card in Match</span><span style="color:var(--red);font-family:var(--font-mono);font-weight:700;">NO ✗</span></div>
-      </div>
-    </div>
-    <div style="padding:12px 0;font-family:var(--font-mono);font-size:10px;color:var(--text3);">
-      <div style="color:var(--green);font-weight:700;margin-bottom:6px;">✓ All 12 markets settled</div>
-      <div>Volume: ₦18.6M</div>
-      <div style="margin-top:4px;">Group B · Round 1</div>
-    </div>
+    <div class="rsidebar-section-title">Order Book — Brazil Win <span style="color:var(--wc);font-size:10px;">PRE</span></div>
+    <div id="order-book-asks"></div>
+    <div class="ob-spread">Spread: ₦3 · Mid: ₦65</div>
+    <div id="order-book-bids"></div>
   </div>
   <div style="border-top:1px solid var(--border3);padding-top:16px;">
     <div class="rsidebar-section-title">Activity Feed</div>
     <div id="activity-feed"></div>
+  </div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;">
+    <div class="rsidebar-section-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
+    <div id="recent-trades"></div>
   </div>
 </div>
 
@@ -434,7 +429,7 @@
     <div class="order-panel-title">Place Order</div>
     <button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button>
   </div>
-  <div class="order-market-name" id="op-market-name">Switzerland Win (FT)</div>
+  <div class="order-market-name" id="op-market-name">Brazil Win (FT)</div>
   <div class="order-side-tabs">
     <button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button>
     <button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button>
@@ -454,7 +449,7 @@
     <input type="number" id="op-amount" value="5000" min="100" max="9999999" oninput="updateOrderSummary()"
       style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;">
   </div>
-  <input type="hidden" id="op-price" value="50">
+  <input type="hidden" id="op-price" value="65">
   <div class="quick-amt-row">
     <button class="quick-amt-btn" onclick="addAmount(1000)">+₦1K</button>
     <button class="quick-amt-btn" onclick="addAmount(2000)">+₦2K</button>
@@ -478,47 +473,47 @@
 <script src="../script.js"></script>
 <script src="../sportmonks.js"></script>
 <script>
-const KICKOFF_TIME = new Date('2026-06-13T19:00:00Z'); // 8:00 PM WAT
+const KICKOFF_TIME = new Date('2026-06-13T22:00:00Z'); // 11:00 PM WAT
 const AF_KEY     = '537fc407993fe20fd8f3ac68bee2ed2d';
 const AF_FIXTURE = null; // update with real fixture ID once known
-const AF_HOME    = 'Qatar';
-const AF_AWAY    = 'Switzerland';
+const AF_HOME    = 'Brazil';
+const AF_AWAY    = 'Morocco';
 let orderSide = 'YES', walletBalance = 4271250;
 let miniCharts = {}, probChart;
 
 const MARKETS = [
-  { id:'che_win',   title:'Switzerland Win (FT)',           yes:0.00, vol:'₦8.4M',  liq:'₦2.2M', spread:'₦2', history:[0.48,0.49,0.50,0.50,0.51,0.50,0.50,0.40,0.22,0.00] },
-  { id:'qat_win',   title:'Qatar Win (FT)',                 yes:0.00, vol:'₦3.8M',  liq:'₦1.0M', spread:'₦4', history:[0.23,0.23,0.22,0.22,0.22,0.22,0.18,0.10,0.04,0.00] },
-  { id:'draw',      title:'Draw (Full Time)',               yes:1.00, vol:'₦4.2M',  liq:'₦1.1M', spread:'₦3', history:[0.29,0.28,0.28,0.28,0.30,0.35,0.50,0.72,0.90,1.00] },
-  { id:'over25',    title:'Over 2.5 Goals',                yes:0.00, vol:'₦2.2M',  liq:'₦0.6M', spread:'₦4', history:[0.51,0.52,0.52,0.48,0.40,0.30,0.20,0.10,0.02,0.00] },
-  { id:'btts',      title:'Both Teams To Score',           yes:1.00, vol:'₦1.6M',  liq:'₦0.5M', spread:'₦4', history:[0.47,0.47,0.48,0.48,0.55,0.68,0.80,0.92,0.98,1.00] },
-  { id:'che_cs',    title:'Switzerland Clean Sheet',       yes:0.00, vol:'₦0.9M',  liq:'₦0.3M', spread:'₦5', history:[0.36,0.36,0.36,0.30,0.20,0.10,0.04,0.01,0.00,0.00] },
-  { id:'qat_cs',    title:'Qatar Clean Sheet',             yes:0.00, vol:'₦0.5M',  liq:'₦0.1M', spread:'₦6', history:[0.19,0.18,0.18,0.16,0.10,0.05,0.02,0.00,0.00,0.00] },
-  { id:'che_nil',   title:'Switzerland Win to Nil',        yes:0.00, vol:'₦0.6M',  liq:'₦0.2M', spread:'₦6', history:[0.26,0.26,0.26,0.22,0.15,0.08,0.03,0.01,0.00,0.00] },
-  { id:'qat_nil',   title:'Qatar Win to Nil',              yes:0.00, vol:'₦0.3M',  liq:'₦0.1M', spread:'₦7', history:[0.12,0.12,0.12,0.10,0.06,0.03,0.01,0.00,0.00,0.00] },
-  { id:'che_first', title:'Switzerland First to Score',    yes:1.00, vol:'₦1.0M',  liq:'₦0.3M', spread:'₦5', history:[0.55,0.56,0.56,0.60,0.70,0.82,0.92,0.97,0.99,1.00] },
-  { id:'qat_first', title:'Qatar First to Score',          yes:0.00, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦5', history:[0.38,0.38,0.38,0.34,0.25,0.14,0.06,0.02,0.00,0.00] },
-  { id:'redcard',   title:'🟥 Red Card in Match',          yes:0.00, vol:'₦0.3M',  liq:'₦0.1M', spread:'₦6', history:[0.28,0.28,0.28,0.25,0.18,0.10,0.04,0.01,0.00,0.00] },
+  { id:'bra_win',   title:'Brazil Win (FT)',            yes:0.65, vol:'₦36.4M', liq:'₦9.2M', spread:'₦3', history:[0.64,0.64,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65] },
+  { id:'mar_win',   title:'Morocco Win (FT)',            yes:0.13, vol:'₦14.8M', liq:'₦3.8M', spread:'₦6', history:[0.14,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13] },
+  { id:'draw',      title:'Draw (Full Time)',            yes:0.22, vol:'₦16.2M', liq:'₦4.2M', spread:'₦4', history:[0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22] },
+  { id:'over25',    title:'Over 2.5 Goals',             yes:0.62, vol:'₦5.8M',  liq:'₦1.5M', spread:'₦4', history:[0.61,0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62] },
+  { id:'btts',      title:'Both Teams To Score',        yes:0.52, vol:'₦3.6M',  liq:'₦1.0M', spread:'₦4', history:[0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52] },
+  { id:'bra_cs',    title:'Brazil Clean Sheet',         yes:0.38, vol:'₦2.8M',  liq:'₦0.7M', spread:'₦5', history:[0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38] },
+  { id:'mar_cs',    title:'Morocco Clean Sheet',        yes:0.18, vol:'₦1.2M',  liq:'₦0.3M', spread:'₦6', history:[0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18] },
+  { id:'bra_nil',   title:'Brazil Win to Nil',          yes:0.32, vol:'₦1.8M',  liq:'₦0.5M', spread:'₦6', history:[0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32] },
+  { id:'mar_nil',   title:'Morocco Win to Nil',         yes:0.08, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦8', history:[0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.08] },
+  { id:'bra_first', title:'Brazil First to Score',      yes:0.68, vol:'₦2.2M',  liq:'₦0.6M', spread:'₦5', history:[0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68] },
+  { id:'mar_first', title:'Morocco First to Score',     yes:0.28, vol:'₦1.4M',  liq:'₦0.4M', spread:'₦6', history:[0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28] },
+  { id:'redcard',   title:'🟥 Red Card in Match',       yes:0.32, vol:'₦0.6M',  liq:'₦0.2M', spread:'₦6', history:[0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32] },
 ];
 
 const ORDER_BOOK_DATA = {
-  asks: [{p:'₦52',s:320,t:580},{p:'₦51',s:480,t:860},{p:'₦50',s:1800,t:3200},{p:'₦49',s:420,t:740}],
-  bids: [{p:'₦48',s:560,t:1000},{p:'₦47',s:380,t:680},{p:'₦46',s:440,t:790},{p:'₦45',s:220,t:400}]
+  asks: [{p:'₦67',s:280,t:500},{p:'₦66',s:420,t:760},{p:'₦65',s:2400,t:4300},{p:'₦64',s:360,t:650}],
+  bids: [{p:'₦63',s:480,t:860},{p:'₦62',s:320,t:580},{p:'₦61',s:380,t:680},{p:'₦60',s:180,t:320}]
 };
 
 const ACTIVITY = [
-  {type:'buy',  text:'<strong>swiss_banker</strong> backed Switzerland Win YES ×3,200 at ₦50 — "Swiss are solid as ever"', time:'12m'},
-  {type:'buy',  text:'<strong>qatar_believer</strong> backed Qatar Win YES ×1,800 at ₦22 — "Great value if they click upfront"', time:'28m'},
-  {type:'sell', text:'<strong>sharp_bets_ng</strong> backed Draw YES ×2,100 at ₦28 — "Neither team will blow each other away"', time:'44m'},
-  {type:'buy',  text:'<strong>over_goals_hawk</strong> backed Over 2.5 Goals YES ×2,600 at ₦52 — "Both need points"', time:'1h'},
-  {type:'buy',  text:'<strong>cs_king</strong> backed Switzerland CS YES ×1,400 at ₦36 — "Qatar struggled to score in 2022"', time:'2h'},
+  {type:'buy',  text:'<strong>brazil_legends</strong> backed Brazil Win YES ×4,800 at ₦65 — "Seleção never fails in the group stage"', time:'8m'},
+  {type:'buy',  text:'<strong>atlas_lions_fan</strong> backed Morocco Win YES ×2,200 at ₦13 — "Morocco showed the world in 2022 — they can do it again"', time:'22m'},
+  {type:'sell', text:'<strong>wc_stats_ng</strong> backed Draw YES ×1,600 at ₦22 — "Morocco will park the bus, this ends 0-0 or 1-1"', time:'38m'},
+  {type:'buy',  text:'<strong>goals_hawk</strong> backed Over 2.5 Goals YES ×3,100 at ₦62 — "Brazil attack with intent every game"', time:'1h'},
+  {type:'buy',  text:'<strong>cs_king</strong> backed Brazil CS YES ×1,800 at ₦38 — "Morocco struggled to score vs top sides in 2022"', time:'2h'},
 ];
 
 const COMMENTS = [
-  {col:'#D0021B',init:'CH',user:'nati_super_fan',text:"Switzerland are super organised and clinical. Their defensive shape is one of the best in Europe. I see a narrow Swiss win — ₦50 is fair value and I've loaded up.",time:'1h',likes:31},
-  {col:'#8D1B3D',init:'QA',user:'qatar_football',text:"People underestimate Qatar. They won the 2019 Asian Cup and have been improving. ₦22 is huge potential value if they can stay compact and hit on the counter.",time:'2h',likes:14},
-  {col:'#22C55E',init:'NG',user:'sharp_money_ng',text:"These group opener matchups often end 1-0 or 1-1. Draw at ₦28 is where I've put my stake. Neither side has the firepower to run away with it.",time:'3h',likes:22},
-  {col:'#F59E0B',init:'US',user:'wc_goals_hawk',text:"Both teams need to win — expect an open, nervy game. Over 2.5 at ₦52 is close to fair value but I lean YES given the competitive stakes. Worth a small position.",time:'4h',likes:9},
+  {col:'#009C3B',init:'BR',user:'selecao_forever',text:"Vinicius Jr., Rodrygo, and Endrick all starting — Brazil's attack is terrifying. I see a comfortable 2-0 or 3-0 win. ₦65 is actually fair value for a Brazil team this stacked. Loading up YES.",time:'1h',likes:64},
+  {col:'#C1272D',init:'MA',user:'atlas_lions_fan',text:"People forget Morocco BEAT Spain and Portugal at the 2022 World Cup. They know how to defend and counter. ₦13 for a Morocco win is massive value if they can soak the pressure and hit Brazil on the break.",time:'2h',likes:29},
+  {col:'#22C55E',init:'NG',user:'sharp_money_ng',text:"Brazil -1.5 is where the sharp money is. They'll win comfortably. But I'm also on Over 2.5 at ₦62 — Brazil will test Morocco's defence early and often. Should be two goals in the first 40 minutes.",time:'3h',likes:38},
+  {col:'#F59E0B',init:'GH',user:'wc_goals_hawk',text:"BTTS at ₦52 is the play. Morocco WILL get a goal at some point — they have real quality upfront. Brazil has too much firepower to be shut out. Both markets look value to me.",time:'4h',likes:18},
 ];
 
 function renderMarkets() {
@@ -590,7 +585,7 @@ function generateTrade() {
   const m = MARKETS[Math.floor(Math.random() * MARKETS.length)];
   const side = Math.random() > 0.4 ? 'buy' : 'sell';
   const pct = Math.round(m.yes * 100);
-  return { side, market: m.title.replace(' (Full Time)','').replace(' (FT)',''), price: pct, size: Math.floor(Math.random()*2000+200) };
+  return { side, market: m.title.replace(' (Full Time)','').replace(' (FT)',''), price: pct, size: Math.floor(Math.random()*3000+300) };
 }
 function renderTrades() {
   if (!recentTrades.length) for (let i = 0; i < 8; i++) recentTrades.push(generateTrade());
@@ -608,7 +603,7 @@ function renderComments() {
       <div class="comment-body">
         <div class="comment-user">${c.user}</div>
         <div class="comment-text">${c.text}</div>
-        <div class="comment-meta">${c.time} · <span style="color:var(--che1);">👍 ${c.likes}</span></div>
+        <div class="comment-meta">${c.time} · <span style="color:var(--bra1);">👍 ${c.likes}</span></div>
       </div>
     </div>`
   ).join('');
@@ -623,9 +618,9 @@ function drawProbChart() {
     data:{
       labels:['7d ago','6d ago','5d ago','4d ago','3d ago','2d ago','Yesterday','12h ago','Now'],
       datasets:[
-        {label:'Switzerland Win %', data:[52,51,51,50,50,50,51,50,50], borderColor:'#D0021B', backgroundColor:'rgba(208,2,27,0.06)', borderWidth:2, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#D0021B'},
-        {label:'Draw %',            data:[28,28,28,28,28,28,27,28,28], borderColor:'#9A9880', backgroundColor:'rgba(154,152,128,0.06)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#9A9880'},
-        {label:'Qatar Win %',       data:[20,21,21,22,22,22,22,22,22], borderColor:'#8D1B3D', backgroundColor:'rgba(141,27,61,0.06)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#8D1B3D'},
+        {label:'Brazil Win %',  data:[63,64,64,65,65,65,65,65,65], borderColor:'#009C3B', backgroundColor:'rgba(0,156,59,0.08)', borderWidth:2, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#009C3B'},
+        {label:'Draw %',        data:[23,22,22,22,22,22,22,22,22], borderColor:'#9A9880', backgroundColor:'rgba(154,152,128,0.06)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#9A9880'},
+        {label:'Morocco Win %', data:[14,14,14,13,13,13,13,13,13], borderColor:'#C1272D', backgroundColor:'rgba(193,39,45,0.06)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#C1272D'},
       ]
     },
     options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true,labels:{color:tc,font:{size:10},usePointStyle:true}}}, scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},min:0,max:100}}}
@@ -648,7 +643,7 @@ function updateCountdown() {
 function updateLiveData() {
   MARKETS.forEach(m => {
     if (m.yes >= 0.99 || m.yes <= 0.01) return;
-    const delta = (Math.random() - 0.5) * 0.006;
+    const delta = (Math.random() - 0.5) * 0.005;
     m.yes = Math.max(0.02, Math.min(0.98, m.yes + delta));
     m.history.push(m.yes);
     if (m.history.length > 12) m.history.shift();
@@ -669,16 +664,16 @@ function updateLiveData() {
     if (btnNo)   btnNo.textContent   = `BUY NO ₦${100 - pct}`;
     drawMiniChart(m);
   });
-  const chePct = Math.round(MARKETS[0].yes * 100);
+  const braPct = Math.round(MARKETS[0].yes * 100);
   const drwPct = Math.round(MARKETS[2].yes * 100);
-  const qatPct = 100 - chePct - drwPct;
-  document.getElementById('home-prob-stat').textContent = chePct + '%';
-  document.getElementById('bar-che').style.width  = chePct + '%';
+  const marPct = 100 - braPct - drwPct;
+  document.getElementById('home-prob-stat').textContent = braPct + '%';
+  document.getElementById('bar-bra').style.width  = braPct + '%';
   document.getElementById('bar-draw').style.width = drwPct + '%';
-  document.getElementById('bar-qat').style.width  = Math.max(0, qatPct) + '%';
-  document.getElementById('label-che').textContent  = `Switzerland ${chePct}%`;
+  document.getElementById('bar-mar').style.width  = Math.max(0, marPct) + '%';
+  document.getElementById('label-bra').textContent  = `Brazil ${braPct}%`;
   document.getElementById('label-draw').textContent = `Draw ${drwPct}%`;
-  document.getElementById('label-qat').textContent  = `Qatar ${Math.max(0, qatPct)}%`;
+  document.getElementById('label-mar').textContent  = `Morocco ${Math.max(0, marPct)}%`;
   renderOrderBook();
   recentTrades.unshift(generateTrade());
   if (recentTrades.length > 12) recentTrades.pop();
@@ -731,12 +726,17 @@ function switchTab(name, btn) {
 }
 
 renderMarkets();
+renderOrderBook();
 renderActivity();
+renderTrades();
 updateOrderSummary();
+updateCountdown();
+setInterval(updateLiveData, 4000);
+setInterval(updateCountdown, 1000);
 
 // ── API-FOOTBALL LIVE FEED ────────────────────────────────────────
 const seenEvents = new Set();
-let matchDone = true;
+let matchDone = false;
 
 async function fetchLiveMatch() {
   if (matchDone || !AF_FIXTURE) return;
@@ -760,8 +760,8 @@ function applyFixture(fix) {
     document.getElementById('score-display').textContent = hg + ' — ' + ag;
   }
 
-  const clockEl  = document.getElementById('clock-display');
-  const statusEl = document.getElementById('match-status');
+  const clockEl   = document.getElementById('clock-display');
+  const statusEl  = document.getElementById('match-status');
   const liveLabel = document.getElementById('live-label');
   const liveDot   = document.getElementById('live-dot');
 
@@ -803,7 +803,6 @@ function pushLiveEvent(ev, hg, ag) {
   const name = ev.player?.name || 'Unknown';
   const team = ev.team?.name  || '';
   let text, type;
-
   if (ev.type === 'Goal') {
     text = '⚽ <strong>' + name + '</strong> GOAL! ' + team + ' — <span style="color:var(--y)">' + hg + '–' + ag + '</span>';
     type = 'buy';
@@ -817,7 +816,6 @@ function pushLiveEvent(ev, hg, ag) {
     text = '⇄ Sub: <strong>' + (ev.assist?.name || '') + '</strong> on for <strong>' + name + '</strong> — ' + team + ' (' + min + "')";
     type = 'buy';
   } else { return; }
-
   const item = document.createElement('div');
   item.className = 'activity-item';
   item.innerHTML = '<div class="act-dot ' + type + '"></div><div class="act-text">' + text + '</div><div class="act-time">' + min + "'</div>";
@@ -830,18 +828,18 @@ function settleMarketsAF(fix, hg, ag) {
   const hasRed    = events.some(ev => ev.type === 'Card' && ev.detail === 'Red Card');
   MARKETS.forEach(m => {
     let yes;
-    if      (m.id === 'che_win')   yes = ag > hg   ? 1 : 0;
-    else if (m.id === 'qat_win')   yes = hg > ag   ? 1 : 0;
+    if      (m.id === 'bra_win')   yes = hg > ag   ? 1 : 0;
+    else if (m.id === 'mar_win')   yes = ag > hg   ? 1 : 0;
     else if (m.id === 'draw')      yes = hg === ag  ? 1 : 0;
     else if (m.id === 'over25')    yes = (hg+ag) > 2 ? 1 : 0;
     else if (m.id === 'btts')      yes = (hg>0 && ag>0) ? 1 : 0;
-    else if (m.id === 'che_cs')    yes = hg === 0   ? 1 : 0;
-    else if (m.id === 'qat_cs')    yes = ag === 0   ? 1 : 0;
-    else if (m.id === 'che_nil')   yes = (ag>hg && hg===0) ? 1 : 0;
-    else if (m.id === 'qat_nil')   yes = (hg>ag && ag===0) ? 1 : 0;
+    else if (m.id === 'bra_cs')    yes = ag === 0   ? 1 : 0;
+    else if (m.id === 'mar_cs')    yes = hg === 0   ? 1 : 0;
+    else if (m.id === 'bra_nil')   yes = (hg>ag && ag===0) ? 1 : 0;
+    else if (m.id === 'mar_nil')   yes = (ag>hg && hg===0) ? 1 : 0;
     else if (m.id === 'redcard')   yes = hasRed ? 1 : 0;
-    else if (m.id === 'che_first') yes = firstGoal ? (firstGoal.team.name===AF_AWAY ? 1:0) : 0;
-    else if (m.id === 'qat_first') yes = firstGoal ? (firstGoal.team.name===AF_HOME ? 1:0) : 0;
+    else if (m.id === 'bra_first') yes = firstGoal ? (firstGoal.team.name===AF_HOME ? 1:0) : 0;
+    else if (m.id === 'mar_first') yes = firstGoal ? (firstGoal.team.name===AF_AWAY ? 1:0) : 0;
     else return;
     m.yes = yes;
   });
