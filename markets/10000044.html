@@ -471,7 +471,7 @@
 <script>
 const KICKOFF_TIME = new Date('2026-06-13T19:00:00Z'); // 8:00 PM WAT
 const AF_KEY     = '537fc407993fe20fd8f3ac68bee2ed2d';
-const AF_FIXTURE = 1539020;
+const AF_FIXTURE = null; // update with real fixture ID once known
 const AF_HOME    = 'Qatar';
 const AF_AWAY    = 'Switzerland';
 let orderSide = 'YES', walletBalance = 4271250;
@@ -734,7 +734,7 @@ const seenEvents = new Set();
 let matchDone = false;
 
 async function fetchLiveMatch() {
-  if (matchDone) return;
+  if (matchDone || !AF_FIXTURE) return;
   try {
     const res  = await fetch('https://v3.football.api-sports.io/fixtures?id=' + AF_FIXTURE, {
       headers: { 'x-apisports-key': AF_KEY }
