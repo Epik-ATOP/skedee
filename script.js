@@ -88,3 +88,61 @@ function closeMoreDrawer() {
   document.getElementById('more-drawer').classList.remove('open');
   document.body.style.overflow = '';
 }
+
+// ── FLOATING TRADE NUMBERS ────────────────────────────────────────────────────
+(function() {
+  if (!window.location.pathname.includes('/markets/')) return;
+
+  const CSS = `
+#float-container{position:fixed;right:0;bottom:60px;width:280px;height:380px;pointer-events:none;z-index:90;overflow:hidden;}
+.float-num{position:absolute;bottom:0;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;white-space:nowrap;animation:floatUp var(--dur,2.4s) ease-out forwards;}
+.float-num.buy{color:#22C55E;}.float-num.sell{color:#EF4444;}
+@keyframes floatUp{0%{opacity:0;transform:translateY(0)}12%{opacity:1}75%{opacity:.85}100%{opacity:0;transform:translateY(-340px)}}
+@media(max-width:900px){#float-container{display:none;}}`;
+
+  const AMOUNTS = [800,1200,1600,2400,3200,4800,6400,8800,12000,16000,24000,36000,48000,88000,124000];
+
+  function fmt(n) {
+    if (n >= 1000000) return '₦' + (n / 1000000).toFixed(1) + 'M';
+    if (n >= 10000)   return '₦' + Math.round(n / 1000) + 'K';
+    if (n >= 1000)    return '₦' + (n / 1000).toFixed(1) + 'K';
+    return '₦' + n;
+  }
+
+  function isClosed() {
+    return window.matchDone === true ||
+           window.MARKET_CLOSED === true ||
+           !!(document.querySelector('.kickoff-title')?.textContent.trim().startsWith('✓')) ||
+           !!(document.querySelector('#match-status')?.textContent.includes('FULL TIME')) ||
+           !!(document.querySelector('#sentiment-live-tag')?.textContent.includes('SETTLED'));
+  }
+
+  function spawn(container) {
+    if (isClosed()) return;
+    const isBuy = Math.random() > 0.38;
+    const amount = AMOUNTS[Math.floor(Math.random() * AMOUNTS.length)];
+    const el = document.createElement('span');
+    el.className = 'float-num ' + (isBuy ? 'buy' : 'sell');
+    el.textContent = (isBuy ? '+' : '−') + fmt(amount);
+    el.style.left = Math.floor(Math.random() * 55 + 10) + '%';
+    el.style.setProperty('--dur', (2.0 + Math.random() * 1.4).toFixed(2) + 's');
+    container.appendChild(el);
+    el.addEventListener('animationend', () => el.remove(), { once: true });
+    setTimeout(() => spawn(container), 700 + Math.random() * 2000);
+  }
+
+  // Wait for page-specific scripts to run (they set matchDone, MARKET_CLOSED, etc.)
+  setTimeout(function() {
+    if (isClosed()) return;
+
+    const style = document.createElement('style');
+    style.textContent = CSS;
+    document.head.appendChild(style);
+
+    const container = document.createElement('div');
+    container.id = 'float-container';
+    document.body.appendChild(container);
+
+    setTimeout(() => spawn(container), 1200);
+  }, 300);
+})();

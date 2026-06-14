@@ -528,6 +528,7 @@ function applyFixture(fix) {
   (fix.events||[]).forEach(ev=>{const key=ev.time.elapsed+'-'+ev.type+'-'+(ev.player?.name||'');if(seenEvents.has(key)) return;seenEvents.add(key);const feed=document.getElementById('activity-feed');if(!feed) return;const min=ev.time.elapsed+(ev.time.extra?'+'+ev.time.extra:''),name=ev.player?.name||'Unknown',team=ev.team?.name||'';let text,type;if(ev.type==='Goal'){text='⚽ <strong>'+name+'</strong> GOAL! '+team+' — <span style="color:var(--y)">'+hg+'–'+ag+'</span>';type='buy';}else if(ev.type==='Card'&&ev.detail==='Red Card'){text='🟥 <strong>'+name+'</strong> RED CARD — '+team+' ('+min+"')";type='sell';}else return;const item=document.createElement('div');item.className='activity-item';item.innerHTML='<div class="act-dot '+type+'"></div><div class="act-text">'+text+'</div><div class="act-time">'+min+"'</div>";feed.insertBefore(item,feed.firstChild);});
 }
 (function startPolling(){const now=Date.now(),start=KICKOFF_TIME.getTime()-30*60*1000,end=KICKOFF_TIME.getTime()+130*60*1000;if(now<start||now>end) return;fetchLiveMatch();const iv=setInterval(()=>{if(matchDone){clearInterval(iv);return;}fetchLiveMatch();},60000);})();
+
 </script>
 <footer class="site-footer"><div class="footer-inner"><div class="footer-left"><div class="footer-logo">Skedee</div><div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div></div><div class="footer-right"><div class="footer-disclaimer">18+ | Trade Responsibly</div></div></div></footer>
 <nav class="mobile-bottom-nav">
