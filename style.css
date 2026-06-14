@@ -350,3 +350,30 @@ body{-webkit-font-smoothing:antialiased;}
 .profile-dropdown.open{animation:dropIn .2s ease;}
 @keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── OVER GOALS CARD ── */
+.og-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px;}
+.og-title{font-size:13px;font-weight:600;color:var(--text);font-family:var(--font-display);margin-bottom:14px;letter-spacing:.01em;}
+.og-body{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.og-selector{display:flex;align-items:center;gap:5px;flex:1;min-width:0;}
+.og-arrow{background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:28px;height:28px;color:var(--text2);cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,color .15s;line-height:1;padding:0;}
+.og-arrow:hover:not(:disabled){background:var(--bg4);color:var(--text);}
+.og-arrow:disabled{opacity:.3;cursor:default;}
+.og-thresholds{display:flex;align-items:center;gap:2px;overflow:hidden;flex:1;}
+.og-thresh{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--text3);cursor:pointer;padding:5px 9px;border-radius:7px;transition:all .15s;white-space:nowrap;border:1px solid transparent;}
+.og-thresh:hover{color:var(--text2);}
+.og-thresh.active{color:var(--green);background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.22);}
+.og-right{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+.og-stat{display:flex;align-items:baseline;gap:8px;}
+.og-prob{font-family:var(--font-num);font-weight:700;font-size:28px;color:var(--text);}
+.og-delta{font-family:var(--font-mono);font-size:11px;font-weight:700;padding:2px 7px;border-radius:5px;}
+.og-delta.up{color:var(--green);background:rgba(34,197,94,.1);}
+.og-delta.down{color:var(--red);background:rgba(239,68,68,.08);}
+.og-btns{display:flex;gap:7px;}
+.og-btn{padding:8px 16px;border-radius:99px;font-family:var(--font-mono);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap;border:1px solid;}
+.og-btn-yes{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.28);color:var(--green);}
+.og-btn-yes:hover{background:var(--green);color:#000;}
+.og-btn-no{background:rgba(239,68,68,.06);border-color:rgba(239,68,68,.28);color:var(--red);}
+.og-btn-no:hover{background:var(--red);color:#fff;}
+.og-card.settled .og-btn{opacity:.35;pointer-events:none;cursor:not-allowed;}
+.og-card.settled .og-arrow{opacity:.6;}

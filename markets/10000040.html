@@ -371,6 +371,24 @@
       </div>
     </div>
 
+    <div class="og-card" id="og-card" style="margin-top:12px;">
+      <div class="og-title">Over <span id="og-thresh-label">3.5</span> goals scored</div>
+      <div class="og-body">
+        <div class="og-selector">
+          <button class="og-arrow" id="og-prev" onclick="ogMove(-1)">‹</button>
+          <div class="og-thresholds" id="og-thresholds"></div>
+          <button class="og-arrow" id="og-next" onclick="ogMove(1)">›</button>
+        </div>
+        <div class="og-right">
+          <div class="og-stat"><span class="og-prob" id="og-prob"></span><span class="og-delta" id="og-delta"></span></div>
+          <div class="og-btns">
+            <button class="og-btn og-btn-yes" id="og-btn-yes" onclick="ogBuyYes()">YES</button>
+            <button class="og-btn og-btn-no" id="og-btn-no" onclick="ogBuyNo()">NO</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="markets-grid" id="markets-grid" style="margin-top:12px;"></div>
 
     <div class="positions-card">
@@ -811,6 +829,7 @@ async function initOddsAPI() {
   }
 }
 
+window.OVER_GOALS=[{t:1.5,p:100},{t:2.5,p:0},{t:3.5,p:0},{t:4.5,p:0},{t:5.5,p:0}]; window.OG_SETTLED=true;
 renderMarkets();
 renderOrderBook();
 renderActivity();
@@ -818,6 +837,7 @@ renderTrades();
 updateOrderSummary();
 updateCountdown();
 setInterval(updateLiveData, 4000);
+initOg();
 setInterval(updateCountdown, 1000);
 initOddsAPI();
 </script>

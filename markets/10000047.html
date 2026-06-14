@@ -295,6 +295,23 @@
         <div class="trend-pill" onclick="openOrder('Netherlands First to Score','YES',65)"><div class="trend-pill-name">NED First Goal</div><div class="trend-pill-prob">₦65 YES</div></div>
       </div>
     </div>
+    <div class="og-card" id="og-card" style="margin-top:12px;">
+      <div class="og-title">Over <span id="og-thresh-label">3.5</span> goals scored</div>
+      <div class="og-body">
+        <div class="og-selector">
+          <button class="og-arrow" id="og-prev" onclick="ogMove(-1)">‹</button>
+          <div class="og-thresholds" id="og-thresholds"></div>
+          <button class="og-arrow" id="og-next" onclick="ogMove(1)">›</button>
+        </div>
+        <div class="og-right">
+          <div class="og-stat"><span class="og-prob" id="og-prob"></span><span class="og-delta" id="og-delta"></span></div>
+          <div class="og-btns">
+            <button class="og-btn og-btn-yes" id="og-btn-yes" onclick="ogBuyYes()">YES</button>
+            <button class="og-btn og-btn-no" id="og-btn-no" onclick="ogBuyNo()">NO</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="markets-grid" id="markets-grid" style="margin-top:12px;"></div>
     <div class="positions-card">
       <div class="positions-title">Open Positions <span class="badge">0</span></div>
@@ -430,7 +447,8 @@ function settleCard(m){const card=document.getElementById('mc-'+m.id);if(!card) 
 function resolveMidMatch(hg,ag,events){const settle=(id,yes)=>{const m=MARKETS.find(m=>m.id===id);if(!m||m.yes>=0.99||m.yes<=0.01) return;m.yes=yes?1:0;m.history.push(m.yes);if(m.history.length>12) m.history.shift();settleCard(m);};const firstGoal=events.find(ev=>ev.type==='Goal'),hasRed=events.some(ev=>ev.type==='Card'&&ev.detail==='Red Card'),total=hg+ag;if(firstGoal){const nedFirst=firstGoal.team.name===AF_HOME;settle('ned_first',nedFirst);settle('jpn_first',!nedFirst);}if(ag>0){settle('ned_cs',false);settle('ned_nil',false);}if(hg>0){settle('jpn_cs',false);settle('jpn_nil',false);}if(hg>0&&ag>0) settle('btts',true);if(total>2) settle('over25',true);if(hasRed) settle('redcard',true);}
 function settleMarketsAF(fix,hg,ag){const events=fix.events||[],firstGoal=events.find(ev=>ev.type==='Goal'),hasRed=events.some(ev=>ev.type==='Card'&&ev.detail==='Red Card');MARKETS.forEach(m=>{let yes;if(m.id==='ned_win') yes=hg>ag?1:0;else if(m.id==='jpn_win') yes=ag>hg?1:0;else if(m.id==='draw') yes=hg===ag?1:0;else if(m.id==='over25') yes=(hg+ag)>2?1:0;else if(m.id==='btts') yes=(hg>0&&ag>0)?1:0;else if(m.id==='ned_cs') yes=ag===0?1:0;else if(m.id==='jpn_cs') yes=hg===0?1:0;else if(m.id==='ned_nil') yes=(hg>ag&&ag===0)?1:0;else if(m.id==='jpn_nil') yes=(ag>hg&&hg===0)?1:0;else if(m.id==='redcard') yes=hasRed?1:0;else if(m.id==='ned_first') yes=firstGoal?(firstGoal.team.name===AF_HOME?1:0):0;else if(m.id==='jpn_first') yes=firstGoal?(firstGoal.team.name===AF_AWAY?1:0):0;else return;m.yes=yes;});renderMarkets();}
 
-renderMarkets();renderOrderBook();renderActivity();renderTrades();updateOrderSummary();updateCountdown();
+window.OVER_GOALS=[{t:1.5,p:80,d:+3},{t:2.5,p:58,d:+5},{t:3.5,p:36,d:+6},{t:4.5,p:20,d:+3},{t:5.5,p:10,d:-2},{t:6.5,p:4,d:-3}];
+renderMarkets();renderOrderBook();renderActivity();renderTrades();updateOrderSummary();updateCountdown();initOg();
 setInterval(updateLiveData,4000);setInterval(updateCountdown,1000);
 const seenEvents=new Set();let matchDone=false;
 async function fetchLiveMatch(){if(matchDone||!AF_FIXTURE) return;try{const res=await fetch('https://v3.football.api-sports.io/fixtures?id='+AF_FIXTURE,{headers:{'x-apisports-key':AF_KEY}});const data=await res.json();if(!data.response?.length) return;applyFixture(data.response[0]);}catch(e){console.warn('[API-Football]',e);}}

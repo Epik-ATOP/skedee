@@ -207,9 +207,9 @@
       <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 12 markets available</div>
     </div>
     <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-      <div style="color:var(--red);font-weight:700;font-size:12px;margin-bottom:4px;">● LIVE</div>
+      <div style="color:var(--green);font-weight:700;font-size:12px;margin-bottom:4px;">✓ FT</div>
       <div>Jun 14, 2026</div>
-      <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;"></div>
+      <div id="banner-countdown" style="color:var(--green);font-weight:700;margin-top:4px;">Full Time</div>
     </div>
   </div>
   <div class="match-card">
@@ -217,8 +217,8 @@
       <div class="league-badge">🌍 FIFA WORLD CUP 2026 · GROUP E · MATCHDAY 1</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <div class="live-indicator">
-          <div class="live-dot" id="live-dot" style="background:var(--y);"></div>
-          <span id="live-label" style="color:var(--y);">LIVE</span>
+          <div class="live-dot" id="live-dot" style="background:var(--green);animation:none;"></div>
+          <span id="live-label" style="color:var(--green);">FULL TIME</span>
         </div>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">NRG Stadium, Houston</div>
       </div>
@@ -232,11 +232,11 @@
       <div class="score-block">
         <div class="ticker-score">
           <span class="ticker-abbr" style="color:var(--ger2);">GER</span>
-          <span class="ticker-sep" id="score-display">vs</span>
+          <span class="ticker-sep" id="score-display">7 — 1</span>
           <span class="ticker-abbr" style="color:var(--cur1);">CUR</span>
         </div>
-        <div class="match-clock"><i class="fa-solid fa-clock" style="font-size:11px;"></i><span id="clock-display" style="font-size:11px;">6:00 PM WAT</span></div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);">LIVE</div>
+        <div class="match-clock"><i class="fa-solid fa-clock" style="font-size:11px;"></i><span id="clock-display" style="font-size:11px;">FT</span></div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);">✓ FULL TIME</div>
       </div>
       <div class="team-block">
         <div class="team-logo" style="border-color:rgba(0,43,127,.4);background:rgba(0,43,127,.06);font-size:0;"><img src="https://flagcdn.com/w80/cw.png" alt="Curaçao" style="width:54px;height:auto;border-radius:3px;"></div>
@@ -252,23 +252,17 @@
       <div class="meta-item" style="margin-left:auto;"><span style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Volume: </span><span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦124,600,000</span></div>
     </div>
   </div>
-  <div class="kickoff-timer">
+  <div class="kickoff-timer" style="background:rgba(34,197,94,.05);border-color:rgba(34,197,94,.25);">
     <div class="kickoff-info">
-      <div class="kickoff-title">Kickoff — Jun 14, 2026 · 6:00 PM WAT</div>
-      <div class="kickoff-sub">Markets lock at kickoff · All open positions settle post full time</div>
+      <div class="kickoff-title" style="color:var(--green);">✓ Full Time — Germany 7–1 Curaçao</div>
+      <div class="kickoff-sub">Musiala · Wirtz (×2) · Gnabry · Havertz · Müller · Adeyemi — All 12 markets settled</div>
     </div>
-    <div class="timer-block">
-      <div class="timer-seg"><div class="timer-num" id="t-h">--</div><div class="timer-label">HRS</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-m">--</div><div class="timer-label">MIN</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-s">--</div><div class="timer-label">SEC</div></div>
-    </div>
+    <div style="font-family:var(--font-num);font-weight:700;font-size:36px;color:var(--green);flex-shrink:0;">7 — 1</div>
   </div>
   <div class="stats-row">
-    <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦124.6M</div><div class="stat-box-sub" style="color:var(--green);">▲ +34% in 2h</div></div>
-    <div class="stat-box"><div class="stat-box-label">Germany Win</div><div class="stat-box-val" style="color:var(--ger2);font-size:22px;" id="home-prob-stat">88%</div><div class="stat-box-sub" style="color:var(--text3);">Implied probability</div></div>
-    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">12</div><div class="stat-box-sub" style="color:var(--text3);">This match</div></div>
+    <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦124.6M</div><div class="stat-box-sub" style="color:var(--text3);">All positions settled</div></div>
+    <div class="stat-box"><div class="stat-box-label">Germany Win</div><div class="stat-box-val" style="color:var(--green);font-size:22px;" id="home-prob-stat">SETTLED ✓</div><div class="stat-box-sub" style="color:var(--green);">7–1 · GER Win</div></div>
+    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">0</div><div class="stat-box-sub" style="color:var(--text3);">All 12 settled</div></div>
   </div>
   <div class="tabs-bar">
     <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
@@ -280,20 +274,20 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(245,200,0,.1);border:1px solid rgba(245,200,0,.3);color:var(--wc);padding:2px 6px;border-radius:4px;margin-left:6px;">● LIVE</span></div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);padding:2px 6px;border-radius:4px;margin-left:6px;">✓ FT</span></div>
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦124.6M total volume</div>
       </div>
       <div class="sentiment-bar">
-        <div class="sentiment-home" id="bar-home" style="width:88%;"></div>
-        <div class="sentiment-draw" id="bar-draw" style="width:8%;"></div>
-        <div class="sentiment-away" id="bar-away" style="width:4%;"></div>
+        <div class="sentiment-home" id="bar-home" style="width:100%;"></div>
+        <div class="sentiment-draw" id="bar-draw" style="width:0%;"></div>
+        <div class="sentiment-away" id="bar-away" style="width:0%;"></div>
       </div>
       <div class="sentiment-labels">
-        <span style="color:var(--ger2);font-weight:700;" id="label-home">Germany 88%</span>
-        <span style="color:var(--text2);font-weight:700;" id="label-draw">Draw 8%</span>
-        <span style="color:var(--cur1);font-weight:700;" id="label-away">Curaçao 4%</span>
+        <span style="color:var(--green);font-weight:700;" id="label-home">Germany WIN ✓</span>
+        <span style="color:var(--text3);font-weight:700;" id="label-draw">Draw NO ✗</span>
+        <span style="color:var(--text3);font-weight:700;" id="label-away">Curaçao NO ✗</span>
       </div>
-      <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);"><i class="fa-solid fa-clock" style="color:var(--wc);margin-right:4px;"></i>Kickoff 6:00 PM WAT · Markets open · Locks at kickoff</div>
+      <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);"><i class="fa-solid fa-circle-check" style="color:var(--green);margin-right:4px;"></i>Full time · GER 7–1 CUR · All 12 markets settled</div>
     </div>
     <div class="trending-strip" style="margin-top:12px;">
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🔥 Hot Markets</div>
@@ -304,6 +298,26 @@
         <div class="trend-pill" onclick="openOrder('Both Teams To Score','YES',28)"><div class="trend-pill-name">BTTS</div><div class="trend-pill-prob">₦28 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Draw (FT)','YES',8)"><div class="trend-pill-name">Draw</div><div class="trend-pill-prob">₦8 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Curaçao Win (FT)','YES',4)"><div class="trend-pill-name">🇨🇼 Curaçao Win</div><div class="trend-pill-prob">₦4 YES</div></div>
+      </div>
+    </div>
+    <div class="og-card" id="og-card" style="margin-top:12px;">
+      <div class="og-title">Over <span id="og-thresh-label">3.5</span> goals scored</div>
+      <div class="og-body">
+        <div class="og-selector">
+          <button class="og-arrow" id="og-prev" onclick="ogMove(-1)">‹</button>
+          <div class="og-thresholds" id="og-thresholds"></div>
+          <button class="og-arrow" id="og-next" onclick="ogMove(1)">›</button>
+        </div>
+        <div class="og-right">
+          <div class="og-stat">
+            <span class="og-prob" id="og-prob">80%</span>
+            <span class="og-delta up" id="og-delta">▲ 8</span>
+          </div>
+          <div class="og-btns">
+            <button class="og-btn og-btn-yes" id="og-btn-yes" onclick="ogBuyYes()">YES ₦80</button>
+            <button class="og-btn og-btn-no" id="og-btn-no" onclick="ogBuyNo()">NO ₦20</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="markets-grid" id="markets-grid" style="margin-top:12px;"></div>
@@ -375,18 +389,18 @@ let orderSide = 'YES', walletBalance = 4271250;
 let miniCharts = {}, probChart;
 
 const MARKETS = [
-  { id:'ger_win',   title:'Germany Win (FT)',          yes:0.88, vol:'₦56.2M', liq:'₦14.0M', spread:'₦2', history:[0.86,0.87,0.87,0.88,0.88,0.88,0.88,0.88,0.88,0.88] },
-  { id:'cur_win',   title:'Curaçao Win (FT)',           yes:0.04, vol:'₦8.4M',  liq:'₦2.1M', spread:'₦3', history:[0.05,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04] },
-  { id:'draw',      title:'Draw (Full Time)',           yes:0.08, vol:'₦12.2M', liq:'₦3.0M', spread:'₦3', history:[0.09,0.09,0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.08] },
-  { id:'over25',    title:'Over 2.5 Goals',            yes:0.72, vol:'₦18.4M', liq:'₦4.6M', spread:'₦4', history:[0.70,0.71,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72] },
-  { id:'btts',      title:'Both Teams To Score',       yes:0.28, vol:'₦8.2M',  liq:'₦2.0M', spread:'₦5', history:[0.29,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28] },
-  { id:'ger_cs',    title:'Germany Clean Sheet',       yes:0.72, vol:'₦6.4M',  liq:'₦1.6M', spread:'₦4', history:[0.71,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72,0.72] },
-  { id:'cur_cs',    title:'Curaçao Clean Sheet',       yes:0.02, vol:'₦2.1M',  liq:'₦0.5M', spread:'₦2', history:[0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02] },
-  { id:'ger_nil',   title:'Germany Win to Nil',        yes:0.62, vol:'₦4.8M',  liq:'₦1.2M', spread:'₦5', history:[0.61,0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62] },
-  { id:'cur_nil',   title:'Curaçao Win to Nil',        yes:0.02, vol:'₦1.2M',  liq:'₦0.3M', spread:'₦2', history:[0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02] },
-  { id:'ger_first', title:'Germany First to Score',    yes:0.82, vol:'₦3.6M',  liq:'₦0.9M', spread:'₦3', history:[0.82,0.82,0.82,0.82,0.82,0.82,0.82,0.82,0.82,0.82] },
-  { id:'cur_first', title:'Curaçao First to Score',    yes:0.18, vol:'₦2.4M',  liq:'₦0.6M', spread:'₦5', history:[0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18] },
-  { id:'redcard',   title:'🟥 Red Card in Match',      yes:0.18, vol:'₦1.2M',  liq:'₦0.3M', spread:'₦6', history:[0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18] },
+  { id:'ger_win',   title:'Germany Win (FT)',          yes:1.00, vol:'₦56.2M', liq:'₦0.0M', spread:'₦0', history:[0.86,0.87,0.88,0.90,0.92,0.95,0.97,0.99,0.99,1.00] },
+  { id:'cur_win',   title:'Curaçao Win (FT)',           yes:0.00, vol:'₦8.4M',  liq:'₦0.0M', spread:'₦0', history:[0.05,0.04,0.04,0.03,0.02,0.02,0.01,0.01,0.01,0.00] },
+  { id:'draw',      title:'Draw (Full Time)',           yes:0.00, vol:'₦12.2M', liq:'₦0.0M', spread:'₦0', history:[0.09,0.09,0.08,0.07,0.05,0.04,0.02,0.01,0.01,0.00] },
+  { id:'over25',    title:'Over 2.5 Goals',            yes:1.00, vol:'₦18.4M', liq:'₦0.0M', spread:'₦0', history:[0.70,0.72,0.75,0.82,0.88,0.92,0.96,0.98,0.99,1.00] },
+  { id:'btts',      title:'Both Teams To Score',       yes:1.00, vol:'₦8.2M',  liq:'₦0.0M', spread:'₦0', history:[0.29,0.28,0.28,0.28,0.28,0.40,0.60,0.80,0.95,1.00] },
+  { id:'ger_cs',    title:'Germany Clean Sheet',       yes:0.00, vol:'₦6.4M',  liq:'₦0.0M', spread:'₦0', history:[0.71,0.72,0.72,0.72,0.72,0.60,0.40,0.20,0.05,0.00] },
+  { id:'cur_cs',    title:'Curaçao Clean Sheet',       yes:0.00, vol:'₦2.1M',  liq:'₦0.0M', spread:'₦0', history:[0.02,0.02,0.02,0.02,0.01,0.01,0.01,0.01,0.01,0.00] },
+  { id:'ger_nil',   title:'Germany Win to Nil',        yes:0.00, vol:'₦4.8M',  liq:'₦0.0M', spread:'₦0', history:[0.61,0.62,0.62,0.62,0.62,0.50,0.30,0.15,0.05,0.00] },
+  { id:'cur_nil',   title:'Curaçao Win to Nil',        yes:0.00, vol:'₦1.2M',  liq:'₦0.0M', spread:'₦0', history:[0.02,0.02,0.02,0.02,0.01,0.01,0.01,0.01,0.01,0.00] },
+  { id:'ger_first', title:'Germany First to Score',    yes:1.00, vol:'₦3.6M',  liq:'₦0.0M', spread:'₦0', history:[0.82,0.82,0.82,0.82,0.82,0.90,0.95,0.99,0.99,1.00] },
+  { id:'cur_first', title:'Curaçao First to Score',    yes:0.00, vol:'₦2.4M',  liq:'₦0.0M', spread:'₦0', history:[0.18,0.18,0.18,0.18,0.18,0.10,0.05,0.01,0.01,0.00] },
+  { id:'redcard',   title:'🟥 Red Card in Match',      yes:0.00, vol:'₦1.2M',  liq:'₦0.0M', spread:'₦0', history:[0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.00] },
 ];
 const ORDER_BOOK_DATA = {
   asks:[{p:'₦90',s:180,t:320},{p:'₦89',s:280,t:500},{p:'₦88',s:2800,t:5000},{p:'₦87',s:240,t:420}],
@@ -498,10 +512,11 @@ function settleMarketsAF(fix,hg,ag) {
   }); renderMarkets();
 }
 
-renderMarkets(); renderOrderBook(); renderActivity(); renderTrades(); updateOrderSummary(); updateCountdown();
+window.OVER_GOALS=[{t:1.5,p:100},{t:2.5,p:100},{t:3.5,p:100},{t:4.5,p:100},{t:5.5,p:100},{t:6.5,p:100},{t:7.5,p:100}]; window.OG_SETTLED=true;
+renderMarkets(); renderOrderBook(); renderActivity(); renderTrades(); updateOrderSummary(); updateCountdown(); initOg();
 setInterval(updateLiveData,4000); setInterval(updateCountdown,1000);
 
-const seenEvents=new Set(); let matchDone=false;
+const seenEvents=new Set(); let matchDone=true;
 async function fetchLiveMatch() {
   if(matchDone||!AF_FIXTURE) return;
   try { const res=await fetch('https://v3.football.api-sports.io/fixtures?id='+AF_FIXTURE,{headers:{'x-apisports-key':AF_KEY}}); const data=await res.json(); if(!data.response?.length) return; applyFixture(data.response[0]); } catch(e){console.warn('[API-Football]',e);}

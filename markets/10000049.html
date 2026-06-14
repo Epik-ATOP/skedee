@@ -258,6 +258,23 @@
         <div class="trend-pill" onclick="openOrder('Tunisia Win (FT)','YES',20)"><div class="trend-pill-name">🇹🇳 Tunisia Win</div><div class="trend-pill-prob">₦20 YES</div></div>
       </div>
     </div>
+    <div class="og-card" id="og-card" style="margin-top:12px;">
+      <div class="og-title">Over <span id="og-thresh-label">3.5</span> goals scored</div>
+      <div class="og-body">
+        <div class="og-selector">
+          <button class="og-arrow" id="og-prev" onclick="ogMove(-1)">‹</button>
+          <div class="og-thresholds" id="og-thresholds"></div>
+          <button class="og-arrow" id="og-next" onclick="ogMove(1)">›</button>
+        </div>
+        <div class="og-right">
+          <div class="og-stat"><span class="og-prob" id="og-prob"></span><span class="og-delta" id="og-delta"></span></div>
+          <div class="og-btns">
+            <button class="og-btn og-btn-yes" id="og-btn-yes" onclick="ogBuyYes()">YES</button>
+            <button class="og-btn og-btn-no" id="og-btn-no" onclick="ogBuyNo()">NO</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="markets-grid" id="markets-grid" style="margin-top:12px;"></div>
     <div class="positions-card"><div class="positions-title">Open Positions <span class="badge">0</span></div><div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No open positions yet</div></div>
   </div>
@@ -335,7 +352,8 @@ function switchTab(name,btn){document.querySelectorAll('.tab').forEach(t=>t.clas
 function settleCard(m){const card=document.getElementById('mc-'+m.id);if(!card) return;const pct=Math.round(m.yes*100);const bt=card.querySelector('.market-btns');if(bt) bt.innerHTML=`<div style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid ${m.yes>=0.99?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};background:${m.yes>=0.99?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'};font-family:var(--font-display);font-weight:700;font-size:13px;text-align:center;color:${m.yes>=0.99?'var(--green)':'var(--red)'};">SETTLED — ${m.yes>=0.99?'YES ✓':'NO ✗'}</div>`;drawMiniChart(m);}
 function resolveMidMatch(hg,ag,events){const settle=(id,yes)=>{const m=MARKETS.find(m=>m.id===id);if(!m||m.yes>=0.99||m.yes<=0.01) return;m.yes=yes?1:0;m.history.push(m.yes);if(m.history.length>12) m.history.shift();settleCard(m);};const firstGoal=events.find(ev=>ev.type==='Goal'),hasRed=events.some(ev=>ev.type==='Card'&&ev.detail==='Red Card'),total=hg+ag;if(firstGoal){const sweFirst=firstGoal.team.name===AF_HOME;settle('swe_first',sweFirst);settle('tun_first',!sweFirst);}if(ag>0){settle('swe_cs',false);settle('swe_nil',false);}if(hg>0){settle('tun_cs',false);settle('tun_nil',false);}if(hg>0&&ag>0) settle('btts',true);if(total>2) settle('over25',true);if(hasRed) settle('redcard',true);}
 function settleMarketsAF(fix,hg,ag){const events=fix.events||[],firstGoal=events.find(ev=>ev.type==='Goal'),hasRed=events.some(ev=>ev.type==='Card'&&ev.detail==='Red Card');MARKETS.forEach(m=>{let yes;if(m.id==='swe_win') yes=hg>ag?1:0;else if(m.id==='tun_win') yes=ag>hg?1:0;else if(m.id==='draw') yes=hg===ag?1:0;else if(m.id==='over25') yes=(hg+ag)>2?1:0;else if(m.id==='btts') yes=(hg>0&&ag>0)?1:0;else if(m.id==='swe_cs') yes=ag===0?1:0;else if(m.id==='tun_cs') yes=hg===0?1:0;else if(m.id==='swe_nil') yes=(hg>ag&&ag===0)?1:0;else if(m.id==='tun_nil') yes=(ag>hg&&hg===0)?1:0;else if(m.id==='redcard') yes=hasRed?1:0;else if(m.id==='swe_first') yes=firstGoal?(firstGoal.team.name===AF_HOME?1:0):0;else if(m.id==='tun_first') yes=firstGoal?(firstGoal.team.name===AF_AWAY?1:0):0;else return;m.yes=yes;});renderMarkets();}
-renderMarkets();renderOrderBook();renderActivity();renderTrades();updateOrderSummary();updateCountdown();
+window.OVER_GOALS=[{t:1.5,p:72,d:+3},{t:2.5,p:44,d:+4},{t:3.5,p:24,d:+2},{t:4.5,p:12,d:-1},{t:5.5,p:5,d:-3}];
+renderMarkets();renderOrderBook();renderActivity();renderTrades();updateOrderSummary();updateCountdown();initOg();
 setInterval(updateLiveData,4000);setInterval(updateCountdown,1000);
 const seenEvents=new Set();let matchDone=false;
 async function fetchLiveMatch(){if(matchDone||!AF_FIXTURE) return;try{const res=await fetch('https://v3.football.api-sports.io/fixtures?id='+AF_FIXTURE,{headers:{'x-apisports-key':AF_KEY}});const data=await res.json();if(!data.response?.length) return;applyFixture(data.response[0]);}catch(e){console.warn('[API-Football]',e);}}

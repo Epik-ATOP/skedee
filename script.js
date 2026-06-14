@@ -131,7 +131,7 @@ function closeMoreDrawer() {
     setTimeout(() => spawn(container), 700 + Math.random() * 2000);
   }
 
-  // Wait for page-specific scripts to run (they set matchDone, MARKET_CLOSED, etc.)
+  // Wait for page-specific scripts to run (they set matchDone, MARKET_CLOSED, window.OVER_GOALS, etc.)
   setTimeout(function() {
     if (isClosed()) return;
 
@@ -145,4 +145,121 @@ function closeMoreDrawer() {
 
     setTimeout(() => spawn(container), 1200);
   }, 300);
+})();
+
+// ── OVER GOALS CARD ──────────────────────────────────────────────────────────
+let ogIdx = 2;
+
+function ogRender() {
+  if (!window.OVER_GOALS) return;
+  const item = window.OVER_GOALS[ogIdx];
+  const ge = id => document.getElementById(id);
+  if (ge('og-thresh-label')) ge('og-thresh-label').textContent = item.t.toFixed(1);
+  const probEl = ge('og-prob');
+  if (probEl) {
+    probEl.textContent = item.p + '%';
+    probEl.style.color = window.OG_SETTLED ? (item.p >= 99 ? '#22C55E' : '#EF4444') : '';
+  }
+  const deltaEl = ge('og-delta');
+  if (deltaEl) {
+    deltaEl.style.display = window.OG_SETTLED ? 'none' : '';
+    if (!window.OG_SETTLED && item.d !== undefined) {
+      deltaEl.textContent = (item.d >= 0 ? '▲ ' : '▼ ') + Math.abs(item.d);
+      deltaEl.className = 'og-delta ' + (item.d >= 0 ? 'up' : 'down');
+    }
+  }
+  const bY = ge('og-btn-yes'), bN = ge('og-btn-no');
+  if (bY) bY.textContent = 'YES ₦' + item.p;
+  if (bN) bN.textContent = 'NO ₦' + (100 - item.p);
+  document.querySelectorAll('.og-thresh').forEach((el, i) => el.classList.toggle('active', i === ogIdx));
+  if (ge('og-prev')) ge('og-prev').disabled = ogIdx === 0;
+  if (ge('og-next')) ge('og-next').disabled = ogIdx === window.OVER_GOALS.length - 1;
+}
+
+function ogMove(dir) {
+  if (!window.OVER_GOALS) return;
+  const n = ogIdx + dir;
+  if (n < 0 || n >= window.OVER_GOALS.length) return;
+  ogIdx = n; ogRender();
+}
+
+function ogSelect(i) { ogIdx = i; ogRender(); }
+
+function ogBuyYes() {
+  if (!window.OVER_GOALS || window.OG_SETTLED) return;
+  const {t, p} = window.OVER_GOALS[ogIdx];
+  openOrder('Over ' + t.toFixed(1) + ' Goals', 'YES', p);
+}
+
+function ogBuyNo() {
+  if (!window.OVER_GOALS || window.OG_SETTLED) return;
+  const {t, p} = window.OVER_GOALS[ogIdx];
+  openOrder('Over ' + t.toFixed(1) + ' Goals', 'NO', 100 - p);
+}
+
+function ogDrift() {
+  if (!window.OVER_GOALS || window.OG_SETTLED) return;
+  window.OVER_GOALS.forEach(item => {
+    item.p = Math.max(2, Math.min(98, item.p + Math.round((Math.random() - 0.5) * 2)));
+  });
+  ogRender();
+}
+
+function ogUpdate(totalGoals, minute) {
+  if (!window.OVER_GOALS || window.OG_SETTLED) return;
+  const lambda = Math.max(0, (90 - minute) / 90) * 2.8;
+  window.OVER_GOALS.forEach(item => {
+    const need = Math.ceil(item.t + 0.5) - totalGoals;
+    if (need <= 0) { item.p = 99; return; }
+    let under = 0, term = Math.exp(-lambda);
+    under += term;
+    for (let k = 1; k < need; k++) { term *= lambda / k; under += term; }
+    item.p = Math.max(1, Math.min(98, Math.round((1 - under) * 97)));
+  });
+  ogRender();
+}
+
+function ogSettle(totalGoals) {
+  if (!window.OVER_GOALS) return;
+  window.OG_SETTLED = true;
+  window.OVER_GOALS.forEach(item => { item.p = totalGoals > item.t ? 100 : 0; item.d = 0; });
+  const card = document.getElementById('og-card');
+  if (card) card.classList.add('settled');
+  ogRender();
+}
+
+function initOg() {
+  const wrap = document.getElementById('og-thresholds');
+  if (!wrap || !window.OVER_GOALS) return;
+  wrap.innerHTML = '';
+  window.OVER_GOALS.forEach((item, i) => {
+    const el = document.createElement('span');
+    el.className = 'og-thresh' + (i === ogIdx ? ' active' : '');
+    el.textContent = item.t.toFixed(1);
+    el.onclick = () => ogSelect(i);
+    wrap.appendChild(el);
+  });
+  if (window.OG_SETTLED) {
+    const card = document.getElementById('og-card');
+    if (card) card.classList.add('settled');
+  }
+  ogRender();
+}
+
+setInterval(ogDrift, 4000);
+
+// Auto-update OG card from live score changes (MutationObserver)
+(function() {
+  const scoreEl = document.getElementById('score-display');
+  if (!scoreEl) return;
+  const clockEl = document.getElementById('clock-display');
+  new MutationObserver(function() {
+    if (!window.OVER_GOALS || window.OG_SETTLED) return;
+    const m = scoreEl.textContent.trim().match(/(\d+)\s*[—–\-]\s*(\d+)/);
+    if (!m) return;
+    const total = +m[1] + +m[2];
+    const ct = (clockEl ? clockEl.textContent : '').trim();
+    if (ct === 'FT') { ogSettle(total); }
+    else { const min = ct.match(/^(\d+)/); if (min) ogUpdate(total, +min[1]); }
+  }).observe(scoreEl, { childList: true, subtree: true, characterData: true });
 })();
