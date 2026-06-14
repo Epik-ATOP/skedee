@@ -308,12 +308,13 @@
     "title": "Brazil vs Morocco — 2026 FIFA World Cup Group E",
     "yesPct": 65,
     "volume": "₦84.2M",
-    "status": "UPCOMING",
-    "closesAt": "Jun 13",
+    "status": "RESOLVED",
+    "closesAt": "Full Time",
     "isMatch": true,
     "team1": "Brazil",
     "team2": "Morocco",
     "team1Emoji": "🇧🇷",
-    "team2Emoji": "🇲🇦"
+    "team2Emoji": "🇲🇦",
+    "score": "1 — 1"
   }
 ]

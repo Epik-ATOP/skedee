@@ -304,13 +304,13 @@
     </div>
   </div>
 
-  <!-- MARKETS LOCKED INDICATOR -->
-  <div class="kickoff-timer" style="border-color:rgba(239,68,68,.3);background:linear-gradient(135deg,rgba(239,68,68,.06),rgba(239,68,68,.02));">
+  <!-- RESULT BANNER -->
+  <div class="kickoff-timer" style="border-color:rgba(34,197,94,.3);background:linear-gradient(135deg,rgba(34,197,94,.06),rgba(34,197,94,.02));">
     <div class="kickoff-info">
-      <div class="kickoff-title" style="color:var(--red);">● Match In Progress — BRA 0 · 1 MAR</div>
-      <div class="kickoff-sub">Markets locked at kickoff · All positions settle at full time</div>
+      <div class="kickoff-title" style="color:var(--green);">✓ Full Time — Brazil 1 — 1 Morocco</div>
+      <div class="kickoff-sub">Morocco scored first (Saibari 21') · Vinícius Júnior 32' · All 12 markets settled</div>
     </div>
-    <div style="font-family:var(--font-mono);font-size:11px;color:var(--red);font-weight:700;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);border-radius:8px;padding:8px 16px;">MARKETS LOCKED</div>
+    <div style="font-family:var(--font-mono);font-size:11px;color:var(--green);font-weight:700;border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.08);border-radius:8px;padding:8px 16px;">✓ SETTLED</div>
   </div>
 
   <!-- STAT BOXES -->
@@ -400,18 +400,36 @@
 <!-- RIGHT SIDEBAR -->
 <div class="right-sidebar">
   <div>
-    <div class="rsidebar-section-title">Order Book — Brazil Win <span style="color:var(--wc);font-size:10px;">PRE</span></div>
-    <div id="order-book-asks"></div>
-    <div class="ob-spread">Spread: ₦3 · Mid: ₦65</div>
-    <div id="order-book-bids"></div>
+    <div class="rsidebar-section-title">Final Score</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--border3);">
+      <div style="text-align:center;"><img src="https://flagcdn.com/w40/br.png" style="width:36px;height:auto;border-radius:3px;display:block;margin:0 auto 6px;"><div style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--bra1);">BRA</div></div>
+      <div style="font-family:var(--font-num);font-size:32px;font-weight:700;color:var(--y);">1 — 1</div>
+      <div style="text-align:center;"><img src="https://flagcdn.com/w40/ma.png" style="width:36px;height:auto;border-radius:3px;display:block;margin:0 auto 6px;"><div style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--mar1);">MAR</div></div>
+    </div>
+    <div style="padding:12px 0;border-bottom:1px solid var(--border3);">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Goalscorers</div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:4px;"><span>Ismael Saibari</span><span style="color:var(--mar1);">MAR 21'</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);"><span>Vinícius Júnior</span><span style="color:var(--bra1);">BRA 32'</span></div>
+    </div>
+    <div style="padding:12px 0;border-bottom:1px solid var(--border3);">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Key Outcomes</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Draw (FT)</span><span style="color:var(--green);font-family:var(--font-mono);font-weight:700;">YES ✓</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Both Teams To Score</span><span style="color:var(--green);font-family:var(--font-mono);font-weight:700;">YES ✓</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Morocco First to Score</span><span style="color:var(--green);font-family:var(--font-mono);font-weight:700;">YES ✓</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Brazil Win</span><span style="color:var(--red);font-family:var(--font-mono);font-weight:700;">NO ✗</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Morocco Win</span><span style="color:var(--red);font-family:var(--font-mono);font-weight:700;">NO ✗</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Over 2.5 Goals</span><span style="color:var(--red);font-family:var(--font-mono);font-weight:700;">NO ✗</span></div>
+      </div>
+    </div>
+    <div style="padding:12px 0;font-family:var(--font-mono);font-size:10px;color:var(--text3);">
+      <div style="color:var(--green);font-weight:700;margin-bottom:6px;">✓ All 12 markets settled</div>
+      <div>Volume: ₦84.2M · Group E · Round 1</div>
+    </div>
   </div>
   <div style="border-top:1px solid var(--border3);padding-top:16px;">
     <div class="rsidebar-section-title">Activity Feed</div>
     <div id="activity-feed"></div>
-  </div>
-  <div style="border-top:1px solid var(--border3);padding-top:16px;">
-    <div class="rsidebar-section-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
-    <div id="recent-trades"></div>
   </div>
 </div>
 
