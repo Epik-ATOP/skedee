@@ -248,12 +248,12 @@
       <div class="banner-cat" style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP E · MATCHDAY 1</div>
       <div class="banner-title" style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Brazil vs Morocco</div>
       <div class="banner-meta" style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Hard Rock Stadium, Miami, FL · Jun 13, 2026 · 11:00 PM WAT</div>
-      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Match in progress · Markets locked · Settles at full time</div>
+      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Full Time · BRA 1 — 1 MAR · All 12 markets settled</div>
     </div>
     <div class="banner-status" style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-      <div style="color:var(--red);font-weight:700;font-size:12px;margin-bottom:4px;">● LIVE</div>
+      <div style="color:var(--green);font-weight:700;font-size:12px;margin-bottom:4px;">✓ FULL TIME</div>
       <div>Jun 13, 2026</div>
-      <div id="banner-countdown" style="color:var(--red);font-weight:700;margin-top:4px;">31'</div>
+      <div style="color:var(--y);font-weight:700;margin-top:4px;font-family:var(--font-mono);font-size:10px;">BRA 1 — 1 MAR</div>
     </div>
   </div>
 
@@ -263,8 +263,8 @@
       <div class="league-badge">🌍 FIFA WORLD CUP 2026 · GROUP E · MATCHDAY 1</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <div class="live-indicator">
-          <div class="live-dot" id="live-dot" style="background:var(--red);animation:live-pulse 1.4s infinite;"></div>
-          <span id="live-label" style="color:var(--red);">LIVE</span>
+          <div class="live-dot" id="live-dot" style="background:var(--green);"></div>
+          <span id="live-label" style="color:var(--green);">FULL TIME</span>
         </div>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Hard Rock Stadium, FL</div>
       </div>
@@ -279,14 +279,14 @@
       <div class="score-block">
         <div class="ticker-score">
           <span class="ticker-abbr" style="color:var(--bra1);">BRA</span>
-          <span class="ticker-sep" id="score-display">vs</span>
+          <span class="ticker-sep" id="score-display">1 — 1</span>
           <span class="ticker-abbr" style="color:var(--mar1);">MAR</span>
         </div>
         <div class="match-clock">
           <i class="fa-solid fa-clock" style="font-size:11px;"></i>
-          <span id="clock-display" style="font-size:11px;">31'</span>
+          <span id="clock-display" style="font-size:11px;">FT</span>
         </div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:var(--red);">● LIVE</div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);">✓ FULL TIME</div>
       </div>
       <div class="team-block">
         <div class="team-logo" style="border-color:rgba(193,39,45,.4);background:rgba(193,39,45,.06);font-size:0;"><img src="https://flagcdn.com/w80/ma.png" alt="Morocco" style="width:54px;height:auto;border-radius:3px;"></div>
@@ -494,18 +494,18 @@ let orderSide = 'YES', walletBalance = 4271250;
 let miniCharts = {}, probChart;
 
 const MARKETS = [
-  { id:'bra_win',   title:'Brazil Win (FT)',            yes:0.65, vol:'₦36.4M', liq:'₦9.2M', spread:'₦3', history:[0.64,0.64,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65] },
-  { id:'mar_win',   title:'Morocco Win (FT)',            yes:0.13, vol:'₦14.8M', liq:'₦3.8M', spread:'₦6', history:[0.14,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13] },
-  { id:'draw',      title:'Draw (Full Time)',            yes:0.22, vol:'₦16.2M', liq:'₦4.2M', spread:'₦4', history:[0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22] },
-  { id:'over25',    title:'Over 2.5 Goals',             yes:0.62, vol:'₦5.8M',  liq:'₦1.5M', spread:'₦4', history:[0.61,0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62] },
-  { id:'btts',      title:'Both Teams To Score',        yes:0.52, vol:'₦3.6M',  liq:'₦1.0M', spread:'₦4', history:[0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52] },
-  { id:'bra_cs',    title:'Brazil Clean Sheet',         yes:0.38, vol:'₦2.8M',  liq:'₦0.7M', spread:'₦5', history:[0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38] },
-  { id:'mar_cs',    title:'Morocco Clean Sheet',        yes:0.18, vol:'₦1.2M',  liq:'₦0.3M', spread:'₦6', history:[0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18] },
-  { id:'bra_nil',   title:'Brazil Win to Nil',          yes:0.32, vol:'₦1.8M',  liq:'₦0.5M', spread:'₦6', history:[0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32] },
-  { id:'mar_nil',   title:'Morocco Win to Nil',         yes:0.08, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦8', history:[0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.08] },
-  { id:'bra_first', title:'Brazil First to Score',      yes:0.68, vol:'₦2.2M',  liq:'₦0.6M', spread:'₦5', history:[0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68] },
-  { id:'mar_first', title:'Morocco First to Score',     yes:0.28, vol:'₦1.4M',  liq:'₦0.4M', spread:'₦6', history:[0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28] },
-  { id:'redcard',   title:'🟥 Red Card in Match',       yes:0.32, vol:'₦0.6M',  liq:'₦0.2M', spread:'₦6', history:[0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32] },
+  { id:'bra_win',   title:'Brazil Win (FT)',            yes:0.00, vol:'₦36.4M', liq:'₦9.2M', spread:'₦3', history:[0.65,0.65,0.65,0.60,0.50,0.40,0.28,0.14,0.04,0.00] },
+  { id:'mar_win',   title:'Morocco Win (FT)',            yes:0.00, vol:'₦14.8M', liq:'₦3.8M', spread:'₦6', history:[0.13,0.13,0.14,0.18,0.22,0.18,0.12,0.06,0.02,0.00] },
+  { id:'draw',      title:'Draw (Full Time)',            yes:1.00, vol:'₦16.2M', liq:'₦4.2M', spread:'₦4', history:[0.22,0.22,0.24,0.30,0.38,0.50,0.68,0.84,0.96,1.00] },
+  { id:'over25',    title:'Over 2.5 Goals',             yes:0.00, vol:'₦5.8M',  liq:'₦1.5M', spread:'₦4', history:[0.62,0.62,0.58,0.48,0.36,0.22,0.10,0.03,0.00,0.00] },
+  { id:'btts',      title:'Both Teams To Score',        yes:1.00, vol:'₦3.6M',  liq:'₦1.0M', spread:'₦4', history:[0.52,0.52,0.55,0.65,0.78,0.88,0.95,0.99,1.00,1.00] },
+  { id:'bra_cs',    title:'Brazil Clean Sheet',         yes:0.00, vol:'₦2.8M',  liq:'₦0.7M', spread:'₦5', history:[0.38,0.38,0.30,0.18,0.06,0.02,0.00,0.00,0.00,0.00] },
+  { id:'mar_cs',    title:'Morocco Clean Sheet',        yes:0.00, vol:'₦1.2M',  liq:'₦0.3M', spread:'₦6', history:[0.18,0.18,0.16,0.10,0.04,0.01,0.00,0.00,0.00,0.00] },
+  { id:'bra_nil',   title:'Brazil Win to Nil',          yes:0.00, vol:'₦1.8M',  liq:'₦0.5M', spread:'₦6', history:[0.32,0.32,0.24,0.12,0.04,0.01,0.00,0.00,0.00,0.00] },
+  { id:'mar_nil',   title:'Morocco Win to Nil',         yes:0.00, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦8', history:[0.08,0.08,0.06,0.04,0.02,0.00,0.00,0.00,0.00,0.00] },
+  { id:'bra_first', title:'Brazil First to Score',      yes:0.00, vol:'₦2.2M',  liq:'₦0.6M', spread:'₦5', history:[0.68,0.68,0.55,0.30,0.10,0.03,0.01,0.00,0.00,0.00] },
+  { id:'mar_first', title:'Morocco First to Score',     yes:1.00, vol:'₦1.4M',  liq:'₦0.4M', spread:'₦6', history:[0.28,0.28,0.45,0.72,0.90,0.97,0.99,1.00,1.00,1.00] },
+  { id:'redcard',   title:'🟥 Red Card in Match',       yes:0.00, vol:'₦0.6M',  liq:'₦0.2M', spread:'₦6', history:[0.32,0.28,0.22,0.14,0.08,0.04,0.01,0.00,0.00,0.00] },
 ];
 
 const ORDER_BOOK_DATA = {
@@ -738,17 +738,12 @@ function switchTab(name, btn) {
 }
 
 renderMarkets();
-renderOrderBook();
 renderActivity();
-renderTrades();
 updateOrderSummary();
-updateCountdown();
-setInterval(updateLiveData, 4000);
-setInterval(updateCountdown, 1000);
 
 // ── API-FOOTBALL LIVE FEED ────────────────────────────────────────
 const seenEvents = new Set();
-let matchDone = false;
+let matchDone = true;
 
 async function fetchLiveMatch() {
   if (matchDone || !AF_FIXTURE) return;
