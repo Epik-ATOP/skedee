@@ -440,20 +440,36 @@
 // ── DATA ──────────────────────────────────────────────────
 const FEATURED = [
   {
+    emoji:'⚽', cat:'FOOTBALL · FIFA WORLD CUP 2026', live:false,
+    title:'Germany vs Curaçao',
+    sub:'GROUP E · MATCHDAY 1 · Jun 14 · 7:00 PM WAT · Rose Bowl, Pasadena',
+    prob:'88', vol:'₦124.6M', change:'PRE-MATCH', changeDir:'up',
+    bg:'⚽', yesLabel:'BUY Germany Win ₦88', noLabel:'BUY Curaçao Win ₦4', probLabel:'GERMANY WIN (FT)',
+    link:'markets/10000046.html'
+  },
+  {
+    emoji:'⚽', cat:'FOOTBALL · FIFA WORLD CUP 2026', live:false,
+    title:'Netherlands vs Japan',
+    sub:'GROUP F · MATCHDAY 1 · Jun 14 · 10:00 PM WAT · AT&T Stadium, Arlington',
+    prob:'62', vol:'₦82.4M', change:'PRE-MATCH', changeDir:'up',
+    bg:'⚽', yesLabel:'BUY Netherlands Win ₦62', noLabel:'BUY Japan Win ₦16', probLabel:'NED WIN (FT)',
+    link:'markets/10000047.html'
+  },
+  {
+    emoji:'⚽', cat:'FOOTBALL · FIFA WORLD CUP 2026', live:false,
+    title:'Spain vs Cabo Verde',
+    sub:'GROUP H · MATCHDAY 1 · Jun 15 · 6:00 PM WAT · MetLife Stadium, NJ',
+    prob:'85', vol:'₦98.4M', change:'PRE-MATCH', changeDir:'up',
+    bg:'⚽', yesLabel:'BUY Spain Win ₦85', noLabel:'BUY Cabo Verde Win ₦5', probLabel:'SPAIN WIN (FT)',
+    link:'markets/10000050.html'
+  },
+  {
     emoji:'⚽', cat:' FOOTBALL · FIFA WORLD CUP', live:false,
     title:'Brazil vs Morocco — Full Time',
     sub:'2026 FIFA World Cup · Group E · Matchday 1 · FT: BRA 1–1 MAR',
     prob:'100', vol:'₦84.2M', change:'SETTLED', changeDir:'flat',
     bg:'⚽', yesLabel:'Draw ✓ YES', noLabel:'Brazil Win ✗ NO', probLabel:'DRAW (FT)',
     link:'markets/10000045.html'
-  },
-  {
-    emoji:'⚽', cat:' FOOTBALL · FIFA WORLD CUP', live:false,
-    title:'Qatar vs Switzerland — Full Time',
-    sub:'2026 FIFA World Cup · Group B · Matchday 1 · FT: QAT 1–1 SUI',
-    prob:'100', vol:'₦18.6M', change:'SETTLED', changeDir:'flat',
-    bg:'⚽', yesLabel:'Draw ✓ YES', noLabel:'Switzerland Win ✗ NO', probLabel:'DRAW (FT)',
-    link:'markets/10000044.html'
   },
   {
     emoji:'⚡', cat:'ENERGY · NEPA', live:true,
@@ -467,6 +483,11 @@ const FEATURED = [
 
 const ALL_MARKETS = [
   // FOOTBALL
+  { id:10000048, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Ivory Coast vs Ecuador — Group E', badge:'upcoming', yes:0.40, vol:'₦48.2M', change:'Jun 15 · 1AM WAT', dir:'up', link:'markets/10000048.html' },
+  { id:10000049, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Sweden vs Tunisia — Group F', badge:'upcoming', yes:0.52, vol:'₦36.8M', change:'Jun 15 · 4AM WAT', dir:'up', link:'markets/10000049.html' },
+  { id:10000050, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Spain vs Cabo Verde — Group H', badge:'upcoming', yes:0.85, vol:'₦98.4M', change:'Jun 15 · 6PM WAT', dir:'up', link:'markets/10000050.html' },
+  { id:10000051, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Belgium vs Egypt — Group G', badge:'upcoming', yes:0.68, vol:'₦64.2M', change:'Jun 15 · 9PM WAT', dir:'up', link:'markets/10000051.html' },
+  { id:10000052, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Saudi Arabia vs Uruguay — Group H', badge:'upcoming', yes:0.48, vol:'₦44.6M', change:'Jun 15 · 11PM WAT', dir:'up', link:'markets/10000052.html' },
 
   // WEATHER
   { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · ENVIRONMENT', title:'Will Lagos Experience Major Flooding Before July 2026?', badge:'hot', yes:0.67, no:0.33, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html', isCommodity:true },
@@ -514,7 +535,7 @@ const ALL_MARKETS = [
   { id:10000035, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 7–8', badge:'live', yes:0.79, vol:'₦6.8M', change:'+8%', dir:'up', link:'#' },
   { id:10000036, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 7–8', badge:'live', yes:0.55, vol:'₦4.1M', change:'+3%', dir:'up', link:'#' },
   { id:10000039, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 14–15', badge:'new', yes:0.82, vol:'₦5.1M', change:'+0%', dir:'up', link:'#' },
-  { id:10000049, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 14–15', badge:'new', yes:0.61, vol:'₦3.2M', change:'+0%', dir:'up', link:'#' },
+  { id:90039, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 14–15', badge:'new', yes:0.61, vol:'₦3.2M', change:'+0%', dir:'up', link:'#' },
   { id:90041, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 21–22', badge:'new', yes:0.85, vol:'₦3.8M', change:'+0%', dir:'up', link:'#' },
   { id:90042, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · ABUJA', title:'Will it Rain in Abuja this Weekend? — Jun 21–22', badge:'new', yes:0.64, vol:'₦2.4M', change:'+0%', dir:'up', link:'#' },
   { id:90043, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend? — Jun 28–29', badge:'new', yes:0.87, vol:'₦3.1M', change:'+0%', dir:'up', link:'#' },
@@ -524,10 +545,8 @@ const ALL_MARKETS = [
   { id:10000043, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'USA vs Paraguay — World Cup Group D (FT 4–1)', badge:'resolved', yes:1.00, vol:'₦52.4M', change:'SETTLED', dir:'flat', link:'markets/10000043.html' },
   { id:10000044, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Qatar vs Switzerland — World Cup Group B (FT 1–1)', badge:'resolved', yes:0.00, vol:'₦18.6M', change:'SETTLED', dir:'flat', link:'markets/10000044.html' },
   { id:10000045, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Brazil vs Morocco — World Cup Group E (FT 1–1)', badge:'resolved', yes:0.00, vol:'₦84.2M', change:'SETTLED', dir:'flat', link:'markets/10000045.html' },
-  { id:10000046, cat:'football', emoji:'🌍', catLabel:'FOOTBALL · WORLD CUP', title:'Nigeria Tops World Cup Group Stage', badge:'new', yes:0.38, vol:'₦28M', change:'+4%', dir:'up', link:'#' },
-  { id:10000040, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Mexico vs South Africa — World Cup Group A', badge:'upcoming', yes:0.58, vol:'₦42.6M', change:'+26%', dir:'up', link:'markets/10000040.html' },
-  { id:10000047, cat:'sports', emoji:'🎾', catLabel:'SPORTS · TENNIS', title:'Djokovic Wins Wimbledon 2026', badge:'new', yes:0.34, vol:'₦11M', change:'+1%', dir:'up', link:'#' },
-  { id:10000048, cat:'miscellaneous', emoji:'⚡', catLabel:'ENERGY · NIGERIA', title:'Will NEPA Improve Power Supply in June?', badge:'hot', yes:0.22, vol:'₦14M', change:'-3%', dir:'down', link:'#' },
+  { id:10000046, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Germany vs Curaçao — Group E', badge:'upcoming', yes:0.88, vol:'₦124.6M', change:'Jun 14 · 7PM WAT', dir:'up', link:'markets/10000046.html' },
+  { id:10000047, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Netherlands vs Japan — Group F', badge:'upcoming', yes:0.62, vol:'₦82.4M', change:'Jun 14 · 10PM WAT', dir:'up', link:'markets/10000047.html' },
   { id:10000034, cat:'sports', emoji:'🏀', catLabel:'BASKETBALL · NBA', title:'New York Knicks vs San Antonio Spurs', badge:'upcoming', yes:0.65, vol:'₦7.2M', change:'+0%', dir:'up', link:'markets/10000034.html' },
   { id:'politics_tinubu_jul', cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Tinubu signs tax reform bill before July', badge:'hot', yes:0.54, vol:'₦22M', change:'+6%', dir:'up', link:'#' },
   { id:'fin_dollar_1700', cat:'finance', emoji:'💱', catLabel:'FINANCE · FOREX', title:'Dollar hits ₦1,700 before August', badge:'new', yes:0.44, vol:'₦31M', change:'+2%', dir:'up', link:'#', isCommodity:true },
