@@ -240,12 +240,12 @@
       <div class="banner-cat" style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP C · MATCHDAY 1</div>
       <div class="banner-title" style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);line-height:1.2;">Canada vs Bosnia</div>
       <div class="banner-meta" style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">BMO Field, Toronto · Jun 12, 2026 · 8:00 PM WAT</div>
-      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 12 markets available</div>
+      <div class="banner-sub" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Full time · CAN 0–2 BIH · All 12 markets settled</div>
     </div>
     <div class="banner-status" style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-      <div style="color:var(--red);font-weight:700;font-size:12px;margin-bottom:4px;">● LIVE</div>
+      <div style="color:var(--green);font-weight:700;font-size:12px;margin-bottom:4px;">✓ FULL TIME</div>
       <div>Jun 12, 2026</div>
-      <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;"></div>
+      <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;">BIH 2–0 CAN</div>
     </div>
   </div>
 
@@ -255,8 +255,8 @@
       <div class="league-badge">🌍 FIFA WORLD CUP 2026 · GROUP C · MATCHDAY 1</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <div class="live-indicator">
-          <div class="live-dot" id="live-dot" style="background:var(--red);"></div>
-          <span id="live-label" style="color:var(--red);">LIVE</span>
+          <div class="live-dot" id="live-dot" style="background:var(--green);"></div>
+          <span id="live-label" style="color:var(--green);">FULL TIME</span>
         </div>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">BMO Field, Toronto</div>
       </div>
@@ -271,14 +271,14 @@
       <div class="score-block">
         <div class="ticker-score">
           <span class="ticker-abbr" style="color:var(--can1);">CAN</span>
-          <span class="ticker-sep" id="score-display">vs</span>
+          <span class="ticker-sep" id="score-display">0 — 2</span>
           <span class="ticker-abbr" style="color:var(--bos2);">BIH</span>
         </div>
         <div class="match-clock">
           <i class="fa-solid fa-clock" style="font-size:11px;"></i>
-          <span id="clock-display" style="font-size:11px;">8:00 PM WAT</span>
+          <span id="clock-display" style="font-size:11px;">FT</span>
         </div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);">PRE-MATCH</div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);">✓ FULL TIME</div>
       </div>
       <div class="team-block">
         <div class="team-logo" style="border-color:rgba(0,35,149,.4);background:rgba(0,35,149,.08);font-size:0;"><img src="https://flagcdn.com/w80/ba.png" alt="Bosnia" style="width:54px;height:auto;border-radius:3px;"></div>
@@ -296,19 +296,13 @@
     </div>
   </div>
 
-  <!-- KICKOFF COUNTDOWN -->
-  <div class="kickoff-timer">
+  <!-- RESULT BANNER -->
+  <div class="kickoff-timer" style="border-color:rgba(34,197,94,.3);background:linear-gradient(135deg,rgba(34,197,94,.06),rgba(34,197,94,.02));">
     <div class="kickoff-info">
-      <div class="kickoff-title">Kickoff — Jun 12, 2026 · 8:00 PM WAT</div>
-      <div class="kickoff-sub">Markets lock at kickoff · All open positions settle post full time</div>
+      <div class="kickoff-title" style="color:var(--green);">✓ Full Time — Bosnia 2 — 0 Canada</div>
+      <div class="kickoff-sub">J. Lukic 21' · E. Džeko 78' · All 12 markets settled</div>
     </div>
-    <div class="timer-block">
-      <div class="timer-seg"><div class="timer-num" id="t-h">--</div><div class="timer-label">HRS</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-m">--</div><div class="timer-label">MIN</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-s">--</div><div class="timer-label">SEC</div></div>
-    </div>
+    <div style="font-family:var(--font-mono);font-size:11px;color:var(--green);font-weight:700;border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.08);border-radius:8px;padding:8px 16px;">✓ SETTLED</div>
   </div>
 
   <!-- STAT BOXES -->
@@ -331,22 +325,22 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:var(--red);padding:2px 6px;border-radius:4px;margin-left:6px;">● LIVE 46'</span></div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result <span style="font-family:var(--font-mono);font-size:9px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--green);padding:2px 6px;border-radius:4px;margin-left:6px;">✓ FT</span></div>
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦21.2M total volume</div>
       </div>
       <div class="sentiment-bar">
-        <div class="sentiment-can" id="bar-can" style="width:22%;"></div>
-        <div class="sentiment-draw" id="bar-draw" style="width:16%;"></div>
-        <div class="sentiment-bos" id="bar-bos" style="width:62%;"></div>
+        <div class="sentiment-can" id="bar-can" style="width:0%;"></div>
+        <div class="sentiment-draw" id="bar-draw" style="width:0%;"></div>
+        <div class="sentiment-bos" id="bar-bos" style="width:100%;"></div>
       </div>
       <div class="sentiment-labels">
-        <span style="color:var(--can1);font-weight:700;" id="label-can">Canada 22%</span>
-        <span style="color:var(--text2);font-weight:700;" id="label-draw">Draw 16%</span>
-        <span style="color:var(--bos2);font-weight:700;" id="label-bos">Bosnia 62%</span>
+        <span style="color:var(--can1);font-weight:700;" id="label-can">Canada 0%</span>
+        <span style="color:var(--text2);font-weight:700;" id="label-draw">Draw 0%</span>
+        <span style="color:var(--bos2);font-weight:700;" id="label-bos">Bosnia 100%</span>
       </div>
       <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:var(--font-mono);">
-        <i class="fa-solid fa-futbol" style="color:var(--bos1);margin-right:4px;"></i>
-        J. Lukic 21' &nbsp;·&nbsp; Bosnia leading 1-0 at half time
+        <i class="fa-solid fa-circle-check" style="color:var(--green);margin-right:4px;"></i>
+        Full time · BIH 2–0 CAN · All 12 markets settled
       </div>
     </div>
 
@@ -398,18 +392,36 @@
 <!-- RIGHT SIDEBAR -->
 <div class="right-sidebar">
   <div>
-    <div class="rsidebar-section-title">Order Book — Canada Win <span style="color:var(--can1);font-size:10px;">PRE</span></div>
-    <div id="order-book-asks"></div>
-    <div class="ob-spread">Spread: ₦2 · Mid: ₦44</div>
-    <div id="order-book-bids"></div>
+    <div class="rsidebar-section-title">Final Score</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--border3);">
+      <div style="text-align:center;"><img src="https://flagcdn.com/w40/ca.png" style="width:36px;height:auto;border-radius:3px;display:block;margin:0 auto 6px;"><div style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--can1);">CAN</div></div>
+      <div style="font-family:var(--font-num);font-size:32px;font-weight:700;color:var(--y);">0 — 2</div>
+      <div style="text-align:center;"><img src="https://flagcdn.com/w40/ba.png" style="width:36px;height:auto;border-radius:3px;display:block;margin:0 auto 6px;"><div style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--bos2);">BIH</div></div>
+    </div>
+    <div style="padding:12px 0;border-bottom:1px solid var(--border3);">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Goalscorers</div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:4px;"><span>J. Lukic</span><span style="color:var(--bos1);">BIH 21'</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);"><span>E. Džeko</span><span style="color:var(--bos1);">BIH 78'</span></div>
+    </div>
+    <div style="padding:12px 0;border-bottom:1px solid var(--border3);">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Key Outcomes</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Bosnia Win (FT)</span><span style="color:var(--green);font-family:var(--font-mono);font-weight:700;">YES ✓</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Bosnia First to Score</span><span style="color:var(--green);font-family:var(--font-mono);font-weight:700;">YES ✓</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Bosnia Clean Sheet</span><span style="color:var(--green);font-family:var(--font-mono);font-weight:700;">YES ✓</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Canada Win</span><span style="color:var(--red);font-family:var(--font-mono);font-weight:700;">NO ✗</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Both Teams To Score</span><span style="color:var(--red);font-family:var(--font-mono);font-weight:700;">NO ✗</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;"><span style="color:var(--text2);">Over 2.5 Goals</span><span style="color:var(--red);font-family:var(--font-mono);font-weight:700;">NO ✗</span></div>
+      </div>
+    </div>
+    <div style="padding:12px 0;font-family:var(--font-mono);font-size:10px;color:var(--text3);">
+      <div style="color:var(--green);font-weight:700;margin-bottom:6px;">✓ All 12 markets settled</div>
+      <div>Volume: ₦21.2M · Group C · Round 1</div>
+    </div>
   </div>
   <div style="border-top:1px solid var(--border3);padding-top:16px;">
     <div class="rsidebar-section-title">Activity Feed</div>
     <div id="activity-feed"></div>
-  </div>
-  <div style="border-top:1px solid var(--border3);padding-top:16px;">
-    <div class="rsidebar-section-title">Recent Trades <span style="font-family:var(--font-mono);font-size:9px;color:var(--green);">● LIVE</span></div>
-    <div id="recent-trades"></div>
   </div>
 </div>
 
@@ -473,18 +485,18 @@ let orderSide = 'YES', walletBalance = 4271250;
 let miniCharts = {}, probChart;
 
 const MARKETS = [
-  { id:'can_win',   title:'Canada Win (FT)',                  yes:0.22, vol:'₦8.8M',  liq:'₦2.4M', spread:'₦2', history:[0.44,0.44,0.43,0.42,0.38,0.32,0.26,0.23,0.22,0.22] },
-  { id:'bos_win',   title:'Bosnia Win (FT)',                   yes:0.62, vol:'₦5.4M',  liq:'₦1.5M', spread:'₦3', history:[0.28,0.28,0.30,0.32,0.38,0.48,0.56,0.60,0.62,0.62] },
-  { id:'draw',      title:'Draw (Full Time)',                   yes:0.16, vol:'₦5.8M',  liq:'₦1.6M', spread:'₦3', history:[0.28,0.28,0.27,0.26,0.24,0.20,0.18,0.17,0.16,0.16] },
-  { id:'over25',    title:'Over 2.5 Goals',                    yes:0.32, vol:'₦2.6M',  liq:'₦0.8M', spread:'₦4', history:[0.44,0.44,0.43,0.42,0.40,0.36,0.34,0.33,0.32,0.32] },
+  { id:'can_win',   title:'Canada Win (FT)',                  yes:0.00, vol:'₦8.8M',  liq:'₦2.4M', spread:'₦2', history:[0.44,0.44,0.43,0.42,0.38,0.32,0.26,0.23,0.22,0.00] },
+  { id:'bos_win',   title:'Bosnia Win (FT)',                   yes:1.00, vol:'₦5.4M',  liq:'₦1.5M', spread:'₦3', history:[0.28,0.28,0.30,0.32,0.38,0.48,0.56,0.60,0.62,1.00] },
+  { id:'draw',      title:'Draw (Full Time)',                   yes:0.00, vol:'₦5.8M',  liq:'₦1.6M', spread:'₦3', history:[0.28,0.28,0.27,0.26,0.24,0.20,0.18,0.17,0.16,0.00] },
+  { id:'over25',    title:'Over 2.5 Goals',                    yes:0.00, vol:'₦2.6M',  liq:'₦0.8M', spread:'₦4', history:[0.44,0.44,0.43,0.42,0.40,0.36,0.34,0.33,0.32,0.00] },
   { id:'can_cs',    title:'Canada Clean Sheet',                 yes:0.00, vol:'₦1.2M',  liq:'₦0.4M', spread:'₦5', history:[0.46,0.45,0.40,0.28,0.12,0.04,0.01,0.00,0.00,0.00] },
   { id:'can_nil',   title:'Canada Win to Nil',                  yes:0.00, vol:'₦0.7M',  liq:'₦0.2M', spread:'₦6', history:[0.32,0.31,0.26,0.16,0.06,0.02,0.00,0.00,0.00,0.00] },
-  { id:'bos_cs',    title:'Bosnia Clean Sheet',                 yes:0.44, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦5', history:[0.36,0.36,0.37,0.38,0.40,0.42,0.43,0.44,0.44,0.44] },
-  { id:'bos_nil',   title:'Bosnia Win to Nil',                  yes:0.38, vol:'₦0.4M',  liq:'₦0.1M', spread:'₦7', history:[0.20,0.20,0.22,0.26,0.30,0.34,0.36,0.37,0.38,0.38] },
+  { id:'bos_cs',    title:'Bosnia Clean Sheet',                 yes:1.00, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦5', history:[0.36,0.36,0.37,0.38,0.40,0.42,0.43,0.44,0.44,1.00] },
+  { id:'bos_nil',   title:'Bosnia Win to Nil',                  yes:1.00, vol:'₦0.4M',  liq:'₦0.1M', spread:'₦7', history:[0.20,0.20,0.22,0.26,0.30,0.34,0.36,0.37,0.38,1.00] },
   { id:'can_first', title:'Canada First to Score',              yes:0.00, vol:'₦1.0M',  liq:'₦0.3M', spread:'₦5', history:[0.50,0.49,0.42,0.28,0.10,0.02,0.00,0.00,0.00,0.00] },
   { id:'bos_first', title:'Bosnia First to Score',              yes:1.00, vol:'₦0.8M',  liq:'₦0.2M', spread:'₦5', history:[0.38,0.38,0.46,0.65,0.82,0.92,0.97,0.99,1.00,1.00] },
-  { id:'btts',      title:'Both Teams To Score',                yes:0.34, vol:'₦1.6M',  liq:'₦0.5M', spread:'₦4', history:[0.38,0.38,0.37,0.36,0.35,0.35,0.34,0.34,0.34,0.34] },
-  { id:'redcard',   title:'🟥 Red Card in Match',               yes:0.28, vol:'₦0.6M',  liq:'₦0.2M', spread:'₦6', history:[0.30,0.30,0.30,0.29,0.29,0.28,0.28,0.28,0.28,0.28] },
+  { id:'btts',      title:'Both Teams To Score',                yes:0.00, vol:'₦1.6M',  liq:'₦0.5M', spread:'₦4', history:[0.38,0.38,0.37,0.36,0.35,0.35,0.34,0.34,0.34,0.00] },
+  { id:'redcard',   title:'🟥 Red Card in Match',               yes:0.00, vol:'₦0.6M',  liq:'₦0.2M', spread:'₦6', history:[0.30,0.30,0.30,0.29,0.29,0.28,0.28,0.28,0.28,0.00] },
 ];
 
 const ORDER_BOOK_DATA = {
@@ -731,7 +743,7 @@ const AF_FIXTURE = 1539000; // Canada vs Bosnia & Herzegovina
 const AF_HOME    = 'Canada';
 const AF_AWAY    = 'Bosnia & Herzegovina';
 const seenEvents = new Set();
-let   matchDone  = false;
+let   matchDone  = true;
 
 async function fetchLiveMatch() {
   if (matchDone) return;
