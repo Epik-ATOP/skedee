@@ -292,3 +292,22 @@ setInterval(ogDrift, 4000);
   if (statusEl) obs.observe(statusEl, { childList: true, subtree: true, characterData: true });
   if (clockEl)  obs.observe(clockEl,  { childList: true, subtree: true, characterData: true });
 })();
+
+// Volume ticker — slowly increments match vol by ₦1k–₦20k every ~5s
+(function() {
+  const meta = document.querySelector('.match-meta');
+  if (!meta) return;
+  let volEl = null;
+  for (const s of meta.querySelectorAll('span')) {
+    if (s.textContent.includes('vol')) { volEl = s; break; }
+  }
+  if (!volEl) return;
+  let vol = parseInt(volEl.textContent.replace(/[^\d]/g, '')) || 0;
+  if (!vol) return;
+  function tick() {
+    vol += Math.floor(Math.random() * 19001) + 1000;
+    volEl.textContent = '₦' + vol.toLocaleString('en-US') + ' vol';
+    setTimeout(tick, 4000 + Math.random() * 3000);
+  }
+  setTimeout(tick, 4000 + Math.random() * 3000);
+})();
