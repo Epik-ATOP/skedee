@@ -182,15 +182,15 @@
       <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 12 markets available</div>
     </div>
     <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-      <div style="color:var(--y);font-weight:700;font-size:12px;margin-bottom:4px;">● PRE-MATCH</div>
+      <div style="color:var(--green);font-weight:700;font-size:12px;margin-bottom:4px;">✓ FT</div>
       <div>Jun 15, 2026</div>
-      <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;"></div>
+      <div id="banner-countdown" style="color:var(--green);font-weight:700;margin-top:4px;">Full Time</div>
     </div>
   </div>
   <div class="match-card">
     <div class="match-card-top">
       <div class="league-badge">🌍 FIFA WORLD CUP 2026 · GROUP H · MATCHDAY 1</div>
-      <div style="display:flex;align-items:center;gap:12px;"><div class="live-indicator"><div class="live-dot" id="live-dot" style="background:var(--y);"></div><span id="live-label" style="color:var(--y);">PRE-MATCH</span></div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Mercedes-Benz Stadium, Atlanta</div></div>
+      <div style="display:flex;align-items:center;gap:12px;"><div class="live-indicator"><div class="live-dot" id="live-dot" style="background:var(--green);animation:none;"></div><span id="live-label" style="color:var(--green);">FULL TIME</span></div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Mercedes-Benz Stadium, Atlanta</div></div>
     </div>
     <div class="match-center">
       <div class="team-block">
@@ -201,11 +201,11 @@
       <div class="score-block">
         <div class="ticker-score">
           <span class="ticker-abbr" style="color:var(--esp1);">ESP</span>
-          <span class="ticker-sep" id="score-display">vs</span>
+          <span class="ticker-sep" id="score-display">0 — 0</span>
           <span class="ticker-abbr" style="color:var(--cpv1);">CPV</span>
         </div>
-        <div class="match-clock"><i class="fa-solid fa-clock" style="font-size:11px;"></i><span id="clock-display" style="font-size:11px;">5:00 PM WAT</span></div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);">PRE-MATCH</div>
+        <div class="match-clock"><i class="fa-solid fa-clock" style="font-size:11px;"></i><span id="clock-display" style="font-size:11px;">FT</span></div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);">✓ FULL TIME</div>
       </div>
       <div class="team-block">
         <div class="team-logo" style="border-color:rgba(0,56,147,.4);background:rgba(0,56,147,.06);"><img src="https://flagcdn.com/w80/cv.png" alt="Cabo Verde" style="width:54px;height:auto;border-radius:3px;"></div>
@@ -220,20 +220,17 @@
       <div class="meta-item" style="margin-left:auto;"><span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦98,400,000 vol</span></div>
     </div>
   </div>
-  <div class="kickoff-timer">
-    <div><div class="kickoff-title">Kickoff — Jun 15, 2026 · 5:00 PM WAT</div><div class="kickoff-sub">Markets lock at kickoff</div></div>
-    <div class="timer-block">
-      <div class="timer-seg"><div class="timer-num" id="t-h">--</div><div class="timer-label">HRS</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-m">--</div><div class="timer-label">MIN</div></div>
-      <div class="timer-colon">:</div>
-      <div class="timer-seg"><div class="timer-num" id="t-s">--</div><div class="timer-label">SEC</div></div>
+  <div style="background:linear-gradient(135deg,rgba(34,197,94,.06),rgba(34,197,94,.02));border:1px solid rgba(34,197,94,.25);border-radius:var(--radius-lg);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--green);">✓ Full Time — Spain 0–0 Cabo Verde</div>
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:4px;">No goals scored · Shock 0–0 draw · All 12 markets settled</div>
     </div>
+    <div style="font-family:var(--font-num);font-weight:700;font-size:36px;color:var(--green);letter-spacing:2px;">0 — 0</div>
   </div>
   <div class="stats-row">
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦98.4M</div><div class="stat-box-sub" style="color:var(--green);">▲ +28% in 2h</div></div>
-    <div class="stat-box"><div class="stat-box-label">Spain Win</div><div class="stat-box-val" style="color:var(--esp1);font-size:22px;" id="home-prob-stat">85%</div><div class="stat-box-sub" style="color:var(--text3);">Implied probability</div></div>
-    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">12</div></div>
+    <div class="stat-box"><div class="stat-box-label">Spain Win</div><div class="stat-box-val" style="color:var(--red);font-size:18px;" id="home-prob-stat">SETTLED ✗</div><div class="stat-box-sub" style="color:var(--text3);">0–0 · Draw</div></div>
+    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">0</div></div>
   </div>
   <div class="tabs-bar">
     <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
@@ -244,9 +241,9 @@
   </div>
   <div id="tab-overview">
     <div class="sentiment-card">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result</div><div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦98.4M total volume</div></div>
-      <div class="sentiment-bar"><div class="sentiment-home" id="bar-home" style="width:85%;"></div><div class="sentiment-draw" id="bar-draw" style="width:10%;"></div><div class="sentiment-away" id="bar-away" style="width:5%;"></div></div>
-      <div class="sentiment-labels"><span style="color:var(--esp1);font-weight:700;" id="label-home">Spain 85%</span><span style="font-weight:700;" id="label-draw">Draw 10%</span><span style="color:var(--cpv1);font-weight:700;" id="label-away">Cabo Verde 5%</span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result</div><div style="font-family:var(--font-mono);font-size:10px;color:var(--green);">✓ FT · Full time · ESP 0–0 CPV · All 12 markets settled</div></div>
+      <div class="sentiment-bar"><div class="sentiment-home" id="bar-home" style="width:0%;"></div><div class="sentiment-draw" id="bar-draw" style="width:100%;"></div><div class="sentiment-away" id="bar-away" style="width:0%;"></div></div>
+      <div class="sentiment-labels"><span style="color:var(--text3);font-weight:700;" id="label-home">Spain NO ✗</span><span style="color:var(--green);font-weight:700;" id="label-draw">Draw YES ✓</span><span style="color:var(--text3);font-weight:700;" id="label-away">Cabo Verde NO ✗</span></div>
     </div>
     <div class="trending-strip" style="margin-top:12px;">
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🔥 Hot Markets</div>
@@ -256,6 +253,26 @@
         <div class="trend-pill" onclick="openOrder('Spain Win to Nil','YES',58)"><div class="trend-pill-name">Spain Win to Nil</div><div class="trend-pill-prob">₦58 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Spain First to Score','YES',82)"><div class="trend-pill-name">Spain First Goal</div><div class="trend-pill-prob">₦82 YES</div></div>
         <div class="trend-pill" onclick="openOrder('Cabo Verde Win (FT)','YES',5)"><div class="trend-pill-name">🇨🇻 CPV Win</div><div class="trend-pill-prob">₦5 YES</div></div>
+      </div>
+    </div>
+    <div class="og-card" id="og-card" style="margin-top:12px;">
+      <div class="og-title">Over X.X Goals</div>
+      <div class="og-body">
+        <div class="og-selector">
+          <button class="og-arrow" id="og-prev" onclick="ogMove(-1)">‹</button>
+          <div class="og-thresholds" id="og-thresholds"></div>
+          <button class="og-arrow" id="og-next" onclick="ogMove(1)">›</button>
+        </div>
+        <div class="og-right">
+          <div class="og-stat">
+            <div class="og-prob" id="og-prob">—%</div>
+            <div class="og-delta" id="og-delta"></div>
+          </div>
+          <div class="og-btns">
+            <button class="og-btn og-btn-yes" id="og-btn-yes" onclick="ogBuyYes()">YES ₦—</button>
+            <button class="og-btn og-btn-no" id="og-btn-no" onclick="ogBuyNo()">NO ₦—</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="markets-grid" id="markets-grid" style="margin-top:12px;"></div>
@@ -291,18 +308,18 @@ const KICKOFF_TIME=new Date('2026-06-15T16:00:00Z');
 const AF_KEY='537fc407993fe20fd8f3ac68bee2ed2d',AF_FIXTURE=1489380,AF_HOME='Spain',AF_AWAY='Cape Verde Islands';
 let orderSide='YES',walletBalance=4271250,miniCharts={},probChart;
 const MARKETS=[
-  {id:'esp_win',title:'Spain Win (FT)',yes:0.85,vol:'₦42.4M',liq:'₦10.6M',spread:'₦2',history:[0.84,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85]},
-  {id:'cpv_win',title:'Cabo Verde Win (FT)',yes:0.05,vol:'₦8.2M',liq:'₦2.0M',spread:'₦3',history:[0.06,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05]},
-  {id:'draw',title:'Draw (Full Time)',yes:0.10,vol:'₦12.8M',liq:'₦3.2M',spread:'₦3',history:[0.10,0.10,0.10,0.10,0.10,0.10,0.10,0.10,0.10,0.10]},
-  {id:'over25',title:'Over 2.5 Goals',yes:0.68,vol:'₦18.4M',liq:'₦4.6M',spread:'₦4',history:[0.67,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68]},
-  {id:'btts',title:'Both Teams To Score',yes:0.24,vol:'₦6.2M',liq:'₦1.5M',spread:'₦5',history:[0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24]},
-  {id:'esp_cs',title:'Spain Clean Sheet',yes:0.68,vol:'₦4.8M',liq:'₦1.2M',spread:'₦4',history:[0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68]},
-  {id:'cpv_cs',title:'Cabo Verde Clean Sheet',yes:0.02,vol:'₦1.4M',liq:'₦0.3M',spread:'₦2',history:[0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02]},
-  {id:'esp_nil',title:'Spain Win to Nil',yes:0.58,vol:'₦3.6M',liq:'₦0.9M',spread:'₦5',history:[0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.58]},
-  {id:'cpv_nil',title:'Cabo Verde Win to Nil',yes:0.02,vol:'₦0.8M',liq:'₦0.2M',spread:'₦2',history:[0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02]},
-  {id:'esp_first',title:'Spain First to Score',yes:0.82,vol:'₦2.8M',liq:'₦0.7M',spread:'₦3',history:[0.82,0.82,0.82,0.82,0.82,0.82,0.82,0.82,0.82,0.82]},
-  {id:'cpv_first',title:'Cabo Verde First to Score',yes:0.18,vol:'₦2.4M',liq:'₦0.6M',spread:'₦5',history:[0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18]},
-  {id:'redcard',title:'🟥 Red Card in Match',yes:0.20,vol:'₦1.0M',liq:'₦0.2M',spread:'₦6',history:[0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20]},
+  {id:'esp_win',title:'Spain Win (FT)',yes:0.00,vol:'₦42.4M',liq:'₦0.0M',spread:'₦0',history:[0.84,0.85,0.85,0.84,0.82,0.78,0.70,0.55,0.30,0.00]},
+  {id:'cpv_win',title:'Cabo Verde Win (FT)',yes:0.00,vol:'₦8.2M',liq:'₦0.0M',spread:'₦0',history:[0.06,0.05,0.05,0.05,0.05,0.04,0.04,0.03,0.02,0.00]},
+  {id:'draw',title:'Draw (Full Time)',yes:1.00,vol:'₦12.8M',liq:'₦0.0M',spread:'₦0',history:[0.10,0.10,0.10,0.11,0.13,0.18,0.30,0.45,0.70,1.00]},
+  {id:'over25',title:'Over 2.5 Goals',yes:0.00,vol:'₦18.4M',liq:'₦0.0M',spread:'₦0',history:[0.67,0.68,0.65,0.58,0.48,0.35,0.22,0.12,0.05,0.00]},
+  {id:'btts',title:'Both Teams To Score',yes:0.00,vol:'₦6.2M',liq:'₦0.0M',spread:'₦0',history:[0.24,0.24,0.22,0.18,0.14,0.10,0.06,0.04,0.02,0.00]},
+  {id:'esp_cs',title:'Spain Clean Sheet',yes:1.00,vol:'₦4.8M',liq:'₦0.0M',spread:'₦0',history:[0.68,0.68,0.70,0.75,0.80,0.86,0.92,0.96,0.98,1.00]},
+  {id:'cpv_cs',title:'Cabo Verde Clean Sheet',yes:1.00,vol:'₦1.4M',liq:'₦0.0M',spread:'₦0',history:[0.02,0.02,0.04,0.10,0.20,0.40,0.65,0.82,0.94,1.00]},
+  {id:'esp_nil',title:'Spain Win to Nil',yes:0.00,vol:'₦3.6M',liq:'₦0.0M',spread:'₦0',history:[0.58,0.58,0.55,0.48,0.38,0.25,0.14,0.07,0.03,0.00]},
+  {id:'cpv_nil',title:'Cabo Verde Win to Nil',yes:0.00,vol:'₦0.8M',liq:'₦0.0M',spread:'₦0',history:[0.02,0.02,0.02,0.02,0.01,0.01,0.01,0.01,0.01,0.00]},
+  {id:'esp_first',title:'Spain First to Score',yes:0.00,vol:'₦2.8M',liq:'₦0.0M',spread:'₦0',history:[0.82,0.82,0.80,0.75,0.65,0.50,0.30,0.15,0.05,0.00]},
+  {id:'cpv_first',title:'Cabo Verde First to Score',yes:0.00,vol:'₦2.4M',liq:'₦0.0M',spread:'₦0',history:[0.18,0.18,0.16,0.12,0.08,0.05,0.03,0.02,0.01,0.00]},
+  {id:'redcard',title:'🟥 Red Card in Match',yes:0.00,vol:'₦1.0M',liq:'₦0.0M',spread:'₦0',history:[0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.00]},
 ];
 const ORDER_BOOK_DATA={asks:[{p:'₦87',s:140,t:260},{p:'₦86',s:200,t:360},{p:'₦85',s:2400,t:4400},{p:'₦84',s:200,t:360}],bids:[{p:'₦83',s:250,t:460},{p:'₦82',s:200,t:360},{p:'₦81',s:160,t:300},{p:'₦80',s:120,t:220}]};
 const ACTIVITY=[
@@ -335,9 +352,10 @@ function switchTab(name,btn){document.querySelectorAll('.tab').forEach(t=>t.clas
 function settleCard(m){const card=document.getElementById('mc-'+m.id);if(!card) return;const pct=Math.round(m.yes*100);const bt=card.querySelector('.market-btns');if(bt) bt.innerHTML=`<div style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid ${m.yes>=0.99?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};background:${m.yes>=0.99?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'};font-family:var(--font-display);font-weight:700;font-size:13px;text-align:center;color:${m.yes>=0.99?'var(--green)':'var(--red)'};">SETTLED — ${m.yes>=0.99?'YES ✓':'NO ✗'}</div>`;drawMiniChart(m);}
 function resolveMidMatch(hg,ag,events){const settle=(id,yes)=>{const m=MARKETS.find(m=>m.id===id);if(!m||m.yes>=0.99||m.yes<=0.01) return;m.yes=yes?1:0;m.history.push(m.yes);if(m.history.length>12) m.history.shift();settleCard(m);};const firstGoal=events.find(ev=>ev.type==='Goal'),hasRed=events.some(ev=>ev.type==='Card'&&ev.detail==='Red Card'),total=hg+ag;if(firstGoal){const espFirst=firstGoal.team.name===AF_HOME;settle('esp_first',espFirst);settle('cpv_first',!espFirst);}if(ag>0){settle('esp_cs',false);settle('esp_nil',false);}if(hg>0){settle('cpv_cs',false);settle('cpv_nil',false);}if(hg>0&&ag>0) settle('btts',true);if(total>2) settle('over25',true);if(hasRed) settle('redcard',true);}
 function settleMarketsAF(fix,hg,ag){const events=fix.events||[],firstGoal=events.find(ev=>ev.type==='Goal'),hasRed=events.some(ev=>ev.type==='Card'&&ev.detail==='Red Card');MARKETS.forEach(m=>{let yes;if(m.id==='esp_win') yes=hg>ag?1:0;else if(m.id==='cpv_win') yes=ag>hg?1:0;else if(m.id==='draw') yes=hg===ag?1:0;else if(m.id==='over25') yes=(hg+ag)>2?1:0;else if(m.id==='btts') yes=(hg>0&&ag>0)?1:0;else if(m.id==='esp_cs') yes=ag===0?1:0;else if(m.id==='cpv_cs') yes=hg===0?1:0;else if(m.id==='esp_nil') yes=(hg>ag&&ag===0)?1:0;else if(m.id==='cpv_nil') yes=(ag>hg&&hg===0)?1:0;else if(m.id==='redcard') yes=hasRed?1:0;else if(m.id==='esp_first') yes=firstGoal?(firstGoal.team.name===AF_HOME?1:0):0;else if(m.id==='cpv_first') yes=firstGoal?(firstGoal.team.name===AF_AWAY?1:0):0;else return;m.yes=yes;});renderMarkets();}
-renderMarkets();renderOrderBook();renderActivity();renderTrades();updateOrderSummary();updateCountdown();
+window.OVER_GOALS=[{t:1.5,p:0},{t:2.5,p:0},{t:3.5,p:0},{t:4.5,p:0},{t:5.5,p:0}]; window.OG_SETTLED=true;
+renderMarkets();renderOrderBook();renderActivity();renderTrades();updateOrderSummary();updateCountdown();initOg();
 setInterval(updateLiveData,4000);setInterval(updateCountdown,1000);
-const seenEvents=new Set();let matchDone=false;
+const seenEvents=new Set();let matchDone=true;
 async function fetchLiveMatch(){if(matchDone||!AF_FIXTURE) return;try{const res=await fetch('https://v3.football.api-sports.io/fixtures?id='+AF_FIXTURE,{headers:{'x-apisports-key':AF_KEY}});const data=await res.json();if(!data.response?.length) return;applyFixture(data.response[0]);}catch(e){console.warn('[API-Football]',e);}}
 function applyFixture(fix){const s=fix.fixture.status.short,el=fix.fixture.status.elapsed,hg=fix.goals.home??0,ag=fix.goals.away??0;if(s!=='NS') document.getElementById('score-display').textContent=hg+' — '+ag;if(s==='1H'||s==='2H'||s==='ET'){document.getElementById('clock-display').textContent=el+"'";document.getElementById('match-status').textContent='● LIVE';document.getElementById('match-status').style.cssText='background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:var(--red);';resolveMidMatch(hg,ag,fix.events||[]);}else if(s==='HT'){document.getElementById('clock-display').textContent='HT';resolveMidMatch(hg,ag,fix.events||[]);}else if(s==='FT'||s==='AET'||s==='PEN'){document.getElementById('clock-display').textContent='FT';document.getElementById('match-status').textContent='✓ FULL TIME';document.getElementById('match-status').style.cssText='background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);';matchDone=true;settleMarketsAF(fix,hg,ag);}}
 (function startPolling(){const now=Date.now(),start=KICKOFF_TIME.getTime()-30*60*1000,end=KICKOFF_TIME.getTime()+130*60*1000;if(now<start||now>end) return;fetchLiveMatch();const iv=setInterval(()=>{if(matchDone){clearInterval(iv);return;}fetchLiveMatch();},60000);})();
