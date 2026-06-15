@@ -263,3 +263,32 @@ setInterval(ogDrift, 4000);
     else { const min = ct.match(/^(\d+)/); if (min) ogUpdate(total, +min[1]); }
   }).observe(scoreEl, { childList: true, subtree: true, characterData: true });
 })();
+
+// Auto-sync live-dot / live-label from status pill + clock changes
+(function() {
+  const dotEl   = document.getElementById('live-dot');
+  const labelEl = document.getElementById('live-label');
+  if (!dotEl || !labelEl) return;
+  const statusEl = document.getElementById('match-status');
+  const clockEl  = document.getElementById('clock-display');
+  function sync() {
+    const status = statusEl ? statusEl.textContent.trim() : '';
+    const clock  = clockEl  ? clockEl.textContent.trim()  : '';
+    if (status.includes('FULL TIME') || clock === 'FT') {
+      dotEl.style.cssText = 'background:var(--green);animation:none;width:7px;height:7px;border-radius:50%;';
+      labelEl.textContent = 'FULL TIME';
+      labelEl.style.color = 'var(--green)';
+    } else if (clock === 'HT') {
+      dotEl.style.cssText = 'background:var(--y);animation:none;width:7px;height:7px;border-radius:50%;';
+      labelEl.textContent = 'HALF TIME';
+      labelEl.style.color = 'var(--y)';
+    } else if (status.includes('LIVE')) {
+      dotEl.style.cssText = 'background:var(--red);animation:pulse-dot 1.5s ease-in-out infinite;width:7px;height:7px;border-radius:50%;';
+      labelEl.textContent = 'LIVE';
+      labelEl.style.color = 'var(--red)';
+    }
+  }
+  const obs = new MutationObserver(sync);
+  if (statusEl) obs.observe(statusEl, { childList: true, subtree: true, characterData: true });
+  if (clockEl)  obs.observe(clockEl,  { childList: true, subtree: true, characterData: true });
+})();
