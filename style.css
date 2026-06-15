@@ -377,3 +377,4 @@ body{-webkit-font-smoothing:antialiased;}
 .og-btn-no:hover{background:var(--red);color:#fff;}
 .og-card.settled .og-btn{opacity:.35;pointer-events:none;cursor:not-allowed;}
 .og-card.settled .og-arrow{opacity:.6;}
+.team-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
