@@ -311,3 +311,13 @@ setInterval(ogDrift, 4000);
   }
   setTimeout(tick, 4000 + Math.random() * 3000);
 })();
+
+// Sentiment bar % labels — keeps data-pct in sync so CSS ::after can render them
+(function() {
+  const els = ['bar-home','bar-draw','bar-away'].map(id => document.getElementById(id)).filter(Boolean);
+  if (!els.length) return;
+  function sync() { els.forEach(el => el.setAttribute('data-pct', Math.round(parseFloat(el.style.width) || 0) + '%')); }
+  sync();
+  const obs = new MutationObserver(sync);
+  els.forEach(el => obs.observe(el, { attributes: true, attributeFilter: ['style'] }));
+})();

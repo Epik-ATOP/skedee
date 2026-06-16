@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iraq vs Norway — 2026 FIFA World Cup | Skedee</title>
+<link rel="icon" type="image/png" href="../assets/skedee-1.png"><link rel="manifest" href="../manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{--sidebar-w:220px;--rsidebar-w:280px;--irq1:#CE1126;--irq2:#007A3D;--nor1:#EF2B2D;--nor2:#002868;--wc:#F5C800;}
+.layout{display:flex;margin-top:52px;height:calc(100vh - 52px);overflow:hidden;}
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 0;}
+.sidebar-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:0 14px;margin-bottom:6px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;font-size:13px;color:var(--text2);border-left:2px solid transparent;}
+.sidebar-item.active{color:var(--y);border-left-color:var(--y);background:rgba(245,200,0,.06);font-weight:500;}
+.sidebar-item i{width:16px;text-align:center;}
+.trending-event{margin:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;cursor:pointer;}
+.trend-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trend-vol{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.trend-change{font-family:var(--font-mono);font-size:10px;color:var(--green);}
+.match-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:20px 24px;position:relative;}
+.match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--irq1),var(--nor2),transparent);animation:scan 3s ease-in-out infinite;}
+@keyframes scan{0%,100%{opacity:.4}50%{opacity:1}}
+.match-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.league-badge{display:flex;align-items:center;gap:6px;background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.3);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--wc);letter-spacing:1px;}
+.live-indicator{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;}
+.live-dot{width:7px;height:7px;border-radius:50%;}
+.match-center{display:flex;align-items:center;justify-content:center;gap:20px;}
+.team-block{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
+.team-logo{width:72px;height:72px;border-radius:50%;border:2px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;}
+.team-name{font-family:var(--font-display);font-weight:700;font-size:16px;text-align:center;}
+.team-record{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.score-block{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.ticker-score{display:flex;align-items:center;gap:6px;font-family:var(--font-num);font-weight:600;font-size:36px;color:var(--text);letter-spacing:1px;line-height:1;}
+.ticker-abbr{font-size:20px;font-weight:700;letter-spacing:2px;}
+.ticker-sep{color:var(--y);font-size:32px;font-weight:700;padding:0 4px;}
+.match-clock{font-family:var(--font-mono);font-size:13px;color:var(--y);background:rgba(245,200,0,.1);border:1px solid var(--border2);border-radius:6px;padding:4px 10px;display:flex;align-items:center;gap:5px;}
+.match-status-pill{font-family:var(--font-mono);font-size:10px;font-weight:700;border-radius:4px;padding:3px 8px;}
+.match-meta{margin-top:10px;padding-top:10px;border-top:1px solid var(--border3);display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.meta-item{display:flex;align-items:center;gap:6px;color:var(--text3);font-size:11px;}
+.kickoff-timer{background:linear-gradient(135deg,rgba(206,17,38,.06),rgba(0,40,104,.06));border:1px solid rgba(245,200,0,.25);border-radius:var(--radius-lg);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.kickoff-title{font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--text);}
+.kickoff-sub{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.timer-block{display:flex;align-items:center;gap:6px;}
+.timer-seg{display:flex;flex-direction:column;align-items:center;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;min-width:44px;}
+.timer-num{font-family:var(--font-num);font-weight:700;font-size:22px;color:var(--wc);line-height:1;}
+.timer-label{font-family:var(--font-mono);font-size:8px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.timer-colon{font-family:var(--font-num);font-weight:700;font-size:20px;color:var(--text3);padding:0 2px;}
+.stats-row{display:flex;gap:10px;}
+.stat-box{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;}
+.stat-box-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.stat-box-val{font-family:var(--font-num);font-weight:700;font-size:26px;color:var(--text);}
+.stat-box-val.yellow{color:var(--y);}
+.stat-box-sub{font-family:var(--font-mono);font-size:10px;margin-top:3px;}
+.sentiment-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.sentiment-bar{height:10px;background:var(--bg4);border-radius:99px;overflow:hidden;display:flex;margin-bottom:8px;}
+.sentiment-home{background:linear-gradient(90deg,var(--irq1),rgba(206,17,38,.7));}
+.sentiment-draw{background:rgba(100,100,100,.4);}
+.sentiment-away{background:linear-gradient(90deg,var(--nor2),rgba(0,40,104,.8));}
+.sentiment-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;}
+.tabs-bar{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;}
+.tab{padding:6px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap;border:none;background:none;}
+.tab.active{background:var(--y);color:#000;font-weight:700;}
+.trending-strip{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px;}
+.trending-pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.trend-pill{flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:6px 12px;cursor:pointer;white-space:nowrap;}
+.trend-pill:hover{border-color:var(--y);}
+.trend-pill-name{font-size:12px;font-weight:500;color:var(--text);}
+.trend-pill-prob{font-family:var(--font-mono);font-size:10px;color:var(--y);margin-top:2px;}
+.markets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.market-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden;}
+.market-card:hover{border-color:var(--border2);background:var(--bg3);}
+.market-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.market-title{font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--text);line-height:1.3;}
+.market-vol{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.market-prob-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.market-prob{font-family:var(--font-num);font-weight:700;font-size:28px;color:var(--y);}
+.market-prob-bar{flex:1;height:5px;background:var(--bg4);border-radius:99px;overflow:hidden;}
+.market-prob-fill{height:100%;background:var(--y);border-radius:99px;transition:width .6s;}
+.market-price-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;}
+.price-chip{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;text-align:center;}
+.price-chip.yes{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04);}
+.price-chip.no{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04);}
+.price-chip-label{font-size:9px;font-family:var(--font-mono);color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.price-chip-val{font-family:var(--font-mono);font-weight:700;font-size:16px;margin-top:1px;}
+.price-chip.yes .price-chip-val{color:var(--green);}
+.price-chip.no .price-chip-val{color:var(--red);}
+.market-mini-chart{height:40px;margin-bottom:12px;}
+.market-btns{display:flex;gap:6px;}
+.btn-yes{flex:1;padding:8px;border-radius:var(--radius);border:1px solid rgba(34,197,94,.3);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;background:rgba(34,197,94,.15);color:var(--green);}
+.btn-yes:hover{background:var(--green);color:#000;}
+.btn-no{flex:1;padding:8px;border-radius:var(--radius);border:1px solid rgba(239,68,68,.3);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:12px;background:rgba(239,68,68,.1);color:var(--red);}
+.btn-no:hover{background:var(--red);color:#fff;}
+.market-stats-row{display:flex;align-items:center;gap:12px;padding-top:10px;border-top:1px solid var(--border3);margin-top:4px;}
+.mstat{flex:1;text-align:center;}
+.mstat-label{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.mstat-val{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--text2);margin-top:2px;}
+.right-sidebar{width:var(--rsidebar-w);background:var(--bg2);border-left:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:16px 12px;display:flex;flex-direction:column;gap:16px;}
+.rsidebar-section-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;}
+.ob-row{display:flex;align-items:center;gap:8px;padding:3px 0;position:relative;overflow:hidden;}
+.ob-bar{position:absolute;top:0;bottom:0;border-radius:2px;opacity:.12;}
+.ob-bar.ask{background:var(--red);right:0;}
+.ob-bar.bid{background:var(--green);left:0;}
+.ob-price{font-family:var(--font-mono);font-size:11px;font-weight:700;width:40px;}
+.ob-price.ask{color:var(--red);}
+.ob-price.bid{color:var(--green);}
+.ob-size{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto;}
+.ob-total{font-family:var(--font-mono);font-size:10px;color:var(--text3);width:40px;text-align:right;}
+.ob-spread{text-align:center;padding:6px 0;font-family:var(--font-mono);font-size:10px;color:var(--y);border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);margin:4px 0;}
+.activity-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border3);}
+.activity-item:last-child{border-bottom:none;}
+.act-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.act-dot.buy{background:var(--green);}
+.act-dot.sell{background:var(--red);}
+.act-text{flex:1;font-size:11px;color:var(--text2);line-height:1.4;}
+.act-text strong{color:var(--text);font-weight:500;}
+.act-time{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.trade-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border3);}
+.trade-side{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;}
+.trade-side.buy{background:rgba(34,197,94,.15);color:var(--green);}
+.trade-side.sell{background:rgba(239,68,68,.1);color:var(--red);}
+.trade-market{font-size:11px;color:var(--text2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trade-price{font-family:var(--font-mono);font-size:11px;color:var(--text);font-weight:600;}
+.trade-size{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.order-panel{position:fixed;bottom:0;right:var(--rsidebar-w);z-index:200;width:340px;background:var(--bg2);border:1px solid var(--border2);border-bottom:none;border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:20px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.5);}
+.order-panel.open{transform:translateY(0);}
+.order-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.order-panel-title{font-family:var(--font-display);font-weight:700;font-size:15px;}
+.btn-close{width:28px;height:28px;background:var(--bg4);border:none;border-radius:50%;cursor:pointer;color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;}
+.btn-close:hover{background:var(--red);color:#fff;}
+.order-side-tabs{display:flex;gap:6px;margin-bottom:16px;}
+.order-side-btn{flex:1;padding:8px;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:13px;background:var(--bg3);color:var(--text2);}
+.order-side-btn.yes.active{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:var(--green);}
+.order-side-btn.no.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:var(--red);}
+.btn-place{width:100%;padding:14px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--font-display);font-weight:800;font-size:15px;background:var(--y);color:#000;}
+.comment-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border3);}
+.comment-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+.comment-body{flex:1;}
+.comment-user{font-size:11px;font-weight:600;color:var(--text);}
+.comment-text{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.5;}
+.comment-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-top:3px;}
+.positions-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;}
+.positions-title{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.positions-title .badge{background:var(--y);color:#000;font-size:10px;font-weight:800;font-family:var(--font-mono);padding:2px 6px;border-radius:4px;}
+@media(max-width:900px){.sidebar{display:none;}.right-sidebar{display:none;}}
+</style>
+<link rel="stylesheet" href="../market-mobile.css">
+</head>
+<body data-theme="dark">
+<div class="topbar">
+  <a href="../index.html"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav"><a href="../search.html" class="topbar-navlink">Search Markets</a><a href="../about.html" class="topbar-navlink">About</a></div>
+  <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search markets..."></div>
+  <div class="topbar-right"><div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div><a href="../login.html"><button class="btn-auth">Log in</button></a><a href="../signup.html"><button class="btn-launch">Sign Up</button></a></div>
+</div>
+<div class="layout">
+<div class="sidebar">
+  <div class="sidebar-label">Browse</div>
+  <div class="sidebar-item active"><i class="fa-solid fa-futbol"></i>Football</div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Yesterday</div>
+  <div class="trending-event" onclick="window.location='10000046.html'"><div class="trend-name">🇩🇪 Germany vs Curaçao 🇨🇼</div><div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦124.6M</div><div class="trend-change" style="color:var(--green);">FT 7–1</div></div></div>
+  <div class="trending-event" onclick="window.location='10000050.html'"><div class="trend-name">🇪🇸 Spain vs Cabo Verde 🇨🇻</div><div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦98.4M</div><div class="trend-change" style="color:var(--green);">FT 0–0</div></div></div>
+  <div class="trending-event" onclick="window.location='10000051.html'"><div class="trend-name">🇧🇪 Belgium vs Egypt 🇪🇬</div><div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦64.2M</div><div class="trend-change">Jun 15</div></div></div>
+  <div style="height:1px;background:var(--border3);margin:12px 10px;"></div>
+  <div class="sidebar-label">Today</div>
+  <div class="trending-event" onclick="window.location='10000053.html'"><div class="trend-name">🇫🇷 France vs Senegal 🇸🇳</div><div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦112.8M</div><div class="trend-change">8:00 PM</div></div></div>
+  <div class="trending-event" style="border-color:rgba(206,17,38,.35);background:rgba(206,17,38,.04);"><div class="trend-name">🇮🇶 Iraq vs Norway 🇳🇴</div><div style="display:flex;justify-content:space-between;margin-top:3px;"><div class="trend-vol">₦88.6M</div><div class="trend-change" style="color:var(--wc);">11:00 PM</div></div></div>
+</div>
+<div class="main">
+  <div class="upcoming-banner" style="background:linear-gradient(135deg,rgba(206,17,38,.06),rgba(0,40,104,.06));border:2px solid rgba(206,17,38,.25);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:22px;position:relative;">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:160px;opacity:.04;pointer-events:none;line-height:1;user-select:none;overflow:hidden;border-radius:20px;">⚽</div>
+    <div style="width:64px;height:64px;background:rgba(239,43,45,.08);border:2px solid rgba(239,43,45,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px;">⚽</div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--wc);letter-spacing:2px;margin-bottom:6px;">🌍 FIFA WORLD CUP 2026 · GROUP I · MATCHDAY 1</div>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--text);">Iraq vs Norway</div>
+      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-top:8px;">Levi's Stadium, Santa Clara, CA · Jun 16, 2026 · 11:00 PM WAT</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 12 markets available</div>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
+      <div style="color:var(--y);font-weight:700;font-size:12px;margin-bottom:4px;">● PRE-MATCH</div>
+      <div>Jun 16, 2026</div>
+      <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;"></div>
+    </div>
+  </div>
+  <div class="match-card">
+    <div class="match-card-top">
+      <div class="league-badge">🌍 FIFA WORLD CUP 2026 · GROUP I · MATCHDAY 1</div>
+      <div style="display:flex;align-items:center;gap:12px;"><div class="live-indicator"><div class="live-dot" id="live-dot" style="background:var(--y);"></div><span id="live-label" style="color:var(--y);">PRE-MATCH</span></div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Levi's Stadium, CA</div></div>
+    </div>
+    <div class="match-center">
+      <div class="team-block">
+        <div class="team-logo" style="border-color:rgba(206,17,38,.4);background:rgba(206,17,38,.05);"><img src="https://flagcdn.com/w80/iq.png" alt="Iraq" style="width:54px;height:auto;border-radius:3px;"></div>
+        <div class="team-name" style="color:var(--irq1);">IRAQ</div>
+        <div class="team-record">Group I · The Lions</div>
+      </div>
+      <div class="score-block">
+        <div class="ticker-score">
+          <span class="ticker-abbr" style="color:var(--irq1);">IRQ</span>
+          <span class="ticker-sep" id="score-display">vs</span>
+          <span class="ticker-abbr" style="color:var(--nor2);">NOR</span>
+        </div>
+        <div class="match-clock"><i class="fa-solid fa-clock" style="font-size:11px;"></i><span id="clock-display" style="font-size:11px;">11:00 PM WAT</span></div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);">PRE-MATCH</div>
+      </div>
+      <div class="team-block">
+        <div class="team-logo" style="border-color:rgba(0,40,104,.5);background:rgba(0,40,104,.06);"><img src="https://flagcdn.com/w80/no.png" alt="Norway" style="width:54px;height:auto;border-radius:3px;"></div>
+        <div class="team-name" style="color:var(--nor2);">NORWAY</div>
+        <div class="team-record">Group I · The Vikings</div>
+      </div>
+    </div>
+    <div class="match-meta">
+      <div class="meta-item"><i class="fa-solid fa-location-dot"></i>Levi's Stadium, Santa Clara, CA</div>
+      <div class="meta-item"><i class="fa-solid fa-calendar"></i>Jun 16, 2026 · 11:00 PM WAT</div>
+      <div class="meta-item"><i class="fa-solid fa-trophy" style="color:var(--wc);"></i><span style="color:var(--wc);font-family:var(--font-mono);font-size:11px;">WORLD CUP GROUP STAGE</span></div>
+      <div class="meta-item" style="margin-left:auto;"><span style="font-family:var(--font-mono);font-size:11px;color:var(--y);font-weight:700;">₦88,600,000 vol</span></div>
+    </div>
+  </div>
+  <div class="kickoff-timer">
+    <div><div class="kickoff-title">Kickoff — Jun 16, 2026 · 11:00 PM WAT</div><div class="kickoff-sub">Markets lock at kickoff</div></div>
+    <div class="timer-block">
+      <div class="timer-seg"><div class="timer-num" id="t-h">--</div><div class="timer-label">HRS</div></div>
+      <div class="timer-colon">:</div>
+      <div class="timer-seg"><div class="timer-num" id="t-m">--</div><div class="timer-label">MIN</div></div>
+      <div class="timer-colon">:</div>
+      <div class="timer-seg"><div class="timer-num" id="t-s">--</div><div class="timer-label">SEC</div></div>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦88.6M</div><div class="stat-box-sub" style="color:var(--green);">▲ +18% in 4h</div></div>
+    <div class="stat-box"><div class="stat-box-label">Norway Win</div><div class="stat-box-val" style="color:var(--nor2);font-size:22px;" id="away-prob-stat">44%</div><div class="stat-box-sub" style="color:var(--text3);">Heavy favourite</div></div>
+    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">12</div></div>
+  </div>
+  <div class="tabs-bar">
+    <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('trades',this)">Trades</button>
+    <button class="tab" onclick="switchTab('comments',this)">Comments</button>
+    <button class="tab" onclick="switchTab('analytics',this)">Analytics</button>
+    <button class="tab" onclick="switchTab('rules',this)">Rules</button>
+  </div>
+  <div id="tab-overview">
+    <div class="sentiment-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result</div><div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦88.6M total volume</div></div>
+      <div class="sentiment-bar"><div class="sentiment-home" id="bar-home" style="width:26%;"></div><div class="sentiment-draw" id="bar-draw" style="width:30%;"></div><div class="sentiment-away" id="bar-away" style="width:44%;"></div></div>
+      <div class="sentiment-labels"><span style="color:var(--irq1);font-weight:700;" id="label-home">Iraq 26%</span><span style="font-weight:700;" id="label-draw">Draw 30%</span><span style="color:var(--nor2);font-weight:700;" id="label-away">Norway 44%</span></div>
+    </div>
+    <div class="trending-strip" style="margin-top:12px;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🔥 Hot Markets</div>
+      <div class="trending-pills">
+        <div class="trend-pill" onclick="openOrder('Norway Win (FT)','YES',44)"><div class="trend-pill-name">🇳🇴 Norway Win</div><div class="trend-pill-prob">₦44 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Over 2.5 Goals','YES',54)"><div class="trend-pill-name">Over 2.5 Goals</div><div class="trend-pill-prob">₦54 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Both Teams To Score','YES',46)"><div class="trend-pill-name">BTTS</div><div class="trend-pill-prob">₦46 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Norway First to Score','YES',62)"><div class="trend-pill-name">Norway First Goal</div><div class="trend-pill-prob">₦62 YES</div></div>
+        <div class="trend-pill" onclick="openOrder('Iraq Win (FT)','YES',26)"><div class="trend-pill-name">🇮🇶 Iraq Upset</div><div class="trend-pill-prob">₦26 YES</div></div>
+      </div>
+    </div>
+    <div class="og-card" id="og-card" style="margin-top:12px;">
+      <div class="og-title">Over X.X Goals</div>
+      <div class="og-body">
+        <div class="og-selector">
+          <button class="og-arrow" id="og-prev" onclick="ogMove(-1)">‹</button>
+          <div class="og-thresholds" id="og-thresholds"></div>
+          <button class="og-arrow" id="og-next" onclick="ogMove(1)">›</button>
+        </div>
+        <div class="og-right">
+          <div class="og-stat"><div class="og-prob" id="og-prob">—%</div><div class="og-delta" id="og-delta"></div></div>
+          <div class="og-btns">
+            <button class="og-btn og-btn-yes" id="og-btn-yes" onclick="ogBuyYes()">YES ₦—</button>
+            <button class="og-btn og-btn-no" id="og-btn-no" onclick="ogBuyNo()">NO ₦—</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="markets-grid" id="markets-grid" style="margin-top:12px;"></div>
+    <div class="positions-card"><div class="positions-title">Open Positions <span class="badge">0</span></div><div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No open positions yet</div></div>
+  </div>
+  <div id="tab-trades" style="display:none;"><div class="positions-card"><div class="positions-title">Trade History</div><div style="text-align:center;padding:24px;color:var(--text3);font-family:var(--font-mono);font-size:11px;">No trades yet</div></div></div>
+  <div id="tab-comments" style="display:none;"><div class="positions-card"><div class="positions-title">Comments <span class="badge">3</span></div><div id="comments-list"></div></div></div>
+  <div id="tab-analytics" style="display:none;"><div class="positions-card"><div class="positions-title">Probability Chart</div><div style="position:relative;height:220px;"><canvas id="probChart"></canvas></div></div></div>
+  <div id="tab-rules" style="display:none;"><div class="positions-card"><div class="positions-title">Market Rules</div><div style="color:var(--text2);font-size:13px;line-height:1.8;"><strong style="color:var(--text);">Match Winner (Full Time)</strong><br>Resolves YES if the specified team wins at 90 minutes. ET/penalties do NOT apply.</div></div></div>
+</div>
+<div class="right-sidebar">
+  <div><div class="rsidebar-section-title">Order Book — Iraq Win</div><div id="order-book-asks"></div><div class="ob-spread">Spread: ₦2 · Mid: ₦26</div><div id="order-book-bids"></div></div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;"><div class="rsidebar-section-title">Activity Feed</div><div id="activity-feed"></div></div>
+  <div style="border-top:1px solid var(--border3);padding-top:16px;"><div class="rsidebar-section-title">Recent Trades</div><div id="recent-trades"></div></div>
+</div>
+</div>
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-header"><div class="order-panel-title">Place Order</div><button class="btn-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></button></div>
+  <div id="op-market-name" style="font-size:13px;color:var(--text2);margin-bottom:12px;">Iraq Win (FT)</div>
+  <div class="order-side-tabs"><button class="order-side-btn yes active" id="op-yes-btn" onclick="setOrderSide('YES')">YES</button><button class="order-side-btn no" id="op-no-btn" onclick="setOrderSide('NO')">NO</button></div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;"><div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;"><div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-bottom:7px;">OUTCOME</div><div style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--green);" id="op-outcome-label">YES</div></div><div style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:14px 10px;text-align:center;"><div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);margin-bottom:7px;">PRICE</div><div style="font-family:var(--font-num);font-weight:700;font-size:22px;color:var(--green);" id="op-price-label">₦—</div></div></div>
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;padding:0 16px;margin-bottom:8px;"><span style="font-family:var(--font-mono);font-size:22px;color:var(--text3);margin-right:8px;">₦</span><input type="number" id="op-amount" value="5000" min="100" oninput="updateOrderSummary()" style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--font-mono);font-size:20px;font-weight:700;padding:16px 0;text-align:right;-moz-appearance:textfield;appearance:textfield;"></div>
+  <input type="hidden" id="op-price" value="26">
+  <div class="quick-amt-row"><button class="quick-amt-btn" onclick="addAmount(1000)">+₦1K</button><button class="quick-amt-btn" onclick="addAmount(2000)">+₦2K</button><button class="quick-amt-btn" onclick="addAmount(5000)">+₦5K</button><button class="quick-amt-btn" onclick="addAmount(10000)">+₦10K</button></div>
+  <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:20px;" id="op-shares-line">— shares of ₦— each</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;"><div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">PAYOUT IF CORRECT</div></div><div style="display:flex;align-items:baseline;gap:4px;"><span style="font-family:var(--font-mono);font-size:26px;color:var(--text3);">₦</span><span style="font-family:var(--font-num);font-size:34px;font-weight:700;color:var(--y);" id="op-payout">—</span></div></div>
+  <button class="btn-place" onclick="placeOrder()">Place Order — <span id="op-side-label">YES</span></button>
+</div>
+<script src="../script.js"></script>
+<script src="../sportmonks.js"></script>
+<script>
+const KICKOFF_TIME=new Date('2026-06-16T22:00:00Z');
+const AF_KEY='537fc407993fe20fd8f3ac68bee2ed2d',AF_FIXTURE=1489389,AF_HOME='Iraq',AF_AWAY='Norway';
+let orderSide='YES',walletBalance=4271250,miniCharts={},probChart;
+const MARKETS=[
+  {id:'irq_win',title:'Iraq Win (FT)',yes:0.26,vol:'₦18.8M',liq:'₦4.7M',spread:'₦5',history:[0.26,0.26,0.26,0.26,0.26,0.26,0.26,0.26,0.26,0.26]},
+  {id:'nor_win',title:'Norway Win (FT)',yes:0.44,vol:'₦28.4M',liq:'₦7.1M',spread:'₦4',history:[0.44,0.44,0.44,0.44,0.44,0.44,0.44,0.44,0.44,0.44]},
+  {id:'draw',title:'Draw (Full Time)',yes:0.30,vol:'₦16.0M',liq:'₦4.0M',spread:'₦4',history:[0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30]},
+  {id:'over25',title:'Over 2.5 Goals',yes:0.54,vol:'₦14.2M',liq:'₦3.5M',spread:'₦4',history:[0.54,0.54,0.54,0.54,0.54,0.54,0.54,0.54,0.54,0.54]},
+  {id:'btts',title:'Both Teams To Score',yes:0.46,vol:'₦8.6M',liq:'₦2.1M',spread:'₦5',history:[0.46,0.46,0.46,0.46,0.46,0.46,0.46,0.46,0.46,0.46]},
+  {id:'irq_cs',title:'Iraq Clean Sheet',yes:0.22,vol:'₦3.4M',liq:'₦0.8M',spread:'₦6',history:[0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22]},
+  {id:'nor_cs',title:'Norway Clean Sheet',yes:0.34,vol:'₦4.8M',liq:'₦1.2M',spread:'₦5',history:[0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34]},
+  {id:'irq_nil',title:'Iraq Win to Nil',yes:0.16,vol:'₦2.2M',liq:'₦0.5M',spread:'₦6',history:[0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.16]},
+  {id:'nor_nil',title:'Norway Win to Nil',yes:0.28,vol:'₦4.0M',liq:'₦1.0M',spread:'₦5',history:[0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28]},
+  {id:'irq_first',title:'Iraq First to Score',yes:0.38,vol:'₦2.8M',liq:'₦0.7M',spread:'₦5',history:[0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38]},
+  {id:'nor_first',title:'Norway First to Score',yes:0.62,vol:'₦3.8M',liq:'₦0.9M',spread:'₦4',history:[0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62]},
+  {id:'redcard',title:'🟥 Red Card in Match',yes:0.24,vol:'₦1.6M',liq:'₦0.4M',spread:'₦7',history:[0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24]},
+];
+const ORDER_BOOK_DATA={asks:[{p:'₦28',s:80,t:140},{p:'₦27',s:110,t:190},{p:'₦26',s:2600,t:4500},{p:'₦25',s:100,t:175}],bids:[{p:'₦24',s:130,t:225},{p:'₦23',s:95,t:165},{p:'₦22',s:75,t:130},{p:'₦21',s:55,t:95}]};
+const ACTIVITY=[
+  {type:'buy',text:'<strong>haaland_ng</strong> backed Norway Win YES ×4,400 at ₦44 — "Haaland will destroy this defence. Norway easy"',time:'12m'},
+  {type:'buy',text:'<strong>iraq_lions_ng</strong> backed Iraq Win YES ×2,600 at ₦26 — "Home continent, nothing to lose. Iraq can shock Norway"',time:'44m'},
+  {type:'buy',text:'<strong>odegs_fan_ng</strong> backed Norway Win YES ×3,800 at ₦44 — "Ødegaard + Haaland. Norway quality is night and day vs Iraq"',time:'1h'},
+];
+const COMMENTS=[
+  {col:'#002868',init:'NO',user:'viking_pundit_ng',text:"Norway are heavy favourites here and rightly so. Haaland is a generational striker and Ødegaard is one of the best midfielders in the world. Norway Win at ₦44 is genuine value — I'm loading heavily. Norway Win to Nil at ₦28 is also interesting.",time:'2h',likes:98},
+  {col:'#CE1126',init:'IQ',user:'iraq_faith_ng',text:"Don't count out Iraq. They're compact, disciplined, and they play for each other. A 0-0 or 1-0 isn't impossible — Draw at ₦30 is my play. Also watching the Red Card market, these Group I matches can get physical.",time:'3h',likes:41},
+  {col:'#F5C800',init:'NG',user:'wc2026_ng',text:"Norway's xG numbers coming into this tournament are elite. Haaland alone creates 1.2 xG per match. The BTTS market at ₦46 worries me for Iraq — they can score but so can Norway. I'm going Norway Win + Over 2.5.",time:'4h',likes:62},
+];
+function renderMarkets(){const grid=document.getElementById('markets-grid');grid.innerHTML='';MARKETS.forEach(m=>{const pct=Math.round(m.yes*100);const card=document.createElement('div');card.className='market-card';card.id='mc-'+m.id;card.innerHTML=`<div class="market-header"><div><div class="market-title">${m.title}</div><div class="market-vol">Vol ${m.vol} · Liq ${m.liq}</div></div></div><div class="market-prob-row"><div class="market-prob">${pct}%</div><div class="market-prob-bar"><div class="market-prob-fill" style="width:${pct}%"></div></div></div><div class="market-price-row"><div class="price-chip yes"><div class="price-chip-label">YES</div><div class="price-chip-val">₦${pct}</div></div><div class="price-chip no"><div class="price-chip-label">NO</div><div class="price-chip-val">₦${100-pct}</div></div></div><div class="market-mini-chart"><canvas id="mini-${m.id}"></canvas></div><div class="market-btns">${m.yes>=0.99||m.yes<=0.01?`<div style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid ${m.yes>=0.99?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};background:${m.yes>=0.99?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'};font-family:var(--font-display);font-weight:700;font-size:13px;text-align:center;color:${m.yes>=0.99?'var(--green)':'var(--red)'};">SETTLED — ${m.yes>=0.99?'YES ✓':'NO ✗'}</div>`:`<button class="btn-yes" onclick="openOrder('${m.title}','YES',${pct})">BUY YES ₦${pct}</button><button class="btn-no" onclick="openOrder('${m.title}','NO',${100-pct})">BUY NO ₦${100-pct}</button>`}</div><div class="market-stats-row"><div class="mstat"><div class="mstat-label">SPREAD</div><div class="mstat-val">${m.spread}</div></div><div class="mstat"><div class="mstat-label">VOL</div><div class="mstat-val">${m.vol}</div></div><div class="mstat"><div class="mstat-label">LIQ</div><div class="mstat-val">${m.liq}</div></div></div>`;grid.appendChild(card);setTimeout(()=>drawMiniChart(m),50);});}
+function drawMiniChart(m){const c=document.getElementById('mini-'+m.id);if(!c||!window.Chart) return;if(miniCharts[m.id]) miniCharts[m.id].destroy();miniCharts[m.id]=new Chart(c.getContext('2d'),{type:'line',data:{labels:m.history.map((_,i)=>i),datasets:[{data:m.history.map(v=>Math.round(v*100)),borderColor:'#22C55E',backgroundColor:'#22C55E15',borderWidth:1.5,fill:true,tension:0.4,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false,min:0,max:100}},animation:{duration:0}}});}
+function renderOrderBook(){const mx=Math.max(...ORDER_BOOK_DATA.asks.map(r=>r.t),...ORDER_BOOK_DATA.bids.map(r=>r.t));document.getElementById('order-book-asks').innerHTML=ORDER_BOOK_DATA.asks.slice().reverse().map(r=>`<div class="ob-row"><div class="ob-bar ask" style="width:${Math.round(r.t/mx*100)}%"></div><span class="ob-price ask">${r.p}</span><span class="ob-size">${r.s}</span><span class="ob-total">${r.t}</span></div>`).join('');document.getElementById('order-book-bids').innerHTML=ORDER_BOOK_DATA.bids.map(r=>`<div class="ob-row"><div class="ob-bar bid" style="width:${Math.round(r.t/mx*100)}%"></div><span class="ob-price bid">${r.p}</span><span class="ob-size">${r.s}</span><span class="ob-total">${r.t}</span></div>`).join('');}
+function renderActivity(){document.getElementById('activity-feed').innerHTML=ACTIVITY.map(a=>`<div class="activity-item"><div class="act-dot ${a.type}"></div><div class="act-text">${a.text}</div><div class="act-time">${a.time}</div></div>`).join('');}
+let recentTrades=[];
+function generateTrade(){const m=MARKETS[Math.floor(Math.random()*MARKETS.length)];return{side:Math.random()>.4?'buy':'sell',market:m.title.replace(' (Full Time)','').replace(' (FT)',''),price:Math.round(m.yes*100),size:Math.floor(Math.random()*3000+300)};}
+function renderTrades(){if(!recentTrades.length) for(let i=0;i<8;i++) recentTrades.push(generateTrade());document.getElementById('recent-trades').innerHTML=recentTrades.slice(0,8).map(t=>`<div class="trade-row"><span class="trade-side ${t.side}">${t.side.toUpperCase()}</span><span class="trade-market">${t.market}</span><span class="trade-price">₦${t.price}</span><span class="trade-size">×${t.size}</span></div>`).join('');}
+function renderComments(){const el=document.getElementById('comments-list');if(!el) return;el.innerHTML=COMMENTS.map(c=>`<div class="comment-item"><div class="comment-avatar" style="background:${c.col}22;color:${c.col}88;border:1px solid ${c.col}44;">${c.init}</div><div class="comment-body"><div class="comment-user">${c.user}</div><div class="comment-text">${c.text}</div><div class="comment-meta">${c.time} · 👍 ${c.likes}</div></div></div>`).join('');}
+function drawProbChart(){if(probChart) probChart.destroy();const tc=document.body.getAttribute('data-theme')==='light'?'#5C5A48':'#9A9880';probChart=new Chart(document.getElementById('probChart').getContext('2d'),{type:'line',data:{labels:['7d','6d','5d','4d','3d','2d','1d','12h','Now'],datasets:[{label:'Norway Win %',data:[43,43,44,44,44,44,44,44,44],borderColor:'#002868',backgroundColor:'rgba(0,40,104,0.08)',borderWidth:2,fill:true,tension:0.4,pointRadius:3},{label:'Draw %',data:[30,30,30,30,30,30,30,30,30],borderColor:'#9A9880',backgroundColor:'rgba(154,152,128,0.06)',borderWidth:1.5,fill:true,tension:0.4,pointRadius:3},{label:'Iraq Win %',data:[27,27,26,26,26,26,26,26,26],borderColor:'#CE1126',backgroundColor:'rgba(206,17,38,0.06)',borderWidth:1.5,fill:true,tension:0.4,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{color:tc,font:{size:10},usePointStyle:true}}},scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:tc,font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},min:0,max:100}}}});}
+function updateCountdown(){const now=new Date(),diff=Math.max(0,KICKOFF_TIME-now),h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000),p=n=>String(n).padStart(2,'0');document.getElementById('t-h').textContent=p(h);document.getElementById('t-m').textContent=p(m);document.getElementById('t-s').textContent=p(s);document.getElementById('banner-countdown').textContent=diff>0?`${p(h)}h ${p(m)}m left`:'Kicked off';}
+function updateLiveData(){MARKETS.forEach(m=>{if(m.yes>=0.99||m.yes<=0.01) return;m.yes=Math.max(0.02,Math.min(0.98,m.yes+(Math.random()-.5)*.004));m.history.push(m.yes);if(m.history.length>12) m.history.shift();const pct=Math.round(m.yes*100),card=document.getElementById('mc-'+m.id);if(!card) return;const yc=card.querySelector('.price-chip.yes .price-chip-val'),nc=card.querySelector('.price-chip.no .price-chip-val'),pb=card.querySelector('.market-prob'),pf=card.querySelector('.market-prob-fill'),by=card.querySelector('.btn-yes'),bn=card.querySelector('.btn-no');if(yc) yc.textContent='₦'+pct;if(nc) nc.textContent='₦'+(100-pct);if(pb) pb.textContent=pct+'%';if(pf) pf.style.width=pct+'%';if(by) by.textContent=`BUY YES ₦${pct}`;if(bn) bn.textContent=`BUY NO ₦${100-pct}`;drawMiniChart(m);});const np=Math.round(MARKETS[1].yes*100),dp=Math.round(MARKETS[2].yes*100),ip=100-np-dp;document.getElementById('away-prob-stat').textContent=np+'%';document.getElementById('bar-home').style.width=Math.max(0,ip)+'%';document.getElementById('bar-draw').style.width=dp+'%';document.getElementById('bar-away').style.width=np+'%';document.getElementById('label-home').textContent=`Iraq ${Math.max(0,ip)}%`;document.getElementById('label-draw').textContent=`Draw ${dp}%`;document.getElementById('label-away').textContent=`Norway ${np}%`;renderOrderBook();recentTrades.unshift(generateTrade());if(recentTrades.length>12) recentTrades.pop();renderTrades();}
+function openOrder(name,side,price){document.getElementById('op-market-name').textContent=name;document.getElementById('op-price').value=parseInt(price);setOrderSide(side);document.getElementById('order-panel').classList.add('open');}
+function closeOrder(){document.getElementById('order-panel').classList.remove('open');}
+function setOrderSide(side){orderSide=side;document.getElementById('op-yes-btn').classList.toggle('active',side==='YES');document.getElementById('op-no-btn').classList.toggle('active',side==='NO');document.getElementById('op-side-label').textContent=side;const oe=document.getElementById('op-outcome-label'),pe=document.getElementById('op-price-label');if(oe){oe.textContent=side;oe.style.color=side==='YES'?'var(--green)':'var(--red)';}if(pe){pe.textContent='₦'+(parseFloat(document.getElementById('op-price').value)||0);pe.style.color=side==='YES'?'var(--green)':'var(--red)';}updateOrderSummary();}
+function updateOrderSummary(){const amt=Math.min(parseFloat(document.getElementById('op-amount').value)||0,9999999),price=parseFloat(document.getElementById('op-price').value)||1,shares=Math.floor(amt/price),payout=shares*100;document.getElementById('op-shares-line').textContent=shares.toLocaleString('en-NG')+' shares of ₦'+Math.round(price)+' each';document.getElementById('op-payout').textContent=payout.toLocaleString('en-NG');}
+function placeOrder(){const amt=parseFloat(document.getElementById('op-amount').value)||0;if(amt>walletBalance){alert('Insufficient balance');return;}walletBalance-=amt;closeOrder();}
+function switchTab(name,btn){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');['overview','trades','comments','analytics','rules'].forEach(t=>{const el=document.getElementById('tab-'+t);if(el) el.style.display=t===name?'':'none';});if(name==='analytics') setTimeout(drawProbChart,50);if(name==='comments') renderComments();}
+function settleCard(m){const card=document.getElementById('mc-'+m.id);if(!card) return;const bt=card.querySelector('.market-btns');if(bt) bt.innerHTML=`<div style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid ${m.yes>=0.99?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};background:${m.yes>=0.99?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'};font-family:var(--font-display);font-weight:700;font-size:13px;text-align:center;color:${m.yes>=0.99?'var(--green)':'var(--red)'};">SETTLED — ${m.yes>=0.99?'YES ✓':'NO ✗'}</div>`;drawMiniChart(m);}
+function resolveMidMatch(hg,ag,events){const settle=(id,yes)=>{const m=MARKETS.find(m=>m.id===id);if(!m||m.yes>=0.99||m.yes<=0.01) return;m.yes=yes?1:0;m.history.push(m.yes);if(m.history.length>12) m.history.shift();settleCard(m);};const firstGoal=events.find(ev=>ev.type==='Goal'),hasRed=events.some(ev=>ev.type==='Card'&&ev.detail==='Red Card'),total=hg+ag;if(firstGoal){const irqFirst=firstGoal.team.name===AF_HOME;settle('irq_first',irqFirst);settle('nor_first',!irqFirst);}if(ag>0){settle('irq_cs',false);settle('irq_nil',false);}if(hg>0){settle('nor_cs',false);settle('nor_nil',false);}if(hg>0&&ag>0) settle('btts',true);if(total>2) settle('over25',true);if(hasRed) settle('redcard',true);}
+function settleMarketsAF(fix,hg,ag){const events=fix.events||[],firstGoal=events.find(ev=>ev.type==='Goal'),hasRed=events.some(ev=>ev.type==='Card'&&ev.detail==='Red Card');MARKETS.forEach(m=>{let yes;if(m.id==='irq_win') yes=hg>ag?1:0;else if(m.id==='nor_win') yes=ag>hg?1:0;else if(m.id==='draw') yes=hg===ag?1:0;else if(m.id==='over25') yes=(hg+ag)>2?1:0;else if(m.id==='btts') yes=(hg>0&&ag>0)?1:0;else if(m.id==='irq_cs') yes=ag===0?1:0;else if(m.id==='nor_cs') yes=hg===0?1:0;else if(m.id==='irq_nil') yes=(hg>ag&&ag===0)?1:0;else if(m.id==='nor_nil') yes=(ag>hg&&hg===0)?1:0;else if(m.id==='redcard') yes=hasRed?1:0;else if(m.id==='irq_first') yes=firstGoal?(firstGoal.team.name===AF_HOME?1:0):0;else if(m.id==='nor_first') yes=firstGoal?(firstGoal.team.name===AF_AWAY?1:0):0;else return;m.yes=yes;});renderMarkets();}
+window.OVER_GOALS=[{t:1.5,p:74,d:+5},{t:2.5,p:54,d:+7},{t:3.5,p:32,d:+4},{t:4.5,p:16,d:+2},{t:5.5,p:7,d:-1}];
+renderMarkets();renderOrderBook();renderActivity();renderTrades();updateOrderSummary();updateCountdown();initOg();
+setInterval(updateLiveData,4000);setInterval(updateCountdown,1000);
+const seenEvents=new Set();let matchDone=false;
+async function fetchLiveMatch(){if(matchDone||!AF_FIXTURE) return;try{const res=await fetch('https://v3.football.api-sports.io/fixtures?id='+AF_FIXTURE,{headers:{'x-apisports-key':AF_KEY}});const data=await res.json();if(!data.response?.length) return;applyFixture(data.response[0]);}catch(e){console.warn('[API-Football]',e);}}
+function applyFixture(fix){const s=fix.fixture.status.short,el=fix.fixture.status.elapsed,hg=fix.goals.home??0,ag=fix.goals.away??0;if(s!=='NS') document.getElementById('score-display').textContent=hg+' — '+ag;if(s==='1H'||s==='2H'||s==='ET'){document.getElementById('clock-display').textContent=el+"'";document.getElementById('match-status').textContent='● LIVE';document.getElementById('match-status').style.cssText='background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:var(--red);';resolveMidMatch(hg,ag,fix.events||[]);}else if(s==='HT'){document.getElementById('clock-display').textContent='HT';resolveMidMatch(hg,ag,fix.events||[]);}else if(s==='FT'||s==='AET'||s==='PEN'){document.getElementById('clock-display').textContent='FT';document.getElementById('match-status').textContent='✓ FULL TIME';document.getElementById('match-status').style.cssText='background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);';matchDone=true;settleMarketsAF(fix,hg,ag);}}
+(function startPolling(){const now=Date.now(),start=KICKOFF_TIME.getTime()-30*60*1000,end=KICKOFF_TIME.getTime()+130*60*1000;if(now<start||now>end) return;fetchLiveMatch();const iv=setInterval(()=>{if(matchDone){clearInterval(iv);return;}fetchLiveMatch();},60000);})();
+</script>
+<footer class="site-footer"><div class="footer-inner"><div class="footer-left"><div class="footer-logo">Skedee</div><div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div></div><div class="footer-right"><div class="footer-disclaimer">18+ | Trade Responsibly</div></div></div></footer>
+<nav class="mobile-bottom-nav"><a class="mob-nav-item" href="../index.html"><i class="fa-solid fa-chart-line"></i>Markets</a><a class="mob-nav-item" href="../search.html"><i class="fa-solid fa-magnifying-glass"></i>Search</a><button class="mob-nav-item"><i class="fa-solid fa-user"></i>Profile</button><button class="mob-nav-item" onclick="openMoreDrawer()"><i class="fa-solid fa-bars"></i>More</button></nav>
+</body>
+</html>

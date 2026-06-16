@@ -421,5 +421,35 @@
     "team2": "Uruguay",
     "team1Emoji": "🇸🇦",
     "team2Emoji": "🇺🇾"
+  },
+  {
+    "id": "10000053",
+    "emoji": "⚽",
+    "category": "FOOTBALL",
+    "title": "France vs Senegal — 2026 FIFA World Cup Group I",
+    "yesPct": 72,
+    "volume": "₦112.8M",
+    "status": "UPCOMING",
+    "closesAt": "Jun 16 · 8:00 PM WAT",
+    "isMatch": true,
+    "team1": "France",
+    "team2": "Senegal",
+    "team1Emoji": "🇫🇷",
+    "team2Emoji": "🇸🇳"
+  },
+  {
+    "id": "10000054",
+    "emoji": "⚽",
+    "category": "FOOTBALL",
+    "title": "Iraq vs Norway — 2026 FIFA World Cup Group I",
+    "yesPct": 44,
+    "volume": "₦88.6M",
+    "status": "UPCOMING",
+    "closesAt": "Jun 16 · 11:00 PM WAT",
+    "isMatch": true,
+    "team1": "Iraq",
+    "team2": "Norway",
+    "team1Emoji": "🇮🇶",
+    "team2Emoji": "🇳🇴"
   }
 ]
