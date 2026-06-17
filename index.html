@@ -442,18 +442,34 @@ const FEATURED = [
   {
     emoji:'⚽', cat:'FOOTBALL · FIFA WORLD CUP 2026', live:false,
     title:'France vs Senegal',
-    sub:'GROUP I · MATCHDAY 1 · Jun 16 · 8:00 PM WAT · MetLife Stadium, NJ',
-    prob:'72', vol:'₦112.8M', change:'PRE-MATCH', changeDir:'up',
-    bg:'⚽', yesLabel:'BUY France Win ₦72', noLabel:'BUY Senegal Win ₦10', probLabel:'FRA WIN (FT)',
+    sub:'GROUP I · MATCHDAY 1 · Jun 16 · FT · MetLife Stadium, NJ',
+    prob:'100', vol:'₦112.8M', change:'✓ FT 3–1', changeDir:'up',
+    bg:'⚽', yesLabel:'SETTLED ✓ France Win', noLabel:'SETTLED ✗ Senegal Win', probLabel:'FRA WIN (FT)',
     link:'markets/10000053.html'
   },
   {
     emoji:'⚽', cat:'FOOTBALL · FIFA WORLD CUP 2026', live:false,
     title:'Iraq vs Norway',
     sub:"GROUP I · MATCHDAY 1 · Jun 16 · 11:00 PM WAT · Levi's Stadium, CA",
-    prob:'44', vol:'₦88.6M', change:'PRE-MATCH', changeDir:'up',
-    bg:'⚽', yesLabel:'BUY Norway Win ₦44', noLabel:'BUY Iraq Win ₦26', probLabel:'NOR WIN (FT)',
+    prob:'100', vol:'₦88.6M', change:'✓ FT 1–2', changeDir:'up',
+    bg:'⚽', yesLabel:'SETTLED ✓ Norway Win', noLabel:'BUY Iraq Win ₦26', probLabel:'NOR WIN (FT)',
     link:'markets/10000054.html'
+  },
+  {
+    emoji:'⚽', cat:'FOOTBALL · FIFA WORLD CUP 2026', live:false,
+    title:'Portugal vs DR Congo',
+    sub:'GROUP K · MATCHDAY 1 · Jun 17 · 6:00 PM WAT · AT&T Stadium, TX',
+    prob:'100', vol:'₦96.4M', change:'✓ FT 2–0', changeDir:'up',
+    bg:'⚽', yesLabel:'SETTLED ✓ Portugal Win', noLabel:'BUY DR Congo Win ₦8', probLabel:'PRT WIN (FT)',
+    link:'markets/10000055.html'
+  },
+  {
+    emoji:'⚽', cat:'FOOTBALL · FIFA WORLD CUP 2026', live:false,
+    title:'England vs Croatia',
+    sub:'GROUP L · MATCHDAY 1 · Jun 17 · 9:00 PM WAT · Rose Bowl, CA',
+    prob:'58', vol:'₦104.2M', change:'PRE-MATCH', changeDir:'up',
+    bg:'⚽', yesLabel:'BUY England Win ₦58', noLabel:'BUY Croatia Win ₦18', probLabel:'ENG WIN (FT)',
+    link:'markets/10000056.html'
   },
   {
     emoji:'⚽', cat:'FOOTBALL · FIFA WORLD CUP 2026', live:false,
@@ -486,10 +502,12 @@ const ALL_MARKETS = [
   { id:10000048, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Ivory Coast vs Ecuador — Group E', badge:'upcoming', yes:0.40, vol:'₦48.2M', change:'Jun 15 · 1AM WAT', dir:'up', link:'markets/10000048.html' },
   { id:10000049, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Sweden vs Tunisia — Group F', badge:'upcoming', yes:0.52, vol:'₦36.8M', change:'Jun 15 · 4AM WAT', dir:'up', link:'markets/10000049.html' },
   { id:10000050, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Spain vs Cabo Verde — Group H (FT 0–0)', badge:'resolved', yes:0.00, vol:'₦98.4M', change:'SETTLED', dir:'flat', link:'markets/10000050.html' },
-  { id:10000051, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Belgium vs Egypt — Group G', badge:'live', yes:0.68, vol:'₦64.2M', change:'● LIVE', dir:'up', link:'markets/10000051.html' },
+  { id:10000051, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Belgium vs Egypt — Group G', badge:'resolved', yes:1.00, vol:'₦64.2M', change:'✓ FT 2–0', dir:'up', link:'markets/10000051.html' },
   { id:10000052, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Saudi Arabia vs Uruguay — Group H', badge:'upcoming', yes:0.48, vol:'₦44.6M', change:'Jun 15 · 11PM WAT', dir:'up', link:'markets/10000052.html' },
-  { id:10000053, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'France vs Senegal — Group I', badge:'upcoming', yes:0.72, vol:'₦112.8M', change:'Jun 16 · 8PM WAT', dir:'up', link:'markets/10000053.html' },
-  { id:10000054, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Iraq vs Norway — Group I', badge:'upcoming', yes:0.44, vol:'₦88.6M', change:'Jun 16 · 11PM WAT', dir:'up', link:'markets/10000054.html' },
+  { id:10000053, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'France vs Senegal — Group I (FT 3–1)', badge:'resolved', yes:1.00, vol:'₦112.8M', change:'SETTLED', dir:'flat', link:'markets/10000053.html' },
+  { id:10000054, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Iraq vs Norway — Group I', badge:'resolved', yes:1.00, vol:'₦88.6M', change:'✓ FT 1–2', dir:'up', link:'markets/10000054.html' },
+  { id:10000055, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Portugal vs DR Congo — Group K', badge:'resolved', yes:1.00, vol:'₦96.4M', change:'✓ FT 2–0', dir:'up', link:'markets/10000055.html' },
+  { id:10000056, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'England vs Croatia — Group L', badge:'upcoming', yes:0.58, vol:'₦104.2M', change:'Jun 17 · 9PM WAT', dir:'up', link:'markets/10000056.html' },
 
   // WEATHER
   { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · ENVIRONMENT', title:'Will Lagos Experience Major Flooding Before July 2026?', badge:'hot', yes:0.67, no:0.33, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html', isCommodity:true },

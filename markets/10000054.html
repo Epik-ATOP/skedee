@@ -181,7 +181,7 @@
       <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-top:5px;">Markets open now · Locks at kickoff · 12 markets available</div>
     </div>
     <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);text-align:right;flex-shrink:0;">
-      <div style="color:var(--y);font-weight:700;font-size:12px;margin-bottom:4px;">● PRE-MATCH</div>
+      <div style="color:var(--green);font-weight:700;font-size:12px;margin-bottom:4px;">✓ FT</div>
       <div>Jun 16, 2026</div>
       <div id="banner-countdown" style="color:var(--y);font-weight:700;margin-top:4px;"></div>
     </div>
@@ -189,7 +189,7 @@
   <div class="match-card">
     <div class="match-card-top">
       <div class="league-badge">🌍 FIFA WORLD CUP 2026 · GROUP I · MATCHDAY 1</div>
-      <div style="display:flex;align-items:center;gap:12px;"><div class="live-indicator"><div class="live-dot" id="live-dot" style="background:var(--y);"></div><span id="live-label" style="color:var(--y);">PRE-MATCH</span></div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Levi's Stadium, CA</div></div>
+      <div style="display:flex;align-items:center;gap:12px;"><div class="live-indicator"><div class="live-dot" id="live-dot" style="background:var(--green);"></div><span id="live-label" style="color:var(--green);">FULL TIME</span></div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);">Levi's Stadium, CA</div></div>
     </div>
     <div class="match-center">
       <div class="team-block">
@@ -200,11 +200,11 @@
       <div class="score-block">
         <div class="ticker-score">
           <span class="ticker-abbr" style="color:var(--irq1);">IRQ</span>
-          <span class="ticker-sep" id="score-display">vs</span>
+          <span class="ticker-sep" id="score-display">1 — 2</span>
           <span class="ticker-abbr" style="color:var(--nor2);">NOR</span>
         </div>
-        <div class="match-clock"><i class="fa-solid fa-clock" style="font-size:11px;"></i><span id="clock-display" style="font-size:11px;">11:00 PM WAT</span></div>
-        <div class="match-status-pill" id="match-status" style="background:rgba(245,200,0,.08);border:1px solid rgba(245,200,0,.25);color:var(--wc);">PRE-MATCH</div>
+        <div class="match-clock"><i class="fa-solid fa-clock" style="font-size:11px;"></i><span id="clock-display" style="font-size:11px;">FT</span></div>
+        <div class="match-status-pill" id="match-status" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);">✓ FULL TIME</div>
       </div>
       <div class="team-block">
         <div class="team-logo" style="border-color:rgba(0,40,104,.5);background:rgba(0,40,104,.06);"><img src="https://flagcdn.com/w80/no.png" alt="Norway" style="width:54px;height:auto;border-radius:3px;"></div>
@@ -231,8 +231,8 @@
   </div>
   <div class="stats-row">
     <div class="stat-box"><div class="stat-box-label">Total Volume</div><div class="stat-box-val yellow">₦88.6M</div><div class="stat-box-sub" style="color:var(--green);">▲ +18% in 4h</div></div>
-    <div class="stat-box"><div class="stat-box-label">Norway Win</div><div class="stat-box-val" style="color:var(--nor2);font-size:22px;" id="away-prob-stat">44%</div><div class="stat-box-sub" style="color:var(--text3);">Heavy favourite</div></div>
-    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">12</div></div>
+    <div class="stat-box"><div class="stat-box-label">Norway Win</div><div class="stat-box-val" style="color:var(--green);font-size:18px;" id="away-prob-stat">SETTLED ✓</div><div class="stat-box-sub" style="color:var(--green);">All 12 markets settled</div></div>
+    <div class="stat-box"><div class="stat-box-label">Open Markets</div><div class="stat-box-val">0</div></div>
   </div>
   <div class="tabs-bar">
     <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
@@ -244,8 +244,8 @@
   <div id="tab-overview">
     <div class="sentiment-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><div style="font-family:var(--font-display);font-weight:600;font-size:13px;">Full Time Result</div><div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">₦88.6M total volume</div></div>
-      <div class="sentiment-bar"><div class="sentiment-home" id="bar-home" style="width:26%;"></div><div class="sentiment-draw" id="bar-draw" style="width:30%;"></div><div class="sentiment-away" id="bar-away" style="width:44%;"></div></div>
-      <div class="sentiment-labels"><span style="color:var(--irq1);font-weight:700;" id="label-home">Iraq 26%</span><span style="font-weight:700;" id="label-draw">Draw 30%</span><span style="color:var(--nor2);font-weight:700;" id="label-away">Norway 44%</span></div>
+      <div class="sentiment-bar"><div class="sentiment-home" id="bar-home" style="width:0%;"></div><div class="sentiment-draw" id="bar-draw" style="width:0%;"></div><div class="sentiment-away" id="bar-away" style="width:100%;"></div></div>
+      <div class="sentiment-labels"><span style="color:var(--red);font-weight:700;" id="label-home">Iraq NO ✗</span><span style="color:var(--red);font-weight:700;" id="label-draw">Draw NO ✗</span><span style="color:var(--green);font-weight:700;" id="label-away">Norway YES ✓</span></div>
     </div>
     <div class="trending-strip" style="margin-top:12px;">
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🔥 Hot Markets</div>
@@ -307,18 +307,18 @@ const KICKOFF_TIME=new Date('2026-06-16T22:00:00Z');
 const AF_KEY='537fc407993fe20fd8f3ac68bee2ed2d',AF_FIXTURE=1489389,AF_HOME='Iraq',AF_AWAY='Norway';
 let orderSide='YES',walletBalance=4271250,miniCharts={},probChart;
 const MARKETS=[
-  {id:'irq_win',title:'Iraq Win (FT)',yes:0.26,vol:'₦18.8M',liq:'₦4.7M',spread:'₦5',history:[0.26,0.26,0.26,0.26,0.26,0.26,0.26,0.26,0.26,0.26]},
-  {id:'nor_win',title:'Norway Win (FT)',yes:0.44,vol:'₦28.4M',liq:'₦7.1M',spread:'₦4',history:[0.44,0.44,0.44,0.44,0.44,0.44,0.44,0.44,0.44,0.44]},
-  {id:'draw',title:'Draw (Full Time)',yes:0.30,vol:'₦16.0M',liq:'₦4.0M',spread:'₦4',history:[0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30]},
-  {id:'over25',title:'Over 2.5 Goals',yes:0.54,vol:'₦14.2M',liq:'₦3.5M',spread:'₦4',history:[0.54,0.54,0.54,0.54,0.54,0.54,0.54,0.54,0.54,0.54]},
-  {id:'btts',title:'Both Teams To Score',yes:0.46,vol:'₦8.6M',liq:'₦2.1M',spread:'₦5',history:[0.46,0.46,0.46,0.46,0.46,0.46,0.46,0.46,0.46,0.46]},
-  {id:'irq_cs',title:'Iraq Clean Sheet',yes:0.22,vol:'₦3.4M',liq:'₦0.8M',spread:'₦6',history:[0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22]},
-  {id:'nor_cs',title:'Norway Clean Sheet',yes:0.34,vol:'₦4.8M',liq:'₦1.2M',spread:'₦5',history:[0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34]},
-  {id:'irq_nil',title:'Iraq Win to Nil',yes:0.16,vol:'₦2.2M',liq:'₦0.5M',spread:'₦6',history:[0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.16]},
-  {id:'nor_nil',title:'Norway Win to Nil',yes:0.28,vol:'₦4.0M',liq:'₦1.0M',spread:'₦5',history:[0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28]},
-  {id:'irq_first',title:'Iraq First to Score',yes:0.38,vol:'₦2.8M',liq:'₦0.7M',spread:'₦5',history:[0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38,0.38]},
-  {id:'nor_first',title:'Norway First to Score',yes:0.62,vol:'₦3.8M',liq:'₦0.9M',spread:'₦4',history:[0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62,0.62]},
-  {id:'redcard',title:'🟥 Red Card in Match',yes:0.24,vol:'₦1.6M',liq:'₦0.4M',spread:'₦7',history:[0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24]},
+  {id:'irq_win',title:'Iraq Win (FT)',yes:0.00,vol:'₦18.8M',liq:'₦4.7M',spread:'₦5',history:[0.26,0.26,0.24,0.18,0.10,0.04,0.01,0.00,0.00,0.00]},
+  {id:'nor_win',title:'Norway Win (FT)',yes:1.00,vol:'₦28.4M',liq:'₦7.1M',spread:'₦4',history:[0.44,0.46,0.54,0.66,0.78,0.88,0.95,0.99,1.00,1.00]},
+  {id:'draw',title:'Draw (Full Time)',yes:0.00,vol:'₦16.0M',liq:'₦4.0M',spread:'₦4',history:[0.30,0.28,0.22,0.16,0.10,0.06,0.02,0.01,0.00,0.00]},
+  {id:'over25',title:'Over 2.5 Goals',yes:1.00,vol:'₦14.2M',liq:'₦3.5M',spread:'₦4',history:[0.54,0.56,0.64,0.76,0.88,0.95,0.98,1.00,1.00,1.00]},
+  {id:'btts',title:'Both Teams To Score',yes:1.00,vol:'₦8.6M',liq:'₦2.1M',spread:'₦5',history:[0.46,0.48,0.56,0.68,0.80,0.90,0.96,1.00,1.00,1.00]},
+  {id:'irq_cs',title:'Iraq Clean Sheet',yes:0.00,vol:'₦3.4M',liq:'₦0.8M',spread:'₦6',history:[0.22,0.20,0.14,0.08,0.03,0.01,0.00,0.00,0.00,0.00]},
+  {id:'nor_cs',title:'Norway Clean Sheet',yes:0.00,vol:'₦4.8M',liq:'₦1.2M',spread:'₦5',history:[0.34,0.32,0.24,0.14,0.06,0.02,0.01,0.00,0.00,0.00]},
+  {id:'irq_nil',title:'Iraq Win to Nil',yes:0.00,vol:'₦2.2M',liq:'₦0.5M',spread:'₦6',history:[0.16,0.14,0.10,0.05,0.02,0.01,0.00,0.00,0.00,0.00]},
+  {id:'nor_nil',title:'Norway Win to Nil',yes:0.00,vol:'₦4.0M',liq:'₦1.0M',spread:'₦5',history:[0.28,0.26,0.20,0.12,0.06,0.02,0.01,0.00,0.00,0.00]},
+  {id:'irq_first',title:'Iraq First to Score',yes:0.00,vol:'₦2.8M',liq:'₦0.7M',spread:'₦5',history:[0.38,0.36,0.28,0.18,0.08,0.03,0.01,0.00,0.00,0.00]},
+  {id:'nor_first',title:'Norway First to Score',yes:1.00,vol:'₦3.8M',liq:'₦0.9M',spread:'₦4',history:[0.62,0.64,0.72,0.82,0.92,0.97,0.99,1.00,1.00,1.00]},
+  {id:'redcard',title:'🟥 Red Card in Match',yes:0.00,vol:'₦1.6M',liq:'₦0.4M',spread:'₦7',history:[0.24,0.22,0.18,0.12,0.06,0.02,0.01,0.00,0.00,0.00]},
 ];
 const ORDER_BOOK_DATA={asks:[{p:'₦28',s:80,t:140},{p:'₦27',s:110,t:190},{p:'₦26',s:2600,t:4500},{p:'₦25',s:100,t:175}],bids:[{p:'₦24',s:130,t:225},{p:'₦23',s:95,t:165},{p:'₦22',s:75,t:130},{p:'₦21',s:55,t:95}]};
 const ACTIVITY=[
@@ -351,10 +351,10 @@ function switchTab(name,btn){document.querySelectorAll('.tab').forEach(t=>t.clas
 function settleCard(m){const card=document.getElementById('mc-'+m.id);if(!card) return;const bt=card.querySelector('.market-btns');if(bt) bt.innerHTML=`<div style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid ${m.yes>=0.99?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};background:${m.yes>=0.99?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'};font-family:var(--font-display);font-weight:700;font-size:13px;text-align:center;color:${m.yes>=0.99?'var(--green)':'var(--red)'};">SETTLED — ${m.yes>=0.99?'YES ✓':'NO ✗'}</div>`;drawMiniChart(m);}
 function resolveMidMatch(hg,ag,events){const settle=(id,yes)=>{const m=MARKETS.find(m=>m.id===id);if(!m||m.yes>=0.99||m.yes<=0.01) return;m.yes=yes?1:0;m.history.push(m.yes);if(m.history.length>12) m.history.shift();settleCard(m);};const firstGoal=events.find(ev=>ev.type==='Goal'),hasRed=events.some(ev=>ev.type==='Card'&&ev.detail==='Red Card'),total=hg+ag;if(firstGoal){const irqFirst=firstGoal.team.name===AF_HOME;settle('irq_first',irqFirst);settle('nor_first',!irqFirst);}if(ag>0){settle('irq_cs',false);settle('irq_nil',false);}if(hg>0){settle('nor_cs',false);settle('nor_nil',false);}if(hg>0&&ag>0) settle('btts',true);if(total>2) settle('over25',true);if(hasRed) settle('redcard',true);}
 function settleMarketsAF(fix,hg,ag){const events=fix.events||[],firstGoal=events.find(ev=>ev.type==='Goal'),hasRed=events.some(ev=>ev.type==='Card'&&ev.detail==='Red Card');MARKETS.forEach(m=>{let yes;if(m.id==='irq_win') yes=hg>ag?1:0;else if(m.id==='nor_win') yes=ag>hg?1:0;else if(m.id==='draw') yes=hg===ag?1:0;else if(m.id==='over25') yes=(hg+ag)>2?1:0;else if(m.id==='btts') yes=(hg>0&&ag>0)?1:0;else if(m.id==='irq_cs') yes=ag===0?1:0;else if(m.id==='nor_cs') yes=hg===0?1:0;else if(m.id==='irq_nil') yes=(hg>ag&&ag===0)?1:0;else if(m.id==='nor_nil') yes=(ag>hg&&hg===0)?1:0;else if(m.id==='redcard') yes=hasRed?1:0;else if(m.id==='irq_first') yes=firstGoal?(firstGoal.team.name===AF_HOME?1:0):0;else if(m.id==='nor_first') yes=firstGoal?(firstGoal.team.name===AF_AWAY?1:0):0;else return;m.yes=yes;});renderMarkets();}
-window.OVER_GOALS=[{t:1.5,p:74,d:+5},{t:2.5,p:54,d:+7},{t:3.5,p:32,d:+4},{t:4.5,p:16,d:+2},{t:5.5,p:7,d:-1}];
+window.OVER_GOALS=[{t:1.5,p:100},{t:2.5,p:100},{t:3.5,p:0},{t:4.5,p:0},{t:5.5,p:0}];window.OG_SETTLED=true;
 renderMarkets();renderOrderBook();renderActivity();renderTrades();updateOrderSummary();updateCountdown();initOg();
 setInterval(updateLiveData,4000);setInterval(updateCountdown,1000);
-const seenEvents=new Set();let matchDone=false;
+const seenEvents=new Set();let matchDone=true;
 async function fetchLiveMatch(){if(matchDone||!AF_FIXTURE) return;try{const res=await fetch('https://v3.football.api-sports.io/fixtures?id='+AF_FIXTURE,{headers:{'x-apisports-key':AF_KEY}});const data=await res.json();if(!data.response?.length) return;applyFixture(data.response[0]);}catch(e){console.warn('[API-Football]',e);}}
 function applyFixture(fix){const s=fix.fixture.status.short,el=fix.fixture.status.elapsed,hg=fix.goals.home??0,ag=fix.goals.away??0;if(s!=='NS') document.getElementById('score-display').textContent=hg+' — '+ag;if(s==='1H'||s==='2H'||s==='ET'){document.getElementById('clock-display').textContent=el+"'";document.getElementById('match-status').textContent='● LIVE';document.getElementById('match-status').style.cssText='background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:var(--red);';resolveMidMatch(hg,ag,fix.events||[]);}else if(s==='HT'){document.getElementById('clock-display').textContent='HT';resolveMidMatch(hg,ag,fix.events||[]);}else if(s==='FT'||s==='AET'||s==='PEN'){document.getElementById('clock-display').textContent='FT';document.getElementById('match-status').textContent='✓ FULL TIME';document.getElementById('match-status').style.cssText='background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);';matchDone=true;settleMarketsAF(fix,hg,ag);}}
 (function startPolling(){const now=Date.now(),start=KICKOFF_TIME.getTime()-30*60*1000,end=KICKOFF_TIME.getTime()+130*60*1000;if(now<start||now>end) return;fetchLiveMatch();const iv=setInterval(()=>{if(matchDone){clearInterval(iv);return;}fetchLiveMatch();},60000);})();
