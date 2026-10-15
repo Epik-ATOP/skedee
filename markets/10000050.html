@@ -305,7 +305,7 @@
 <script src="../sportmonks.js"></script>
 <script>
 const KICKOFF_TIME=new Date('2026-06-15T16:00:00Z');
-const AF_KEY='537fc407993fe20fd8f3ac68bee2ed2d',AF_FIXTURE=1489380,AF_HOME='Spain',AF_AWAY='Cape Verde Islands';
+const SM_PROXY='https://skedee-sm.atypeofperson08.workers.dev',AF_FIXTURE=1489380,AF_HOME='Spain',AF_AWAY='Cape Verde Islands';
 let orderSide='YES',walletBalance=4271250,miniCharts={},probChart;
 const MARKETS=[
   {id:'esp_win',title:'Spain Win (FT)',yes:0.00,vol:'₦42.4M',liq:'₦0.0M',spread:'₦0',history:[0.84,0.85,0.85,0.84,0.82,0.78,0.70,0.55,0.30,0.00]},
@@ -356,7 +356,7 @@ window.OVER_GOALS=[{t:1.5,p:0},{t:2.5,p:0},{t:3.5,p:0},{t:4.5,p:0},{t:5.5,p:0}];
 renderMarkets();renderOrderBook();renderActivity();renderTrades();updateOrderSummary();updateCountdown();initOg();
 setInterval(updateLiveData,4000);setInterval(updateCountdown,1000);
 const seenEvents=new Set();let matchDone=true;
-async function fetchLiveMatch(){if(matchDone||!AF_FIXTURE) return;try{const res=await fetch('https://v3.football.api-sports.io/fixtures?id='+AF_FIXTURE,{headers:{'x-apisports-key':AF_KEY}});const data=await res.json();if(!data.response?.length) return;applyFixture(data.response[0]);}catch(e){console.warn('[API-Football]',e);}}
+async function fetchLiveMatch(){if(matchDone||!AF_FIXTURE) return;try{const res=await fetch(SM_PROXY+'/football/fixtures?id='+AF_FIXTURE);const data=await res.json();if(!data.response?.length) return;applyFixture(data.response[0]);}catch(e){console.warn('[API-Football]',e);}}
 function applyFixture(fix){const s=fix.fixture.status.short,el=fix.fixture.status.elapsed,hg=fix.goals.home??0,ag=fix.goals.away??0;if(s!=='NS') document.getElementById('score-display').textContent=hg+' — '+ag;if(s==='1H'||s==='2H'||s==='ET'){document.getElementById('clock-display').textContent=el+"'";document.getElementById('match-status').textContent='● LIVE';document.getElementById('match-status').style.cssText='background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:var(--red);';resolveMidMatch(hg,ag,fix.events||[]);}else if(s==='HT'){document.getElementById('clock-display').textContent='HT';resolveMidMatch(hg,ag,fix.events||[]);}else if(s==='FT'||s==='AET'||s==='PEN'){document.getElementById('clock-display').textContent='FT';document.getElementById('match-status').textContent='✓ FULL TIME';document.getElementById('match-status').style.cssText='background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green);';matchDone=true;settleMarketsAF(fix,hg,ag);}}
 (function startPolling(){const now=Date.now(),start=KICKOFF_TIME.getTime()-30*60*1000,end=KICKOFF_TIME.getTime()+130*60*1000;if(now<start||now>end) return;fetchLiveMatch();const iv=setInterval(()=>{if(matchDone){clearInterval(iv);return;}fetchLiveMatch();},60000);})();
 </script>

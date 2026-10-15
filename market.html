@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skedee — Market</title>
+<link rel="icon" type="image/png" href="assets/skedee-1.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F5C800">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<style>
+/* Reusable market page — driven entirely by markets-data.js (?id=...).
+   Self-contained on purpose: script.js throws on pages without #more-overlay. */
+
+/* ── TOPBAR EXTRAS ── */
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--y);box-shadow:0 0 8px rgba(245,200,0,.6);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+/* ── PAGE ── */
+.mk-wrap{max-width:900px;margin:0 auto;padding:72px 20px 60px;}
+.mk-crumb{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;margin-bottom:16px;}
+.mk-crumb a{color:var(--text3);text-decoration:none;transition:color .15s;}
+.mk-crumb a:hover{color:var(--y);}
+
+.mk-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:26px;position:relative;overflow:hidden;}
+.mk-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--y),transparent);}
+.mk-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;}
+.mk-cat{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--y);text-transform:uppercase;}
+.mk-badge{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:.5px;white-space:nowrap;}
+.mk-badge.live{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25);}
+.mk-badge.upcoming{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.25);}
+.mk-badge.hot{background:rgba(245,200,0,.12);color:var(--y);border:1px solid var(--border2);}
+.mk-badge.new{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.25);}
+.mk-badge.determined{background:rgba(245,200,0,.12);color:var(--y);border:1px solid rgba(245,200,0,.4);}
+
+.mk-title{font-family:var(--font-display);font-weight:800;font-size:clamp(20px,3vw,30px);letter-spacing:-.5px;line-height:1.2;margin-bottom:18px;color:var(--text);}
+.mk-probrow{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.mk-prob{font-family:var(--font-num);font-weight:700;font-size:44px;line-height:1;color:var(--y);min-width:86px;}
+.mk-probbar{flex:1;height:8px;background:var(--bg4);border-radius:6px;overflow:hidden;}
+.mk-probbar>div{height:100%;background:linear-gradient(90deg,var(--y),var(--y2));border-radius:6px;transition:width .6s ease;}
+
+.mk-yesno{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.mk-yn{border-radius:var(--radius);padding:14px;display:flex;flex-direction:column;gap:6px;}
+.mk-yn.yes{border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.06);}
+.mk-yn.no{border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.05);}
+.mk-yn-label{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;}
+.mk-yn.yes .mk-yn-label{color:var(--green);} .mk-yn.no .mk-yn-label{color:var(--red);}
+.mk-yn-val{font-family:var(--font-num);font-weight:700;font-size:28px;color:var(--text);}
+.mk-yn button{margin-top:6px;padding:10px;border-radius:var(--radius);font-family:var(--font-display);font-weight:700;font-size:13px;cursor:pointer;transition:all .15s;border:1px solid;}
+.mk-yn.yes button{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.12);color:var(--green);}
+.mk-yn.yes button:hover{background:var(--green);color:#000;}
+.mk-yn.no button{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.1);color:var(--red);}
+.mk-yn.no button:hover{background:var(--red);color:#fff;}
+
+.mk-meta{display:flex;flex-wrap:wrap;gap:8px;}
+.mk-chip{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border3);border-radius:20px;padding:5px 11px;font-family:var(--font-mono);font-size:10px;color:var(--text2);}
+.mk-chip.up{color:var(--green);} .mk-chip.down{color:var(--red);} .mk-chip cd-val{color:var(--y);}
+.mk-note{margin-top:16px;font-family:var(--font-mono);font-size:9px;color:var(--text3);line-height:1.6;}
+
+.mk-sec-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin:28px 0 12px;}
+.mk-rel{display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:8px;text-decoration:none;transition:all .15s;}
+.mk-rel:hover{border-color:var(--y);background:rgba(245,200,0,.04);}
+.mk-rel-emoji{font-size:20px;}
+.mk-rel-title{font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--text);margin-bottom:2px;}
+.mk-rel-meta{font-family:var(--font-mono);font-size:9px;color:var(--text3);}
+.mk-rel-prob{margin-left:auto;font-family:var(--font-num);font-weight:700;font-size:20px;color:var(--y);}
+
+.mk-notfound{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:60px 30px;text-align:center;}
+.mk-nf-icon{font-size:40px;margin-bottom:14px;}
+.mk-nf-title{font-family:var(--font-display);font-weight:800;font-size:20px;color:var(--text);margin-bottom:8px;}
+.mk-nf-sub{font-size:13px;color:var(--text2);margin-bottom:22px;}
+.mk-nf-btn{display:inline-flex;align-items:center;gap:8px;background:var(--y);color:#000;font-family:var(--font-display);font-weight:700;font-size:13px;padding:11px 24px;border-radius:var(--radius);text-decoration:none;transition:opacity .15s;}
+.mk-nf-btn:hover{opacity:.85;}
+
+/* ── ORDER MODAL ── */
+.om-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px;}
+.om-backdrop.open{display:flex;}
+.om-card{width:100%;max-width:380px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:22px;position:relative;}
+.om-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.om-title{font-family:var(--font-display);font-weight:800;font-size:16px;color:var(--text);}
+.om-close{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:var(--r);background:var(--bg3);color:var(--text2);cursor:pointer;font-size:12px;transition:all .15s;}
+.om-close:hover{color:var(--red);border-color:var(--red);}
+.om-side{display:inline-block;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:1.5px;padding:4px 10px;border-radius:20px;margin-bottom:12px;}
+.om-side.yes{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.om-side.no{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.3);}
+.om-price-row{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:10px;color:var(--text2);margin-bottom:12px;}
+.om-price-row b{font-family:var(--font-num);font-size:18px;color:var(--y);}
+.om-input{width:100%;box-sizing:border-box;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;color:var(--text);font-family:var(--font-num);font-weight:600;font-size:18px;outline:none;transition:border-color .15s;}
+.om-input:focus{border-color:var(--y);}
+.om-quick{display:flex;gap:6px;margin:10px 0 14px;}
+.om-quick button{flex:1;padding:8px 0;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);color:var(--text2);font-family:var(--font-mono);font-size:10px;cursor:pointer;transition:all .15s;}
+.om-quick button:hover{border-color:var(--y);color:var(--y);}
+.om-summary{border-top:1px solid var(--border3);padding-top:12px;margin-bottom:14px;}
+.om-summary>div{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:10px;color:var(--text2);margin-bottom:7px;}
+.om-summary b{color:var(--text);font-family:var(--font-num);font-size:15px;}
+.om-place{width:100%;padding:13px;border:none;border-radius:var(--radius);background:var(--y);color:#000;font-family:var(--font-display);font-weight:800;font-size:14px;cursor:pointer;transition:opacity .15s;}
+.om-place:hover{opacity:.85;}
+.om-note{margin-top:10px;font-family:var(--font-mono);font-size:8px;color:var(--text3);text-align:center;line-height:1.5;}
+.od-icon{width:52px;height:52px;border-radius:50%;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35);color:var(--green);font-size:22px;display:flex;align-items:center;justify-content:center;margin:6px auto 14px;}
+.od-title{font-family:var(--font-display);font-weight:800;font-size:17px;color:var(--text);text-align:center;margin-bottom:6px;}
+.od-sub{font-family:var(--font-mono);font-size:10px;color:var(--text2);text-align:center;margin-bottom:18px;line-height:1.5;}
+.od-link{display:block;text-align:center;margin-top:12px;font-family:var(--font-mono);font-size:10px;color:var(--y);text-decoration:none;}
+
+@media(max-width:640px){
+  .mk-wrap{padding:64px 12px 80px;}
+  .mk-card{padding:18px;}
+  .mk-yesno{grid-template-columns:1fr;}
+  .mk-prob{font-size:36px;min-width:70px;}
+  .search-bar{display:none;}
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html" style="text-decoration:none;"><div class="logo"><div class="logo-dot"></div>Skedee</div></a>
+  <div class="topbar-nav">
+    <a href="search.html" class="topbar-navlink">Search Markets</a>
+    <a href="about.html" class="topbar-navlink">About</a>
+    <a href="faq.html" class="topbar-navlink">FAQ</a>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search markets..." onkeydown="if(event.key==='Enter')location.href='search.html'">
+  </div>
+  <div class="topbar-right">
+    <div class="wallet-pill"><span class="wallet-label">Balance</span><span class="wallet-bal" id="wallet-top">₦4,271,250</span></div>
+    <div class="theme-btn" onclick="toggleTheme()"><i class="fa-solid fa-sun" id="theme-icon"></i></div>
+    <a href="login.html"><button class="btn-auth">Log in</button></a>
+    <a href="signup.html"><button class="btn-launch">Sign Up</button></a>
+  </div>
+</div>
+
+<!-- MARKET (rendered by JS from markets-data.js) -->
+<main class="mk-wrap">
+  <div class="mk-crumb"><a href="index.html">← ALL MARKETS</a></div>
+  <div id="market-root"></div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Skedee</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="about.html">About</a>
+          <a href="brand.html">Brand</a>
+          <a href="payment.html">Payment</a>
+          <a href="faq.html">FAQ</a>
+          <a href="policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="report.html" style="color:var(--red);">Report an Issue</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SOCIALS</div>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter (X)</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Skedee Inc. All Rights Reserved</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-disclaimer">18+ | Trade Responsibly</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <div class="mbn-items">
+    <a href="index.html" class="mbn-item"><i class="fa-solid fa-chart-line"></i><span>Markets</span></a>
+    <a href="search.html" class="mbn-item"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></a>
+    <a href="account.html" class="mbn-item"><i class="fa-solid fa-wallet"></i><span>Wallet</span></a>
+    <a href="profile.html" class="mbn-item"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+  </div>
+</nav>
+
+<!-- ORDER MODAL -->
+<div class="om-backdrop" id="order-backdrop" onclick="closeOrder()">
+  <div class="om-card" onclick="event.stopPropagation()">
+    <div class="om-head">
+      <div class="om-title">Place Order</div>
+      <div class="om-close" onclick="closeOrder()"><i class="fa-solid fa-xmark"></i></div>
+    </div>
+    <div class="om-side yes" id="om-side">YES</div>
+    <div class="om-price-row"><span>PRICE PER SHARE</span><b id="om-price">₦0</b></div>
+    <input class="om-input" id="op-amount" type="number" min="0" step="100" placeholder="Amount in ₦" oninput="updateOrderSummary()">
+    <div class="om-quick">
+      <button onclick="addAmount(1000)">+₦1K</button>
+      <button onclick="addAmount(5000)">+₦5K</button>
+      <button onclick="addAmount(10000)">+₦10K</button>
+      <button onclick="addAmount(50000)">+₦50K</button>
+    </div>
+    <div class="om-summary">
+      <div><span>SHARES</span><b id="om-shares">0</b></div>
+      <div><span>POTENTIAL PAYOUT</span><b id="om-payout">₦0</b></div>
+      <div><span>WALLET</span><b id="wallet-modal">₦4,271,250</b></div>
+    </div>
+    <button class="om-place" onclick="placeOrder()">Place Order</button>
+    <div class="om-note">DEMO BUILD — ORDERS ARE SIMULATED AND RESET ON REFRESH. NO REAL FUNDS MOVE.</div>
+  </div>
+</div>
+
+<!-- ORDER SUCCESS -->
+<div class="om-backdrop" id="done-backdrop">
+  <div class="om-card" onclick="event.stopPropagation()">
+    <div class="od-icon"><i class="fa-solid fa-check"></i></div>
+    <div class="od-title">Order placed</div>
+    <div class="od-sub" id="done-text"></div>
+    <button class="om-place" onclick="closeDone()">Continue</button>
+    <a class="od-link" href="index.html">Back to markets</a>
+  </div>
+</div>
+
+<script src="markets-data.js"></script>
+<script>
+// ── THEME (mirrors script.js behaviour without its #more-overlay dependency) ──
+function syncThemeIcon() {
+  const dark = document.body.getAttribute('data-theme') !== 'light';
+  const el = document.getElementById('theme-icon');
+  if (el) el.className = dark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+}
+(function initTheme() {
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  const apply = () => { document.body.setAttribute('data-theme', mq.matches ? 'dark' : 'light'); syncThemeIcon(); };
+  apply();
+  mq.addEventListener('change', apply);
+})();
+function toggleTheme() {
+  const dark = document.body.getAttribute('data-theme') !== 'light';
+  document.body.setAttribute('data-theme', dark ? 'light' : 'dark');
+  syncThemeIcon();
+}
+
+// ── RENDER MARKET FROM THE SHARED CATALOGUE ──
+const $ = id => document.getElementById(id);
+const mid = new URLSearchParams(location.search).get('id');
+const M = (window.SKEDII_MARKETS || []).find(x => String(x.id) === mid);
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+}
+function naira(n) { return '₦' + Number(n).toLocaleString('en-NG'); }
+
+const BADGE = {
+  live:       { cls:'live',        txt:'● LIVE' },
+  upcoming:   { cls:'upcoming',    txt:'UPCOMING' },
+  hot:        { cls:'hot',         txt:'🔥 HOT' },
+  resolved:   { cls:'determined',  txt:'🏁 SETTLED' },
+  determined: { cls:'determined',  txt:'🏁 SETTLED' }
+};
+
+let walletBalance = 4271250;
+let side = 'YES', price = 0;
+
+if (!M) {
+  document.title = 'Market not found — Skedee';
+  $('market-root').innerHTML = `
+    <div class="mk-notfound">
+      <div class="mk-nf-icon">🔍</div>
+      <div class="mk-nf-title">Market not found</div>
+      <div class="mk-nf-sub">This market id doesn't exist (or hasn't launched yet).</div>
+      <a class="mk-nf-btn" href="index.html">Browse all markets <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i></a>
+    </div>`;
+} else {
+  document.title = M.title + ' — Skedee';
+  const pct = Math.round(M.yes * 100);
+  const badge = BADGE[M.badge] || { cls:'new', txt:'✦ NEW' };
+  const changeIcon = M.dir === 'up' ? '▲' : M.dir === 'down' ? '▼' : '—';
+
+  let countdownHtml = '';
+  if (M.closes) {
+    const when = new Date(M.closes);
+    const label = when.toLocaleDateString('en-NG', { month:'short', day:'numeric', year:'numeric' })
+                + ' · ' + when.toLocaleTimeString('en-NG', { hour:'2-digit', minute:'2-digit', hour12:false });
+    countdownHtml = `<div class="mk-chip"><i class="fa-regular fa-clock"></i> <span id="countdown-val">closes ${label}</span></div>`;
+  }
+
+  const related = (window.SKEDII_MARKETS || [])
+    .filter(x => x.cat === M.cat && String(x.id) !== String(M.id))
+    .slice(0, 4);
+
+  $('market-root').innerHTML = `
+    <div class="mk-card">
+      <div class="mk-top">
+        <div class="mk-cat">${M.emoji} ${esc(M.catLabel)}</div>
+        <div class="mk-badge ${badge.cls}">${badge.txt}</div>
+      </div>
+      <h1 class="mk-title">${esc(M.title)}</h1>
+      <div class="mk-probrow">
+        <div class="mk-prob" id="mk-prob">${pct}%</div>
+        <div class="mk-probbar"><div id="mk-prob-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="mk-yesno">
+        <div class="mk-yn yes">
+          <div class="mk-yn-label">YES</div>
+          <div class="mk-yn-val">₦${pct}</div>
+          <button onclick="openOrder('YES')">Buy YES</button>
+        </div>
+        <div class="mk-yn no">
+          <div class="mk-yn-label">NO</div>
+          <div class="mk-yn-val">₦${100 - pct}</div>
+          <button onclick="openOrder('NO')">Buy NO</button>
+        </div>
+      </div>
+      <div class="mk-meta">
+        <div class="mk-chip"><i class="fa-solid fa-chart-line"></i> Vol ${esc(M.vol || '₦0')}</div>
+        <div class="mk-chip ${M.dir === 'up' ? 'up' : M.dir === 'down' ? 'down' : ''}">${changeIcon} ${esc(M.change || '')}</div>
+        ${countdownHtml}
+      </div>
+      <div class="mk-note">PRICES ARE SIMULATED FOR THIS DEMO BUILD AND RESET ON REFRESH. THIS IS NOT INVESTMENT ADVICE.</div>
+    </div>
+    ${related.length ? `
+    <div class="mk-sec-label">More ${esc((M.catLabel || '').split(' · ')[0].toLowerCase())} markets</div>
+    ${related.map(r => {
+      const rp = Math.round(r.yes * 100);
+      return `<a class="mk-rel" href="${r.link}">
+        <div class="mk-rel-emoji">${r.emoji}</div>
+        <div>
+          <div class="mk-rel-title">${esc(r.title)}</div>
+          <div class="mk-rel-meta">Vol ${esc(r.vol || '—')} · ${esc(r.change || '')}</div>
+        </div>
+        <div class="mk-rel-prob">${rp}%</div>
+      </a>`;
+    }).join('')}` : ''}`;
+
+  // live countdown
+  if (M.closes) {
+    const target = new Date(M.closes).getTime();
+    const tick = () => {
+      const el = $('countdown-val');
+      if (!el) return;
+      const ms = target - Date.now();
+      if (!isFinite(target)) { el.textContent = 'no closing time set'; return; }
+      if (ms <= 0) { el.textContent = 'closed'; clearInterval(timer); return; }
+      const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), mnt = Math.floor(ms % 36e5 / 6e4);
+      el.textContent = `closes in ${d}d ${String(h).padStart(2,'0')}h ${String(mnt).padStart(2,'0')}m`;
+    };
+    tick();
+    var timer = setInterval(tick, 60000);
+  }
+}
+
+// ── ORDER FLOW (demo, mirrors the per-market pages) ──
+function openOrder(s) {
+  if (!M) return;
+  side = s;
+  const pct = Math.round(M.yes * 100);
+  price = s === 'YES' ? pct : 100 - pct;
+  const el = $('om-side');
+  el.textContent = s;
+  el.className = 'om-side ' + (s === 'YES' ? 'yes' : 'no');
+  $('om-price').textContent = '₦' + price;
+  $('order-backdrop').classList.add('open');
+  updateOrderSummary();
+}
+function updateOrderSummary() {
+  const amt = parseFloat($('op-amount').value) || 0;
+  const shares = price > 0 ? amt / price : 0;
+  $('om-shares').textContent = shares.toFixed(1);
+  $('om-payout').textContent = naira(Math.round(shares * 100));
+  $('wallet-modal').textContent = naira(walletBalance);
+}
+function addAmount(n) {
+  const el = $('op-amount');
+  el.value = Math.min((parseFloat(el.value) || 0) + n, 9999999);
+  updateOrderSummary();
+}
+function placeOrder() {
+  const amt = parseFloat($('op-amount').value) || 0;
+  if (!amt || amt <= 0) { alert('Enter an amount first'); return; }
+  if (amt > walletBalance) { alert('Insufficient balance'); return; }
+  walletBalance -= amt;
+  $('wallet-top').textContent = naira(walletBalance);
+  updateOrderSummary();
+  closeOrder();
+  $('done-text').innerHTML = `${naira(amt)} of <b>${side}</b> at ₦${price}<br>Wallet balance: ${naira(walletBalance)}`;
+  $('done-backdrop').classList.add('open');
+}
+function closeOrder() {
+  $('order-backdrop').classList.remove('open');
+  $('op-amount').value = '';
+}
+function closeDone() { $('done-backdrop').classList.remove('open'); }
+</script>
+</body>
+</html>

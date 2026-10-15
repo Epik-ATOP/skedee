@@ -192,6 +192,10 @@ body{-webkit-font-smoothing:antialiased;}
       <div class="filter-tag" data-filter="entertainment" onclick="setFilter('entertainment',this)">🎬 Entertainment <span class="tag-count"></span></div>
       <div class="filter-tag" data-filter="politics" onclick="setFilter('politics',this)">⚖️ Politics <span class="tag-count"></span></div>
       <div class="filter-tag" data-filter="commodities" onclick="setFilter('commodities',this)">🛢️ Commodities <span class="tag-count"></span></div>
+      <div class="filter-tag" data-filter="sports" onclick="setFilter('sports',this)">🏆 Sports <span class="tag-count"></span></div>
+      <div class="filter-tag" data-filter="finance" onclick="setFilter('finance',this)">🪙 Finance <span class="tag-count"></span></div>
+      <div class="filter-tag" data-filter="weather" onclick="setFilter('weather',this)">🌧️ Weather <span class="tag-count"></span></div>
+      <div class="filter-tag" data-filter="misc" onclick="setFilter('misc',this)">⚡ Misc <span class="tag-count"></span></div>
     </div>
     <div class="results-count" id="results-count">Showing <strong id="results-num">46</strong> markets</div>
   </div>
@@ -267,54 +271,11 @@ body{-webkit-font-smoothing:antialiased;}
   </div>
 </footer>
 
+<script src="markets-data.js"></script>
 <script src="script.js"></script>
 <script>
 // ── DATA ──────────────────────────────────────────────────────────
-const OTHER_MARKETS = [
-  // ── REAL MARKETS ─────────────────────────────────────────────────
-  { id:10000041, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Korea Republic vs Czech Republic — World Cup Group F', badge:'upcoming', yes:0.40, vol:'₦0', change:'NEW', dir:'flat', link:'markets/10000041.html' },
-  { id:10000042, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Canada vs Bosnia and Herzegovina — World Cup Group C', badge:'upcoming', yes:0.44, vol:'₦0', change:'NEW', dir:'flat', link:'markets/10000042.html' },
-  { id:10000043, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'USA vs Paraguay — World Cup Group D (FT 4–1)', badge:'resolved', yes:1.00, vol:'₦52.4M', change:'SETTLED', dir:'flat', link:'markets/10000043.html' },
-  { id:10000044, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Qatar vs Switzerland — World Cup Group B (FT 1–1)', badge:'resolved', yes:0.00, vol:'₦18.6M', change:'SETTLED', dir:'flat', link:'markets/10000044.html' },
-  { id:10000045, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Brazil vs Morocco — World Cup Group E (FT 1–1)', badge:'resolved', yes:0.00, vol:'₦84.2M', change:'SETTLED', dir:'flat', link:'markets/10000045.html' },
-  { id:10000046, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Germany vs Curaçao — Group E (FT 7–1)', badge:'resolved', yes:1.00, vol:'₦124.6M', change:'SETTLED', dir:'flat', link:'markets/10000046.html' },
-  { id:10000047, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Netherlands vs Japan — Group F', badge:'upcoming', yes:0.62, vol:'₦82.4M', change:'Jun 14 · 10PM WAT', dir:'up', link:'markets/10000047.html' },
-  { id:10000048, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Ivory Coast vs Ecuador — Group E', badge:'upcoming', yes:0.40, vol:'₦48.2M', change:'Jun 15 · 1AM WAT', dir:'up', link:'markets/10000048.html' },
-  { id:10000049, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Sweden vs Tunisia — Group F', badge:'upcoming', yes:0.52, vol:'₦36.8M', change:'Jun 15 · 4AM WAT', dir:'up', link:'markets/10000049.html' },
-  { id:10000050, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Spain vs Cabo Verde — Group H (FT 0–0)', badge:'resolved', yes:0.00, vol:'₦98.4M', change:'SETTLED', dir:'flat', link:'markets/10000050.html' },
-  { id:10000051, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Belgium vs Egypt — Group G (FT 2–0)', badge:'resolved', yes:1.00, vol:'₦64.2M', change:'✓ FT 2–0', dir:'up', link:'markets/10000051.html' },
-  { id:10000052, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Saudi Arabia vs Uruguay — Group H', badge:'upcoming', yes:0.48, vol:'₦44.6M', change:'Jun 15 · 11PM WAT', dir:'up', link:'markets/10000052.html' },
-  { id:10000053, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'France vs Senegal — Group I (FT 3–1)', badge:'resolved', yes:1.00, vol:'₦112.8M', change:'SETTLED', dir:'flat', link:'markets/10000053.html' },
-  { id:10000054, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Iraq vs Norway — Group I (FT 1–2)', badge:'resolved', yes:1.00, vol:'₦88.6M', change:'✓ FT 1–2', dir:'up', link:'markets/10000054.html' },
-  { id:10000055, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Portugal vs DR Congo — Group K (FT 2–0)', badge:'resolved', yes:1.00, vol:'₦96.4M', change:'✓ FT 2–0', dir:'up', link:'markets/10000055.html' },
-  { id:10000056, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'England vs Croatia — Group L', badge:'upcoming', yes:0.58, vol:'₦104.2M', change:'Jun 17 · 9PM WAT', dir:'up', link:'markets/10000056.html' },
-  { id:10000040, cat:'football', emoji:'⚽', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'Mexico vs South Africa — World Cup Group A (FT 2-0)', badge:'hot', yes:1.00, vol:'₦42.6M', change:'SETTLED', dir:'flat', link:'markets/10000040.html' },
-  { id:10000033, cat:'football', emoji:'🏆', catLabel:'FOOTBALL · FIFA WORLD CUP', title:'2026 World Cup Winner', badge:'upcoming', yes:0.19, vol:'₦350M', change:'+12%', dir:'up', link:'markets/10000033.html' },
-  { id:10000026, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Will Drop an Album this year?', badge:'hot', yes:0.71, vol:'₦114.2M', change:'+22%', dir:'up', link:'markets/10000026.html' },
-  { id:10000030, cat:'music', emoji:'🎵', catLabel:'MUSIC · NAIJA', title:'Who Drops a New Song in June?', badge:'new', yes:0.71, vol:'₦9.2M', change:'+3%', dir:'up', link:'markets/10000030.html' },
-  { id:10000037, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Dollar to Naira hit ₦2,000 this year?', badge:'hot', yes:0.38, vol:'₦82.1M', change:'+5%', dir:'up', link:'markets/10000037.html' },
-  { id:10000008, cat:'finance', emoji:'🪙', catLabel:'FINANCE · FOREX', title:'Will Dollar to Naira hit ₦1,400 before July?', badge:'hot', yes:0.52, vol:'₦88.3M', change:'+9%', dir:'up', link:'markets/10000008.html' },
-  { id:10000007, cat:'energy', emoji:'⛽', catLabel:'ENERGY · FUEL', title:'Will fuel hit ₦1,400/litre before July?', badge:'hot', yes:0.58, vol:'₦47.2M', change:'+6%', dir:'up', link:'markets/10000007.html' },
-  { id:10000027, cat:'energy', emoji:'⚡', catLabel:'ENERGY · LAGOS', title:'Will NEPA Bring Light Tonight? — Lagos', badge:'live', yes:0.47, vol:'₦8.7M', change:'+2%', dir:'up', link:'markets/10000027.html' },
-  { id:10000005, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will the $1.25bn World Bank Loan be Approved?', badge:'hot', yes:0.74, vol:'₦61.4M', change:'+8%', dir:'up', link:'markets/10000005.html' },
-  { id:10000024, cat:'weather', emoji:'🌊', catLabel:'WEATHER · LAGOS', title:'Will Lagos Experience Major Flooding Before July?', badge:'hot', yes:0.67, vol:'₦34.6M', change:'+14%', dir:'up', link:'markets/10000024.html' },
-  { id:10000025, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'When will it rain the most in Lagos today?', badge:'live', yes:0.58, vol:'₦12.4M', change:'+4%', dir:'up', link:'markets/10000025.html' },
-  { id:10000035, cat:'commodities', emoji:'🛢️', catLabel:'COMMODITIES · CRUDE OIL', title:'Will crude oil hit $100/barrel before July?', badge:'new', yes:0.18, vol:'₦18.7M', change:'+2%', dir:'up', link:'markets/10000035.html' },
-  { id:10000035, cat:'weather', emoji:'🌧️', catLabel:'WEATHER · LAGOS', title:'Will it Rain in Lagos this Weekend?', badge:'live', yes:0.79, vol:'₦6.8M', change:'+4%', dir:'up', link:'markets/10000031.html' },
-  { id:10000038, cat:'sports', emoji:'🏀', catLabel:'SPORTS · NBA', title:'Who Will Win the 2026 NBA Championship?', badge:'hot', yes:1.00, vol:'₦7.2M', change:'SETTLED', dir:'flat', link:'markets/10000038.html' },
-  // ── INSPIRATION MARKETS (no page yet) ────────────────────────────
-  { id:10, cat:'entertainment', emoji:'🎬', catLabel:'ENTERTAINMENT', title:"Will Funke Akindele's new film hit ₦1bn?", badge:'hot', yes:0.52, vol:'₦14.6M', change:'+3%', dir:'up', link:'#' },
-  { id:13, cat:'politics', emoji:'⚖️', catLabel:'POLITICS', title:'Will Tinubu sign the tax reform bill before June?', badge:'new', yes:0.48, vol:'₦38.2M', change:'0%', dir:'flat', link:'#' },
-  { id:16, cat:'commodities', emoji:'⛽', catLabel:'COMMODITIES', title:'Will petrol exceed ₦1,200/litre by July?', badge:'new', yes:0.55, vol:'₦22.4M', change:'+6%', dir:'up', link:'#' },
-  { id:17, cat:'commodities', emoji:'🌾', catLabel:'COMMODITIES', title:'Will a 50kg bag of rice exceed ₦120,000 by August?', badge:'new', yes:0.38, vol:'₦18.7M', change:'+2%', dir:'up', link:'#' },
-  { id:18, cat:'commodities', emoji:'🫘', catLabel:'COMMODITIES', title:'Will beans exceed ₦90,000 per bag in Q3?', badge:'new', yes:0.44, vol:'₦12.3M', change:'+1%', dir:'up', link:'#' },
-  { id:19, cat:'commodities', emoji:'🥚', catLabel:'COMMODITIES', title:'Will a crate of eggs exceed ₦3,500 before September?', badge:'new', yes:0.61, vol:'₦9.8M', change:'+3%', dir:'up', link:'#' },
-  { id:20, cat:'commodities', emoji:'🍌', catLabel:'COMMODITIES', title:'Will plantain prices drop below ₦800/bunch by June?', badge:'new', yes:0.29, vol:'₦7.1M', change:'-2%', dir:'down', link:'#' },
-  { id:21, cat:'commodities', emoji:'🌽', catLabel:'COMMODITIES', title:'Will food inflation fall below 30% by end of 2026?', badge:'new', yes:0.33, vol:'₦16.4M', change:'+1%', dir:'up', link:'#' },
-  { id:22, cat:'finance', emoji:'🪙', catLabel:'FINANCE', title:'Will Naira/Dollar rate hit ₦1,800 before end of 2026?', badge:'hot', yes:0.48, vol:'₦88.3M', change:'-3%', dir:'down', link:'#' },
-  { id:23, cat:'weather', emoji:'🌤️', catLabel:'WEATHER', title:'Will it rain in Abuja today?', badge:'hot', yes:0.44, vol:'₦6.1M', change:'+3%', dir:'up', link:'#' },
-  { id:24, cat:'finance', emoji:'📈', catLabel:'FINANCE', title:'Will CBN cut interest rates at June MPC meeting?', badge:'new', yes:0.31, vol:'₦29.5M', change:'+4%', dir:'up', link:'#' },
-];
+const OTHER_MARKETS = window.SKEDII_MARKETS;
 
 // ── STATE ─────────────────────────────────────────────────────────
 let currentFilter = 'all';

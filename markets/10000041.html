@@ -741,7 +741,7 @@ initOg();
 // setInterval(updateCountdown, 1000);
 
 // ── API-FOOTBALL LIVE FEED ────────────────────────────────────────
-const AF_KEY     = '537fc407993fe20fd8f3ac68bee2ed2d';
+const SM_PROXY='https://skedee-sm.atypeofperson08.workers.dev';
 const AF_FIXTURE = 1538999; // South Korea vs Czech Republic
 const AF_HOME    = 'South Korea';
 const AF_AWAY    = 'Czech Republic';
@@ -751,9 +751,7 @@ let   matchDone  = false;
 async function fetchLiveMatch() {
   if (matchDone) return;
   try {
-    const res  = await fetch('https://v3.football.api-sports.io/fixtures?id=' + AF_FIXTURE, {
-      headers: { 'x-apisports-key': AF_KEY }
-    });
+    const res  = await fetch(SM_PROXY+'/football/fixtures?id='+AF_FIXTURE);
     const data = await res.json();
     if (!data.response?.length) return;
     applyFixture(data.response[0]);

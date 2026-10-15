@@ -497,7 +497,7 @@
 <script src="../sportmonks.js"></script>
 <script>
 const KICKOFF_TIME = new Date('2026-06-13T19:00:00Z'); // 8:00 PM WAT
-const AF_KEY     = '537fc407993fe20fd8f3ac68bee2ed2d';
+const SM_PROXY='https://skedee-sm.atypeofperson08.workers.dev';
 const AF_FIXTURE = null; // update with real fixture ID once known
 const AF_HOME    = 'Qatar';
 const AF_AWAY    = 'Switzerland';
@@ -761,9 +761,7 @@ let matchDone = true;
 async function fetchLiveMatch() {
   if (matchDone || !AF_FIXTURE) return;
   try {
-    const res  = await fetch('https://v3.football.api-sports.io/fixtures?id=' + AF_FIXTURE, {
-      headers: { 'x-apisports-key': AF_KEY }
-    });
+    const res  = await fetch(SM_PROXY+'/football/fixtures?id='+AF_FIXTURE);
     const data = await res.json();
     if (!data.response?.length) return;
     applyFixture(data.response[0]);
